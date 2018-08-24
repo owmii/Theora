@@ -1,0 +1,103 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = "http://files.minecraftforge.net/maven" }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'idea'
+
+version = "${mc_ver}-${major}.${minor}.${revision}.${build}"
+group = "xieao.theora"
+archivesBaseName = "${mod_id}"
+
+sourceCompatibility = targetCompatibility = '1.8'
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
+minecraft {
+    version = "${mc_ver}-${forge_ver}"
+    runDir = "run"
+    mappings = "${project.mappings}"
+    replace "@VERSION@", project.version
+    makeObfSourceJar = false
+}
+
+repositories {
+    maven { url "http://dvs1.progwml6.com/files/maven" }
+}
+
+dependencies {
+    deobfCompile "mezz.jei:jei_1.12.2:4.9.2.196"
+}
+
+task alpha {
+    dependsOn 'build'
+    doLast {
+        int next = "${revision}".toInteger() + 1
+        editProp("gradle", "revision", next)
+        nextBuildNum()
+    }
+}
+
+task beta {
+    dependsOn 'build'
+    doLast {
+        int next = "${minor}".toInteger() + 1
+        editProp("gradle", "minor", next)
+        editProp("gradle", "revision", 0)
+        nextBuildNum()
+    }
+}
+
+task release {
+    dependsOn 'build'
+    doLast {
+        int next = "${major}".toInteger() + 1
+        editProp("gradle", "major", next)
+        editProp("gradle", "minor", 0)
+        editProp("gradle", "revision", 0)
+        nextBuildNum()
+    }
+}
+
+task rebuild {
+    dependsOn 'build'
+    doLast {
+        nextBuildNum()
+    }
+}
+
+def nextBuildNum() {
+    int next = "${build}".toInteger() + 1
+    editProp("gradle", "build", next)
+}
+
+jar {
+    manifest {
+        attributes "FMLAT": "theora_at.cfg"
+    }
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version': project.version, 'mcversion': project.minecraft.version
+    }
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+    rename '(.+_at.cfg)', 'META-INF/$1'
+}
+
+def editProp(name, key, value) {
+    ant.propertyfile(file: "${name}.properties") {
+        ant.entry(key: key, value: value)
+    }
+}

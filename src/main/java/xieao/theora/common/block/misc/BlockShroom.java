@@ -1,4 +1,4 @@
-package xieao.theora.common.block;
+package xieao.theora.common.block.misc;
 
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -8,6 +8,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
+import xieao.theora.common.block.BlockPlant;
 import xieao.theora.common.item.ItemShroom;
 
 public class BlockShroom extends BlockPlant {
@@ -47,6 +48,7 @@ public class BlockShroom extends BlockPlant {
     }
 
     public enum Type implements IStringSerializable {
+        WHITE_BEACH,
         WITCH_HATE;
 
         @Override

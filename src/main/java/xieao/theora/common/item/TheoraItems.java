@@ -17,10 +17,10 @@ public class TheoraItems {
     static {
         for (Block block : TheoraBlocks.BLOCKS) {
             if (block instanceof IGenericBlock) {
-                IGenericBlock gBlock = (IGenericBlock) block;
+                IGenericBlock block1 = (IGenericBlock) block;
                 ResourceLocation location = block.getRegistryName();
                 Objects.requireNonNull(location);
-                register(gBlock.getItemBlock(), location.toString());
+                register(block1.getItemBlock(), location.toString());
             }
         }
     }

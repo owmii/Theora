@@ -14,7 +14,11 @@ public class TheoraItems {
 
     public static final Set<Item> ITEMS = new HashSet<>();
 
+    public static final ItemAcidVial ACID_VIAL;
+
     static {
+        ACID_VIAL = register(new ItemAcidVial(), "acidvial");
+
         for (Block block : TheoraBlocks.BLOCKS) {
             if (block instanceof IGenericBlock) {
                 IGenericBlock block1 = (IGenericBlock) block;

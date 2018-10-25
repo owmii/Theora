@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import xieao.theora.Theora;
 import xieao.theora.network.packets.IPacket;
+import xieao.theora.network.packets.PacketSyncVial;
 
 public class TheoraNetwork {
 
@@ -11,7 +12,7 @@ public class TheoraNetwork {
     private static int ID;
 
     public static void registerPackets() {
-
+        registerPacket(new PacketSyncVial());
     }
 
     @SuppressWarnings("unchecked")

@@ -3,8 +3,6 @@ package xieao.theora.common.item;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
@@ -22,12 +20,17 @@ public class ItemAcidVial extends ItemBase {
         if (!(player instanceof FakePlayer)) {
             PlayerData data = TheoraAPI.getPlayerData(player);
             if (data != null) {
-                if (!data.hasAcidVial()) {
-                    data.setHasAcidVial(true);
-                    player.attackEntityFrom(DamageSource.GENERIC, 2.0F);
-                    player.setHeldItem(hand, ItemStack.EMPTY);
-                    return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
-                }
+//                if (!data.hasAcidVial()) {
+//                    data.setHasAcidVial(true);
+//                    data.setVialChanged(true);
+//                    player.attackEntityFrom(DamageSource.GENERIC, 2.0F);
+//                    player.setHeldItem(hand, ItemStack.EMPTY);
+//                    return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+//                } else {
+//                    data.setHasAcidVial(false);
+//                    data.setVialChanged(true);
+//                    return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+//                }
             }
         }
         return super.onItemRightClick(world, player, hand);

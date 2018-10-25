@@ -12,12 +12,12 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.relauncher.Side;
 import xieao.theora.Theora;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.player.data.PlayerData;
 import xieao.theora.api.player.data.PlayerDataProvider;
-import xieao.theora.common.item.TheoraItems;
 
 @Mod.EventBusSubscriber
 public class EventHandler {
@@ -39,6 +39,22 @@ public class EventHandler {
     }
 
     @SubscribeEvent
+    public static void tickPlayer(TickEvent.PlayerTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
+            EntityPlayer player = event.player;
+            if (event.side == Side.SERVER) {
+                PlayerData data = TheoraAPI.getPlayerData(player);
+                if (data != null) {
+//                    if (player instanceof EntityPlayerMP && data.isVialChanged()) {
+//                        TheoraNetwork.sendToPlayer(new PacketSyncVial(data.getStoredAcid(), data.hasAcidVial()), (EntityPlayerMP) player);
+//                        data.setVialChanged(false);
+//                    }
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
     public static void rightClickEntity(PlayerInteractEvent.EntityInteract event) {
         EntityPlayer player = event.getEntityPlayer();
         Entity entity = event.getTarget();
@@ -46,18 +62,19 @@ public class EventHandler {
         if (entity instanceof EntityZombie) {
             EntityZombie zombie = (EntityZombie) entity;
             ItemStack held = player.getHeldItem(event.getHand());
+            if (zombie.isChild()) return;
             if (!world.isRemote) {
                 if (held.getItem() == Items.GLASS_BOTTLE) {
                     if (player.experienceLevel >= 10) {
                         PlayerData data = TheoraAPI.getPlayerData(player);
                         if (data != null) {
-                            if (!data.hasAcidVial()) {
-                                held.shrink(1);
-                                player.addExperienceLevel(-10);
-                                ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(TheoraItems.ACID_VIAL));
-                                //TODO sounds ...
-                                //TODO particles ...
-                            }
+//                            if (!data.hasAcidVial()) {
+//                                held.shrink(1);
+//                                player.addExperienceLevel(-10);
+//                                ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(TheoraItems.ACID_VIAL));
+//                                //TODO sounds ...
+//                                //TODO particles ...
+//                            }
                         }
                     } else {
                         player.sendStatusMessage(new TextComponentTranslation("theora.status.no.enough.xp", player.experienceLevel), true);
@@ -66,5 +83,4 @@ public class EventHandler {
             }
         }
     }
-
 }

@@ -49,8 +49,12 @@ public class BlockShroom extends BlockPlant {
 
     public enum Type implements IStringSerializable {
         WHITE_BEACH,
+        GLIOPHORUS,
         WITCH_HATE,
-        GLIOPHORUS;
+        BLUE_HORN,
+
+
+        ;
 
         @Override
         public String getName() {

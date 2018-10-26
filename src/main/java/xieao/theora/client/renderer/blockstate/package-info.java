@@ -1,7 +1,7 @@
 @ParametersAreNonnullByDefault
 @FieldsAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-package xieao.theora.client.render;
+package xieao.theora.client.renderer.blockstate;
 
 import mcp.MethodsReturnNonnullByDefault;
 import xieao.theora.api.annotation.FieldsAreNonnullByDefault;

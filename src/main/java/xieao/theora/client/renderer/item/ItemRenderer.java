@@ -1,4 +1,4 @@
-package xieao.theora.client.render.item;
+package xieao.theora.client.renderer.item;
 
 import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.item.ItemStack;

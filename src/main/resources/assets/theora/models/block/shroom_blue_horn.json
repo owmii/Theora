@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "theora:blocks/shroom_blue_horn"
+  }
+}

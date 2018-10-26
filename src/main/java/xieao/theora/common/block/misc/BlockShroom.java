@@ -48,7 +48,7 @@ public class BlockShroom extends BlockPlant {
     }
 
     public enum Type implements IStringSerializable {
-        WHITE_BEACH,
+        WHITE_BEECH,
         GLIOPHORUS,
         WITCH_HAT,
         BLUE_HORN,

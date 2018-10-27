@@ -95,7 +95,7 @@ public class LiquidSlot {
     }
 
     public void setStored(float stored) {
-        this.stored = stored;
+        this.stored = stored > this.capacity ? this.capacity : stored;
         if (isEmpty() && !hasFinalLiquid()) {
             setLiquid(Liquid.EMPTY);
         }

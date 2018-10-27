@@ -14,9 +14,11 @@ public class TheoraItems {
 
     public static final Set<Item> ITEMS = new HashSet<>();
 
+    public static final ItemOoze OOZE;
     public static final ItemAcidVial ACID_VIAL;
 
     static {
+        OOZE = register(new ItemOoze(), "ooze");
         ACID_VIAL = register(new ItemAcidVial(), "acidvial");
 
         for (Block block : TheoraBlocks.BLOCKS) {
@@ -29,7 +31,7 @@ public class TheoraItems {
         }
     }
 
-    public static <T extends Item> T register(T item, String name) {
+    public static <T extends Item & IGenericItem> T register(T item, String name) {
         item.setRegistryName(name);
         item.setUnlocalizedName(name);
         ITEMS.add(item);

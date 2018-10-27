@@ -14,6 +14,12 @@ public class TheoraAPI {
     public static final TheoraAPI INSTANCE = new TheoraAPI();
     private static final Set<IRecipeRegistry> RECIPE_REGISTRIES = new HashSet<>();
 
+    @Nullable
+    @SuppressWarnings("unchecked")
+    public static <T extends IPlayerData> T getPlayerData(EntityPlayer player) {
+        return (T) player.getCapability(PlayerDataCapability.PLAYER_DATA, null);
+    }
+
     public void register(IRecipeRegistry registry) {
         registry.initRecipes();
         RECIPE_REGISTRIES.add(registry);
@@ -21,11 +27,5 @@ public class TheoraAPI {
 
     public Set<IRecipeRegistry> getRecipeRegistries() {
         return RECIPE_REGISTRIES;
-    }
-
-    @Nullable
-    @SuppressWarnings("unchecked")
-    public static <T extends IPlayerData> T getPlayerData(EntityPlayer player) {
-        return (T) player.getCapability(PlayerDataCapability.PLAYER_DATA, null);
     }
 }

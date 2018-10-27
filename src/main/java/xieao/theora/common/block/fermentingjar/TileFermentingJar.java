@@ -57,9 +57,12 @@ public class TileFermentingJar extends TileInvBase implements ITickable {
                             outStack.setCount(stack.getCount());
                             setInventorySlotContents(0, ItemStack.EMPTY);
                             setInventorySlotContents(1, outStack);
-                            liquidSlot.setLiquid(recipe.getOutputLiquid());
-                            float stored = liquidSlot.getStored();
-                            liquidSlot.setStored(stored + 10.0F * stack.getCount());
+                            Liquid liquid = recipe.getOutputLiquid();
+                            if (!liquid.isEmpty()) {
+                                liquidSlot.setLiquid(liquid);
+                                float stored = liquidSlot.getStored();
+                                liquidSlot.setStored(stored + 10.0F * stack.getCount());
+                            }
                             this.fermenting = 0;
                             syncNBTData();
                         }

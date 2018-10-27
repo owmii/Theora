@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import xieao.theora.common.block.BlockPlant;
+import xieao.theora.common.item.IGenericItem;
 import xieao.theora.common.item.ItemShroom;
 
 public class BlockShroom extends BlockPlant {
@@ -43,8 +44,9 @@ public class BlockShroom extends BlockPlant {
     }
 
     @Override
-    public ItemBlock getItemBlock() {
-        return new ItemShroom(this);
+    @SuppressWarnings("unchecked")
+    public <T extends ItemBlock & IGenericItem> T getItemBlock() {
+        return (T) new ItemShroom(this);
     }
 
     public enum Type implements IStringSerializable {

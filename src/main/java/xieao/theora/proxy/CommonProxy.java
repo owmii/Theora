@@ -5,7 +5,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import xieao.theora.Theora;
-import xieao.theora.api.player.data.CapabilityPlayerData;
+import xieao.theora.api.liquid.LiquidContainerCapability;
+import xieao.theora.api.player.data.PlayerDataCapability;
 import xieao.theora.network.GuiHandler;
 import xieao.theora.network.TheoraNetwork;
 
@@ -14,7 +15,8 @@ public class CommonProxy implements IProxy {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         TheoraNetwork.registerPackets();
-        CapabilityPlayerData.register();
+        PlayerDataCapability.register();
+        LiquidContainerCapability.register();
     }
 
     @Override

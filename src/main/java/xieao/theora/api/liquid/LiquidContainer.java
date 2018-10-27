@@ -50,7 +50,7 @@ public class LiquidContainer implements IliquidContainer {
         this.liquidSlots = new LiquidSlot[tagList.tagCount()];
         for (int i = 0; i < tagList.tagCount(); i++) {
             NBTTagCompound nbt = tagList.getCompoundTagAt(i);
-            this.liquidSlots[i] = new LiquidSlot();
+            this.liquidSlots[i] = new LiquidSlot(Liquid.EMPTY, false, 0.0F, 0.0F, 0.0F, LiquidSlot.TransferType.ALL);
             this.liquidSlots[i].readNBT(nbt);
         }
     }

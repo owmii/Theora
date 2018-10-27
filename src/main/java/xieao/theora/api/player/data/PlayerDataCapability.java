@@ -8,7 +8,7 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 
 import javax.annotation.Nullable;
 
-public class CapabilityPlayerData {
+public class PlayerDataCapability {
 
     @CapabilityInject(IPlayerData.class)
     public static Capability<IPlayerData> PLAYER_DATA = null;

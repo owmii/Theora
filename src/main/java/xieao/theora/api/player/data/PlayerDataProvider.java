@@ -15,14 +15,14 @@ public class PlayerDataProvider implements ICapabilityProvider, INBTSerializable
 
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
-        return capability == CapabilityPlayerData.PLAYER_DATA;
+        return capability == PlayerDataCapability.PLAYER_DATA;
     }
 
     @Nullable
     @Override
     @SuppressWarnings("unchecked")
     public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
-        return capability == CapabilityPlayerData.PLAYER_DATA ? (T) this.playerData : null;
+        return capability == PlayerDataCapability.PLAYER_DATA ? (T) this.playerData : null;
     }
 
     @Override

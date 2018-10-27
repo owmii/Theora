@@ -1,21 +1,16 @@
 package xieao.theora;
 
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import xieao.theora.common.block.TheoraBlocks;
-import xieao.theora.common.item.TheoraItems;
 import xieao.theora.proxy.IProxy;
 
 @Mod.EventBusSubscriber
@@ -59,20 +54,6 @@ public class Theora {
     @Mod.EventHandler
     public static void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
-    }
-
-    @SubscribeEvent
-    public static void registerItems(RegistryEvent.Register<Item> event) {
-        for (Item item : TheoraItems.ITEMS) {
-            event.getRegistry().register(item);
-        }
-    }
-
-    @SubscribeEvent
-    public static void registerBlocks(RegistryEvent.Register<Block> event) {
-        for (Block block : TheoraBlocks.BLOCKS) {
-            event.getRegistry().register(block);
-        }
     }
 
     public static ResourceLocation location(String path) {

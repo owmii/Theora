@@ -26,7 +26,9 @@ public class TileFermentingJar extends TileInvBase implements ITickable {
 
     public TileFermentingJar() {
         this.liquidContainer = new LiquidContainer();
-        this.liquidContainer.addLiquidSlot(new LiquidSlot(Liquid.EMPTY, false, 400.0F, 0.0F, 20.0F, LiquidSlot.TransferType.ALL));
+        this.liquidContainer.addLiquidSlots(
+                new LiquidSlot(Liquid.EMPTY, false, 400.0F, 0.0F, 20.0F, LiquidSlot.TransferType.ALL)
+        );
     }
 
     @Override

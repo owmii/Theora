@@ -38,9 +38,9 @@ public class LiquidContainer implements IliquidContainer {
         this.liquidSlots[index] = liquidSlot;
     }
 
-    public void addLiquidSlot(LiquidSlot liquidSlot) {
+    public void addLiquidSlots(LiquidSlot... liquidSlots) {
         List<LiquidSlot> slots = new ArrayList<>(Arrays.asList(this.liquidSlots));
-        slots.add(liquidSlot);
+        slots.addAll(Arrays.asList(liquidSlots));
         this.liquidSlots = slots.toArray(this.liquidSlots);
     }
 

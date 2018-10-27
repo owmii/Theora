@@ -3,6 +3,7 @@ package xieao.theora.common.item;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import xieao.theora.Theora;
 import xieao.theora.common.block.IGenericBlock;
 import xieao.theora.common.block.TheoraBlocks;
 
@@ -34,6 +35,7 @@ public class TheoraItems {
     public static <T extends Item & IGenericItem> T register(T item, String name) {
         item.setRegistryName(name);
         item.setUnlocalizedName(name);
+        item.setCreativeTab(Theora.TAB);
         ITEMS.add(item);
         return item;
     }

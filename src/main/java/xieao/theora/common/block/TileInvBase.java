@@ -1,5 +1,6 @@
 package xieao.theora.common.block;
 
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -9,6 +10,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.stream.IntStream;
 
@@ -27,6 +29,70 @@ public abstract class TileInvBase extends TileBase implements ISidedInventory {
     public void writeNBT(NBTTagCompound nbt) {
         super.writeNBT(nbt);
         ItemStackHelper.saveAllItems(nbt, this.stacks);
+    }
+
+    public boolean insertStack(ItemStack stack, int max, EnumFacing facing) {
+        for (int i = 0; i < getSizeInventory(); i++) {
+            ItemStack stack1 = stack.copy();
+            if (canInsertItem(i, stack, facing)) {
+                if (stack1.getCount() >= max) {
+                    stack1.setCount(max);
+                    stack.shrink(max);
+                    setInventorySlotContents(i, stack1);
+                    syncNBTData();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean takeStack(EntityPlayer player, EnumFacing facing) {
+        for (int i = getSizeInventory() - 1; i >= 0; i--) {
+            ItemStack stack = getStackInSlot(i);
+            if (!stack.isEmpty()) {
+                if (canExtractItem(i, stack, facing)) {
+                    ItemHandlerHelper.giveItemToPlayer(player, stack.copy());
+                    setInventorySlotContents(i, ItemStack.EMPTY);
+                    syncNBTData();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean collectItems(EntityItem entityItem, int amount, int... excludedSlots) {
+        for (int i = 0; i < getSizeInventory(); i++) {
+            boolean flag = false;
+            for (int excludedSlot : excludedSlots) {
+                if (i == excludedSlot) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                ItemStack stack = getStackInSlot(i);
+                if (stack.isEmpty()) {
+                    collectItem(entityItem, amount, i);
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean collectItem(EntityItem entityItem, int amount, int slot) {
+        ItemStack stack = entityItem.getItem();
+        amount = Math.min(stack.getCount(), amount);
+        ItemStack copyStack = stack.copy();
+        copyStack.setCount(amount);
+        if (isItemValidForSlot(slot, copyStack)) {
+            setInventorySlotContents(slot, copyStack);
+            stack.shrink(amount);
+            syncNBTData();
+            return true;
+        }
+        return false;
     }
 
     public NonNullList<ItemStack> getStacks() {

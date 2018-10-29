@@ -1,6 +1,9 @@
 package xieao.theora.api.player.ability;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import xieao.theora.api.registry.RegistryEntry;
 
 import java.util.HashMap;
@@ -14,6 +17,10 @@ public class Ability extends RegistryEntry<Ability> {
     static {
         REGISTRY = new HashMap<>();
         EMPTY = register(new Ability(), "theora:empty");
+    }
+
+    public void tickAbility(EntityPlayer player, World world, int abilityLevel, NBTTagCompound abilityNbt) {
+
     }
 
     public static Ability register(Ability ability, String name) {

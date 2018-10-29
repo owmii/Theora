@@ -10,7 +10,71 @@ import java.util.Map;
 
 public class Abilities implements INBTSerializable<NBTTagCompound> {
 
-    private final Map<Ability, NBTTagCompound> abilityMap = new HashMap<>();
+    public static final String TAG_STATUS = "status";
+    public static final String TAG_LEVEL = "level";
+
+    private final HashMap<Ability, NBTTagCompound> abilityMap = new HashMap<>();
+
+    public boolean hasAbility(Ability ability) {
+        return this.abilityMap.containsKey(ability);
+    }
+
+    public boolean acquire(Ability ability) {
+        if (!hasAbility(ability)) {
+            NBTTagCompound nbt = new NBTTagCompound();
+            nbt.setBoolean(TAG_STATUS, true);
+            nbt.setInteger(TAG_LEVEL, 0);
+            this.abilityMap.put(ability, nbt);
+            return true;
+        }
+        return false;
+    }
+
+    public int getAbilityLevel(Ability ability) {
+        NBTTagCompound nbt = this.abilityMap.get(ability);
+        if (nbt != null) {
+            return nbt.getInteger(TAG_LEVEL);
+        }
+        return 0;
+    }
+
+
+    public boolean setAbilityLevel(Ability ability, int level) {
+        NBTTagCompound nbt = this.abilityMap.get(ability);
+        if (nbt != null) {
+            int curLevel = nbt.getInteger(TAG_LEVEL);
+            if (curLevel != level) {
+                nbt.setInteger(TAG_LEVEL, level);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isActive(Ability ability) {
+        NBTTagCompound nbt = this.abilityMap.get(ability);
+        if (nbt != null) {
+            return nbt.getBoolean(TAG_LEVEL);
+        }
+        return false;
+    }
+
+    public boolean setAbilityStatus(Ability ability, boolean status) {
+        NBTTagCompound nbt = this.abilityMap.get(ability);
+        if (nbt != null) {
+            boolean curStatus = nbt.getBoolean(TAG_LEVEL);
+            if (curStatus != status) {
+                nbt.setBoolean(TAG_STATUS, status);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public NBTTagCompound getAbilityNbt(Ability ability) {
+        NBTTagCompound nbt = this.abilityMap.get(ability);
+        return nbt == null ? new NBTTagCompound() : nbt;
+    }
 
     @Override
     public NBTTagCompound serializeNBT() {
@@ -40,7 +104,7 @@ public class Abilities implements INBTSerializable<NBTTagCompound> {
         }
     }
 
-    public Map<Ability, NBTTagCompound> getAbilityMap() {
+    public HashMap<Ability, NBTTagCompound> getAbilityMap() {
         return abilityMap;
     }
 }

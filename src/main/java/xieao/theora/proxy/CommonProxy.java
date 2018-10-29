@@ -29,7 +29,6 @@ public class CommonProxy implements IProxy {
         TheoraNetwork.registerPackets();
         PlayerDataCapability.register();
         LiquidContainerCapability.register();
-
         TheoraAPI.INSTANCE.register(new FermentingRecipes());
     }
 

@@ -14,11 +14,11 @@ import javax.annotation.Nullable;
 
 public interface IPacket<M extends IPacket> extends IMessage, IMessageHandler<M, IPacket> {
 
-    default void writeBytes(ByteBuffer buf) {
+    default void readBytes(ByteBuffer buf) {
 
     }
 
-    default void readBytes(ByteBuffer buf) {
+    default void writeBytes(ByteBuffer buf) {
 
     }
 

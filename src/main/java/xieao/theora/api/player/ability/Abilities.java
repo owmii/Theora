@@ -10,10 +10,11 @@ import java.util.Map;
 
 public class Abilities implements INBTSerializable<NBTTagCompound> {
 
-    public static final String TAG_STATUS = "status";
-    public static final String TAG_LEVEL = "level";
-
     private final HashMap<Ability, NBTTagCompound> abilityMap = new HashMap<>();
+
+    public static final String TAG_STATUS = "abilityStatus";
+    public static final String TAG_LEVEL = "abilityLevel";
+    public static final String TAG_SUB_NBT = "abilitySubNbt";
 
     public boolean hasAbility(Ability ability) {
         return this.abilityMap.containsKey(ability);
@@ -24,8 +25,16 @@ public class Abilities implements INBTSerializable<NBTTagCompound> {
             NBTTagCompound nbt = new NBTTagCompound();
             nbt.setBoolean(TAG_STATUS, true);
             nbt.setInteger(TAG_LEVEL, 0);
+            nbt.setTag(TAG_SUB_NBT, new NBTTagCompound());
             this.abilityMap.put(ability, nbt);
             return true;
+        }
+        return false;
+    }
+
+    public boolean lose(Ability ability) {
+        if (hasAbility(ability)) {
+            this.abilityMap.remove(ability);
         }
         return false;
     }
@@ -65,6 +74,26 @@ public class Abilities implements INBTSerializable<NBTTagCompound> {
             boolean curStatus = nbt.getBoolean(TAG_LEVEL);
             if (curStatus != status) {
                 nbt.setBoolean(TAG_STATUS, status);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public NBTTagCompound getSubNbt(Ability ability) {
+        NBTTagCompound nbt = this.abilityMap.get(ability);
+        if (nbt != null) {
+            return nbt.getCompoundTag(TAG_SUB_NBT);
+        }
+        return new NBTTagCompound();
+    }
+
+    public boolean setAbilitySubNbt(Ability ability, NBTTagCompound subNbt) {
+        NBTTagCompound nbt = this.abilityMap.get(ability);
+        if (nbt != null) {
+            NBTTagCompound curNbt = nbt.getCompoundTag(TAG_SUB_NBT);
+            if (curNbt != subNbt) {
+                nbt.setTag(TAG_SUB_NBT, subNbt);
                 return true;
             }
         }

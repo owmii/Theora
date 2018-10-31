@@ -24,7 +24,6 @@ public class Ability extends RegistryEntry<Ability> {
     }
 
     public static Ability register(Ability ability, String name) {
-        ability.setRegistryName(name);
         REGISTRY.put(ability.getRegistryName(), ability);
         return ability;
     }

@@ -3,6 +3,7 @@ package xieao.theora.common.ability;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityPigZombie;
+import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -102,25 +103,28 @@ public class AbilityMePig extends Ability {
                 Abilities abilities = data.getAbilities();
                 if (abilities.hasAbility(TheoraAbilities.ME_PIG)) {
                     World world = player.world;
-                    BlockPos pos = new BlockPos(player.posX, player.posY, player.motionZ);
+                    BlockPos pos = new BlockPos(player.posX, player.posY, player.posZ);
                     AxisAlignedBB boudingBox = new AxisAlignedBB(pos).grow(24.0D);
                     if (source instanceof EntityLivingBase) {
-                        if (!(source instanceof EntityPigZombie)) {
+                        if (source instanceof EntityPigZombie) {
+                            List<EntityPigZombie> pigZombies = world.getEntitiesWithinAABB(EntityPigZombie.class, boudingBox);
+                            for (EntityPigZombie pigZombie : pigZombies) {
+                                EntityLivingBase target = pigZombie.getAttackTarget();
+                                EntityLivingBase revengeTarget = pigZombie.getRevengeTarget();
+                                if (target != null && target.getUniqueID() == player.getUniqueID() || revengeTarget != null && revengeTarget.getUniqueID() == player.getUniqueID()) {
+                                    pigZombie.angerLevel = 0;
+                                    pigZombie.angerTargetUUID = null;
+                                    pigZombie.attackingPlayer = null;
+                                    pigZombie.setRevengeTarget(null);
+                                    pigZombie.setAttackTarget(new EntityBat(world));
+                                }
+                            }
+                        } else {
                             List<EntityPigZombie> pigZombies = world.getEntitiesWithinAABB(EntityPigZombie.class, boudingBox);
                             for (EntityPigZombie pigZombie : pigZombies) {
                                 pigZombie.setRevengeTarget((EntityLivingBase) source);
                                 pigZombie.setAttackTarget((EntityLivingBase) source);
                                 world.playSound(null, source.posX, source.posY, source.motionZ, SoundEvents.ENTITY_ZOMBIE_PIG_ANGRY, SoundCategory.HOSTILE, 0.8F, 1.0F);
-                            }
-                        } else {
-                            List<EntityPigZombie> pigZombies = world.getEntitiesWithinAABB(EntityPigZombie.class, boudingBox);
-                            for (EntityPigZombie pigZombie : pigZombies) {
-                                if (pigZombie.isAngry()) {
-                                    if (pigZombie.getAttackTarget() == player) {
-                                        pigZombie.setRevengeTarget(null);
-                                        pigZombie.setAttackTarget(null);
-                                    }
-                                }
                             }
                         }
                     }

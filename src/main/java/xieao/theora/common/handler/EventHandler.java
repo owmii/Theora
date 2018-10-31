@@ -1,23 +1,21 @@
 package xieao.theora.common.handler;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.World;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
 import xieao.theora.Theora;
 import xieao.theora.api.TheoraAPI;
+import xieao.theora.api.player.ability.Abilities;
+import xieao.theora.api.player.ability.Ability;
 import xieao.theora.api.player.data.PlayerData;
 import xieao.theora.api.player.data.PlayerDataProvider;
+
+import java.util.Map;
 
 @Mod.EventBusSubscriber
 public class EventHandler {
@@ -42,32 +40,34 @@ public class EventHandler {
     public static void tickPlayer(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
             EntityPlayer player = event.player;
-            if (event.side == Side.SERVER) {
-                PlayerData data = TheoraAPI.getPlayerData(player);
-                if (data != null) {
-//                    if (player instanceof EntityPlayerMP && data.isVialChanged()) {
-//                        TheoraNetwork.sendToPlayer(new PacketSyncVial(data.getStoredAcid(), data.hasAcidVial()), (EntityPlayerMP) player);
-//                        data.setVialChanged(false);
-//                    }
+            PlayerData data = TheoraAPI.getPlayerData(player);
+            if (data != null) {
+                Abilities abilities = data.getAbilities();
+                for (Map.Entry<Ability, NBTTagCompound> e : abilities.getAbilityMap().entrySet()) {
+                    Ability ability = e.getKey();
+                    NBTTagCompound nbt = e.getValue();
+                    if (abilities.isActive(ability)) {
+                        ability.tickAbility(player, player.world, abilities.getAbilityLevel(ability), abilities.getSubNbt(ability));
+                    }
                 }
             }
         }
     }
 
-    @SubscribeEvent
-    public static void rightClickEntity(PlayerInteractEvent.EntityInteract event) {
-        EntityPlayer player = event.getEntityPlayer();
-        Entity entity = event.getTarget();
-        World world = player.world;
-        if (entity instanceof EntityZombie) {
-            EntityZombie zombie = (EntityZombie) entity;
-            ItemStack held = player.getHeldItem(event.getHand());
-            if (zombie.isChild()) return;
-            if (!world.isRemote) {
-                if (held.getItem() == Items.GLASS_BOTTLE) {
-                    if (player.experienceLevel >= 10) {
-                        PlayerData data = TheoraAPI.getPlayerData(player);
-                        if (data != null) {
+//    @SubscribeEvent
+//    public static void rightClickEntity(PlayerInteractEvent.EntityInteract event) {
+//        EntityPlayer player = event.getEntityPlayer();
+//        Entity entity = event.getTarget();
+//        World world = player.world;
+//        if (entity instanceof EntityZombie) {
+//            EntityZombie zombie = (EntityZombie) entity;
+//            ItemStack held = player.getHeldItem(event.getHand());
+//            if (zombie.isChild()) return;
+//            if (!world.isRemote) {
+//                if (held.getItem() == Items.GLASS_BOTTLE) {
+//                    if (player.experienceLevel >= 10) {
+//                        PlayerData data = TheoraAPI.getPlayerData(player);
+//                        if (data != null) {
 //                            if (!data.hasAcidVial()) {
 //                                held.shrink(1);
 //                                player.addExperienceLevel(-10);
@@ -75,12 +75,12 @@ public class EventHandler {
 //                                //TODO sounds ...
 //                                //TODO particles ...
 //                            }
-                        }
-                    } else {
-                        player.sendStatusMessage(new TextComponentTranslation("theora.status.no.enough.xp", player.experienceLevel), true);
-                    }
-                }
-            }
-        }
-    }
+//                        }
+//                    } else {
+//                        player.sendStatusMessage(new TextComponentTranslation("theora.status.no.enough.xp", player.experienceLevel), true);
+//                    }
+//                }
+//            }
+//        }
+//    }
 }

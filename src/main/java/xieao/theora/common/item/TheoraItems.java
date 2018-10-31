@@ -16,10 +16,12 @@ public class TheoraItems {
     public static final Set<Item> ITEMS = new HashSet<>();
 
     public static final ItemOoze OOZE;
+    public static final ItemPigCoin PIG_COIN;
     public static final ItemAcidVial ACID_VIAL;
 
     static {
         OOZE = register(new ItemOoze(), "ooze");
+        PIG_COIN = register(new ItemPigCoin(), "pigcoin");
         ACID_VIAL = register(new ItemAcidVial(), "acidvial");
 
         for (Block block : TheoraBlocks.BLOCKS) {

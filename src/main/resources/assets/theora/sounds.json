@@ -1,0 +1,32 @@
+{
+  "block.transformed": {
+    "sounds": [
+      "theora:block_transformed"
+    ]
+  },
+  "whoosh.fire": {
+    "sounds": [
+      "theora:whoosh_fire"
+    ]
+  },
+  "whoosh.smoke": {
+    "sounds": [
+      "theora:whoosh_smoke"
+    ]
+  },
+  "pok": {
+    "sounds": [
+      "theora:pok"
+    ]
+  },
+  "liquid.drip": {
+    "sounds": [
+      "theora:liquid_drip"
+    ]
+  },
+  "peel": {
+    "sounds": [
+      "theora:peel"
+    ]
+  }
+}

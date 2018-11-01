@@ -77,15 +77,16 @@ public class AbilityMePig extends Ability {
         if (livingBase instanceof EntityPig) {
             EntityPig pig = (EntityPig) livingBase;
             if (pig.isBeingRidden()) {
-                Entity ridingEntity = pig.getRidingEntity();
+                Entity ridingEntity = pig.getControllingPassenger();
                 if (ridingEntity instanceof EntityPlayer) {
                     EntityPlayer player = (EntityPlayer) ridingEntity;
                     PlayerData data = TheoraAPI.getPlayerData(player);
                     if (data != null) {
                         Abilities abilities = data.getAbilities();
                         if (abilities.hasAbility(TheoraAbilities.ME_PIG)) {
-                            pig.moveRelative(pig.moveStrafing, 0F, pig.moveForward, 0.5F);
+                            pig.moveRelative(pig.moveStrafing, 0F, pig.moveForward, 1.9F);
                         }
+
                     }
                 }
             }

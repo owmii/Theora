@@ -16,6 +16,8 @@ public class Abilities implements INBTSerializable<NBTTagCompound> {
     public static final String TAG_LEVEL = "abilityLevel";
     public static final String TAG_SUB_NBT = "abilitySubNbt";
 
+    private boolean sync;
+
     public boolean hasAbility(Ability ability) {
         return this.abilityMap.containsKey(ability);
     }
@@ -103,6 +105,14 @@ public class Abilities implements INBTSerializable<NBTTagCompound> {
     public NBTTagCompound getAbilityNbt(Ability ability) {
         NBTTagCompound nbt = this.abilityMap.get(ability);
         return nbt == null ? new NBTTagCompound() : nbt;
+    }
+
+    public boolean doSync() {
+        return sync;
+    }
+
+    public void sync(boolean sync) {
+        this.sync = sync;
     }
 
     @Override

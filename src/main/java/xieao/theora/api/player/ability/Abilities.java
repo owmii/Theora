@@ -21,7 +21,7 @@ public class Abilities implements INBTSerializable<NBTTagCompound> {
     }
 
     public boolean acquire(Ability ability) {
-        if (!hasAbility(ability)) {
+        if (!ability.isEmpty() && !hasAbility(ability)) {
             NBTTagCompound nbt = new NBTTagCompound();
             nbt.setBoolean(TAG_STATUS, true);
             nbt.setInteger(TAG_LEVEL, 0);

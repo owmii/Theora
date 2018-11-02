@@ -15,6 +15,8 @@ import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.player.ability.Abilities;
 import xieao.theora.api.player.ability.Ability;
 import xieao.theora.api.player.data.PlayerData;
+import xieao.theora.network.TheoraNetwork;
+import xieao.theora.network.packets.PacketAbilityStatus;
 
 import java.util.Map;
 
@@ -26,6 +28,7 @@ public class GuiAbilities extends GuiScreen {
     private final EntityPlayer player;
     private int x, y, w = 256, h = 234;
 
+    private String[] regNames = new String[0];
     private ResourceLocation[] textures = new ResourceLocation[0];
     private boolean[] status = new boolean[0];
     private int[] levels = new int[0];
@@ -46,6 +49,7 @@ public class GuiAbilities extends GuiScreen {
                     if (mousePressed(this.x + 17 + j * 35, this.y + 17 + i * 35, mouseX, mouseY)) {
                         if (mouseButton == 0) {
                             this.status[index] = !this.status[index];
+                            TheoraNetwork.sendToServer(new PacketAbilityStatus(Ability.getAbility(this.regNames[index]), this.status[index]));
                         }
                     }
                 }
@@ -113,12 +117,14 @@ public class GuiAbilities extends GuiScreen {
             Abilities abilities = data.getAbilities();
             Map<Ability, NBTTagCompound> map = abilities.getAbilityMap();
             int abilityCount = map.size();
+            this.regNames = new String[abilityCount];
             this.textures = new ResourceLocation[abilityCount];
             this.status = new boolean[abilityCount];
             this.levels = new int[abilityCount];
             int index = 0;
             for (Ability ability : map.keySet()) {
                 ResourceLocation regName = ability.getRegistryName();
+                this.regNames[index] = ability.getRegistryString();
                 this.textures[index] = new ResourceLocation(regName.getResourceDomain(), "textures/abilities/" + regName.getResourcePath() + ".png");
                 this.status[index] = abilities.isActive(ability);
                 this.levels[index] = abilities.getAbilityLevel(ability);

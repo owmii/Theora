@@ -14,6 +14,7 @@ public class TheoraNetwork {
         registerPacket(new PacketSyncAbilities());
         registerPacket(new PacketRequestAbilitiesGui());
         registerPacket(new PacketOpenAbilitiesGui());
+        registerPacket(new PacketAbilityStatus());
         registerPacket(new PacketSyncVial());
     }
 

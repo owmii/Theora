@@ -65,7 +65,7 @@ public class Abilities implements INBTSerializable<NBTTagCompound> {
     public boolean isActive(Ability ability) {
         NBTTagCompound nbt = this.abilityMap.get(ability);
         if (nbt != null) {
-            return nbt.getBoolean(TAG_LEVEL);
+            return nbt.getBoolean(TAG_STATUS);
         }
         return false;
     }
@@ -73,7 +73,7 @@ public class Abilities implements INBTSerializable<NBTTagCompound> {
     public boolean setAbilityStatus(Ability ability, boolean status) {
         NBTTagCompound nbt = this.abilityMap.get(ability);
         if (nbt != null) {
-            boolean curStatus = nbt.getBoolean(TAG_LEVEL);
+            boolean curStatus = nbt.getBoolean(TAG_STATUS);
             if (curStatus != status) {
                 nbt.setBoolean(TAG_STATUS, status);
                 return true;

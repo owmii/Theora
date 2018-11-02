@@ -72,7 +72,7 @@ public class GuiAbilities extends GuiScreen {
                 int index = j + i * 5;
                 if (index < this.textures.length) {
                     GlStateManager.pushMatrix();
-                    if (!this.status[index]) {
+                    if (this.status[index]) {
                         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                     } else {
                         GlStateManager.color(0.0F, 0.0F, 0.0F, 1.0F);

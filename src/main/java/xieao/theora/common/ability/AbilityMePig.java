@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xieao.theora.api.TheoraAPI;
@@ -44,14 +45,14 @@ public class AbilityMePig extends Ability {
                     Abilities abilities = data.getAbilities();
                     if (abilities.hasAbility(TheoraAbilities.ME_PIG)) {
                         abilities.lose(TheoraAbilities.ME_PIG);
-                        //TODO sync ability
+                        abilities.sync(true);
                     }
                 }
             }
         }
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGH)
     public static void useItem(LivingEntityUseItemEvent.Finish event) {
         EntityLivingBase livingBase = event.getEntityLiving();
         if (livingBase instanceof EntityPlayer) {
@@ -60,10 +61,17 @@ public class AbilityMePig extends Ability {
             if (!player.world.isRemote && data != null) {
                 Abilities abilities = data.getAbilities();
                 if (abilities.hasAbility(TheoraAbilities.ME_PIG)) {
-                    Item[] items = {Items.PORKCHOP, Items.COOKED_PORKCHOP};
-                    for (Item item : items) {
-                        if (item == event.getResultStack().getItem()) {
-                            player.addPotionEffect(new PotionEffect(MobEffects.POISON, 300));
+                    Item resultItem = event.getResultStack().getItem();
+                    if (resultItem == Items.CARROT) {
+                        if (abilities.isActive(TheoraAbilities.ME_PIG)) {
+                            //TODO carrot action
+                        }
+                    } else {
+                        Item[] items = {Items.PORKCHOP, Items.COOKED_PORKCHOP};
+                        for (Item item : items) {
+                            if (item == resultItem) {
+                                player.addPotionEffect(new PotionEffect(MobEffects.POISON, 300));
+                            }
                         }
                     }
                 }
@@ -84,9 +92,10 @@ public class AbilityMePig extends Ability {
                     if (data != null) {
                         Abilities abilities = data.getAbilities();
                         if (abilities.hasAbility(TheoraAbilities.ME_PIG)) {
-                            pig.moveRelative(pig.moveStrafing, 0F, pig.moveForward, 1.9F);
+                            if (abilities.isActive(TheoraAbilities.ME_PIG)) {
+                                pig.moveRelative(pig.moveStrafing, 0F, pig.moveForward, 1.9F);
+                            }
                         }
-
                     }
                 }
             }
@@ -103,29 +112,31 @@ public class AbilityMePig extends Ability {
             if (!player.world.isRemote && data != null) {
                 Abilities abilities = data.getAbilities();
                 if (abilities.hasAbility(TheoraAbilities.ME_PIG)) {
-                    World world = player.world;
-                    BlockPos pos = new BlockPos(player.posX, player.posY, player.posZ);
-                    AxisAlignedBB boudingBox = new AxisAlignedBB(pos).grow(24.0D);
-                    if (source instanceof EntityLivingBase) {
-                        if (source instanceof EntityPigZombie) {
-                            List<EntityPigZombie> pigZombies = world.getEntitiesWithinAABB(EntityPigZombie.class, boudingBox);
-                            for (EntityPigZombie pigZombie : pigZombies) {
-                                EntityLivingBase target = pigZombie.getAttackTarget();
-                                EntityLivingBase revengeTarget = pigZombie.getRevengeTarget();
-                                if (target != null && target.getUniqueID() == player.getUniqueID() || revengeTarget != null && revengeTarget.getUniqueID() == player.getUniqueID()) {
-                                    pigZombie.angerLevel = 0;
-                                    pigZombie.angerTargetUUID = null;
-                                    pigZombie.attackingPlayer = null;
-                                    pigZombie.setRevengeTarget(null);
-                                    pigZombie.setAttackTarget(new EntityBat(world));
+                    if (abilities.isActive(TheoraAbilities.ME_PIG)) {
+                        World world = player.world;
+                        BlockPos pos = new BlockPos(player.posX, player.posY, player.posZ);
+                        AxisAlignedBB boudingBox = new AxisAlignedBB(pos).grow(24.0D);
+                        if (source instanceof EntityLivingBase) {
+                            if (source instanceof EntityPigZombie) {
+                                List<EntityPigZombie> pigZombies = world.getEntitiesWithinAABB(EntityPigZombie.class, boudingBox);
+                                for (EntityPigZombie pigZombie : pigZombies) {
+                                    EntityLivingBase target = pigZombie.getAttackTarget();
+                                    EntityLivingBase revengeTarget = pigZombie.getRevengeTarget();
+                                    if (target != null && target.getUniqueID() == player.getUniqueID() || revengeTarget != null && revengeTarget.getUniqueID() == player.getUniqueID()) {
+                                        pigZombie.angerLevel = 0;
+                                        pigZombie.angerTargetUUID = null;
+                                        pigZombie.attackingPlayer = null;
+                                        pigZombie.setRevengeTarget(null);
+                                        pigZombie.setAttackTarget(new EntityBat(world));
+                                    }
                                 }
-                            }
-                        } else {
-                            List<EntityPigZombie> pigZombies = world.getEntitiesWithinAABB(EntityPigZombie.class, boudingBox);
-                            for (EntityPigZombie pigZombie : pigZombies) {
-                                pigZombie.setRevengeTarget((EntityLivingBase) source);
-                                pigZombie.setAttackTarget((EntityLivingBase) source);
-                                world.playSound(null, source.posX, source.posY, source.motionZ, SoundEvents.ENTITY_ZOMBIE_PIG_ANGRY, SoundCategory.HOSTILE, 0.8F, 1.0F);
+                            } else {
+                                List<EntityPigZombie> pigZombies = world.getEntitiesWithinAABB(EntityPigZombie.class, boudingBox);
+                                for (EntityPigZombie pigZombie : pigZombies) {
+                                    pigZombie.setRevengeTarget((EntityLivingBase) source);
+                                    pigZombie.setAttackTarget((EntityLivingBase) source);
+                                    world.playSound(null, source.posX, source.posY, source.motionZ, SoundEvents.ENTITY_ZOMBIE_PIG_ANGRY, SoundCategory.HOSTILE, 0.8F, 1.0F);
+                                }
                             }
                         }
                     }
@@ -145,8 +156,10 @@ public class AbilityMePig extends Ability {
                 if (!player.world.isRemote && data != null) {
                     Abilities abilities = data.getAbilities();
                     if (abilities.hasAbility(TheoraAbilities.ME_PIG)) {
-                        ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(TheoraItems.PIG_COIN));
-                        event.setCanceled(true);
+                        if (abilities.isActive(TheoraAbilities.ME_PIG)) {
+                            ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(TheoraItems.PIG_COIN));
+                            event.setCanceled(true);
+                        }
                     }
                 }
             }

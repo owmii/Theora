@@ -16,14 +16,13 @@ public class ItemPigCoin extends ItemBase {
         PlayerData data = TheoraAPI.getPlayerData(playerIn);
         if (data != null) {
             Abilities abilities = data.getAbilities();
-            if (!abilities.hasAbility(TheoraAbilities.ME_PIG)) {
-                abilities.acquire(TheoraAbilities.ME_PIG);
+            if (!abilities.hasAbility(TheoraAbilities.THE_CLOUD)) {
+                abilities.acquire(TheoraAbilities.THE_CLOUD);
                 System.out.println("done!");
                 return true;
             }
         }
         System.out.println("no done!");
-
         return false;
     }
 

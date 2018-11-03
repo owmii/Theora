@@ -14,6 +14,7 @@ import xieao.theora.api.player.data.PlayerDataCapability;
 import xieao.theora.common.ability.TheoraAbilities;
 import xieao.theora.common.block.TheoraBlocks;
 import xieao.theora.common.item.TheoraItems;
+import xieao.theora.common.recipe.BindingStoneRecipes;
 import xieao.theora.common.recipe.FermentingRecipes;
 import xieao.theora.common.recipe.RecipeHandler;
 import xieao.theora.network.GuiHandler;
@@ -30,7 +31,9 @@ public class CommonProxy implements IProxy {
         TheoraNetwork.registerPackets();
         PlayerDataCapability.register();
         LiquidContainerCapability.register();
+
         TheoraAPI.INSTANCE.register(new FermentingRecipes());
+        TheoraAPI.INSTANCE.register(new BindingStoneRecipes());
 
         TheoraAbilities.register();
     }
@@ -42,6 +45,6 @@ public class CommonProxy implements IProxy {
 
     @Override
     public void postInit(FMLPostInitializationEvent event) {
-        RecipeHandler.reloadRecipes();
+        RecipeHandler.initRecipes();
     }
 }

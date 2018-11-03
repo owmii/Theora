@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class FermentingRecipes implements IFermentingRegistry {
 
-    private Set<IFermentingRecipe> fermentingRecipes = new HashSet<>();
+    private final Set<IFermentingRecipe> fermentingRecipes = new HashSet<>();
 
     @Override
     public void initRecipes() {

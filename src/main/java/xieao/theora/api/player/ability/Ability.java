@@ -34,6 +34,14 @@ public class Ability extends RegistryEntry<Ability> {
         return ability == null ? EMPTY : ability;
     }
 
+    public static Ability readAbility(NBTTagCompound compound) {
+        return getAbility(compound.getString("regName"));
+    }
+
+    public static void writeAbility(Ability ability, NBTTagCompound compound) {
+        compound.setString("regName", ability.getRegistryString());
+    }
+
     public boolean isEmpty() {
         return this == EMPTY;
     }

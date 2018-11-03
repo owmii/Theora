@@ -41,11 +41,11 @@ public class Liquid extends RegistryEntry<Liquid> {
     }
 
     public static Liquid readLiquid(NBTTagCompound compound) {
-        return getLiquid(compound.getString("liquidName"));
+        return getLiquid(compound.getString("regName"));
     }
 
     public static void writeLiquid(Liquid liquid, NBTTagCompound compound) {
-        compound.setString("liquidName", liquid.getRegistryString());
+        compound.setString("regName", liquid.getRegistryString());
     }
 
     public boolean isEmpty() {

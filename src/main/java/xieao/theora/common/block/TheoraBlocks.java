@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import xieao.theora.Theora;
+import xieao.theora.common.block.bindingstone.BlockBindingStone;
 import xieao.theora.common.block.fermentingjar.BlockFermentingJar;
 import xieao.theora.common.block.misc.BlockShroom;
 
@@ -20,10 +21,12 @@ public class TheoraBlocks {
 
     public static final BlockShroom SHROOM;
     public static final BlockFermentingJar FERMENTING_JAR;
+    public static final BlockBindingStone BINDING_STONE;
 
     static {
         SHROOM = register(new BlockShroom(), "shroom");
         FERMENTING_JAR = register(new BlockFermentingJar(), "fermentingjar");
+        BINDING_STONE = register(new BlockBindingStone(), "bindingstone");
 
         //noinspection ConstantConditions
         for (Block block : BLOCKS) {

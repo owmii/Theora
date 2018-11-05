@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface IBindingStoneRecipe extends IRecipeRegistry.Entry {
 
-    boolean matches(List<ItemStack> stacks, int storedLiquid, World world, BlockPos pos);
+    boolean matches(List<ItemStack> stacks, float storedLiquid, World world, BlockPos pos);
 
     List<ItemStack> getInputs();
 

@@ -4,25 +4,25 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import xieao.theora.api.item.wand.IWand;
-import xieao.theora.api.item.wand.IWandable;
 import xieao.theora.common.block.BlockBase;
 
 import javax.annotation.Nullable;
 
-public class BlockBindingStone extends BlockBase implements ITileEntityProvider, IWandable {
+public class BlockBindingRing extends BlockBase implements ITileEntityProvider {
 
-    private static final AxisAlignedBB BB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D / 16.0D, 1.0D);
+    private static final AxisAlignedBB BB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.02D, 1.0D);
 
-    public BlockBindingStone() {
-        super(Material.ROCK);
+    public BlockBindingRing() {
+        super(Material.CLOTH);
     }
 
     @Override
@@ -31,23 +31,22 @@ public class BlockBindingStone extends BlockBase implements ITileEntityProvider,
     }
 
     @Override
-    public boolean performWand(World world, BlockPos pos, EntityPlayer player, EnumHand hand, IWand wand, @Nullable EnumFacing facing) {
-        TileEntity tileEntity = world.getTileEntity(pos);
-        if (tileEntity instanceof TileBindingStone) {
-            TileBindingStone bindingStone = (TileBindingStone) tileEntity;
-            if (!bindingStone.ready && bindingStone.ability.isEmpty()) {
-                bindingStone.startBinding = true;
-                bindingStone.syncNBTData();
-                return true;
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        ItemStack held = playerIn.getHeldItem(hand);
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if (tileEntity instanceof TileBindingRing) {
+            TileBindingRing bindingRing = (TileBindingRing) tileEntity;
+            if (!bindingRing.insertStack(held, 1, facing)) {
+                return bindingRing.takeStack(playerIn, facing);
             }
         }
-        return false;
+        return true;
     }
 
     @Nullable
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileBindingStone();
+        return new TileBindingRing();
     }
 
     @Override
@@ -60,4 +59,8 @@ public class BlockBindingStone extends BlockBase implements ITileEntityProvider,
         return false;
     }
 
+    @Override
+    public EnumBlockRenderType getRenderType(IBlockState state) {
+        return EnumBlockRenderType.INVISIBLE;
+    }
 }

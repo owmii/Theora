@@ -43,7 +43,7 @@ public class RecipeHandler {
     }
 
     @Nullable
-    public static IBindingStoneRecipe findBindingStoneRecipe(List<ItemStack> stacks, int storedLiquid, World world, BlockPos pos) {
+    public static IBindingStoneRecipe findBindingStoneRecipe(List<ItemStack> stacks, float storedLiquid, World world, BlockPos pos) {
         for (IBindingStoneRecipe recipe : BINDING_STONE_RECIPES) {
             if (recipe.matches(stacks, storedLiquid, world, pos)) {
                 return recipe;

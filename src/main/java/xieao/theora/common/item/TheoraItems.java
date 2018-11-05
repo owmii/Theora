@@ -16,11 +16,13 @@ public class TheoraItems {
     public static final Set<Item> ITEMS = new HashSet<>();
 
     public static final ItemOoze OOZE;
+    public static final ItemWand WAND;
     public static final ItemPigCoin PIG_COIN;
     public static final ItemAcidVial ACID_VIAL;
 
     static {
         OOZE = register(new ItemOoze(), "ooze");
+        WAND = register(new ItemWand(), "wand");
         PIG_COIN = register(new ItemPigCoin(), "pigcoin");
         ACID_VIAL = register(new ItemAcidVial(), "acidvial");
 

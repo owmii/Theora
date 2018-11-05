@@ -22,7 +22,7 @@ public class BindingStoneRecipe implements IBindingStoneRecipe {
     }
 
     @Override
-    public boolean matches(List<ItemStack> stacks, int storedLiquid, World world, BlockPos pos) {
+    public boolean matches(List<ItemStack> stacks, float storedLiquid, World world, BlockPos pos) {
         List<ItemStack> itemStacks = new ArrayList<>(this.inputs);
         if (this.liquidAmount <= storedLiquid) {
             if (!stacks.isEmpty()) {

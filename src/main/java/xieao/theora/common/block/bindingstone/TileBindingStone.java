@@ -1,31 +1,41 @@
 package xieao.theora.common.block.bindingstone;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
-import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.liquid.LiquidContainer;
 import xieao.theora.api.liquid.LiquidContainerCapability;
 import xieao.theora.api.liquid.LiquidSlot;
 import xieao.theora.api.player.ability.Ability;
+import xieao.theora.api.recipe.bindingstone.IBindingStoneRecipe;
 import xieao.theora.common.block.TileBase;
+import xieao.theora.common.liquid.TheoraLiquids;
+import xieao.theora.common.recipe.RecipeHandler;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileBindingStone extends TileBase implements ITickable {
 
+    private static final int[][] RING_OFFSETS = {{0, 3}, {3, 0}, {0, -3}, {-3, 0}, {2, 2}, {-2, -2}, {2, -2}, {-2, 2}};
+
     private final LiquidContainer liquidContainer;
-    private Ability ability = Ability.EMPTY;
+    public Ability ability = Ability.EMPTY;
+    public boolean ready;
 
     private final int maxTime = 640;
     private int binding;
-    private boolean startBinding;
+    public boolean startBinding;
 
     public TileBindingStone() {
         this.liquidContainer = new LiquidContainer();
         this.liquidContainer.addLiquidSlots(
-                new LiquidSlot(Liquid.EMPTY, true, 10000.0F, 0.0F, 250.0F, LiquidSlot.TransferType.RECEIVE)
+                new LiquidSlot(TheoraLiquids.LEQUEN, true, 10000.0F, 0.0F, 250.0F, LiquidSlot.TransferType.RECEIVE)
         );
     }
 
@@ -36,6 +46,7 @@ public class TileBindingStone extends TileBase implements ITickable {
         this.ability = Ability.readAbility(nbt);
         this.binding = nbt.getInteger("binding");
         this.startBinding = nbt.getBoolean("startBinding");
+        this.ready = nbt.getBoolean("ready");
     }
 
     @Override
@@ -45,13 +56,65 @@ public class TileBindingStone extends TileBase implements ITickable {
         Ability.writeAbility(this.ability, nbt);
         nbt.setInteger("binding", this.binding);
         nbt.setBoolean("startBinding", this.startBinding);
+        nbt.setBoolean("ready", this.ready);
     }
 
     @Override
     public void update() {
+        boolean flag = false;
         if (isServerWorld()) {
-
+            LiquidSlot liquidSlot = this.liquidContainer.getLiquidSlot(0);
+            if (this.ability.isEmpty()) {
+                IBindingStoneRecipe recipe = getCurrentRecipe();
+                if (recipe != null && !recipe.getResultAbility().isEmpty()) {
+                    if (this.startBinding) {
+                        flag = true;
+                        liquidSlot.setStored(liquidSlot.getStored() - recipe.getLiquidAmount());
+                        this.ability = recipe.getResultAbility();
+                        this.startBinding = false;
+                        syncNBTData();
+                    }
+                }
+            } else if (!this.ready && this.binding++ >= this.maxTime) {
+                this.ready = true;
+                this.binding = 0;
+                syncNBTData();
+            }
         }
+        if (flag) {
+            for (int[] offset : RING_OFFSETS) {
+                BlockPos ringPos = getPos().add(offset[0], 0, offset[1]);
+                TileEntity tileEntity = getWorld().getTileEntity(ringPos);
+                if (tileEntity instanceof TileBindingRing) {
+                    TileBindingRing bindingRing = (TileBindingRing) tileEntity;
+                    if (!bindingRing.getStackInSlot(0).isEmpty()) {
+                        bindingRing.setInventorySlotContents(0, ItemStack.EMPTY);
+                        bindingRing.syncNBTData();
+                    }
+                }
+            }
+        }
+    }
+
+    public IBindingStoneRecipe getCurrentRecipe() {
+        LiquidSlot liquidSlot = this.liquidContainer.getLiquidSlot(0);
+        return RecipeHandler.findBindingStoneRecipe(getRecipeStacks(), liquidSlot.getStored(), getWorld(), getPos());
+    }
+
+    public List<ItemStack> getRecipeStacks() {
+        List<ItemStack> stacks = new ArrayList<>();
+        for (int[] offset : RING_OFFSETS) {
+            BlockPos ringPos = getPos().add(offset[0], 0, offset[1]);
+            TileEntity tileEntity = getWorld().getTileEntity(ringPos);
+            if (tileEntity instanceof TileBindingRing) {
+                TileBindingRing bindingRing = (TileBindingRing) tileEntity;
+                ItemStack stack = bindingRing.getStackInSlot(0);
+                if (!stack.isEmpty()) {
+                    stacks.add(stack);
+                }
+            }
+        }
+        return stacks;
     }
 
     @Override

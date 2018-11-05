@@ -9,7 +9,7 @@ import xieao.theora.common.block.misc.BlockShroom;
 @SideOnly(Side.CLIENT)
 public class TheoraStateMapper {
 
-    public static void registerStateMappers() {
+    public static void register() {
         ModelLoader.setCustomStateMapper(TheoraBlocks.SHROOM, new CustomStateMap.Builder().withName(BlockShroom.TYPE).withPreffix("shroom").build());
     }
 

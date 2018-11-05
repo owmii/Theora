@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xieao.theora.client.handler.KeyHandler;
 import xieao.theora.client.renderer.blockstate.TheoraStateMapper;
+import xieao.theora.client.renderer.tesr.TESRRenderer;
 import xieao.theora.common.item.IGenericItem;
 import xieao.theora.common.item.TheoraItems;
 
@@ -19,13 +20,14 @@ public class ClientProxy extends CommonProxy {
                 ((IGenericItem) item).renderItem();
             }
         }
-        TheoraStateMapper.registerStateMappers();
+        TheoraStateMapper.register();
         KeyHandler.register();
     }
 
     @Override
     public void init(FMLInitializationEvent event) {
         super.init(event);
+        TESRRenderer.register();
     }
 
     @Override

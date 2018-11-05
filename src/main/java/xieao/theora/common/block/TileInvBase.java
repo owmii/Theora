@@ -16,12 +16,13 @@ import java.util.stream.IntStream;
 
 public abstract class TileInvBase extends TileBase implements ISidedInventory {
 
-    public final NonNullList<ItemStack> stacks = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
+    public NonNullList<ItemStack> stacks = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
     private String customName = "";
 
     @Override
     public void readNBT(NBTTagCompound nbt) {
         super.readNBT(nbt);
+        stacks = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
         ItemStackHelper.loadAllItems(nbt, this.stacks);
     }
 
@@ -35,12 +36,14 @@ public abstract class TileInvBase extends TileBase implements ISidedInventory {
         for (int i = 0; i < getSizeInventory(); i++) {
             ItemStack stack1 = stack.copy();
             if (canInsertItem(i, stack, facing)) {
-                if (stack1.getCount() >= max) {
-                    stack1.setCount(max);
-                    stack.shrink(max);
-                    setInventorySlotContents(i, stack1);
-                    syncNBTData();
-                    return true;
+                if (getStackInSlot(i).isEmpty()) {
+                    if (stack1.getCount() >= max) {
+                        stack1.setCount(max);
+                        stack.shrink(max);
+                        setInventorySlotContents(i, stack1);
+                        syncNBTData();
+                        return true;
+                    }
                 }
             }
         }
@@ -101,12 +104,12 @@ public abstract class TileInvBase extends TileBase implements ISidedInventory {
 
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing facing) {
-        return false;
+        return true;
     }
 
     @Override
@@ -195,6 +198,7 @@ public abstract class TileInvBase extends TileBase implements ISidedInventory {
         for (int i = 0; i < getSizeInventory(); i++) {
             setInventorySlotContents(i, ItemStack.EMPTY);
         }
+        syncNBTData();
     }
 
     public void setCustomName(String customName) {

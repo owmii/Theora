@@ -14,6 +14,7 @@ import xieao.theora.api.player.data.PlayerDataCapability;
 import xieao.theora.common.ability.TheoraAbilities;
 import xieao.theora.common.block.TheoraBlocks;
 import xieao.theora.common.item.TheoraItems;
+import xieao.theora.common.liquid.TheoraLiquids;
 import xieao.theora.common.recipe.BindingStoneRecipes;
 import xieao.theora.common.recipe.FermentingRecipes;
 import xieao.theora.common.recipe.RecipeHandler;
@@ -35,6 +36,7 @@ public class CommonProxy implements IProxy {
         TheoraAPI.INSTANCE.register(new FermentingRecipes());
         TheoraAPI.INSTANCE.register(new BindingStoneRecipes());
 
+        TheoraLiquids.register();
         TheoraAbilities.register();
     }
 

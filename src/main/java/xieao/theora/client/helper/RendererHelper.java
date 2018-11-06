@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -67,16 +68,16 @@ public class RendererHelper {
         }
     }
 
-    public static void renderFlatQuad(double dim) {
+    public static void renderQuad(ResourceLocation loc, double dim) {
+        mc.getTextureManager().bindTexture(loc);
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder buffer = tessellator.getBuffer();
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
         dim /= 2.0D;
-        double mid = -dim;
         buffer.pos(dim, 0.0D, dim).tex(1, 1).endVertex();
-        buffer.pos(dim, 0.0D, mid).tex(1, 0).endVertex();
-        buffer.pos(mid, 0.0D, mid).tex(0, 0).endVertex();
-        buffer.pos(mid, 0.0D, dim).tex(0, 1).endVertex();
+        buffer.pos(dim, 0.0D, -dim).tex(1, 0).endVertex();
+        buffer.pos(-dim, 0.0D, -dim).tex(0, 0).endVertex();
+        buffer.pos(-dim, 0.0D, dim).tex(0, 1).endVertex();
         tessellator.draw();
     }
 

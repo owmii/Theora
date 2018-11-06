@@ -18,9 +18,8 @@ public class RenderBindingRing extends TESRBase<TileBindingRing> {
         RenderHelper.disableStandardItemLighting();
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        mc.getTextureManager().bindTexture(Theora.location("textures/tesr/bindingring.png"));
-        ColorHelper.glColor(te.isEmpty() ? 0xffffff : 0, 0.3F);
-        RendererHelper.renderFlatQuad(1.0F);
+        ColorHelper.glColor(te.isEmpty() ? 0xffffff : 0xffffff, 0.3F);
+        RendererHelper.renderQuad(Theora.location("textures/tesr/bindingring.png"), 1.0F);
         GlStateManager.disableBlend();
         RenderHelper.enableStandardItemLighting();
         GlStateManager.translate(0.0D, 0.4D, 0.0D);

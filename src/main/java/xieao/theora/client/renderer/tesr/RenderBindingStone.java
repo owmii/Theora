@@ -20,19 +20,18 @@ public class RenderBindingStone extends TESRBase<TileBindingStone> {
         RenderHelper.disableStandardItemLighting();
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GlStateManager.SourceFactor.DST_COLOR, GlStateManager.DestFactor.SRC_ALPHA);
-        mc.getTextureManager().bindTexture(Theora.location("textures/misc/rune_circle_1.png"));
         ColorHelper.glColor(0xffffff, 0.4F);
         GlStateManager.pushMatrix();
         GlStateManager.rotate(-ticks, 0, 1, 0);
-        RendererHelper.renderFlatQuad(2.5F);
+        RendererHelper.renderQuad(Theora.location("textures/misc/rune_circle_1.png"), 2.5F);
         GlStateManager.popMatrix();
+        ColorHelper.glColor(0xffffff, 0.7F);
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        ColorHelper.glColor(0xc2bbcc);
+        //ColorHelper.glColor(0xc2bbcc);
         IBindingStoneRecipe recipe = te.getCurrentRecipe();
         if (recipe != null && !recipe.getResultAbility().isEmpty()) {
             ResourceLocation regName = recipe.getResultAbility().getRegistryName();
-            mc.getTextureManager().bindTexture(new ResourceLocation(regName.getResourceDomain(), "textures/abilities/" + regName.getResourcePath() + ".png"));
-            RendererHelper.renderFlatQuad(1.0F);
+            RendererHelper.renderQuad(new ResourceLocation(regName.getResourceDomain(), "textures/abilities/" + regName.getResourcePath() + ".png"), 1.0F);
         }
         GlStateManager.disableBlend();
         RenderHelper.enableStandardItemLighting();

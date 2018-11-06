@@ -54,6 +54,16 @@ public class BlockBindingRing extends BlockBase implements ITileEntityProvider {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
     }
 
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if (tileEntity instanceof TileBindingRing) {
+            TileBindingRing bindingRing = (TileBindingRing) tileEntity;
+            bindingRing.tryToDemolish();
+        }
+        super.breakBlock(worldIn, pos, state);
+    }
+
     @Nullable
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {

@@ -22,7 +22,7 @@ import java.util.List;
 
 public class TileBindingStone extends TileBase implements ITickable {
 
-    private static final int[][] RING_OFFSETS = {{0, 3}, {3, 0}, {0, -3}, {-3, 0}, {2, 2}, {-2, -2}, {2, -2}, {-2, 2}};
+    public static final int[][] RING_OFFSETS = {{0, 3}, {3, 0}, {0, -3}, {-3, 0}, {2, 2}, {-2, -2}, {2, -2}, {-2, 2}};
 
     private final LiquidContainer liquidContainer;
     public Ability ability = Ability.EMPTY;
@@ -61,14 +61,23 @@ public class TileBindingStone extends TileBase implements ITickable {
 
     @Override
     public void update() {
-        boolean flag = false;
         if (isServerWorld()) {
             LiquidSlot liquidSlot = this.liquidContainer.getLiquidSlot(0);
             if (this.ability.isEmpty()) {
                 IBindingStoneRecipe recipe = getCurrentRecipe();
                 if (recipe != null && !recipe.getResultAbility().isEmpty()) {
                     if (this.startBinding) {
-                        flag = true;
+                        for (int[] offset : RING_OFFSETS) {
+                            BlockPos ringPos = getPos().add(offset[0], 0, offset[1]);
+                            TileEntity tileEntity = getWorld().getTileEntity(ringPos);
+                            if (tileEntity instanceof TileBindingRing) {
+                                TileBindingRing bindingRing = (TileBindingRing) tileEntity;
+                                if (!bindingRing.getStackInSlot(0).isEmpty()) {
+                                    bindingRing.setInventorySlotContents(0, ItemStack.EMPTY);
+                                    bindingRing.syncNBTData();
+                                }
+                            }
+                        }
                         liquidSlot.setStored(liquidSlot.getStored() - recipe.getLiquidAmount());
                         this.ability = recipe.getResultAbility();
                         this.startBinding = false;
@@ -79,19 +88,6 @@ public class TileBindingStone extends TileBase implements ITickable {
                 this.ready = true;
                 this.binding = 0;
                 syncNBTData();
-            }
-        }
-        if (flag) {
-            for (int[] offset : RING_OFFSETS) {
-                BlockPos ringPos = getPos().add(offset[0], 0, offset[1]);
-                TileEntity tileEntity = getWorld().getTileEntity(ringPos);
-                if (tileEntity instanceof TileBindingRing) {
-                    TileBindingRing bindingRing = (TileBindingRing) tileEntity;
-                    if (!bindingRing.getStackInSlot(0).isEmpty()) {
-                        bindingRing.setInventorySlotContents(0, ItemStack.EMPTY);
-                        bindingRing.syncNBTData();
-                    }
-                }
             }
         }
     }

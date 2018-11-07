@@ -8,8 +8,7 @@ public class ParticleGlow extends ParticleBase {
 
     public ParticleGlow(World world, Vec3d start, Vec3d end, double speed, int maxAge, float scale, int color, float alpha) {
         super(world, start, end, speed, maxAge, scale, color, alpha);
-        this.particleTexture = "glow0";
-        // this.particleMaxAge = (int) (80.0D / (Math.random() * 0.8D + 0.2D));
+        this.particleTexture = "glow1";
     }
 
     @Override
@@ -32,5 +31,6 @@ public class ParticleGlow extends ParticleBase {
     public void renderParticle(float partialTicks, double rotX, double rotZ, double rotYZ, double rotXY, double rotXZ) {
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
         super.renderParticle(partialTicks, rotX, rotZ, rotYZ, rotXY, rotXZ);
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
     }
 }

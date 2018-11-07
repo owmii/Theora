@@ -1,6 +1,7 @@
 package xieao.theora.common.block.bindingstone;
 
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -24,6 +25,8 @@ public class BlockBindingRing extends BlockBase implements ITileEntityProvider {
 
     public BlockBindingRing() {
         super(Material.CLOTH);
+        setSoundType(SoundType.CLOTH);
+        setResistance(100.0F);
     }
 
     @Override

@@ -12,8 +12,6 @@ import xieao.theora.api.liquid.LiquidContainerCapability;
 import xieao.theora.api.liquid.LiquidSlot;
 import xieao.theora.api.player.ability.Ability;
 import xieao.theora.api.recipe.bindingstone.IBindingStoneRecipe;
-import xieao.theora.client.particle.ParticleEngine;
-import xieao.theora.client.particle.ParticleGlow;
 import xieao.theora.common.block.TileBase;
 import xieao.theora.common.liquid.TheoraLiquids;
 import xieao.theora.common.recipe.RecipeHandler;
@@ -21,7 +19,6 @@ import xieao.theora.common.recipe.RecipeHandler;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class TileBindingStone extends TileBase implements ITickable {
 
@@ -92,21 +89,29 @@ public class TileBindingStone extends TileBase implements ITickable {
                 this.binding = 0;
                 syncNBTData();
             }
-        } else {
-            Random random = getWorld().rand;
-            if (getWorld().getTotalWorldTime() % 2 == 0)
-                for (int[] offset : RING_OFFSETS) {
-                    for (int i = 0; i < 7; i++) {
-                        if (random.nextInt(8) == 0) {
-                            ParticleEngine.INSTANCE.addEffect(
-                                    new ParticleGlow(getWorld(), getPosVec().addVector(
-                                            offset[0] + random.nextDouble(), 0, offset[1] + random.nextDouble()), getPosVec().addVector(
-                                            offset[0] + random.nextDouble(), 0.5D, offset[1] + random.nextDouble()), 1, 40, 1.0F, 0xffffff, 0.6F)
-                            );
-                        }
-                    }
-                }
         }
+//        else { TODO remake particles
+//            Random random = getWorld().rand;
+//            if (getWorld().getTotalWorldTime() % 2 == 0)
+//                for (int i = 0; i < 4; i++) {
+//                    ParticleEngine.INSTANCE.addEffect(
+//                            new ParticleGlow(getWorld(), getPosVec().addVector(
+//                                    random.nextDouble(), 0.05, random.nextDouble()), getPosVec().addVector(
+//                                    random.nextDouble(), 2.5D, random.nextDouble()), 1, 80, 1.0F, 0xffffff, 0.5F)
+//                    );
+//                }
+//            for (int[] offset : RING_OFFSETS) {
+//                for (int i = 0; i < 7; i++) {
+//                    if (random.nextInt(8) == 0) {
+//                        ParticleEngine.INSTANCE.addEffect(
+//                                new ParticleGlow(getWorld(), getPosVec().addVector(
+//                                        offset[0] + 0.125 + (random.nextDouble() * 0.750), 0.05, offset[1] + 0.125 + (random.nextDouble() * 0.750)), getPosVec().addVector(
+//                                        offset[0] + random.nextDouble(), 0.55D, offset[1] + random.nextDouble()), 1, 40, 0.7F, 0xffffff, 0.6F)
+//                        );
+//                    }
+//                }
+//            }
+//        }
     }
 
     public IBindingStoneRecipe getCurrentRecipe() {

@@ -4,6 +4,8 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -17,13 +19,15 @@ import xieao.theora.api.item.wand.IWandable;
 import xieao.theora.common.block.BlockBase;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class BlockBindingStone extends BlockBase implements ITileEntityProvider, IWandable {
 
-    private static final AxisAlignedBB BB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D / 16.0D, 1.0D);
+    private static final AxisAlignedBB BB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.0001D, 1.0D);
 
     public BlockBindingStone() {
-        super(Material.ROCK);
+        super(Material.CLOTH);
+        setHardness(9999.0F);
     }
 
     @Override
@@ -49,6 +53,17 @@ public class BlockBindingStone extends BlockBase implements ITileEntityProvider,
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileBindingStone();
+    }
+
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return Items.AIR;
+    }
+
+
+    @Override
+    public int quantityDropped(Random random) {
+        return 0;
     }
 
     @Override

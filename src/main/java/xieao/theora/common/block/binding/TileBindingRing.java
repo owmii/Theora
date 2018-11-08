@@ -70,7 +70,7 @@ public class TileBindingRing extends TileInvBase {
     }
 
     public void tryToDemolish() {
-        if (this.centerPos != null) {
+        if (this.centerPos != BlockPos.ORIGIN) {
             TileEntity tileEntity = getWorld().getTileEntity(this.centerPos);
             if (!getWorld().isAirBlock(this.centerPos) && tileEntity instanceof TileBindingCenter) {
                 getWorld().setBlockToAir(this.centerPos);
@@ -80,7 +80,7 @@ public class TileBindingRing extends TileInvBase {
                 TileEntity tileEntity1 = getWorld().getTileEntity(ringPos);
                 if (tileEntity1 instanceof TileBindingRing) {
                     TileBindingRing bindingRing = (TileBindingRing) tileEntity1;
-                    bindingRing.centerPos = null;
+                    bindingRing.centerPos = BlockPos.ORIGIN;
                 }
             }
         }

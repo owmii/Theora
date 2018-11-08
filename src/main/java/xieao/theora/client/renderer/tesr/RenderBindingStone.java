@@ -25,8 +25,6 @@ public class RenderBindingStone extends TESRBase<TileBindingCenter> {
         GlStateManager.translate(0.5D, 0.0002D, 0.5D);
         RenderHelper.disableStandardItemLighting();
         GlStateManager.enableBlend();
-        //GlStateManager.blendFunc(GlStateManager.SourceFactor.DST_COLOR, GlStateManager.DestFactor.SRC_ALPHA);
-        //GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
         float f0 = ((float) te.maxBuildTicks / ((float) (te.buildTicks + 1) * 10)) / 6.5F;
         ColorHelper.glColor(0x999999, f0);

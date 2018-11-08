@@ -9,7 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
@@ -17,6 +16,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldNameable;
 import net.minecraft.world.World;
+import xieao.theora.common.item.IGenericItem;
+import xieao.theora.common.item.ItemBlockBase;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -29,9 +30,10 @@ public abstract class BlockBase extends Block implements IGenericBlock {
         setHardness(0.8F);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public ItemBlock getItemBlock() {
-        return new ItemBlock(this);
+    public <T extends ItemBlockBase & IGenericItem> T getItemBlock() {
+        return (T) new ItemBlockBase(this);
     }
 
     @Override

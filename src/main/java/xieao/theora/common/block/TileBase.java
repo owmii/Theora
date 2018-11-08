@@ -12,9 +12,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 import java.util.UUID;
 
 public class TileBase extends TileEntity {
+
+    protected final Random rand = new Random();
 
     @Nullable
     private UUID placer;

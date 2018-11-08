@@ -27,7 +27,7 @@ public class TheoraBlocks {
 
     static {
         SHROOM = register(new BlockShroom(), "shroom");
-        FERMENTING_JAR = register(new BlockFermentingJar(), "fermenting");
+        FERMENTING_JAR = register(new BlockFermentingJar(), "fermentingJar");
         BINDING_STONE = register(new BlockBindingCenter(), "binding");
         BINDING_RING = register(new BlockBindingRing(), "bindingring");
 

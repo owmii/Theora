@@ -21,7 +21,6 @@ import xieao.theora.common.recipe.RecipeHandler;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class TileBindingCenter extends TileBase implements ITickable {
 
@@ -106,14 +105,13 @@ public class TileBindingCenter extends TileBase implements ITickable {
             }
         } else {
             if (this.buildTicks > 0) {
-                Random random = getWorld().rand;
                 for (int[] offset : RING_OFFSETS) {
                     for (int i = 0; i < 7; i++) {
-                        if (random.nextInt(8) == 0) {
+                        if (this.rand.nextInt(8) == 0) {
                             ParticleEngine.INSTANCE.addEffect(
                                     new ParticleGlow(getWorld(), getPosVec().addVector(
-                                            offset[0] + 0.125 + (random.nextDouble() * 0.750), 0.05, offset[1] + 0.125 + (random.nextDouble() * 0.750)), getPosVec().addVector(
-                                            0 + random.nextDouble(), 0.55D, 0 + random.nextDouble()), 1, 40, 0.7F, 0xffffff, 0.6F)
+                                            offset[0] + 0.125 + (this.rand.nextDouble() * 0.750), 0.05, offset[1] + 0.125 + (this.rand.nextDouble() * 0.750)), getPosVec().addVector(
+                                            this.rand.nextDouble(), 0.55D, this.rand.nextDouble()), 1, 40, 0.7F, 0xffffff, 0.6F)
                             );
                         }
                     }
@@ -121,39 +119,17 @@ public class TileBindingCenter extends TileBase implements ITickable {
                 this.buildTicks--;
                 if (this.buildTicks <= 5) {
                     for (int i = 0; i < 20; i++) {
-                        if (random.nextInt(5) == 0) {
+                        if (this.rand.nextInt(5) == 0) {
                             ParticleEngine.INSTANCE.addEffect(
                                     new ParticleGlow(getWorld(), getPosVec().addVector(
-                                            random.nextDouble(), 0.05, random.nextDouble()), getPosVec().addVector(
-                                            random.nextDouble(), 2.55D, random.nextDouble()), 1, 40, 0.7F, 0xffffff, 0.6F)
+                                            this.rand.nextDouble(), 0.05, this.rand.nextDouble()), getPosVec().addVector(
+                                            this.rand.nextDouble(), 2.55D, this.rand.nextDouble()), 1, 40, 0.7F, 0xffffff, 0.6F)
                             );
                         }
                     }
                 }
             }
         }
-//        else { TODO remake particles
-//            Random random = getWorld().rand;
-//            if (getWorld().getTotalWorldTime() % 2 == 0)
-//                for (int i = 0; i < 4; i++) {
-//                    ParticleEngine.INSTANCE.addEffect(
-//                            new ParticleGlow(getWorld(), getPosVec().addVector(
-//                                    random.nextDouble(), 0.05, random.nextDouble()), getPosVec().addVector(
-//                                    random.nextDouble(), 2.5D, random.nextDouble()), 1, 80, 1.0F, 0xffffff, 0.5F)
-//                    );
-//                }
-//            for (int[] offset : RING_OFFSETS) {
-//                for (int i = 0; i < 7; i++) {
-//                    if (random.nextInt(8) == 0) {
-//                        ParticleEngine.INSTANCE.addEffect(
-//                                new ParticleGlow(getWorld(), getPosVec().addVector(
-//                                        offset[0] + 0.125 + (random.nextDouble() * 0.750), 0.05, offset[1] + 0.125 + (random.nextDouble() * 0.750)), getPosVec().addVector(
-//                                        offset[0] + random.nextDouble(), 0.55D, offset[1] + random.nextDouble()), 1, 40, 0.7F, 0xffffff, 0.6F)
-//                        );
-//                    }
-//                }
-//            }
-//        }
     }
 
     public IBindingStoneRecipe getCurrentRecipe() {
@@ -175,6 +151,10 @@ public class TileBindingCenter extends TileBase implements ITickable {
             }
         }
         return stacks;
+    }
+
+    public boolean hasAbility() {
+        return !this.ability.isEmpty();
     }
 
     @Override

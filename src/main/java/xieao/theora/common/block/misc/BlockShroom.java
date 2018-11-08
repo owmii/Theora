@@ -4,12 +4,12 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import xieao.theora.common.block.BlockPlant;
 import xieao.theora.common.item.IGenericItem;
+import xieao.theora.common.item.ItemBlockBase;
 import xieao.theora.common.item.ItemShroom;
 
 public class BlockShroom extends BlockPlant {
@@ -45,7 +45,7 @@ public class BlockShroom extends BlockPlant {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends ItemBlock & IGenericItem> T getItemBlock() {
+    public <T extends ItemBlockBase & IGenericItem> T getItemBlock() {
         return (T) new ItemShroom(this);
     }
 

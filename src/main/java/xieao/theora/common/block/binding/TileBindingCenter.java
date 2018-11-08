@@ -1,4 +1,4 @@
-package xieao.theora.common.block.bindingstone;
+package xieao.theora.common.block.binding;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,6 +12,8 @@ import xieao.theora.api.liquid.LiquidContainerCapability;
 import xieao.theora.api.liquid.LiquidSlot;
 import xieao.theora.api.player.ability.Ability;
 import xieao.theora.api.recipe.bindingstone.IBindingStoneRecipe;
+import xieao.theora.client.particle.ParticleEngine;
+import xieao.theora.client.particle.ParticleGlow;
 import xieao.theora.common.block.TileBase;
 import xieao.theora.common.liquid.TheoraLiquids;
 import xieao.theora.common.recipe.RecipeHandler;
@@ -19,10 +21,14 @@ import xieao.theora.common.recipe.RecipeHandler;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-public class TileBindingStone extends TileBase implements ITickable {
+public class TileBindingCenter extends TileBase implements ITickable {
 
     public static final int[][] RING_OFFSETS = {{0, 3}, {3, 0}, {0, -3}, {-3, 0}, {2, 2}, {-2, -2}, {2, -2}, {-2, 2}};
+
+    public final int maxBuildTicks = 40;
+    public int buildTicks;
 
     private final LiquidContainer liquidContainer;
     public Ability ability = Ability.EMPTY;
@@ -32,7 +38,7 @@ public class TileBindingStone extends TileBase implements ITickable {
     private int binding;
     public boolean startBinding;
 
-    public TileBindingStone() {
+    public TileBindingCenter() {
         this.liquidContainer = new LiquidContainer();
         this.liquidContainer.addLiquidSlots(
                 new LiquidSlot(TheoraLiquids.LEQUEN, true, 10000.0F, 0.0F, 250.0F, LiquidSlot.TransferType.RECEIVE)
@@ -47,6 +53,7 @@ public class TileBindingStone extends TileBase implements ITickable {
         this.binding = nbt.getInteger("binding");
         this.startBinding = nbt.getBoolean("startBinding");
         this.ready = nbt.getBoolean("ready");
+        this.buildTicks = nbt.getInteger("buildTicks");
     }
 
     @Override
@@ -57,37 +64,72 @@ public class TileBindingStone extends TileBase implements ITickable {
         nbt.setInteger("binding", this.binding);
         nbt.setBoolean("startBinding", this.startBinding);
         nbt.setBoolean("ready", this.ready);
+        nbt.setInteger("buildTicks", this.buildTicks);
     }
 
     @Override
     public void update() {
         if (isServerWorld()) {
-            LiquidSlot liquidSlot = this.liquidContainer.getLiquidSlot(0);
-            if (this.ability.isEmpty()) {
-                IBindingStoneRecipe recipe = getCurrentRecipe();
-                if (recipe != null && !recipe.getResultAbility().isEmpty()) {
-                    if (this.startBinding) {
-                        for (int[] offset : RING_OFFSETS) {
-                            BlockPos ringPos = getPos().add(offset[0], 0, offset[1]);
-                            TileEntity tileEntity = getWorld().getTileEntity(ringPos);
-                            if (tileEntity instanceof TileBindingRing) {
-                                TileBindingRing bindingRing = (TileBindingRing) tileEntity;
-                                if (!bindingRing.getStackInSlot(0).isEmpty()) {
-                                    bindingRing.setInventorySlotContents(0, ItemStack.EMPTY);
-                                    bindingRing.syncNBTData();
+            if (this.buildTicks > 0) {
+                this.buildTicks--;
+                if (this.buildTicks <= 0) {
+                    syncNBTData();
+                }
+            } else {
+                LiquidSlot liquidSlot = this.liquidContainer.getLiquidSlot(0);
+                if (this.ability.isEmpty()) {
+                    IBindingStoneRecipe recipe = getCurrentRecipe();
+                    if (recipe != null && !recipe.getResultAbility().isEmpty()) {
+                        if (this.startBinding) {
+                            for (int[] offset : RING_OFFSETS) {
+                                BlockPos ringPos = getPos().add(offset[0], 0, offset[1]);
+                                TileEntity tileEntity = getWorld().getTileEntity(ringPos);
+                                if (tileEntity instanceof TileBindingRing) {
+                                    TileBindingRing bindingRing = (TileBindingRing) tileEntity;
+                                    if (!bindingRing.getStackInSlot(0).isEmpty()) {
+                                        bindingRing.setInventorySlotContents(0, ItemStack.EMPTY);
+                                        bindingRing.syncNBTData();
+                                    }
                                 }
                             }
+                            liquidSlot.setStored(liquidSlot.getStored() - recipe.getLiquidAmount());
+                            this.ability = recipe.getResultAbility();
+                            this.startBinding = false;
+                            syncNBTData();
                         }
-                        liquidSlot.setStored(liquidSlot.getStored() - recipe.getLiquidAmount());
-                        this.ability = recipe.getResultAbility();
-                        this.startBinding = false;
-                        syncNBTData();
+                    }
+                } else if (!this.ready && this.binding++ >= this.maxTime) {
+                    this.ready = true;
+                    this.binding = 0;
+                    syncNBTData();
+                }
+            }
+        } else {
+            if (this.buildTicks > 0) {
+                Random random = getWorld().rand;
+                for (int[] offset : RING_OFFSETS) {
+                    for (int i = 0; i < 7; i++) {
+                        if (random.nextInt(8) == 0) {
+                            ParticleEngine.INSTANCE.addEffect(
+                                    new ParticleGlow(getWorld(), getPosVec().addVector(
+                                            offset[0] + 0.125 + (random.nextDouble() * 0.750), 0.05, offset[1] + 0.125 + (random.nextDouble() * 0.750)), getPosVec().addVector(
+                                            0 + random.nextDouble(), 0.55D, 0 + random.nextDouble()), 1, 40, 0.7F, 0xffffff, 0.6F)
+                            );
+                        }
                     }
                 }
-            } else if (!this.ready && this.binding++ >= this.maxTime) {
-                this.ready = true;
-                this.binding = 0;
-                syncNBTData();
+                this.buildTicks--;
+                if (this.buildTicks <= 5) {
+                    for (int i = 0; i < 20; i++) {
+                        if (random.nextInt(5) == 0) {
+                            ParticleEngine.INSTANCE.addEffect(
+                                    new ParticleGlow(getWorld(), getPosVec().addVector(
+                                            random.nextDouble(), 0.05, random.nextDouble()), getPosVec().addVector(
+                                            random.nextDouble(), 2.55D, random.nextDouble()), 1, 40, 0.7F, 0xffffff, 0.6F)
+                            );
+                        }
+                    }
+                }
             }
         }
 //        else { TODO remake particles

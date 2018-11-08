@@ -1,4 +1,4 @@
-package xieao.theora.common.block.fermentingjar;
+package xieao.theora.common.block.fermenting;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

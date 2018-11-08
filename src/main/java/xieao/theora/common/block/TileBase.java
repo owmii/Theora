@@ -90,6 +90,18 @@ public class TileBase extends TileEntity {
         return new Vec3d(getPos());
     }
 
+    public double getX() {
+        return getPosVec().x;
+    }
+
+    public double getY() {
+        return getPosVec().y;
+    }
+
+    public double getZ() {
+        return getPosVec().z;
+    }
+
     public boolean isServerWorld() {
         return hasWorld() && !getWorld().isRemote;
     }

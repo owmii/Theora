@@ -24,6 +24,10 @@ public class ColorHelper {
         GlStateManager.color(rbg[0], rbg[1], rbg[2], alpha);
     }
 
+    public static void glColorNormal() {
+        glColor(0xffffff, 1.0F);
+    }
+
     public static float[] getColorRBG(int color) {
         return getColorRBG(new Color(color));
     }

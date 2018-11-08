@@ -1,7 +1,7 @@
 @ParametersAreNonnullByDefault
 @FieldsAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-package xieao.theora.common.block.fermentingjar;
+package xieao.theora.common.block.fermenting;
 
 import mcp.MethodsReturnNonnullByDefault;
 import xieao.theora.api.annotation.FieldsAreNonnullByDefault;

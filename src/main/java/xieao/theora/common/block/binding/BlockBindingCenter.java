@@ -1,4 +1,4 @@
-package xieao.theora.common.block.bindingstone;
+package xieao.theora.common.block.binding;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -21,11 +21,11 @@ import xieao.theora.common.block.BlockBase;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockBindingStone extends BlockBase implements ITileEntityProvider, IWandable {
+public class BlockBindingCenter extends BlockBase implements ITileEntityProvider, IWandable {
 
     private static final AxisAlignedBB BB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.0001D, 1.0D);
 
-    public BlockBindingStone() {
+    public BlockBindingCenter() {
         super(Material.CLOTH);
         setHardness(9999.0F);
     }
@@ -38,8 +38,8 @@ public class BlockBindingStone extends BlockBase implements ITileEntityProvider,
     @Override
     public boolean performWand(World world, BlockPos pos, EntityPlayer player, EnumHand hand, IWand wand, @Nullable EnumFacing facing) {
         TileEntity tileEntity = world.getTileEntity(pos);
-        if (tileEntity instanceof TileBindingStone) {
-            TileBindingStone bindingStone = (TileBindingStone) tileEntity;
+        if (tileEntity instanceof TileBindingCenter) {
+            TileBindingCenter bindingStone = (TileBindingCenter) tileEntity;
             if (!bindingStone.ready && bindingStone.ability.isEmpty()) {
                 bindingStone.startBinding = true;
                 bindingStone.syncNBTData();
@@ -52,7 +52,7 @@ public class BlockBindingStone extends BlockBase implements ITileEntityProvider,
     @Nullable
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileBindingStone();
+        return new TileBindingCenter();
     }
 
     @Override

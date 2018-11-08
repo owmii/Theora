@@ -1,4 +1,4 @@
-package xieao.theora.common.block.bindingstone;
+package xieao.theora.common.block.binding;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
@@ -31,30 +31,40 @@ public class TileBindingRing extends TileInvBase {
     }
 
     public void tryToBuild() {
-        for (int i = 0; i < RINGS_OFFSETS.length; i++) {
-            int[][] offsets_arrs = RINGS_OFFSETS[i];
-            boolean flag = false;
-            for (int[] offset : offsets_arrs) {
-                BlockPos ringPos = getPos().add(offset[0], 0, offset[1]);
-                TileEntity tileEntity = getWorld().getTileEntity(ringPos);
-                if (!(tileEntity instanceof TileBindingRing)) {
-                    flag = true;
-                }
-            }
-            if (!flag) {
-                int[] arrs = CENTR_OFFSETS[i];
-                BlockPos pos = getPos().add(arrs[0], 0, arrs[1]);
-                if (getWorld().isAirBlock(pos)) {
-                    getWorld().setBlockState(pos, TheoraBlocks.BINDING_STONE.getDefaultState(), 2);
-                    for (int[] offset : offsets_arrs) {
-                        BlockPos ringPos = getPos().add(offset[0], 0, offset[1]);
-                        TileEntity tileEntity = getWorld().getTileEntity(ringPos);
-                        if (tileEntity instanceof TileBindingRing) {
-                            ((TileBindingRing) tileEntity).centerPos = pos;
-                        }
+        if (isServerWorld()) {
+            for (int i = 0; i < RINGS_OFFSETS.length; i++) {
+                int[][] offsets_arrs = RINGS_OFFSETS[i];
+                boolean flag = false;
+                for (int[] offset : offsets_arrs) {
+                    BlockPos ringPos = getPos().add(offset[0], 0, offset[1]);
+                    TileEntity tileEntity = getWorld().getTileEntity(ringPos);
+                    if (!(tileEntity instanceof TileBindingRing)) {
+                        flag = true;
                     }
                 }
-                break;
+                if (!flag) {
+                    int[] arrs = CENTR_OFFSETS[i];
+                    BlockPos centerPos = getPos().add(arrs[0], 0, arrs[1]);
+                    if (getWorld().isAirBlock(centerPos)) {
+                        getWorld().setBlockState(centerPos, TheoraBlocks.BINDING_STONE.getDefaultState(), 2);
+                        TileEntity tileEntity = getWorld().getTileEntity(centerPos);
+                        if (tileEntity instanceof TileBindingCenter) {
+                            TileBindingCenter bindingStone = (TileBindingCenter) tileEntity;
+                            bindingStone.buildTicks = bindingStone.maxBuildTicks;
+                            bindingStone.syncNBTData();
+                        }
+                        for (int[] offset : offsets_arrs) {
+                            BlockPos ringPos = getPos().add(offset[0], 0, offset[1]);
+                            TileEntity tileEntity1 = getWorld().getTileEntity(ringPos);
+                            if (tileEntity1 instanceof TileBindingRing) {
+                                TileBindingRing bindingRing = (TileBindingRing) tileEntity1;
+                                bindingRing.centerPos = centerPos;
+                                bindingRing.syncNBTData();
+                            }
+                        }
+                    }
+                    break;
+                }
             }
         }
     }
@@ -62,10 +72,10 @@ public class TileBindingRing extends TileInvBase {
     public void tryToDemolish() {
         if (this.centerPos != null) {
             TileEntity tileEntity = getWorld().getTileEntity(this.centerPos);
-            if (!getWorld().isAirBlock(this.centerPos) && tileEntity instanceof TileBindingStone) {
+            if (!getWorld().isAirBlock(this.centerPos) && tileEntity instanceof TileBindingCenter) {
                 getWorld().setBlockToAir(this.centerPos);
             }
-            for (int[] offset : TileBindingStone.RING_OFFSETS) {
+            for (int[] offset : TileBindingCenter.RING_OFFSETS) {
                 BlockPos ringPos = getPos().add(offset[0], 0, offset[1]);
                 TileEntity tileEntity1 = getWorld().getTileEntity(ringPos);
                 if (tileEntity1 instanceof TileBindingRing) {

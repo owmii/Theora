@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.theora.Theora;
 import xieao.theora.client.helper.ColorHelper;
 import xieao.theora.client.helper.RendererHelper;
-import xieao.theora.common.block.bindingstone.TileBindingRing;
+import xieao.theora.common.block.binding.TileBindingRing;
 
 @SideOnly(Side.CLIENT)
 public class RenderBindingRing extends TESRBase<TileBindingRing> {

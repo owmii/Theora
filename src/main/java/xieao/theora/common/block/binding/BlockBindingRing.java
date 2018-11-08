@@ -1,4 +1,4 @@
-package xieao.theora.common.block.bindingstone;
+package xieao.theora.common.block.binding;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;

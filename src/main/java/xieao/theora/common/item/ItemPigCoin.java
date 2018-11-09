@@ -53,26 +53,23 @@ public class ItemPigCoin extends ItemBase {
     }
 
     public static int shrinkPlayerCoins(EntityPlayer player, int amount) {
-        int count = getTotalPlayerCoins(player);
         for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
             ItemStack stack = player.inventory.getStackInSlot(i);
             int size = stack.getCount();
             if (stack.getItem() == TheoraItems.PIG_COIN) {
-                if (size <= amount) {
-                    amount -= size;
-                    stack.shrink(size);
-                } else {
-                    stack.shrink(size - amount);
-                    amount = 0;
-                }
+                int toShrink = Math.min(size, amount);
+                amount -= toShrink;
+                stack.shrink(toShrink);
             } else if (stack.getItem() == TheoraItems.PIG_COIN_BAG) {
                 int coins = NBTHelper.getInteger(stack, ItemPigCoinBag.TAG_PIG_COINS);
-                
+                int toShrink = Math.min(coins, amount);
+                NBTHelper.setInteger(stack, ItemPigCoinBag.TAG_PIG_COINS, coins - toShrink);
+                amount -= toShrink;
             }
             if (amount <= 0) {
-                return count;
+                return getTotalPlayerCoins(player);
             }
         }
-        return count;
+        return getTotalPlayerCoins(player);
     }
 }

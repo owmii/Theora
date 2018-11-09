@@ -11,6 +11,8 @@ import xieao.theora.Theora;
 import xieao.theora.api.trade.pigzombie.PigZombieTrade;
 import xieao.theora.client.helper.ColorHelper;
 import xieao.theora.common.item.TheoraItems;
+import xieao.theora.network.TheoraNetwork;
+import xieao.theora.network.packets.PacketPigZombieTradBuy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +65,7 @@ public class GuiPigZombieTrade extends GuiScreen {
                     this.currTrade--;
                 break;
             case 12:
+                TheoraNetwork.sendToServer(new PacketPigZombieTradBuy(this.trades.get(this.currTrade).getRegistryName()));
                 break;
         }
     }

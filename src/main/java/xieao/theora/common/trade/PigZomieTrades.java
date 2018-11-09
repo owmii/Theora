@@ -39,8 +39,10 @@ public class PigZomieTrades {
 
     public static void post() {
         for (Map.Entry<ResourceLocation, PigZombieTrade> entry : PigZombieTrade.REGISTRY.entrySet()) {
-            PigZombieTradeHandler.TRADE_ENTRIES.add(new PigZombieTradeHandler.TradeEntry(entry.getKey(),
-                    entry.getValue().rarity.ordinal()));
+            if (!entry.getValue().isEmpty()) {
+                PigZombieTradeHandler.TRADE_ENTRIES.add(new PigZombieTradeHandler.TradeEntry(entry.getKey(),
+                        entry.getValue().rarity.ordinal()));
+            }
         }
     }
 

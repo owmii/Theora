@@ -16,6 +16,7 @@ public class TheoraNetwork {
         registerPacket(new PacketOpenAbilitiesGui());
         registerPacket(new PacketAbilityStatus());
         registerPacket(new PacketSyncVial());
+        registerPacket(new PacketOpenPigZombieTradeGui());
     }
 
     @SuppressWarnings("unchecked")

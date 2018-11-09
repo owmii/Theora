@@ -25,6 +25,4 @@ public class ItemPigCoin extends ItemBase {
         System.out.println("no done!");
         return false;
     }
-
-    //TODO pig zombie trades & gui
 }

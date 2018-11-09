@@ -8,11 +8,15 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import xieao.theora.common.helper.NBTHelper;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
+@Mod.EventBusSubscriber
 public class ItemPigCoinBag extends ItemBase {
 
     public static final String TAG_PIG_COINS = "pig.coins.stored";
@@ -41,6 +45,35 @@ public class ItemPigCoinBag extends ItemBase {
             return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
         }
         return super.onItemRightClick(worldIn, player, hand);
+    }
+
+    @SubscribeEvent
+    public static void pickUpCoin(EntityItemPickupEvent event) {
+        EntityPlayer player = event.getEntityPlayer();
+        if (!player.world.isRemote) {
+            ItemStack stack = event.getItem().getItem();
+            if (stack.getItem() == TheoraItems.PIG_COIN) {
+                ItemStack bag = getPigCoinBag(player);
+                if (!bag.isEmpty()) {
+                    int coins = NBTHelper.getInteger(bag, ItemPigCoinBag.TAG_PIG_COINS);
+                    NBTHelper.setInteger(bag, TAG_PIG_COINS, coins + stack.getCount());
+                    event.getItem().getItem().shrink(stack.getCount());
+                    event.setCanceled(true);
+
+                    //TODO coin pickup sound
+                }
+            }
+        }
+    }
+
+    private static ItemStack getPigCoinBag(EntityPlayer player) {
+        for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+            ItemStack stack = player.inventory.getStackInSlot(i);
+            if (stack.getItem() == TheoraItems.PIG_COIN_BAG) {
+                return stack;
+            }
+        }
+        return ItemStack.EMPTY;
     }
 
     @Override

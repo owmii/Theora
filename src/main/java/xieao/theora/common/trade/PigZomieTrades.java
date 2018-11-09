@@ -3,7 +3,11 @@ package xieao.theora.common.trade;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import xieao.theora.api.trade.pigzombie.PigZombieTrade;
+import xieao.theora.api.trade.pigzombie.PigZombieTradeHandler;
+
+import java.util.Map;
 
 public class PigZomieTrades {
 
@@ -31,6 +35,13 @@ public class PigZomieTrades {
         PigZombieTrade.register(new PigZombieTrade(new ItemStack(Items.GOLDEN_HORSE_ARMOR, 1), 19, PigZombieTrade.TradRarity.VERY_RARE), "trade.goldenhorsarmor");
         PigZombieTrade.register(new PigZombieTrade(new ItemStack(Items.NETHER_WART, 4), 9, PigZombieTrade.TradRarity.RARE), "trade.netherwart");
         PigZombieTrade.register(new PigZombieTrade(new ItemStack(Items.NAME_TAG, 1), 29, PigZombieTrade.TradRarity.VERY_RARE), "trade.nametag");
+    }
+
+    public static void post() {
+        for (Map.Entry<ResourceLocation, PigZombieTrade> entry : PigZombieTrade.REGISTRY.entrySet()) {
+            PigZombieTradeHandler.TRADE_ENTRIES.add(new PigZombieTradeHandler.TradeEntry(entry.getKey(),
+                    entry.getValue().rarity.ordinal()));
+        }
     }
 
 }

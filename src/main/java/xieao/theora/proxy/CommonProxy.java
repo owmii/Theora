@@ -51,5 +51,6 @@ public class CommonProxy implements IProxy {
     @Override
     public void postInit(FMLPostInitializationEvent event) {
         RecipeHandler.initRecipes();
+        PigZomieTrades.post();
     }
 }

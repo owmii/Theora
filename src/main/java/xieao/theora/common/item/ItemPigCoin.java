@@ -12,6 +12,7 @@ import xieao.theora.api.player.ability.Abilities;
 import xieao.theora.api.player.data.PlayerData;
 import xieao.theora.api.trade.pigzombie.PigZombieTradeHandler;
 import xieao.theora.common.ability.TheoraAbilities;
+import xieao.theora.common.helper.NBTHelper;
 import xieao.theora.network.TheoraNetwork;
 import xieao.theora.network.packets.PacketOpenPigZombieTradeGui;
 
@@ -34,5 +35,44 @@ public class ItemPigCoin extends ItemBase {
             }
         }
         return false;
+    }
+
+    public static int getTotalPlayerCoins(EntityPlayer player) {
+        int count = 0;
+        for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+            ItemStack stack = player.inventory.getStackInSlot(i);
+            int size = stack.getCount();
+            if (stack.getItem() == TheoraItems.PIG_COIN) {
+                count += size;
+            } else if (stack.getItem() == TheoraItems.PIG_COIN_BAG) {
+                int coins = NBTHelper.getInteger(stack, ItemPigCoinBag.TAG_PIG_COINS);
+                count += coins;
+            }
+        }
+        return count;
+    }
+
+    public static int shrinkPlayerCoins(EntityPlayer player, int amount) {
+        int count = getTotalPlayerCoins(player);
+        for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+            ItemStack stack = player.inventory.getStackInSlot(i);
+            int size = stack.getCount();
+            if (stack.getItem() == TheoraItems.PIG_COIN) {
+                if (size <= amount) {
+                    amount -= size;
+                    stack.shrink(size);
+                } else {
+                    stack.shrink(size - amount);
+                    amount = 0;
+                }
+            } else if (stack.getItem() == TheoraItems.PIG_COIN_BAG) {
+                int coins = NBTHelper.getInteger(stack, ItemPigCoinBag.TAG_PIG_COINS);
+                
+            }
+            if (amount <= 0) {
+                return count;
+            }
+        }
+        return count;
     }
 }

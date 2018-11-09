@@ -43,7 +43,7 @@ public class PacketPigZombieTradBuy implements IPacket<PacketPigZombieTradBuy> {
             int price = trade.price;
             int playerBalance = ItemPigCoin.getTotalPlayerCoins(player);
             if (price <= playerBalance) {
-                ItemPigCoin.shrinkPlayerCoins(player, price);
+                ItemPigCoin.tryShrinkPlayerCoins(player, price);
                 ItemHandlerHelper.giveItemToPlayer(player, trade.itemToSell.copy());
             }
         });

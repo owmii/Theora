@@ -52,24 +52,26 @@ public class ItemPigCoin extends ItemBase {
         return count;
     }
 
-    public static int shrinkPlayerCoins(EntityPlayer player, int amount) {
-        for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-            ItemStack stack = player.inventory.getStackInSlot(i);
-            int size = stack.getCount();
-            if (stack.getItem() == TheoraItems.PIG_COIN) {
-                int toShrink = Math.min(size, amount);
-                amount -= toShrink;
-                stack.shrink(toShrink);
-            } else if (stack.getItem() == TheoraItems.PIG_COIN_BAG) {
-                int coins = NBTHelper.getInteger(stack, ItemPigCoinBag.TAG_PIG_COINS);
-                int toShrink = Math.min(coins, amount);
-                NBTHelper.setInteger(stack, ItemPigCoinBag.TAG_PIG_COINS, coins - toShrink);
-                amount -= toShrink;
-            }
-            if (amount <= 0) {
-                return getTotalPlayerCoins(player);
+    public static boolean tryShrinkPlayerCoins(EntityPlayer player, int amount) {
+        if (getTotalPlayerCoins(player) >= amount) {
+            for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+                ItemStack stack = player.inventory.getStackInSlot(i);
+                int size = stack.getCount();
+                if (stack.getItem() == TheoraItems.PIG_COIN) {
+                    int toShrink = Math.min(size, amount);
+                    amount -= toShrink;
+                    stack.shrink(toShrink);
+                } else if (stack.getItem() == TheoraItems.PIG_COIN_BAG) {
+                    int coins = NBTHelper.getInteger(stack, ItemPigCoinBag.TAG_PIG_COINS);
+                    int toShrink = Math.min(coins, amount);
+                    NBTHelper.setInteger(stack, ItemPigCoinBag.TAG_PIG_COINS, coins - toShrink);
+                    amount -= toShrink;
+                }
+                if (amount <= 0) {
+                    return true;
+                }
             }
         }
-        return getTotalPlayerCoins(player);
+        return false;
     }
 }

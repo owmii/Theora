@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "theora:tesr/binding_ring"
+    "layer0": "theora:items/binding_ring"
   }
 }

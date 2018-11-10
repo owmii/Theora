@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "theora:items/pig_coin"
+    "layer0": "theora:items/pig_coin_bag"
   }
 }

@@ -5,6 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import xieao.theora.api.liquid.LiquidContainer;
@@ -169,5 +170,10 @@ public class TileBindingCenter extends TileBase implements ITickable {
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
         return capability == LiquidContainerCapability.CAPABILITY_LIQUID_CONTAINER ? (T) this.liquidContainer
                 : super.getCapability(capability, facing);
+    }
+
+    @Override
+    public AxisAlignedBB getRenderBoundingBox() {
+        return INFINITE_EXTENT_AABB;
     }
 }

@@ -1,4 +1,4 @@
-package xieao.theora.api.recipe.bindingstone;
+package xieao.theora.api.recipe.binding;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class BindingStoneRecipe implements IBindingStoneRecipe {
+public class BindingRecipe implements IBindingRecipe {
 
     private final List<ItemStack> inputs;
     private final float liquidAmount;
     private final Ability ability;
 
-    public BindingStoneRecipe(Ability resultAbility, float liquidAmount, ItemStack... inputs) {
+    public BindingRecipe(Ability resultAbility, float liquidAmount, ItemStack... inputs) {
         this.inputs = Arrays.asList(inputs);
         this.liquidAmount = liquidAmount;
         this.ability = resultAbility;

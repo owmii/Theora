@@ -1,4 +1,4 @@
-package xieao.theora.api.recipe.bindingstone;
+package xieao.theora.api.recipe.binding;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -8,7 +8,7 @@ import xieao.theora.api.recipe.IRecipeRegistry;
 
 import java.util.List;
 
-public interface IBindingStoneRecipe extends IRecipeRegistry.Entry {
+public interface IBindingRecipe extends IRecipeRegistry.Entry {
 
     boolean matches(List<ItemStack> stacks, float storedLiquid, World world, BlockPos pos);
 

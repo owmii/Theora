@@ -28,5 +28,10 @@
     "sounds": [
       "theora:peel"
     ]
+  },
+  "coins.collect": {
+    "sounds": [
+      "theora:coins_collect"
+    ]
   }
 }

@@ -12,6 +12,7 @@ public class TheoraSounds {
     public static final SoundEvent POK = new SoundEvent(Theora.location("pok"));
     public static final SoundEvent LIQUID_DRIP = new SoundEvent(Theora.location("liquid.drip"));
     public static final SoundEvent PEEL = new SoundEvent(Theora.location("peel"));
+    public static final SoundEvent COINS_COLLECT = new SoundEvent(Theora.location("coins.collect"));
 
 
     public String[] register() {
@@ -21,6 +22,7 @@ public class TheoraSounds {
         register(POK);
         register(LIQUID_DRIP);
         register(PEEL);
+        register(COINS_COLLECT);
         return new String[0];
     }
 

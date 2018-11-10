@@ -7,10 +7,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import xieao.theora.common.TheoraSounds;
 import xieao.theora.common.helper.NBTHelper;
 
 import javax.annotation.Nullable;
@@ -41,7 +43,7 @@ public class ItemPigCoinBag extends ItemBase {
             }
         }
         if (flag) {
-            //TODO coins sound}
+            worldIn.playSound(null, player.getPosition(), TheoraSounds.COINS_COLLECT, SoundCategory.AMBIENT, 1.0F, 1.0F);
             return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
         }
         return super.onItemRightClick(worldIn, player, hand);

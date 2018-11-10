@@ -7,10 +7,8 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.WeightedRandom;
 import xieao.theora.Theora;
 import xieao.theora.api.trade.pigzombie.PigZombieTrade;
-import xieao.theora.api.trade.pigzombie.PigZombieTradeHandler;
 import xieao.theora.client.helper.ColorHelper;
 import xieao.theora.common.item.TheoraItems;
 import xieao.theora.network.TheoraNetwork;
@@ -54,11 +52,6 @@ public class GuiPigZombieTrade extends GuiScreen {
         this.buttonList.add(next);
         this.buttonList.add(prev);
         this.buttonList.add(buy);
-
-        for (int i = 0; i < 120; i++) {
-            PigZombieTradeHandler.TradeEntry randomItem = WeightedRandom.getRandomItem(mc.world.rand, PigZombieTradeHandler.TRADE_ENTRIES);
-            // System.out.println(randomItem.trade);
-        }
     }
 
     @Override
@@ -105,7 +98,6 @@ public class GuiPigZombieTrade extends GuiScreen {
             renderItem.renderItemIntoGUI(new ItemStack(TheoraItems.PIG_COIN), sX - 12, sY + 30);
             this.fontRenderer.drawString(" x " + trade.price, sX + 2, sY + 33, 0x5a495a);
             RenderHelper.disableStandardItemLighting();
-
             GlStateManager.disableBlend();
             GlStateManager.popMatrix();
 

@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "theora:items/binding_ring"
+    "layer0": "theora:items/goo_gliophorus"
   }
 }

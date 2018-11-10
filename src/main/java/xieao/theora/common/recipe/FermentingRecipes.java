@@ -17,7 +17,7 @@ public class FermentingRecipes implements IFermentingRegistry {
 
     @Override
     public void initRecipes() {
-        addRecipe(new ItemStack(TheoraItems.OOZE), Liquid.EMPTY, new ItemStack(TheoraBlocks.SHROOM));
+        addRecipe(new ItemStack(TheoraItems.GOO), Liquid.EMPTY, new ItemStack(TheoraBlocks.SHROOM));
     }
 
     @Override

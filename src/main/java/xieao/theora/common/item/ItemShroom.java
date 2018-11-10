@@ -22,4 +22,9 @@ public class ItemShroom extends ItemBlockBase {
         return super.getUnlocalizedName() + "." + BlockShroom.Type
                 .values()[meta].getName().replace("_", ".");
     }
+
+    @Override
+    public Enum<?>[] getSubTypeValues() {
+        return BlockShroom.Type.values();
+    }
 }

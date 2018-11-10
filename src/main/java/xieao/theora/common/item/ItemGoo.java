@@ -5,9 +5,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import xieao.theora.common.block.misc.BlockShroom;
 
-public class ItemOoze extends ItemBase {
+public class ItemGoo extends ItemBase {
 
-    public ItemOoze() {
+    public ItemGoo() {
         setHasSubtypes(true);
     }
 
@@ -26,5 +26,10 @@ public class ItemOoze extends ItemBase {
                 items.add(new ItemStack(this, 1, type.ordinal()));
             }
         }
+    }
+
+    @Override
+    public Enum<?>[] getSubTypeValues() {
+        return BlockShroom.Type.values();
     }
 }

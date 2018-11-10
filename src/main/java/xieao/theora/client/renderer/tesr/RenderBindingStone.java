@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.theora.Theora;
-import xieao.theora.api.recipe.bindingstone.IBindingStoneRecipe;
+import xieao.theora.api.recipe.binding.IBindingRecipe;
 import xieao.theora.client.helper.ColorHelper;
 import xieao.theora.client.helper.RendererHelper;
 import xieao.theora.common.block.binding.TileBindingCenter;
@@ -36,7 +36,7 @@ public class RenderBindingStone extends TESRBase<TileBindingCenter> {
         RendererHelper.renderQuad(AURA_TEXTURE, 2.5F);
         GlStateManager.translate(0.0D, 0.0001D, 0.0D);
         ColorHelper.glColor(0xffffff, 0.7F);
-        IBindingStoneRecipe recipe = te.getCurrentRecipe();
+        IBindingRecipe recipe = te.getCurrentRecipe();
         if (recipe != null && !recipe.getResultAbility().isEmpty()) {
             ResourceLocation regName = recipe.getResultAbility().getRegistryName();
             GlStateManager.scale(.9, 0, .9);

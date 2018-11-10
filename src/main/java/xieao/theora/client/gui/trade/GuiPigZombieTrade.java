@@ -7,13 +7,16 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.WeightedRandom;
 import xieao.theora.Theora;
 import xieao.theora.api.trade.pigzombie.PigZombieTrade;
+import xieao.theora.api.trade.pigzombie.PigZombieTradeHandler;
 import xieao.theora.client.helper.ColorHelper;
 import xieao.theora.common.item.TheoraItems;
 import xieao.theora.network.TheoraNetwork;
 import xieao.theora.network.packets.PacketPigZombieTradBuy;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -51,6 +54,11 @@ public class GuiPigZombieTrade extends GuiScreen {
         this.buttonList.add(next);
         this.buttonList.add(prev);
         this.buttonList.add(buy);
+
+        for (int i = 0; i < 120; i++) {
+            PigZombieTradeHandler.TradeEntry randomItem = WeightedRandom.getRandomItem(mc.world.rand, PigZombieTradeHandler.TRADE_ENTRIES);
+            // System.out.println(randomItem.trade);
+        }
     }
 
     @Override
@@ -73,18 +81,18 @@ public class GuiPigZombieTrade extends GuiScreen {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawDefaultBackground();
-        GlStateManager.pushMatrix();
-        ColorHelper.glColorNormal();
-        GlStateManager.enableBlend();
-        GlStateManager.translate(this.x, this.y, 0.0D);
-        this.mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
-        drawTexturedModalRect(0, 0, 0, 0, this.w, this.h);
-        ColorHelper.glColor(0xffffff, this.currTrade < this.maxTrades - 1 ? 1.0F : 0.3F);
-        drawTexturedModalRect(87, 11, this.w, 0, 24, 20);
-        ColorHelper.glColor(0xffffff, this.currTrade > 0 ? 1.0F : 0.3F);
-        drawTexturedModalRect(29, 11, this.w + 24, 0, 24, 20);
-        ColorHelper.glColorNormal();
         if (!this.trades.isEmpty()) {
+            GlStateManager.pushMatrix();
+            ColorHelper.glColorNormal();
+            GlStateManager.enableBlend();
+            GlStateManager.translate(this.x, this.y, 0.0D);
+            this.mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
+            drawTexturedModalRect(0, 0, 0, 0, this.w, this.h);
+            ColorHelper.glColor(0xffffff, this.currTrade < this.maxTrades - 1 ? 1.0F : 0.3F);
+            drawTexturedModalRect(87, 11, this.w, 0, 24, 20);
+            ColorHelper.glColor(0xffffff, this.currTrade > 0 ? 1.0F : 0.3F);
+            drawTexturedModalRect(29, 11, this.w + 24, 0, 24, 20);
+            ColorHelper.glColorNormal();
             PigZombieTrade trade = this.trades.get(this.currTrade);
             ItemStack stack = trade.itemToSell;
             RenderItem renderItem = this.mc.getRenderItem();
@@ -97,18 +105,29 @@ public class GuiPigZombieTrade extends GuiScreen {
             renderItem.renderItemIntoGUI(new ItemStack(TheoraItems.PIG_COIN), sX - 12, sY + 30);
             this.fontRenderer.drawString(" x " + trade.price, sX + 2, sY + 33, 0x5a495a);
             RenderHelper.disableStandardItemLighting();
+
+            GlStateManager.disableBlend();
+            GlStateManager.popMatrix();
+
+            if (inRange(this.x + sX, this.y + sY, mouseX, mouseY)) {
+                renderToolTip(stack, mouseX, mouseY);
+            }
         }
-        GlStateManager.disableBlend();
-        GlStateManager.popMatrix();
     }
 
-    @Override
-    protected void renderToolTip(ItemStack stack, int x, int y) {
-        super.renderToolTip(stack, x, y);
+    public boolean inRange(int x, int y, int mouseX, int mouseY) {
+        return mouseX >= x && mouseY >= y && mouseX < x + 16 && mouseY < y + 16;
     }
 
     @Override
     public boolean doesGuiPauseGame() {
         return false;
+    }
+
+    @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        if (keyCode == 1 || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode)) {
+            this.mc.player.closeScreen();
+        }
     }
 }

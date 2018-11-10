@@ -1,6 +1,9 @@
 package xieao.theora.network.packets;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -44,7 +47,11 @@ public class PacketPigZombieTradBuy implements IPacket<PacketPigZombieTradBuy> {
             int playerBalance = ItemPigCoin.getTotalPlayerCoins(player);
             if (price <= playerBalance) {
                 ItemPigCoin.tryShrinkPlayerCoins(player, price);
-                ItemHandlerHelper.giveItemToPlayer(player, trade.itemToSell.copy());
+                ItemStack toSell = trade.itemToSell.copy();
+                if (toSell.getItem() == Items.ENCHANTED_BOOK) {
+                    toSell = EnchantmentHelper.addRandomEnchantment(world.rand, new ItemStack(Items.BOOK), 15, true);
+                }
+                ItemHandlerHelper.giveItemToPlayer(player, toSell);
             }
         });
         return null;

@@ -11,7 +11,7 @@ import xieao.theora.api.liquid.LiquidContainer;
 import xieao.theora.api.liquid.LiquidContainerCapability;
 import xieao.theora.api.liquid.LiquidSlot;
 import xieao.theora.api.player.ability.Ability;
-import xieao.theora.api.recipe.bindingstone.IBindingStoneRecipe;
+import xieao.theora.api.recipe.binding.IBindingRecipe;
 import xieao.theora.client.particle.ParticleEngine;
 import xieao.theora.client.particle.ParticleGlow;
 import xieao.theora.common.block.TileBase;
@@ -77,7 +77,7 @@ public class TileBindingCenter extends TileBase implements ITickable {
             } else {
                 LiquidSlot liquidSlot = this.liquidContainer.getLiquidSlot(0);
                 if (this.ability.isEmpty()) {
-                    IBindingStoneRecipe recipe = getCurrentRecipe();
+                    IBindingRecipe recipe = getCurrentRecipe();
                     if (recipe != null && !recipe.getResultAbility().isEmpty()) {
                         if (this.startBinding) {
                             for (int[] offset : RING_OFFSETS) {
@@ -132,7 +132,7 @@ public class TileBindingCenter extends TileBase implements ITickable {
         }
     }
 
-    public IBindingStoneRecipe getCurrentRecipe() {
+    public IBindingRecipe getCurrentRecipe() {
         LiquidSlot liquidSlot = this.liquidContainer.getLiquidSlot(0);
         return RecipeHandler.findBindingStoneRecipe(getRecipeStacks(), liquidSlot.getStored(), getWorld(), getPos());
     }

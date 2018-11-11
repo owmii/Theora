@@ -14,7 +14,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.theora.api.liquid.*;
 import xieao.theora.api.liquid.LiquidSlot.TransferType;
+import xieao.theora.api.recipe.liquidinteract.ILiquidInteractRecipe;
 import xieao.theora.client.renderer.item.IColoredItem;
+import xieao.theora.common.entity.EntityInteractor;
+import xieao.theora.common.recipe.RecipeHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -74,34 +77,41 @@ public class ItemVial extends ItemBase implements IColoredItem {
         ItemStack stack = player.getHeldItem(hand);
         IliquidContainer.Item vial = LiquidUtil.getILiquidContainerItem(stack);
         if (vial != null) {
-            LiquidSlot linkedTank = vial.getLiquidSlot(0);
-//            if (ItemVial.tryLiquidInteract(player, world, pos, linkedTank)) {
-//                return EnumActionResult.SUCCESS;
-//            }
+            LiquidSlot vialSlot = vial.getLiquidSlot(0);
+            ILiquidInteractRecipe recipe = RecipeHandler.findLiquidInteractRecipe(vialSlot.getLiquid(), vialSlot.getStored(), world, pos);
+            if (recipe != null) {
+                if (EntityInteractor.tryInteract(world, pos, recipe.getInState(), recipe.exactState(), recipe.getOutState()
+                        , (int) recipe.getLiquidAmount() * 20, vialSlot.getLiquid().getDarkColor(), player.getUniqueID())) {
+                    if (!player.isCreative()) {
+                        vialSlot.setStored(vialSlot.getStored() - recipe.getLiquidAmount());
+                        vial.setLiquidSlot(0, vialSlot);
+                    }
+                    return EnumActionResult.SUCCESS;
+                }
+            }
             IliquidContainer liquidContainer = LiquidUtil.getILiquidContainer(world, pos, side);
             if (liquidContainer != null) {
-                LiquidSlot vialTank = vial.getLiquidSlot(0);
-                if (!vialTank.isEmpty()) {
+                if (!vialSlot.isEmpty()) {
                     for (LiquidSlot liquidSlot : liquidContainer.getLiquidSlots()) {
                         TransferType transferType = liquidSlot.getTransferType();
                         if (transferType.equals(TransferType.ALL) || transferType.equals(TransferType.RECEIVE)) {
-                            if (liquidSlot.liquidEquals(vialTank.getLiquid()) && !liquidSlot.isFull() || liquidSlot.isEmpty()) {
-                                liquidSlot.setLiquid(vialTank.getLiquid());
-                                vialTank.drain(liquidSlot, true, !player.isCreative());
-                                vial.setLiquidSlot(0, vialTank);
+                            if (liquidSlot.liquidEquals(vialSlot.getLiquid()) && !liquidSlot.isFull() || liquidSlot.isEmpty()) {
+                                liquidSlot.setLiquid(vialSlot.getLiquid());
+                                vialSlot.drain(liquidSlot, true, !player.isCreative());
+                                vial.setLiquidSlot(0, vialSlot);
                                 return EnumActionResult.SUCCESS;
                             }
                         }
                     }
                 }
-                if (!vialTank.isFull()) {
+                if (!vialSlot.isFull()) {
                     for (LiquidSlot liquidSlot : liquidContainer.getLiquidSlots()) {
                         TransferType transferType = liquidSlot.getTransferType();
                         if (transferType.equals(TransferType.ALL) || transferType.equals(TransferType.SEND)) {
-                            if (liquidSlot.liquidEquals(vialTank.getLiquid()) || vialTank.getLiquid().isEmpty() && !liquidSlot.isEmpty()) {
-                                vialTank.setLiquid(liquidSlot.getLiquid());
-                                vialTank.fill(liquidSlot, true);
-                                vial.setLiquidSlot(0, vialTank);
+                            if (liquidSlot.liquidEquals(vialSlot.getLiquid()) || vialSlot.getLiquid().isEmpty() && !liquidSlot.isEmpty()) {
+                                vialSlot.setLiquid(liquidSlot.getLiquid());
+                                vialSlot.fill(liquidSlot, true);
+                                vial.setLiquidSlot(0, vialSlot);
                                 return EnumActionResult.SUCCESS;
                             }
                         }

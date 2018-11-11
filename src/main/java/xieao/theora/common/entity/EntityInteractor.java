@@ -38,7 +38,7 @@ public class EntityInteractor extends Entity {
 
     public EntityInteractor(World worldIn) {
         super(worldIn);
-        setSize(0.001F, 0.001F);
+        setSize(0.9F, 0.9F);
         this.oldState = Blocks.AIR.getDefaultState();
         this.newState = Blocks.AIR.getDefaultState();
     }
@@ -182,6 +182,16 @@ public class EntityInteractor extends Entity {
     @Override
     public boolean isGlowing() {
         return false;
+    }
+
+    @Override
+    public int getBrightnessForRender() {
+        return 12213545;
+    }
+
+    @Override
+    public float getBrightness() {
+        return super.getBrightness();
     }
 
     public int getColor() {

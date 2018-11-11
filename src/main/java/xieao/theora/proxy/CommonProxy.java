@@ -18,6 +18,7 @@ import xieao.theora.common.item.TheoraItems;
 import xieao.theora.common.liquid.TheoraLiquids;
 import xieao.theora.common.recipe.BindingRecipes;
 import xieao.theora.common.recipe.FermentingRecipes;
+import xieao.theora.common.recipe.LiquidInteractRecipes;
 import xieao.theora.common.recipe.RecipeHandler;
 import xieao.theora.common.trade.PigZomieTrades;
 import xieao.theora.network.GuiHandler;
@@ -36,6 +37,7 @@ public class CommonProxy implements IProxy {
         LiquidContainerCapability.register();
 
         TheoraAPI.INSTANCE.register(new FermentingRecipes());
+        TheoraAPI.INSTANCE.register(new LiquidInteractRecipes());
         TheoraAPI.INSTANCE.register(new BindingRecipes());
 
         TheoraLiquids.register();

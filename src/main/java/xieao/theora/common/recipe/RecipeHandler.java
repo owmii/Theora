@@ -4,11 +4,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import xieao.theora.api.TheoraAPI;
+import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.recipe.IRecipeRegistry;
 import xieao.theora.api.recipe.binding.IBindingRecipe;
 import xieao.theora.api.recipe.binding.IBindingRegistry;
 import xieao.theora.api.recipe.fermentingjar.IFermentingRecipe;
 import xieao.theora.api.recipe.fermentingjar.IFermentingRegistry;
+import xieao.theora.api.recipe.liquidinteract.ILiquidInteractRecipe;
+import xieao.theora.api.recipe.liquidinteract.ILiquidInteractRegistry;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -18,6 +21,7 @@ import java.util.Set;
 public class RecipeHandler {
 
     public static final Set<IFermentingRecipe> FERMENTING_RECIPES = new HashSet<>();
+    public static final Set<ILiquidInteractRecipe> LIQUID_INTERACT_RECIPES = new HashSet<>();
     public static final Set<IBindingRecipe> BINDING_STONE_RECIPES = new HashSet<>();
 
     public static void initRecipes() {
@@ -25,6 +29,9 @@ public class RecipeHandler {
             if (registry instanceof IFermentingRegistry) {
                 IFermentingRegistry fermentingRegistry = (IFermentingRegistry) registry;
                 FERMENTING_RECIPES.addAll(fermentingRegistry.getRecipes());
+            } else if (registry instanceof ILiquidInteractRegistry) {
+                ILiquidInteractRegistry liquidInteractRegistry = (ILiquidInteractRegistry) registry;
+                LIQUID_INTERACT_RECIPES.addAll(liquidInteractRegistry.getRecipes());
             } else if (registry instanceof IBindingRegistry) {
                 IBindingRegistry bindingStoneRegistry = (IBindingRegistry) registry;
                 BINDING_STONE_RECIPES.addAll(bindingStoneRegistry.getRecipes());
@@ -36,6 +43,16 @@ public class RecipeHandler {
     public static IFermentingRecipe findFermentingRecipe(ItemStack stack, World world, BlockPos pos) {
         for (IFermentingRecipe recipe : FERMENTING_RECIPES) {
             if (recipe.matches(stack, world, pos)) {
+                return recipe;
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    public static ILiquidInteractRecipe findLiquidInteractRecipe(Liquid liquid, float liquidAmount, World world, BlockPos pos) {
+        for (ILiquidInteractRecipe recipe : LIQUID_INTERACT_RECIPES) {
+            if (recipe.matches(liquid, liquidAmount, world, pos)) {
                 return recipe;
             }
         }

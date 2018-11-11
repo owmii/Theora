@@ -1,0 +1,62 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "theora:items/vial/vial_empty"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "stored": 0.000000
+      },
+      "model": "theora:item/vial_empty"
+    },
+    {
+      "predicate": {
+        "stored": 0.125000
+      },
+      "model": "theora:item/vial_fill_1"
+    },
+    {
+      "predicate": {
+        "stored": 0.250000
+      },
+      "model": "theora:item/vial_fill_2"
+    },
+    {
+      "predicate": {
+        "stored": 0.375000
+      },
+      "model": "theora:item/vial_fill_3"
+    },
+    {
+      "predicate": {
+        "stored": 0.500000
+      },
+      "model": "theora:item/vial_fill_4"
+    },
+    {
+      "predicate": {
+        "stored": 0.625000
+      },
+      "model": "theora:item/vial_fill_5"
+    },
+    {
+      "predicate": {
+        "stored": 0.750000
+      },
+      "model": "theora:item/vial_fill_6"
+    },
+    {
+      "predicate": {
+        "stored": 0.875000
+      },
+      "model": "theora:item/vial_fill_7"
+    },
+    {
+      "predicate": {
+        "stored": 1.000000
+      },
+      "model": "theora:item/vial_fill_8"
+    }
+  ]
+}

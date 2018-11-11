@@ -13,6 +13,7 @@ import xieao.theora.api.liquid.LiquidContainerCapability;
 import xieao.theora.api.player.data.PlayerDataCapability;
 import xieao.theora.common.ability.TheoraAbilities;
 import xieao.theora.common.block.TheoraBlocks;
+import xieao.theora.common.entity.TheoraEntities;
 import xieao.theora.common.item.TheoraItems;
 import xieao.theora.common.liquid.TheoraLiquids;
 import xieao.theora.common.recipe.BindingRecipes;
@@ -39,7 +40,7 @@ public class CommonProxy implements IProxy {
 
         TheoraLiquids.register();
         TheoraAbilities.register();
-
+        TheoraEntities.register();
         PigZomieTrades.register();
     }
 

@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemBlock;
@@ -78,6 +79,22 @@ public class RendererHelper {
         buffer.pos(dim, 0.0D, -dim).tex(1, 0).endVertex();
         buffer.pos(-dim, 0.0D, -dim).tex(0, 0).endVertex();
         buffer.pos(-dim, 0.0D, dim).tex(0, 1).endVertex();
+        tessellator.draw();
+    }
+
+    public static void renderQuad(TextureAtlasSprite texture, double dim) {
+        float f0 = texture.getMinU();
+        float f1 = texture.getMaxU();
+        float f2 = texture.getMinV();
+        float f3 = texture.getMaxV();
+        dim /= 2.0D;
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder buffer = tessellator.getBuffer();
+        buffer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
+        buffer.pos(-dim, 0.0D, -dim).tex((double) f0, (double) f3).normal(0.0F, 1.0F, 0.0F).endVertex();
+        buffer.pos(-dim, 0.0D, dim).tex((double) f1, (double) f3).normal(0.0F, 1.0F, 0.0F).endVertex();
+        buffer.pos(dim, 0.0D, dim).tex((double) f1, (double) f2).normal(0.0F, 1.0F, 0.0F).endVertex();
+        buffer.pos(dim, 0.0D, -dim).tex((double) f0, (double) f2).normal(0.0F, 1.0F, 0.0F).endVertex();
         tessellator.draw();
     }
 

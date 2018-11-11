@@ -7,16 +7,15 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import xieao.theora.Theora;
 import xieao.theora.client.helper.ColorHelper;
 import xieao.theora.client.helper.RendererHelper;
+import xieao.theora.client.renderer.TheoraTextureMap;
 import xieao.theora.common.entity.EntityInteractor;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 
 public class RenderInteractor extends Render<EntityInteractor> {
-
-    private static final ResourceLocation OV = Theora.location("textures/misc/liquid_interact_ov.png");
 
     public RenderInteractor(RenderManager renderManager) {
         super(renderManager);
@@ -29,44 +28,39 @@ public class RenderInteractor extends Render<EntityInteractor> {
         RenderHelper.disableStandardItemLighting();
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
-        ColorHelper.glColor(entity.getColor(), 1.0F);
+        ColorHelper.glColor(new Color(entity.getColor()).darker(), 1.0F);
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.0F, 0.0001F, 0.0F);
-        RendererHelper.renderQuad(OV, 1.0D);
+        RendererHelper.renderQuad(TheoraTextureMap.liquid_interact_ov, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.0F, -0.5F, 0.5001F);
         GlStateManager.rotate(90.0F, 1, 0, 0);
-        RendererHelper.renderQuad(OV, 1.0D);
+        RendererHelper.renderQuad(TheoraTextureMap.liquid_interact_ov, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(-0.5001F, -0.5F, 0.0F);
         GlStateManager.rotate(90.0F, 0, 0, 1);
-        RendererHelper.renderQuad(OV, 1.0D);
+        RendererHelper.renderQuad(TheoraTextureMap.liquid_interact_ov, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.0F, -0.5F, -0.5001F);
         GlStateManager.rotate(-90.0F, 1, 0, 0);
-        RendererHelper.renderQuad(OV, 1.0D);
+        RendererHelper.renderQuad(TheoraTextureMap.liquid_interact_ov, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.5001F, -0.5F, 0.0F);
         GlStateManager.rotate(-90.0F, 0, 0, 1);
-        RendererHelper.renderQuad(OV, 1.0D);
+        RendererHelper.renderQuad(TheoraTextureMap.liquid_interact_ov, 1.0D);
         GlStateManager.popMatrix();
 
         RenderHelper.enableStandardItemLighting();
         GlStateManager.popMatrix();
-    }
-
-    @Override
-    public boolean isMultipass() {
-        return true;
     }
 
     @Override

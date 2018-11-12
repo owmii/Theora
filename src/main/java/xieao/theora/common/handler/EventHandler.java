@@ -63,34 +63,4 @@ public class EventHandler {
             }
         }
     }
-
-//    @SubscribeEvent
-//    public static void rightClickEntity(PlayerInteractEvent.EntityInteract event) {
-//        EntityPlayer player = event.getEntityPlayer();
-//        Entity entity = event.getTarget();
-//        World world = player.world;
-//        if (entity instanceof EntityZombie) {
-//            EntityZombie zombie = (EntityZombie) entity;
-//            ItemStack held = player.getHeldItem(event.getHand());
-//            if (zombie.isChild()) return;
-//            if (!world.isRemote) {
-//                if (held.getItem() == Items.GLASS_BOTTLE) {
-//                    if (player.experienceLevel >= 10) {
-//                        PlayerData data = TheoraAPI.getPlayerData(player);
-//                        if (data != null) {
-//                            if (!data.hasAcidVial()) {
-//                                held.shrink(1);
-//                                player.addExperienceLevel(-10);
-//                                ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(TheoraItems.ACID_VIAL));
-//                                //TODO sounds ...
-//                                //TODO particles ...
-//                            }
-//                        }
-//                    } else {
-//                        player.sendStatusMessage(new TextComponentTranslation("theora.status.no.enough.xp", player.experienceLevel), true);
-//                    }
-//                }
-//            }
-//        }
-//    }
 }

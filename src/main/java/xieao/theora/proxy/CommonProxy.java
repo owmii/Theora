@@ -2,6 +2,7 @@ package xieao.theora.proxy;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -21,6 +22,7 @@ import xieao.theora.common.recipe.FermentingRecipes;
 import xieao.theora.common.recipe.LiquidInteractRecipes;
 import xieao.theora.common.recipe.RecipeHandler;
 import xieao.theora.common.trade.PigZomieTrades;
+import xieao.theora.common.world.gen.WorldGenShrooms;
 import xieao.theora.network.GuiHandler;
 import xieao.theora.network.TheoraNetwork;
 
@@ -49,6 +51,7 @@ public class CommonProxy implements IProxy {
     @Override
     public void init(FMLInitializationEvent event) {
         NetworkRegistry.INSTANCE.registerGuiHandler(Theora.instance, GuiHandler.INSTANCE);
+        MinecraftForge.TERRAIN_GEN_BUS.register(WorldGenShrooms.class);
     }
 
     @Override

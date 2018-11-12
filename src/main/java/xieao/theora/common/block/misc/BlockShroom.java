@@ -50,13 +50,21 @@ public class BlockShroom extends BlockPlant {
     }
 
     public enum Type implements IStringSerializable {
-        WHITE_BEECH,
-        GLIOPHORUS,
-        WITCH_HAT,
-        BLUE_HORN,
-
-
+        WHITE_BEECH(19),
+        GLIOPHORUS(24),
+        WITCH_HAT(7),
+        BLUE_HORN(16),
         ;
+
+        private final int weight;
+
+        Type(int weight) {
+            this.weight = weight;
+        }
+
+        public int getWeight() {
+            return weight;
+        }
 
         @Override
         public String getName() {

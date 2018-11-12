@@ -12,8 +12,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import xieao.theora.common.TheoraSounds;
-import xieao.theora.common.helper.NBTHelper;
+import xieao.theora.common.lib.TheoraSounds;
+import xieao.theora.common.lib.helper.NBTHelper;
 
 import javax.annotation.Nullable;
 import java.util.List;

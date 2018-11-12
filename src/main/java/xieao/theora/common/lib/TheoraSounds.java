@@ -1,4 +1,4 @@
-package xieao.theora.common;
+package xieao.theora.common.lib;
 
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;

@@ -10,7 +10,8 @@ import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import xieao.theora.common.block.TheoraBlocks;
 import xieao.theora.common.block.misc.BlockShroom;
-import xieao.theora.common.helper.WorldHelper;
+import xieao.theora.common.lib.config.ConfigWorldGen;
+import xieao.theora.common.lib.helper.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,29 +24,33 @@ public class WorldGenShrooms {
     private static final List<MushroomEntry> MUSHROOM_ENTRIES = new ArrayList<>();
 
     static {
-        for (BlockShroom.Type type : BlockShroom.Type.values()) {
-            MUSHROOM_ENTRIES.add(new MushroomEntry(TheoraBlocks.SHROOM.getDefaultState()
-                    .withProperty(BlockShroom.TYPE, type), type.getWeight()));
+        if (ConfigWorldGen.enabled) {
+            for (BlockShroom.Type type : BlockShroom.Type.values()) {
+                MUSHROOM_ENTRIES.add(new MushroomEntry(TheoraBlocks.SHROOM.getDefaultState()
+                        .withProperty(BlockShroom.TYPE, type), type.getWeight()));
+            }
         }
     }
 
     @SubscribeEvent
     public static void decorate(DecorateBiomeEvent.Decorate event) {
-        if (event.getType() == DecorateBiomeEvent.Decorate.EventType.SHROOM) {
-            World world = event.getWorld();
-            Random rand = event.getRand();
-            if (rand.nextInt(8) == 0) {
-                ChunkPos chunkPos = event.getChunkPos();
-                MushroomEntry randomItem = WeightedRandom.getRandomItem(rand, MUSHROOM_ENTRIES);
-                for (int i = 0; i < 7; i++) {
-                    int x = (chunkPos.x << 4) + rand.nextInt(16) + 8;
-                    int z = (chunkPos.z << 4) + rand.nextInt(16) + 8;
-                    BlockPos pos = world.getTopSolidOrLiquidBlock(new BlockPos(x, 0, z));
-                    Biome biome = world.getBiome(pos);
-                    if (!WorldHelper.hasBiomeTypes(biome, HOT, DRY, BEACH, DEAD, END, OCEAN, NETHER)) {
-                        IBlockState state = randomItem.state;
-                        if (world.isAirBlock(pos) || world.getBlockState(pos).getBlock().isReplaceable(world, pos) && state.getBlock().canPlaceBlockAt(world, pos)) {
-                            world.setBlockState(pos, state, 2);
+        if (ConfigWorldGen.enabled) {
+            if (event.getType() == DecorateBiomeEvent.Decorate.EventType.SHROOM) {
+                World world = event.getWorld();
+                Random rand = event.getRand();
+                if (rand.nextInt(8) == 0) {
+                    ChunkPos chunkPos = event.getChunkPos();
+                    MushroomEntry randomItem = WeightedRandom.getRandomItem(rand, MUSHROOM_ENTRIES);
+                    for (int i = 0; i < 7; i++) {
+                        int x = (chunkPos.x << 4) + rand.nextInt(16) + 8;
+                        int z = (chunkPos.z << 4) + rand.nextInt(16) + 8;
+                        BlockPos pos = world.getTopSolidOrLiquidBlock(new BlockPos(x, 0, z));
+                        Biome biome = world.getBiome(pos);
+                        if (!WorldHelper.hasBiomeTypes(biome, HOT, DRY, BEACH, DEAD, END, OCEAN, NETHER)) {
+                            IBlockState state = randomItem.state;
+                            if (world.isAirBlock(pos) || world.getBlockState(pos).getBlock().isReplaceable(world, pos) && state.getBlock().canPlaceBlockAt(world, pos)) {
+                                world.setBlockState(pos, state, 2);
+                            }
                         }
                     }
                 }

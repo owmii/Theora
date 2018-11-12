@@ -19,7 +19,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import xieao.theora.common.TheoraSounds;
+import xieao.theora.common.lib.TheoraSounds;
 
 import javax.annotation.Nullable;
 import java.util.List;

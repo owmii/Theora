@@ -12,7 +12,7 @@ import xieao.theora.api.player.ability.Abilities;
 import xieao.theora.api.player.data.PlayerData;
 import xieao.theora.api.trade.pigzombie.PigZombieTradeHandler;
 import xieao.theora.common.ability.TheoraAbilities;
-import xieao.theora.common.helper.NBTHelper;
+import xieao.theora.common.lib.helper.NBTHelper;
 import xieao.theora.network.TheoraNetwork;
 import xieao.theora.network.packets.PacketOpenPigZombieTradeGui;
 

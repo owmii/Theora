@@ -1,4 +1,4 @@
-package xieao.theora.common.helper;
+package xieao.theora.common.lib.helper;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;

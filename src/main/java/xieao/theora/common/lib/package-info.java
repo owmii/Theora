@@ -1,7 +1,7 @@
 @ParametersAreNonnullByDefault
 @FieldsAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-package xieao.theora.common.helper;
+package xieao.theora.common.lib;
 
 import mcp.MethodsReturnNonnullByDefault;
 import xieao.theora.api.annotation.FieldsAreNonnullByDefault;

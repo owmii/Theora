@@ -1,4 +1,4 @@
-package xieao.theora.common.handler;
+package xieao.theora.common.lib.handler;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

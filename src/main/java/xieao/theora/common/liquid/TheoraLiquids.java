@@ -27,7 +27,7 @@ public class TheoraLiquids {
 //        Liquid.register(FORALIS, "foralis", 0xf7279e, 0xffffff);
 //        Liquid.register(ZIMONA, "zimona", 0x905fab, 0xffffff);
 //        Liquid.register(SQUINK, "squink", 0x380d5c, 0xffffff);
-//        Liquid.register(LEQUEN, "lequen", 0xffe0e7, 0xfff7f4);
+        Liquid.register(LEQUEN, "lequen", 0xffe0e7, 0xfff7f4);
         new Color(0x23ace3);
     }
 }

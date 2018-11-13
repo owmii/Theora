@@ -13,18 +13,12 @@ public class ParticleGlow extends ParticleBase {
 
     @Override
     public void onUpdate() {
-        this.prevPosX = this.posX;
-        this.prevPosY = this.posY;
-        this.prevPosZ = this.posZ;
-        move(this.motionX, this.motionY, this.motionZ);
+        super.onUpdate();
         this.particleAlpha *= 0.92F;
         this.particleScale *= 0.98F;
         this.motionX = (end.x - this.posX) * 0.04;
         this.motionY = (end.y - this.posY) * 0.04;
         this.motionZ = (end.z - this.posZ) * 0.04;
-        if (this.particleAge++ >= this.particleMaxAge) {
-            setExpired();
-        }
     }
 
     @Override

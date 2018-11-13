@@ -15,6 +15,7 @@ public class TheoraItems {
 
     public static final Set<Item> ITEMS = new HashSet<>();
 
+    public static final ItemShroomBit SHROOM_BIT;
     public static final ItemGoo GOO;
     public static final ItemWand WAND;
     public static final ItemVial VIAL;
@@ -22,6 +23,7 @@ public class TheoraItems {
     public static final ItemPigCoinBag PIG_COIN_BAG;
 
     static {
+        SHROOM_BIT = register(new ItemShroomBit(), "shroombit");
         GOO = register(new ItemGoo(), "goo");
         WAND = register(new ItemWand(), "wand");
         VIAL = register(new ItemVial(), "vial");

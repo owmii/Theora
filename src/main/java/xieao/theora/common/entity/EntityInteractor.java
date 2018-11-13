@@ -132,8 +132,8 @@ public class EntityInteractor extends Entity {
                 if (state.equals(getOldState())) {
                     if (this.interactTime-- <= 0) {
                         this.world.setBlockState(pos, getNewState(), 2);
-                        this.world.playEvent(2001, pos, Block.getStateId(getNewState()));
-                        this.world.playSound(null, this.posX, this.posY, this.posZ, TheoraSounds.BLOCK_TRANSFORMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                        this.world.playSound(null, this.posX, this.posY, this.posZ,
+                                TheoraSounds.BLOCK_TRANSFORMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
                         setDead();
                     }
                 } else {

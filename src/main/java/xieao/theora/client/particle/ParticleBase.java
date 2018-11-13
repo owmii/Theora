@@ -36,6 +36,15 @@ public class ParticleBase extends Particle {
         this.particleTexture = "glow2";
     }
 
+    @Override
+    public void onUpdate() {
+        this.prevPosX = this.posX;
+        this.prevPosY = this.posY;
+        this.prevPosZ = this.posZ;
+        move(this.motionX, this.motionY, this.motionZ);
+        killExpiredParticle();
+    }
+
     public void renderParticle(float partialTicks, double rotX, double rotZ, double rotYZ, double rotXY, double rotXZ) {
         double d0 = 0.1F * this.particleScale;
         double d1 = this.prevPosX + (this.posX - this.prevPosX) * partialTicks - interpPosX;
@@ -67,9 +76,10 @@ public class ParticleBase extends Particle {
         tessellator.draw();
     }
 
-    protected void killOldParticle() {
-        if (this.particleAge++ >= this.particleMaxAge)
+    protected void killExpiredParticle() {
+        if (this.particleAge++ >= this.particleMaxAge) {
             this.setExpired();
+        }
     }
 
     protected void setColor(int color) {

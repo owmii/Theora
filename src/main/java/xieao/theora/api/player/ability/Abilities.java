@@ -5,12 +5,12 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Abilities implements INBTSerializable<NBTTagCompound> {
 
-    private final HashMap<Ability, NBTTagCompound> abilityMap = new HashMap<>();
+    private final TreeMap<Ability, NBTTagCompound> abilityMap = new TreeMap<>((a0, a1) -> a0 != null && a1 != null ? a0.getRegistryString().compareTo(a1.getRegistryString()) : 1);
 
     public static final String TAG_STATUS = "abilityStatus";
     public static final String TAG_LEVEL = "abilityLevel";
@@ -143,7 +143,9 @@ public class Abilities implements INBTSerializable<NBTTagCompound> {
         }
     }
 
-    public HashMap<Ability, NBTTagCompound> getAbilityMap() {
+    public TreeMap<Ability, NBTTagCompound> getAbilityMap() {
         return abilityMap;
     }
+
+
 }

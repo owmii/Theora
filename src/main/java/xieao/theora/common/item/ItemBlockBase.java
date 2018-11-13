@@ -3,6 +3,7 @@ package xieao.theora.common.item;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -15,6 +16,17 @@ public class ItemBlockBase extends ItemBlock implements IGenericItem {
         setTileEntityItemStackRenderer(
                 new ItemRenderer()
         );
+    }
+
+    @Override
+    public String getUnlocalizedName(ItemStack stack) {
+        if (getSubTypeValues().length > 0) {
+            int meta = stack.getMetadata();
+            return super.getUnlocalizedName() + "." + getSubTypeValues()[meta]
+                    .toString().toLowerCase().replace("_", ".");
+        } else {
+            return super.getUnlocalizedName(stack);
+        }
     }
 
     @Override

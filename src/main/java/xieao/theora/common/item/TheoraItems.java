@@ -16,17 +16,21 @@ public class TheoraItems {
     public static final Set<Item> ITEMS = new HashSet<>();
 
     public static final ItemShroomBit SHROOM_BIT;
+    public static final ItemClearSlime CLEAR_SLIME;
     public static final ItemWand WAND;
     public static final ItemVial VIAL;
     public static final ItemPigCoin PIG_COIN;
     public static final ItemPigCoinBag PIG_COIN_BAG;
+    public static final ItemWitherTear WITHER_TEAR;
 
     static {
         SHROOM_BIT = register(new ItemShroomBit(), "shroombit");
+        CLEAR_SLIME = register(new ItemClearSlime(), "clearslime");
         WAND = register(new ItemWand(), "wand");
         VIAL = register(new ItemVial(), "vial");
         PIG_COIN = register(new ItemPigCoin(), "pigcoin");
         PIG_COIN_BAG = register(new ItemPigCoinBag(), "pigcoinbag");
+        WITHER_TEAR = register(new ItemWitherTear(), "withertear");
 
         for (Block block : TheoraBlocks.BLOCKS) {
             if (block instanceof IGenericBlock) {

@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import xieao.theora.Theora;
 import xieao.theora.common.block.binding.BlockBindingCenter;
 import xieao.theora.common.block.binding.BlockBindingRing;
+import xieao.theora.common.block.cauldron.BlockCauldron;
 import xieao.theora.common.block.fermenting.BlockFermentingJar;
 import xieao.theora.common.block.misc.BlockShroom;
 
@@ -21,14 +22,16 @@ public class TheoraBlocks {
     public static final Set<Block> BLOCKS = new HashSet<>();
 
     public static final BlockShroom SHROOM;
+    public static final BlockCauldron CAULDRON;
     public static final BlockFermentingJar FERMENTING_JAR;
-    public static final BlockBindingCenter BINDING_STONE;
+    public static final BlockBindingCenter BINDING_CENTER;
     public static final BlockBindingRing BINDING_RING;
 
     static {
         SHROOM = register(new BlockShroom(), "shroom");
+        CAULDRON = register(new BlockCauldron(), "cauldron");
         FERMENTING_JAR = register(new BlockFermentingJar(), "fermentingJar");
-        BINDING_STONE = register(new BlockBindingCenter(), "binding");
+        BINDING_CENTER = register(new BlockBindingCenter(), "binding");
         BINDING_RING = register(new BlockBindingRing(), "bindingring");
 
         for (Block block : BLOCKS) {

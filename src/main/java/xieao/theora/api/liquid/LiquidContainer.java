@@ -38,6 +38,14 @@ public class LiquidContainer implements IliquidContainer {
         this.liquidSlots[index] = liquidSlot;
     }
 
+    public void addLiquidSlots(LiquidSlot liquidSlot, int count) {
+        LiquidSlot[] slots = new LiquidSlot[count];
+        for (int i = 0; i < slots.length; i++) {
+            slots[i] = liquidSlot;
+        }
+        this.liquidSlots = slots;
+    }
+
     public void addLiquidSlots(LiquidSlot... liquidSlots) {
         List<LiquidSlot> slots = new ArrayList<>(Arrays.asList(this.liquidSlots));
         slots.addAll(Arrays.asList(liquidSlots));

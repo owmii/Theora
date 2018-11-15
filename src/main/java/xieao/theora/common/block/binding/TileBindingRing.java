@@ -46,7 +46,7 @@ public class TileBindingRing extends TileInvBase {
                     int[] arrs = CENTR_OFFSETS[i];
                     BlockPos centerPos = getPos().add(arrs[0], 0, arrs[1]);
                     if (getWorld().isAirBlock(centerPos)) {
-                        getWorld().setBlockState(centerPos, TheoraBlocks.BINDING_STONE.getDefaultState(), 2);
+                        getWorld().setBlockState(centerPos, TheoraBlocks.BINDING_CENTER.getDefaultState(), 2);
                         TileEntity tileEntity = getWorld().getTileEntity(centerPos);
                         if (tileEntity instanceof TileBindingCenter) {
                             TileBindingCenter bindingStone = (TileBindingCenter) tileEntity;

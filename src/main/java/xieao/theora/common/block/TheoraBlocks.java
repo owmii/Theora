@@ -11,6 +11,7 @@ import xieao.theora.common.block.binding.BlockBindingCenter;
 import xieao.theora.common.block.binding.BlockBindingRing;
 import xieao.theora.common.block.cauldron.BlockCauldron;
 import xieao.theora.common.block.fermenting.BlockFermentingJar;
+import xieao.theora.common.block.misc.BlockEmber;
 import xieao.theora.common.block.misc.BlockShroom;
 
 import java.util.HashSet;
@@ -23,6 +24,7 @@ public class TheoraBlocks {
 
     public static final BlockShroom SHROOM;
     public static final BlockCauldron CAULDRON;
+    public static final BlockEmber EMBER;
     public static final BlockFermentingJar FERMENTING_JAR;
     public static final BlockBindingCenter BINDING_CENTER;
     public static final BlockBindingRing BINDING_RING;
@@ -30,6 +32,7 @@ public class TheoraBlocks {
     static {
         SHROOM = register(new BlockShroom(), "shroom");
         CAULDRON = register(new BlockCauldron(), "cauldron");
+        EMBER = register(new BlockEmber(), "ember");
         FERMENTING_JAR = register(new BlockFermentingJar(), "fermentingJar");
         BINDING_CENTER = register(new BlockBindingCenter(), "binding");
         BINDING_RING = register(new BlockBindingRing(), "bindingring");

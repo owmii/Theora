@@ -18,10 +18,7 @@ import xieao.theora.common.entity.TheoraEntities;
 import xieao.theora.common.item.TheoraItems;
 import xieao.theora.common.lib.config.Config;
 import xieao.theora.common.liquid.TheoraLiquids;
-import xieao.theora.common.recipe.BindingRecipes;
-import xieao.theora.common.recipe.FermentingRecipes;
-import xieao.theora.common.recipe.LiquidInteractRecipes;
-import xieao.theora.common.recipe.RecipeHandler;
+import xieao.theora.common.recipe.*;
 import xieao.theora.common.trade.PigZomieTrades;
 import xieao.theora.common.world.gen.WorldGenShrooms;
 import xieao.theora.network.GuiHandler;
@@ -39,6 +36,7 @@ public class CommonProxy implements IProxy {
         PlayerDataCapability.register();
         LiquidContainerCapability.register();
 
+        TheoraAPI.INSTANCE.register(new CauldronRecipes());
         TheoraAPI.INSTANCE.register(new FermentingRecipes());
         TheoraAPI.INSTANCE.register(new LiquidInteractRecipes());
         TheoraAPI.INSTANCE.register(new BindingRecipes());
@@ -59,7 +57,7 @@ public class CommonProxy implements IProxy {
 
     @Override
     public void postInit(FMLPostInitializationEvent event) {
-        RecipeHandler.initRecipes();
-        PigZomieTrades.post();
+        RecipeHandler.sortRecipes();
+        PigZomieTrades.postInit();
     }
 }

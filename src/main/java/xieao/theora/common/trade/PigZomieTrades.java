@@ -42,7 +42,7 @@ public class PigZomieTrades {
         PigZombieTrade.register(new PigZombieTrade(new ItemStack(Blocks.SOUL_SAND, 16), 5, PigZombieTrade.TradRarity.NORMAL), "state.redmushroom");
     }
 
-    public static void post() {
+    public static void postInit() {
         for (Map.Entry<ResourceLocation, PigZombieTrade> entry : PigZombieTrade.REGISTRY.entrySet()) {
             if (!entry.getValue().isEmpty()) {
                 PigZombieTradeHandler.TRADE_ENTRIES.add(new PigZombieTradeHandler.TradeEntry(entry.getKey(),

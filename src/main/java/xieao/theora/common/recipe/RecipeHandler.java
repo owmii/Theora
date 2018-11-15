@@ -1,5 +1,6 @@
 package xieao.theora.common.recipe;
 
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -8,6 +9,8 @@ import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.recipe.IRecipeRegistry;
 import xieao.theora.api.recipe.binding.IBindingRecipe;
 import xieao.theora.api.recipe.binding.IBindingRegistry;
+import xieao.theora.api.recipe.cauldron.ICauldronRecipe;
+import xieao.theora.api.recipe.cauldron.ICauldronRegistry;
 import xieao.theora.api.recipe.fermentingjar.IFermentingRecipe;
 import xieao.theora.api.recipe.fermentingjar.IFermentingRegistry;
 import xieao.theora.api.recipe.liquidinteract.ILiquidInteractRecipe;
@@ -20,13 +23,17 @@ import java.util.Set;
 
 public class RecipeHandler {
 
+    public static final Set<ICauldronRecipe> CAULDRON_RECIPES = new HashSet<>();
     public static final Set<IFermentingRecipe> FERMENTING_RECIPES = new HashSet<>();
     public static final Set<ILiquidInteractRecipe> LIQUID_INTERACT_RECIPES = new HashSet<>();
     public static final Set<IBindingRecipe> BINDING_STONE_RECIPES = new HashSet<>();
 
-    public static void initRecipes() {
+    public static void sortRecipes() {
         for (IRecipeRegistry registry : TheoraAPI.INSTANCE.getRecipeRegistries()) {
-            if (registry instanceof IFermentingRegistry) {
+            if (registry instanceof ICauldronRegistry) {
+                ICauldronRegistry cauldronRegistry = (ICauldronRegistry) registry;
+                CAULDRON_RECIPES.addAll(cauldronRegistry.getRecipes());
+            } else if (registry instanceof IFermentingRegistry) {
                 IFermentingRegistry fermentingRegistry = (IFermentingRegistry) registry;
                 FERMENTING_RECIPES.addAll(fermentingRegistry.getRecipes());
             } else if (registry instanceof ILiquidInteractRegistry) {
@@ -37,6 +44,16 @@ public class RecipeHandler {
                 BINDING_STONE_RECIPES.addAll(bindingStoneRegistry.getRecipes());
             }
         }
+    }
+
+    @Nullable
+    public static ICauldronRecipe findCauldronRecipe(IInventory inventory, World world, BlockPos pos) {
+        for (ICauldronRecipe recipe : CAULDRON_RECIPES) {
+            if (recipe.matches(inventory, world, pos)) {
+                return recipe;
+            }
+        }
+        return null;
     }
 
     @Nullable

@@ -21,12 +21,14 @@ import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidUtil;
 import xieao.theora.api.item.wand.IWand;
 import xieao.theora.api.item.wand.IWandable;
+import xieao.theora.api.recipe.cauldron.ICauldronRecipe;
 import xieao.theora.common.block.BlockBase;
 import xieao.theora.common.block.IHeatedBlock;
 import xieao.theora.common.block.TheoraBlocks;
 import xieao.theora.common.item.IGenericItem;
 import xieao.theora.common.item.ItemBlockBase;
 import xieao.theora.common.item.ItemCauldron;
+import xieao.theora.common.recipe.RecipeHandler;
 
 import javax.annotation.Nullable;
 
@@ -62,7 +64,9 @@ public class BlockCauldron extends BlockBase implements IHeatedBlock, IWandable,
                 FluidActionResult fluidActionResult = FluidUtil.tryEmptyContainer(held, cauldron.fluidTank, Fluid.BUCKET_VOLUME, playerIn, true);
                 ItemStack stack = fluidActionResult.getResult();
                 if (!stack.isEmpty()) {
-                    playerIn.setHeldItem(hand, stack);
+                    if (!playerIn.isCreative()) {
+                        playerIn.setHeldItem(hand, stack);
+                    }
                     flag = true;
                 } else {
                     FluidActionResult fluidActionResult1 = FluidUtil.tryFillContainer(held, cauldron.fluidTank, Fluid.BUCKET_VOLUME, playerIn, true);
@@ -88,9 +92,12 @@ public class BlockCauldron extends BlockBase implements IHeatedBlock, IWandable,
         TileEntity tileEntity = world.getTileEntity(pos);
         if (tileEntity instanceof TileCauldron) {
             TileCauldron cauldron = (TileCauldron) tileEntity;
-            cauldron.started = true;
-            cauldron.syncNBTData();
-            return true;
+            ICauldronRecipe recipe = RecipeHandler.findCauldronRecipe(cauldron, world, pos);
+            if (cauldron.hasWater() && cauldron.waterHeating >= 100 && recipe != null) {
+                cauldron.started = true;
+                cauldron.syncNBTData();
+                return true;
+            }
         }
         return false;
     }

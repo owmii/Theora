@@ -41,7 +41,7 @@ public class TileCauldron extends TileInvBase implements ITickable {
     public boolean heated;
 
     private final int waterMaxHeat = 100;
-    private int waterHeating;
+    public int waterHeating;
 
     public final int boilingTime = 240;
     public int boiling;
@@ -49,6 +49,7 @@ public class TileCauldron extends TileInvBase implements ITickable {
 
     public int[] nextLiquidColors = new int[2];
     public float blend;
+    public float fill;
 
     public TileCauldron() {
         this.liquidContainer = new LiquidContainer();
@@ -65,6 +66,8 @@ public class TileCauldron extends TileInvBase implements ITickable {
         this.waterHeating = nbt.getInteger("waterHeating");
         this.boiling = nbt.getInteger("boiling");
         this.blend = (float) this.boiling;
+        LiquidSlot liquidSlot = this.liquidContainer.getLiquidSlot(0);
+        this.fill = liquidSlot.getStored();
         this.heated = nbt.getBoolean("heated");
         this.started = nbt.getBoolean("started");
         this.nextLiquidColors = nbt.getIntArray("nextLiquidColors");
@@ -86,42 +89,59 @@ public class TileCauldron extends TileInvBase implements ITickable {
     public void update() {
         if (isServerWorld()) {
             if (hasWater()) {
-                if (this.heated && this.waterHeating < this.waterMaxHeat) {
-                    this.waterHeating++;
-                } else {
-                    LiquidSlot liquidSlot = this.liquidContainer.getLiquidSlot(0);
-                    if (liquidSlot.isEmpty()) {
-                        ICauldronRecipe recipe = RecipeHandler.findCauldronRecipe(this, getWorld(), getPos());
-                        if (recipe != null && this.started) {
-                            Liquid liquid = recipe.getLiquid();
-                            int dColor = liquid.getDarkColor();
-                            int bColor = liquid.getBrightColor();
-                            if (this.nextLiquidColors[0] != dColor && this.nextLiquidColors[1] != bColor) {
-                                this.nextLiquidColors[0] = dColor;
-                                this.nextLiquidColors[1] = bColor;
-                                syncNBTData();
-                            }
-                            if (this.boiling++ >= this.boilingTime) {
-                                for (int i = 0; i < getSizeInventory(); i++) {
-                                    ItemStack stack = getStackInSlot(i);
-                                    stack.shrink(1);
+                if (this.heated) {
+                    if (this.waterHeating < this.waterMaxHeat) {
+                        this.waterHeating++;
+                    } else {
+                        LiquidSlot liquidSlot = this.liquidContainer.getLiquidSlot(0);
+                        if (liquidSlot.isEmpty()) {
+                            ICauldronRecipe recipe = RecipeHandler.findCauldronRecipe(this, getWorld(), getPos());
+                            if (recipe != null && this.started) {
+                                Liquid liquid = recipe.getLiquid();
+                                int dColor = liquid.getDarkColor();
+                                int bColor = liquid.getBrightColor();
+                                if (this.nextLiquidColors[0] != dColor && this.nextLiquidColors[1] != bColor) {
+                                    this.nextLiquidColors[0] = dColor;
+                                    this.nextLiquidColors[1] = bColor;
+                                    syncNBTData();
                                 }
-                                liquidSlot.setLiquid(liquid);
-                                liquidSlot.setFull();
-                                this.fluidTank.drainInternal(Fluid.BUCKET_VOLUME, true);
-                                this.boiling = 0;
-                                this.blend = 0;
-                                this.started = false;
-                                syncNBTData();
+                                if (this.boiling++ >= this.boilingTime) {
+                                    for (int i = 0; i < getSizeInventory(); i++) {
+                                        ItemStack stack = getStackInSlot(i);
+                                        stack.shrink(1);
+                                    }
+                                    liquidSlot.setLiquid(liquid);
+                                    liquidSlot.setFull();
+                                    this.fluidTank.drainInternal(Fluid.BUCKET_VOLUME, true);
+                                    this.boiling = 0;
+                                    this.blend = 0;
+                                    this.started = false;
+                                    syncNBTData();
+                                }
                             }
                         }
                     }
                 }
             }
         } else {
+            LiquidSlot liquidSlot = this.liquidContainer.getLiquidSlot(0);
+            float stored = liquidSlot.getStored();
             this.tickCount++;
-            if (started) {
+            if (this.started && hasWater()) {
                 this.blend++;
+            }
+            for (int i = 0; this.fill != stored && i < 30; i++) {
+                if (this.fill < stored) {
+                    this.fill++;
+                    if (this.fill > stored) {
+                        this.fill = stored;
+                    }
+                } else if (this.fill > stored) {
+                    this.fill--;
+                    if (this.fill < 0) {
+                        this.fill = 0;
+                    }
+                }
             }
         }
     }

@@ -1,7 +1,11 @@
 package xieao.theora.common.block.orb;
 
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.util.Constants;
 import xieao.theora.api.liquid.IliquidContainer;
 import xieao.theora.api.liquid.LiquidSlot;
 import xieao.theora.api.liquid.LiquidSlot.TransferType;
@@ -17,6 +21,29 @@ import static xieao.theora.api.liquid.LiquidSlot.TransferType.*;
 public class TileOrb extends TileBase implements ITickable {
 
     private final Set<BlockPos> linkedPositions = new HashSet<>();
+
+    @Override
+    public void readNBT(NBTTagCompound nbt) {
+        super.readNBT(nbt);
+        NBTTagList tagList = nbt.getTagList("linkedPositions", Constants.NBT.TAG_COMPOUND);
+        for (int i = 0; i < tagList.tagCount(); i++) {
+            NBTTagCompound compound = tagList.getCompoundTagAt(i);
+            BlockPos pos = NBTUtil.getPosFromTag(compound.getCompoundTag("linkedPos"));
+            this.linkedPositions.add(pos);
+        }
+    }
+
+    @Override
+    public void writeNBT(NBTTagCompound nbt) {
+        super.writeNBT(nbt);
+        NBTTagList tagList = new NBTTagList();
+        for (BlockPos pos : this.linkedPositions) {
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setTag("linkedPos", NBTUtil.createPosTag(pos));
+            tagList.appendTag(compound);
+        }
+        nbt.setTag("linkedPositions", tagList);
+    }
 
     @Override
     public void update() {

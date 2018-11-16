@@ -41,7 +41,7 @@ public class TileBindingCenter extends TileBase implements ITickable {
     public TileBindingCenter() {
         this.liquidContainer = new LiquidContainer();
         this.liquidContainer.addLiquidSlots(
-                new LiquidSlot(TheoraLiquids.GLIOPHORIN, true, 10000.0F, 0.0F, 250.0F, LiquidSlot.TransferType.RECEIVE)
+                new LiquidSlot(TheoraLiquids.GLIOPHORIN, true, 10000.0F, 0.0F, 100.0F, LiquidSlot.TransferType.RECEIVE)
         );
     }
 

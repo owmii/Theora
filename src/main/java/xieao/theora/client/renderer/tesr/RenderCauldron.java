@@ -6,7 +6,6 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import xieao.theora.Theora;
-import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.liquid.LiquidSlot;
 import xieao.theora.client.helper.ColorHelper;
 import xieao.theora.client.helper.RendererHelper;
@@ -31,13 +30,12 @@ public class RenderCauldron extends TESRBase<TileCauldron> {
             RendererHelper.render(TheoraBlocks.EMBER.getDefaultState(), mc.world, BlockPos.ORIGIN);
         }
         LiquidSlot liquidTank = te.liquidContainer.getLiquidSlot(0);
-        Liquid liquid = liquidTank.getLiquid();
         boolean hasWater = te.hasWater();
-        if (!liquidTank.isEmpty() || hasWater) {
+        if (te.fill > 0 || hasWater) {
             float blend = te.blend / (float) te.boilingTime;
-            int color0 = hasWater ? ColorHelper.blend(0x008CEE, te.nextLiquidColors[0], blend) : liquid.getDarkColor();
-            int color1 = hasWater ? ColorHelper.blend(0x7cf8ff, te.nextLiquidColors[1], blend) : liquid.getBrightColor();
-            float fill = hasWater ? 0.72F : (liquidTank.getStored() * (0.72F - 0.35F)) / liquidTank.getCapacity() + 0.35F;
+            int color0 = hasWater ? ColorHelper.blend(0x008CEE, te.nextLiquidColors[0], blend) : te.nextLiquidColors[0];
+            int color1 = hasWater ? ColorHelper.blend(0x7cf8ff, te.nextLiquidColors[1], blend) : te.nextLiquidColors[1];
+            float fill = hasWater ? 0.72F : (te.fill * (0.72F - 0.35F)) / liquidTank.getCapacity() + 0.35F;
             GlStateManager.pushMatrix();
             GlStateManager.translate(0.5D, fill, 0.5D);
             ColorHelper.glColor(color1);

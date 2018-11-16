@@ -29,7 +29,7 @@ public class RecipeHandler {
     public static final Set<IBindingRecipe> BINDING_STONE_RECIPES = new HashSet<>();
 
     public static void sortRecipes() {
-        for (IRecipeRegistry registry : TheoraAPI.INSTANCE.getRecipeRegistries()) {
+        for (IRecipeRegistry registry : TheoraAPI.API.getRecipeRegistries()) {
             if (registry instanceof ICauldronRegistry) {
                 ICauldronRegistry cauldronRegistry = (ICauldronRegistry) registry;
                 CAULDRON_RECIPES.addAll(cauldronRegistry.getRecipes());

@@ -13,9 +13,7 @@ import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.liquid.LiquidContainerCapability;
 import xieao.theora.api.player.data.PlayerDataCapability;
 import xieao.theora.common.ability.TheoraAbilities;
-import xieao.theora.common.block.TheoraBlocks;
 import xieao.theora.common.entity.TheoraEntities;
-import xieao.theora.common.item.TheoraItems;
 import xieao.theora.common.lib.config.Config;
 import xieao.theora.common.liquid.TheoraLiquids;
 import xieao.theora.common.recipe.*;
@@ -24,22 +22,23 @@ import xieao.theora.common.world.gen.WorldGenShrooms;
 import xieao.theora.network.GuiHandler;
 import xieao.theora.network.TheoraNetwork;
 
+import static xieao.theora.common.block.TheoraBlocks.BLOCKS;
+import static xieao.theora.common.item.TheoraItems.ITEMS;
+
 public class CommonProxy implements IProxy {
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
-        for (Item item : TheoraItems.ITEMS)
-            ForgeRegistries.ITEMS.register(item);
-        for (Block block : TheoraBlocks.BLOCKS)
-            ForgeRegistries.BLOCKS.register(block);
+        ForgeRegistries.ITEMS.registerAll(ITEMS.toArray(new Item[0]));
+        ForgeRegistries.BLOCKS.registerAll(BLOCKS.toArray(new Block[0]));
         TheoraNetwork.registerPackets();
         PlayerDataCapability.register();
         LiquidContainerCapability.register();
 
-        TheoraAPI.INSTANCE.register(new CauldronRecipes());
-        TheoraAPI.INSTANCE.register(new FermentingRecipes());
-        TheoraAPI.INSTANCE.register(new LiquidInteractRecipes());
-        TheoraAPI.INSTANCE.register(new BindingRecipes());
+        TheoraAPI.API.register(new CauldronRecipes());
+        TheoraAPI.API.register(new FermentingRecipes());
+        TheoraAPI.API.register(new LiquidInteractRecipes());
+        TheoraAPI.API.register(new BindingRecipes());
 
         TheoraLiquids.register();
         TheoraAbilities.register();

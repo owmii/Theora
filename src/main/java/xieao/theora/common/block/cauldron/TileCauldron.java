@@ -90,11 +90,13 @@ public class TileCauldron extends TileInvBase implements ITickable {
                     LiquidSlot liquidSlot = this.liquidContainer.getLiquidSlot(0);
                     if (liquidSlot.isEmpty()) {
                         ICauldronRecipe recipe = RecipeHandler.findCauldronRecipe(this, getWorld(), getPos());
-                        if (recipe != null) {
+                        if (recipe != null && this.started) {
                             Liquid liquid = recipe.getLiquid();
-                            if (this.nextLiquidColors[0] == 0) {
-                                this.nextLiquidColors[0] = liquid.getDarkColor();
-                                this.nextLiquidColors[1] = liquid.getBrightColor();
+                            int dColor = liquid.getDarkColor();
+                            int bColor = liquid.getBrightColor();
+                            if (this.nextLiquidColors[0] != dColor && this.nextLiquidColors[1] != bColor) {
+                                this.nextLiquidColors[0] = dColor;
+                                this.nextLiquidColors[1] = bColor;
                                 syncNBTData();
                             }
                             if (this.boiling++ >= this.boilingTime) {
@@ -108,13 +110,16 @@ public class TileCauldron extends TileInvBase implements ITickable {
                                 this.boiling = 0;
                                 this.blend = 0;
                                 this.started = false;
-                                this.nextLiquidColors[0] = 0;
-                                this.nextLiquidColors[1] = 0;
                                 syncNBTData();
                             }
                         }
                     }
                 }
+            }
+        } else {
+            this.tickCount++;
+            if (started) {
+                this.blend++;
             }
         }
     }

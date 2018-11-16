@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class TheoraAPI {
 
-    public static final TheoraAPI INSTANCE = new TheoraAPI();
+    public static final TheoraAPI API = new TheoraAPI();
     private static final Set<IRecipeRegistry> RECIPE_REGISTRIES = new HashSet<>();
 
     @Nullable

@@ -14,19 +14,23 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidUtil;
+import xieao.theora.api.item.wand.IWand;
+import xieao.theora.api.item.wand.IWandable;
 import xieao.theora.common.block.BlockBase;
 import xieao.theora.common.block.IHeatedBlock;
+import xieao.theora.common.block.TheoraBlocks;
 import xieao.theora.common.item.IGenericItem;
 import xieao.theora.common.item.ItemBlockBase;
 import xieao.theora.common.item.ItemCauldron;
 
 import javax.annotation.Nullable;
 
-public class BlockCauldron extends BlockBase implements IHeatedBlock, ITileEntityProvider {
+public class BlockCauldron extends BlockBase implements IHeatedBlock, IWandable, ITileEntityProvider {
 
     public BlockCauldron() {
         super(Material.ROCK);
@@ -38,6 +42,11 @@ public class BlockCauldron extends BlockBase implements IHeatedBlock, ITileEntit
     @Override
     public <T extends ItemBlockBase & IGenericItem> T getItemBlock() {
         return (T) new ItemCauldron(this);
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.8D, 0.9D);
     }
 
     @Override
@@ -73,8 +82,15 @@ public class BlockCauldron extends BlockBase implements IHeatedBlock, ITileEntit
     }
 
     @Override
-    public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World worldIn, BlockPos pos) {
-        return super.getSelectedBoundingBox(state, worldIn, pos);
+    public boolean performWand(World world, BlockPos pos, EntityPlayer player, EnumHand hand, IWand wand, @Nullable EnumFacing facing) {
+        TileEntity tileEntity = world.getTileEntity(pos);
+        if (tileEntity instanceof TileCauldron) {
+            TileCauldron cauldron = (TileCauldron) tileEntity;
+            cauldron.started = true;
+            cauldron.syncNBTData();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -102,6 +118,18 @@ public class BlockCauldron extends BlockBase implements IHeatedBlock, ITileEntit
     @Override
     public boolean isOpaqueCube(IBlockState state) {
         return false;
+    }
+
+    @Override
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+        TileEntity tileEntity = world.getTileEntity(pos);
+        if (tileEntity instanceof TileCauldron) {
+            TileCauldron cauldron = (TileCauldron) tileEntity;
+            if (heated(world, pos)) {
+                world.setBlockState(pos, TheoraBlocks.EMBER.getDefaultState(), 2);
+            }
+        }
+        super.breakBlock(world, pos, state);
     }
 
     @Override

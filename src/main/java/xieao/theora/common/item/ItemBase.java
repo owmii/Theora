@@ -32,8 +32,13 @@ public class ItemBase extends Item implements IGenericItem {
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         if (isInCreativeTab(tab)) {
+            boolean flag = false;
             for (Enum<?> type : getSubTypeValues()) {
                 items.add(new ItemStack(this, 1, type.ordinal()));
+                flag = true;
+            }
+            if (!flag) {
+                items.add(new ItemStack(this));
             }
         }
     }

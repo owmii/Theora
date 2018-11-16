@@ -2,12 +2,15 @@ package xieao.theora.client.renderer.tesr;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import xieao.theora.Theora;
 import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.liquid.LiquidSlot;
 import xieao.theora.client.helper.ColorHelper;
 import xieao.theora.client.helper.RendererHelper;
+import xieao.theora.common.block.TheoraBlocks;
 import xieao.theora.common.block.cauldron.TileCauldron;
 
 public class RenderCauldron extends TESRBase<TileCauldron> {
@@ -23,10 +26,10 @@ public class RenderCauldron extends TESRBase<TileCauldron> {
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         RenderHelper.disableStandardItemLighting();
-//        if (te.heated()) {
-//            bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-//            RendererHelper.render(te.getHeatState(), mc.world, BlockPos.ORIGIN);
-//        }
+        if (te.heated) {
+            bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+            RendererHelper.render(TheoraBlocks.EMBER.getDefaultState(), mc.world, BlockPos.ORIGIN);
+        }
         LiquidSlot liquidTank = te.liquidContainer.getLiquidSlot(0);
         Liquid liquid = liquidTank.getLiquid();
         boolean hasWater = te.hasWater();

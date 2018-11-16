@@ -41,7 +41,7 @@ public class TileBindingCenter extends TileBase implements ITickable {
     public TileBindingCenter() {
         this.liquidContainer = new LiquidContainer();
         this.liquidContainer.addLiquidSlots(
-                new LiquidSlot(TheoraLiquids.LEQUEN, true, 10000.0F, 0.0F, 250.0F, LiquidSlot.TransferType.RECEIVE)
+                new LiquidSlot(TheoraLiquids.GLIOPHORIN, true, 10000.0F, 0.0F, 250.0F, LiquidSlot.TransferType.RECEIVE)
         );
     }
 
@@ -69,6 +69,9 @@ public class TileBindingCenter extends TileBase implements ITickable {
 
     @Override
     public void update() {
+        if (getWorld().getTotalWorldTime() % 10 == 0) {
+            System.out.println(this.liquidContainer.getLiquidSlot(0).getStored());
+        }
         if (isServerWorld()) {
             if (this.buildTicks > 0) {
                 this.buildTicks--;

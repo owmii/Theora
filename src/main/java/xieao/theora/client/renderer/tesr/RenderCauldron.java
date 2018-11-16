@@ -48,7 +48,9 @@ public class RenderCauldron extends TESRBase<TileCauldron> {
             GlStateManager.popMatrix();
         }
         RenderHelper.enableStandardItemLighting();
-        RendererHelper.renderRotatingItems(te.getStacks(), 0.5F, ticks * 0.8F, 0.7D, 0.3D);
+        if (!te.started) {
+            RendererHelper.renderRotatingItems(te.getStacks(), 0.5F, ticks * 0.8F, 0.7D, 0.3D);
+        }
         GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }

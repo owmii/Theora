@@ -8,7 +8,6 @@ import xieao.theora.common.block.IGenericBlock;
 import xieao.theora.common.block.TheoraBlocks;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 public class TheoraItems {
@@ -36,7 +35,6 @@ public class TheoraItems {
             if (block instanceof IGenericBlock) {
                 IGenericBlock block1 = (IGenericBlock) block;
                 ResourceLocation location = block.getRegistryName();
-                Objects.requireNonNull(location);
                 register(block1.getItemBlock(), location.toString());
             }
         }

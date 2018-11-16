@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 
 public class BlockEmber extends BlockBase {
 
-    private static final AxisAlignedBB BB = new AxisAlignedBB(0.4D, 0.0D, 0.4D, 0.04D, 0.8D, 0.4D);
+    private static final AxisAlignedBB BB = new AxisAlignedBB(0.62D, 0.0D, 0.62D, 0.38D, 0.06D, 0.38D);
 
     public BlockEmber() {
         super(Material.ROCK);

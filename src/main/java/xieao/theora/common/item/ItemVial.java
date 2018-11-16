@@ -26,7 +26,7 @@ public class ItemVial extends ItemBase implements IColoredItem {
 
     public ItemVial() {
         addPropertyOverride(new ResourceLocation("stored"), (stack, world, entity) -> {
-            IliquidContainer.Item vial = LiquidUtil.getILiquidContainerItem(stack);
+            IliquidContainer.Item vial = LiquidUtil.getContainerItem(stack);
             if (vial != null) {
                 LiquidSlot LiquidSlot = vial.getLiquidSlot(0);
                 return LiquidSlot.getStored() / LiquidSlot.getCapacity();
@@ -40,7 +40,7 @@ public class ItemVial extends ItemBase implements IColoredItem {
         if (isInCreativeTab(tab)) {
             for (Liquid liquid : Liquid.REGISTRY.values()) {
                 ItemStack stack = new ItemStack(this);
-                IliquidContainer.Item vial = LiquidUtil.getILiquidContainerItem(stack);
+                IliquidContainer.Item vial = LiquidUtil.getContainerItem(stack);
                 if (vial != null) {
                     LiquidSlot[] liquidSlots = vial.getLiquidSlots();
                     if (liquidSlots.length < 1) {
@@ -62,7 +62,7 @@ public class ItemVial extends ItemBase implements IColoredItem {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        IliquidContainer.Item vial = LiquidUtil.getILiquidContainerItem(stack);
+        IliquidContainer.Item vial = LiquidUtil.getContainerItem(stack);
         if (vial != null) {
             LiquidSlot LiquidSlot = vial.getLiquidSlot(0);
             if (!LiquidSlot.getLiquid().isEmpty()) {
@@ -75,7 +75,7 @@ public class ItemVial extends ItemBase implements IColoredItem {
     @Override
     public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
-        IliquidContainer.Item vial = LiquidUtil.getILiquidContainerItem(stack);
+        IliquidContainer.Item vial = LiquidUtil.getContainerItem(stack);
         if (vial != null) {
             LiquidSlot vialSlot = vial.getLiquidSlot(0);
             ILiquidInteractRecipe recipe = RecipeHandler.findLiquidInteractRecipe(vialSlot.getLiquid(), vialSlot.getStored(), world, pos);
@@ -89,7 +89,7 @@ public class ItemVial extends ItemBase implements IColoredItem {
                     return EnumActionResult.SUCCESS;
                 }
             }
-            IliquidContainer liquidContainer = LiquidUtil.getILiquidContainer(world, pos, side);
+            IliquidContainer liquidContainer = LiquidUtil.getContainer(world, pos, side);
             if (liquidContainer != null) {
                 if (!vialSlot.isEmpty()) {
                     for (LiquidSlot liquidSlot : liquidContainer.getLiquidSlots()) {
@@ -132,7 +132,7 @@ public class ItemVial extends ItemBase implements IColoredItem {
     @SideOnly(Side.CLIENT)
     public IItemColor getItemColor() {
         return (stack, tintIndex) -> {
-            IliquidContainer.Item vial = LiquidUtil.getILiquidContainerItem(stack);
+            IliquidContainer.Item vial = LiquidUtil.getContainerItem(stack);
             if (vial != null) {
                 LiquidSlot LiquidSlot = vial.getLiquidSlot(0);
                 Liquid liquid = LiquidSlot.getLiquid();

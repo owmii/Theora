@@ -32,6 +32,8 @@ import javax.annotation.Nullable;
 
 public class BlockCauldron extends BlockBase implements IHeatedBlock, IWandable, ITileEntityProvider {
 
+    private static final AxisAlignedBB BB = new AxisAlignedBB(0.15D, 0.0D, 0.15D, 0.85D, 0.75D, 0.85D);
+
     public BlockCauldron() {
         super(Material.ROCK);
         setSoundType(SoundType.METAL);
@@ -46,7 +48,7 @@ public class BlockCauldron extends BlockBase implements IHeatedBlock, IWandable,
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.8D, 0.9D);
+        return BB;
     }
 
     @Override
@@ -128,6 +130,8 @@ public class BlockCauldron extends BlockBase implements IHeatedBlock, IWandable,
             if (heated(world, pos)) {
                 world.setBlockState(pos, TheoraBlocks.EMBER.getDefaultState(), 2);
             }
+            InventoryHelper.dropInventoryItems(world, pos, cauldron);
+            world.updateComparatorOutputLevel(pos, this);
         }
         super.breakBlock(world, pos, state);
     }

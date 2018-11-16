@@ -39,7 +39,7 @@ public class LiquidSlot {
     }
 
     public void drain(LiquidSlot other, boolean override, boolean doDrain) {
-        if (!isEmpty() && !other.isFull()) {
+        if (!isEmpty() && !other.isFull() && this.liquid.equals(other.liquid)) {
             float amount = Math.min(this.stored, other.capacity - other.stored);
             float transfer = override ? amount : Math.min(this.transfer, other.transfer);
             float toDrain = Math.min(amount, transfer);
@@ -54,7 +54,7 @@ public class LiquidSlot {
     }
 
     public void fill(LiquidSlot other, boolean override) {
-        if (!isFull() && !other.isEmpty()) {
+        if (!isFull() && !other.isEmpty() && this.liquid.equals(other.liquid)) {
             float amount = Math.min(other.stored, this.capacity - this.stored);
             float transfer = override ? amount : Math.min(other.transfer, this.transfer);
             float toFill = Math.min(amount, transfer);

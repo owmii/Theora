@@ -1,5 +1,7 @@
 package xieao.theora.common.block.cauldron;
 
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -122,6 +124,16 @@ public class TileCauldron extends TileInvBase implements ITickable {
                 this.blend++;
             }
         }
+    }
+
+    @Override
+    public boolean collectItems(EntityItem entityItem, int amount, int... excludedSlots) {
+        return hasWater() && super.collectItems(entityItem, amount, excludedSlots);
+    }
+
+    @Override
+    public boolean takeStack(EntityPlayer player, EnumFacing facing) {
+        return !this.started && super.takeStack(player, facing);
     }
 
     public boolean hasWater() {

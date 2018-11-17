@@ -72,7 +72,7 @@ public class ItemWand extends ItemBase implements IWand {
         int mode = NBTHelper.getInteger(stack, "mode");
         tooltip.add("Mode: " + (mode == 0 ? "Normal" : "Link"));
         BlockPos orbPos = NBTUtil.getPosFromTag(NBTHelper.getCompoundTag(stack, "orbPos"));
-        if (mode == 1 && orbPos != BlockPos.ORIGIN && !worldIn.isAreaLoaded(orbPos, 4)) {
+        if (mode == 1 && orbPos != BlockPos.ORIGIN && !worldIn.isBlockLoaded(orbPos)) {
             tooltip.add(TextFormatting.RED + "Linked Orb are in unloaded chunk!");
         }
         //TODO localisation

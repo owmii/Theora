@@ -7,6 +7,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.Constants;
 import xieao.theora.api.liquid.IliquidContainer;
+import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.liquid.LiquidSlot;
 import xieao.theora.api.liquid.LiquidSlot.TransferType;
 import xieao.theora.api.liquid.LiquidUtil;
@@ -49,23 +50,25 @@ public class TileOrb extends TileBase implements ITickable {
     public void update() {
         Set<BlockPos> toRemove = new HashSet<>();
         for (BlockPos pos : this.linkedPositions) {
-            if (getWorld().isAreaLoaded(pos, 4)) {
+            if (getWorld().isBlockLoaded(pos)) {
                 IliquidContainer container = getLiquidContainer(pos);
                 if (container != null) {
                     LiquidSlot[] slots = container.getLiquidSlots();
                     for (LiquidSlot slot : slots) {
                         TransferType transferType = slot.getTransferType();
+                        Liquid liquid = slot.getLiquid();
                         float transferRate = slot.getTransfer();
                         if (transferType == SEND) {
                             for (BlockPos pos1 : this.linkedPositions) {
-                                if (getWorld().isAreaLoaded(pos1, 4)) {
+                                if (getWorld().isBlockLoaded(pos1)) {
                                     if (!pos.equals(pos1)) {
                                         IliquidContainer container1 = getLiquidContainer(pos1);
                                         if (container1 != null) {
                                             LiquidSlot[] slots1 = container1.getLiquidSlots();
                                             for (LiquidSlot slot1 : slots1) {
                                                 TransferType transferType1 = slot1.getTransferType();
-                                                if (transferType1 == ALL) {
+                                                Liquid liquid1 = slot1.getLiquid();
+                                                if (!liquid1.isEmpty() && transferType1 == ALL) {
                                                     slot1.fill(slot, false);
                                                 }
                                             }
@@ -77,7 +80,7 @@ public class TileOrb extends TileBase implements ITickable {
                             }
                         } else if (transferType == RECEIVE) {
                             for (BlockPos pos1 : this.linkedPositions) {
-                                if (getWorld().isAreaLoaded(pos1, 4)) {
+                                if (getWorld().isBlockLoaded(pos1)) {
                                     if (!pos.equals(pos1)) {
                                         IliquidContainer container1 = getLiquidContainer(pos1);
                                         if (container1 != null) {

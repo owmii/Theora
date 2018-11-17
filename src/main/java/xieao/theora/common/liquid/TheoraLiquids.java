@@ -7,7 +7,7 @@ import java.awt.*;
 public class TheoraLiquids {
 
     public static final Liquid LAOWM = new Liquid();
-    public static final Liquid GLIOPHORIN = new Liquid();
+    public static final Liquid GLIOPHIN = new Liquid();
     public static final Liquid VEANTA = new Liquid();
     public static final Liquid VERVY = new Liquid();
 
@@ -19,7 +19,7 @@ public class TheoraLiquids {
 
     public static void register() {
         Liquid.register(LAOWM, "laowm", 0xcfe4e9, 0xffffff);
-        Liquid.register(GLIOPHORIN, "gliophorin", 0x85be00, 0xd1ff00);
+        Liquid.register(GLIOPHIN, "gliophin", 0x85be00, 0xd1ff00);
         Liquid.register(VEANTA, "veanta", 0xcf2e1a, 0xe27653);
         Liquid.register(VERVY, "vervy", 0x1e81ce, 0x23ace3);
 

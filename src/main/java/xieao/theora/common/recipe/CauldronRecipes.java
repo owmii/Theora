@@ -18,7 +18,7 @@ public class CauldronRecipes implements ICauldronRegistry {
 
     @Override
     public void initRecipes() {
-        addRecipe(TheoraLiquids.GLIOPHORIN, new ItemStack(TheoraItems.SHROOM_BIT, 1, BlockShroom.Type.GLIOPHORUS.ordinal()), new ItemStack(TheoraItems.SHROOM_BIT, 1, BlockShroom.Type.GLIOPHORUS.ordinal()), new ItemStack(TheoraItems.SHROOM_BIT, 1, BlockShroom.Type.GLIOPHORUS.ordinal()), new ItemStack(TheoraItems.SHROOM_BIT, 1, BlockShroom.Type.GLIOPHORUS.ordinal()));
+        addRecipe(TheoraLiquids.GLIOPHIN, new ItemStack(TheoraItems.SHROOM_BIT, 1, BlockShroom.Type.GLIOPHORUS.ordinal()), new ItemStack(TheoraItems.SHROOM_BIT, 1, BlockShroom.Type.GLIOPHORUS.ordinal()), new ItemStack(TheoraItems.SHROOM_BIT, 1, BlockShroom.Type.GLIOPHORUS.ordinal()), new ItemStack(TheoraItems.SHROOM_BIT, 1, BlockShroom.Type.GLIOPHORUS.ordinal()));
     }
 
     @Override

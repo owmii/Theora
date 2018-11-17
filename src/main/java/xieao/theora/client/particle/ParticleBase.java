@@ -41,7 +41,6 @@ public class ParticleBase extends Particle {
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
-        move(this.motionX, this.motionY, this.motionZ);
         killExpiredParticle();
     }
 

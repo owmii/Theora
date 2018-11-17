@@ -2,12 +2,16 @@ package xieao.theora.common.block.binding;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.Constants;
 import xieao.theora.api.liquid.LiquidContainer;
 import xieao.theora.api.liquid.LiquidContainerCapability;
 import xieao.theora.api.liquid.LiquidSlot;
@@ -38,10 +42,12 @@ public class TileBindingCenter extends TileBase implements ITickable {
     private int binding;
     public boolean startBinding;
 
+    public BlockPos[] activeRings = new BlockPos[0];
+
     public TileBindingCenter() {
         this.liquidContainer = new LiquidContainer();
         this.liquidContainer.addLiquidSlots(
-                new LiquidSlot(TheoraLiquids.GLIOPHORIN, true, 10000.0F, 0.0F, 100.0F, LiquidSlot.TransferType.RECEIVE)
+                new LiquidSlot(TheoraLiquids.GLIOPHIN, true, 10000.0F, 0.0F, 100.0F, LiquidSlot.TransferType.RECEIVE)
         );
     }
 
@@ -54,6 +60,13 @@ public class TileBindingCenter extends TileBase implements ITickable {
         this.startBinding = nbt.getBoolean("startBinding");
         this.ready = nbt.getBoolean("ready");
         this.buildTicks = nbt.getInteger("buildTicks");
+        List<BlockPos> list = new ArrayList<>();
+        NBTTagList tagList = nbt.getTagList("activeRings", Constants.NBT.TAG_COMPOUND);
+        for (int i = 0; i < tagList.tagCount(); i++) {
+            NBTTagCompound compound = tagList.getCompoundTagAt(i);
+            list.add(NBTUtil.getPosFromTag(compound.getCompoundTag("activePos")));
+        }
+        this.activeRings = list.toArray(new BlockPos[0]);
     }
 
     @Override
@@ -65,13 +78,17 @@ public class TileBindingCenter extends TileBase implements ITickable {
         nbt.setBoolean("startBinding", this.startBinding);
         nbt.setBoolean("ready", this.ready);
         nbt.setInteger("buildTicks", this.buildTicks);
+        NBTTagList tagList = new NBTTagList();
+        for (BlockPos pos : this.activeRings) {
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setTag("activePos", NBTUtil.createPosTag(pos));
+            tagList.appendTag(compound);
+        }
+        nbt.setTag("activeRings", tagList);
     }
 
     @Override
     public void update() {
-        if (getWorld().getTotalWorldTime() % 10 == 0) {
-            System.out.println(this.liquidContainer.getLiquidSlot(0).getStored());
-        }
         if (isServerWorld()) {
             if (this.buildTicks > 0) {
                 this.buildTicks--;
@@ -84,6 +101,7 @@ public class TileBindingCenter extends TileBase implements ITickable {
                     IBindingRecipe recipe = getCurrentRecipe();
                     if (recipe != null && !recipe.getResultAbility().isEmpty()) {
                         if (this.startBinding) {
+                            List<BlockPos> list = new ArrayList<>();
                             for (int[] offset : RING_OFFSETS) {
                                 BlockPos ringPos = getPos().add(offset[0], 0, offset[1]);
                                 TileEntity tileEntity = getWorld().getTileEntity(ringPos);
@@ -92,9 +110,11 @@ public class TileBindingCenter extends TileBase implements ITickable {
                                     if (!bindingRing.getStackInSlot(0).isEmpty()) {
                                         bindingRing.setInventorySlotContents(0, ItemStack.EMPTY);
                                         bindingRing.syncNBTData();
+                                        list.add(ringPos);
                                     }
                                 }
                             }
+                            this.activeRings = list.toArray(new BlockPos[0]);
                             liquidSlot.setStored(liquidSlot.getStored() - recipe.getLiquidAmount());
                             this.ability = recipe.getResultAbility();
                             this.startBinding = false;
@@ -104,19 +124,45 @@ public class TileBindingCenter extends TileBase implements ITickable {
                 } else if (!this.ready && this.binding++ >= this.maxTime) {
                     this.ready = true;
                     this.binding = 0;
+                    this.activeRings = new BlockPos[0];
+                    syncNBTData();
+                }
+                if (this.binding == 1) {
                     syncNBTData();
                 }
             }
         } else {
+//            for (int[] offset : RING_OFFSETS) { //TODO remake particles
+//                for (int i = 0; i < 20; i++) {
+//                    if (this.rand.nextInt(8) == 0) {
+//                        ParticleEngine.INSTANCE.addEffect(
+//                                new ParticleGlow(getWorld(), getPosVec().addVector(
+//                                        offset[0] + 0.125 + (this.rand.nextDouble() * 0.750), 0.05, offset[1] + 0.125 + (this.rand.nextDouble() * 0.750)), getPosVec().addVector(
+//                                        this.rand.nextDouble(), 0.55D, this.rand.nextDouble()), 1, 40, 0.7F, 0xffffff, 0.6F)
+//                        );
+//                    }
+//                }
+//            }
+            if (this.ready && !this.ability.isEmpty()) {
+                for (int i = 0; i < 7; i++) {
+                    ParticleEngine.INSTANCE.addEffect(new ParticleGlow(getWorld(), getPosVec().addVector(this.rand.nextDouble(), .2 + this.rand.nextDouble() * 0.9D, this.rand.nextDouble())
+                            , getPosVec().addVector(this.rand.nextDouble(), .2 + this.rand.nextDouble() * 0.9D, this.rand.nextDouble()), .03, 10, 0.7F, 0xffffff, 0.6F));
+                }
+            }
+//            if (!this.ready && this.binding > 0) {
+//                for (int i = 0; i < 7; i++) {
+//                    // Vec3d activeVec = new Vec3d(activePos).addVector(0.125 + (this.rand.nextDouble() * 0.750), 0.05, 0.125 + (this.rand.nextDouble() * 0.750));
+//                    ParticleEngine.INSTANCE.addEffect(new ParticleGlow(getWorld(), getPosVec().addVector(this.rand.nextDouble(), .2 + this.rand.nextDouble() * 0.9D, this.rand.nextDouble())
+//                            , getPosVec().addVector(this.rand.nextDouble(), .2 + this.rand.nextDouble() * 0.9D, this.rand.nextDouble()), .03, 10, 0.7F, 0xffffff, 0.6F));
+//                }
+//            }
             if (this.buildTicks > 0) {
-                for (int[] offset : RING_OFFSETS) {
+                for (BlockPos activePos : this.activeRings) {
                     for (int i = 0; i < 7; i++) {
                         if (this.rand.nextInt(8) == 0) {
-                            ParticleEngine.INSTANCE.addEffect(
-                                    new ParticleGlow(getWorld(), getPosVec().addVector(
-                                            offset[0] + 0.125 + (this.rand.nextDouble() * 0.750), 0.05, offset[1] + 0.125 + (this.rand.nextDouble() * 0.750)), getPosVec().addVector(
-                                            this.rand.nextDouble(), 0.55D, this.rand.nextDouble()), 1, 40, 0.7F, 0xffffff, 0.6F)
-                            );
+                            double d0 = this.rand.nextDouble();
+                            Vec3d activeVec = new Vec3d(activePos).addVector(0.125 + (d0 * 0.750), 0.05, 0.125 + (d0 * 0.750));
+                            ParticleEngine.INSTANCE.addEffect(new ParticleGlow(getWorld(), activeVec, getPosVec().addVector(d0, 0.55D, d0), 1, 40, 0.7F, 0xffffff, 0.6F));
                         }
                     }
                 }

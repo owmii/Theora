@@ -23,11 +23,11 @@ public class LiquidInteractRecipes implements ILiquidInteractRegistry {
         addRecipe(Blocks.BLACK_SHULKER_BOX.getDefaultState(), TheoraLiquids.LEQUEN, 100.0F, Blocks.STONE.getDefaultState(), false);
         addRecipe(Blocks.COAL_BLOCK.getDefaultState(), TheoraLiquids.LEQUEN, 100.0F, Blocks.PLANKS.getDefaultState(), false);
 
-        addRecipe(Blocks.GLOWSTONE.getDefaultState(), TheoraLiquids.GLIOPHORIN, 100.0F, Blocks.LOG.getDefaultState(), false);
-        addRecipe(Blocks.SOUL_SAND.getDefaultState(), TheoraLiquids.GLIOPHORIN, 100.0F, Blocks.GRASS.getDefaultState(), false);
-        addRecipe(Blocks.OBSIDIAN.getDefaultState(), TheoraLiquids.GLIOPHORIN, 100.0F, Blocks.GOLD_BLOCK.getDefaultState(), false);
-        addRecipe(Blocks.BLACK_SHULKER_BOX.getDefaultState(), TheoraLiquids.GLIOPHORIN, 100.0F, Blocks.STONE.getDefaultState(), false);
-        addRecipe(Blocks.COAL_BLOCK.getDefaultState(), TheoraLiquids.GLIOPHORIN, 100.0F, Blocks.PLANKS.getDefaultState(), false);
+        addRecipe(Blocks.GLOWSTONE.getDefaultState(), TheoraLiquids.GLIOPHIN, 100.0F, Blocks.LOG.getDefaultState(), false);
+        addRecipe(Blocks.SOUL_SAND.getDefaultState(), TheoraLiquids.GLIOPHIN, 100.0F, Blocks.GRASS.getDefaultState(), false);
+        addRecipe(Blocks.OBSIDIAN.getDefaultState(), TheoraLiquids.GLIOPHIN, 100.0F, Blocks.GOLD_BLOCK.getDefaultState(), false);
+        addRecipe(Blocks.BLACK_SHULKER_BOX.getDefaultState(), TheoraLiquids.GLIOPHIN, 100.0F, Blocks.STONE.getDefaultState(), false);
+        addRecipe(Blocks.COAL_BLOCK.getDefaultState(), TheoraLiquids.GLIOPHIN, 100.0F, Blocks.PLANKS.getDefaultState(), false);
 
     }
 

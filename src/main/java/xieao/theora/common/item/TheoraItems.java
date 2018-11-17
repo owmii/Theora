@@ -15,6 +15,7 @@ public class TheoraItems {
     public static final Set<Item> ITEMS = new HashSet<>();
 
     public static final ItemShroomBit SHROOM_BIT;
+    public static final ItemGliophin GLIOPHIN;
     public static final ItemClearSlime CLEAR_SLIME;
     public static final ItemWand WAND;
     public static final ItemVial VIAL;
@@ -24,6 +25,7 @@ public class TheoraItems {
 
     static {
         SHROOM_BIT = register(new ItemShroomBit(), "shroombit");
+        GLIOPHIN = register(new ItemGliophin(), "gliophin");
         CLEAR_SLIME = register(new ItemClearSlime(), "clearslime");
         WAND = register(new ItemWand(), "wand");
         VIAL = register(new ItemVial(), "vial");

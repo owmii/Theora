@@ -5,6 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -19,9 +20,11 @@ public class TileBase extends TileEntity {
 
     protected final Random rand = new Random();
 
+    protected float facingAngle = EnumFacing.NORTH.getHorizontalAngle();
+
     @Nullable
-    private UUID placer;
-    private boolean ghostTile;
+    protected UUID placer;
+    protected boolean ghostTile;
 
     @SideOnly(Side.CLIENT)
     public int tickCount;
@@ -62,12 +65,14 @@ public class TileBase extends TileEntity {
     }
 
     public void readNBT(NBTTagCompound nbt) {
+        this.facingAngle = nbt.getFloat("facingAngle");
         if (nbt.hasUniqueId("placerId")) {
             this.placer = nbt.getUniqueId("placerId");
         }
     }
 
     public void writeNBT(NBTTagCompound nbt) {
+        nbt.setFloat("facingAngle", this.facingAngle);
         if (this.placer != null) {
             nbt.setUniqueId("placerId", this.placer);
         }
@@ -119,5 +124,21 @@ public class TileBase extends TileEntity {
 
     public boolean keepData() {
         return false;
+    }
+
+    public EnumFacing getFacing() {
+        return EnumFacing.fromAngle(this.facingAngle);
+    }
+
+    public void setFacing(EnumFacing facing) {
+        this.facingAngle = facing.getHorizontalAngle();
+    }
+
+    public float getFacingAngle() {
+        return facingAngle;
+    }
+
+    public void setFacingAngle(float facingAngle) {
+        this.facingAngle = facingAngle;
     }
 }

@@ -10,7 +10,7 @@ import xieao.theora.Theora;
 import xieao.theora.common.block.binding.BlockBindingCenter;
 import xieao.theora.common.block.binding.BlockBindingRing;
 import xieao.theora.common.block.cauldron.BlockCauldron;
-import xieao.theora.common.block.fermenting.BlockFermentingJar;
+import xieao.theora.common.block.liquidurn.BlockLiquidUrn;
 import xieao.theora.common.block.misc.BlockEmber;
 import xieao.theora.common.block.misc.BlockShroom;
 import xieao.theora.common.block.orb.BlockOrb;
@@ -27,7 +27,7 @@ public class TheoraBlocks {
     public static final BlockCauldron CAULDRON;
     public static final BlockEmber EMBER;
     public static final BlockOrb ORB;
-    public static final BlockFermentingJar FERMENTING_JAR;
+    public static final BlockLiquidUrn VESSEL;
     public static final BlockBindingCenter BINDING_CENTER;
     public static final BlockBindingRing BINDING_RING;
 
@@ -36,7 +36,7 @@ public class TheoraBlocks {
         CAULDRON = register(new BlockCauldron(), "cauldron");
         EMBER = register(new BlockEmber(), "ember");
         ORB = register(new BlockOrb(), "orb");
-        FERMENTING_JAR = register(new BlockFermentingJar(), "fermentingJar");
+        VESSEL = register(new BlockLiquidUrn(), "liquidurn");
         BINDING_CENTER = register(new BlockBindingCenter(), "binding");
         BINDING_RING = register(new BlockBindingRing(), "bindingring");
 

@@ -2,12 +2,12 @@
   "credit": "Made with Blockbench",
   "parent": "block/block",
   "textures": {
-    "0": "theora:blocks/binding_stone",
-    "1": "theora:blocks/binding_stone (copy)",
-    "2": "theora:blocks/binding_stone (another copy)",
-    "3": "theora:blocks/binding_stone (3rd copy)",
-    "4": "theora:blocks/binding_stone (4th copy)",
-    "particle": "theora:blocks/binding_stone"
+    "0": "theora:blocks/liquidurn",
+    "1": "theora:blocks/liquidurn_1",
+    "2": "theora:blocks/liquidurn_2",
+    "3": "theora:blocks/liquidurn_3",
+    "4": "theora:blocks/liquidurn_4",
+    "particle": "theora:blocks/liquidurn"
   },
   "elements": [
     {

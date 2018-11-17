@@ -42,7 +42,9 @@ public abstract class BlockBase extends Block implements IGenericBlock {
         if (tileEntity instanceof TileBase) {
             TileBase tileBase = (TileBase) tileEntity;
             if (placer instanceof EntityPlayer) {
-                tileBase.setPlacer(placer.getUniqueID());
+                EntityPlayer player = (EntityPlayer) placer;
+                tileBase.setFacingAngle(player.getHorizontalFacing().getOpposite().getHorizontalAngle());
+                tileBase.setPlacer(player.getUniqueID());
             }
         }
     }

@@ -10,14 +10,18 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.IWorldNameable;
 import net.minecraft.world.World;
 import xieao.theora.common.item.IGenericItem;
 import xieao.theora.common.item.ItemBlockBase;
+import xieao.theora.common.lib.helper.NBTHelper;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -46,6 +50,9 @@ public abstract class BlockBase extends Block implements IGenericBlock {
                 tileBase.setFacingAngle(player.getHorizontalFacing().getOpposite().getHorizontalAngle());
                 tileBase.setPlacer(player.getUniqueID());
             }
+            if (tileBase.keepData() && NBTHelper.hasNBT(stack) && NBTHelper.hasKey(stack, "tileDataTag")) {
+                tileBase.readNBT(NBTHelper.getCompoundTag(stack, "tileDataTag"));
+            }
         }
     }
 
@@ -67,24 +74,25 @@ public abstract class BlockBase extends Block implements IGenericBlock {
     }
 
     @Override
-    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
         if (te instanceof IWorldNameable && ((IWorldNameable) te).hasCustomName()) {
             player.addStat(Objects.requireNonNull(StatList.getBlockStats(this)));
             player.addExhaustion(0.005F);
-            if (worldIn.isRemote) {
+            if (world.isRemote) {
                 return;
             }
             int i = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack);
-            Item item = this.getItemDropped(state, worldIn.rand, i);
+            Item item = this.getItemDropped(state, world.rand, i);
             if (item == Items.AIR) {
                 return;
             }
-            ItemStack itemstack = new ItemStack(item, this.quantityDropped(worldIn.rand));
+            ItemStack itemstack = new ItemStack(item, this.quantityDropped(world.rand));
             itemstack.setStackDisplayName(((IWorldNameable) te).getName());
-            spawnAsEntity(worldIn, pos, itemstack);
+            spawnAsEntity(world, pos, itemstack);
         } else {
-            super.harvestBlock(worldIn, player, pos, state, null, stack);
+            super.harvestBlock(world, player, pos, state, null, stack);
         }
+        world.setBlockToAir(pos);
     }
 
     @Override
@@ -92,5 +100,26 @@ public abstract class BlockBase extends Block implements IGenericBlock {
         super.eventReceived(state, worldIn, pos, id, param);
         TileEntity tileentity = worldIn.getTileEntity(pos);
         return tileentity != null && tileentity.receiveClientEvent(id, param);
+    }
+
+    @Override
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        super.getDrops(drops, world, pos, state, fortune);
+        TileEntity tileEntity = world.getTileEntity(pos);
+        if (tileEntity instanceof TileBase) {
+            TileBase tileBase = (TileBase) tileEntity;
+            if (tileBase.keepData()) {
+                NBTTagCompound compound = new NBTTagCompound();
+                tileBase.writeNBT(compound);
+                ItemStack stack = drops.get(0);
+                NBTHelper.setTag(stack, "tileDataTag", compound);
+            }
+        }
+    }
+
+    @Override
+    public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+        if (willHarvest) return true; //If it will harvest, delay deletion of the block until after getDrops
+        return super.removedByPlayer(state, world, pos, player, willHarvest);
     }
 }

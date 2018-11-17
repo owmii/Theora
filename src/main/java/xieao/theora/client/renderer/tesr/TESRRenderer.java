@@ -11,7 +11,7 @@ public class TESRRenderer {
 
     public static void register() {
         bindTESR(TileCauldron.class, new RenderCauldron());
-        bindTESR(TileBindingCenter.class, new RenderBindingStone());
+        bindTESR(TileBindingCenter.class, new RenderBindingCenter());
         bindTESR(TileBindingRing.class, new RenderBindingRing());
     }
 

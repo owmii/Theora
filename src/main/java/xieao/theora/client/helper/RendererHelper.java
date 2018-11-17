@@ -39,8 +39,6 @@ import java.util.Objects;
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class RendererHelper {
 
-    //TODO rerange
-
     public static final Minecraft mc = Minecraft.getMinecraft();
     public static int tickCount;
     public static float partialTicks;
@@ -96,6 +94,23 @@ public class RendererHelper {
         buffer.pos(dim, 0.0D, dim).tex((double) f1, (double) f2).normal(0.0F, 1.0F, 0.0F).endVertex();
         buffer.pos(dim, 0.0D, -dim).tex((double) f0, (double) f2).normal(0.0F, 1.0F, 0.0F).endVertex();
         tessellator.draw();
+    }
+
+    public static void renderFacingQuad(ResourceLocation loc, double scale) {
+        GlStateManager.pushMatrix();
+        GlStateManager.rotate(180.0F - mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate((float) (mc.getRenderManager().options.thirdPersonView == 2 ? -1 : 1) * -mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+        mc.getTextureManager().bindTexture(loc);
+        GlStateManager.scale(scale, scale, scale);
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
+        bufferbuilder.pos(-0.5D, -0.25D, 0.0D).tex(0.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+        bufferbuilder.pos(0.5D, -0.25D, 0.0D).tex(1.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+        bufferbuilder.pos(0.5D, 0.75D, 0.0D).tex(1.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+        bufferbuilder.pos(-0.5D, 0.75D, 0.0D).tex(0.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+        tessellator.draw();
+        GlStateManager.popMatrix();
     }
 
     public static void render(TileBase tile, boolean inGui) {

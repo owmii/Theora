@@ -12,7 +12,7 @@ import xieao.theora.client.helper.RendererHelper;
 import xieao.theora.common.block.binding.TileBindingCenter;
 
 @SideOnly(Side.CLIENT)
-public class RenderBindingStone extends TESRBase<TileBindingCenter> {
+public class RenderBindingCenter extends TESRBase<TileBindingCenter> {
 
     public static final ResourceLocation RUNS_TEXTURE = Theora.location("textures/misc/rune_circle_1.png");
     public static final ResourceLocation AURA_TEXTURE = Theora.location("textures/tesr/ability_aura.png");
@@ -39,8 +39,8 @@ public class RenderBindingStone extends TESRBase<TileBindingCenter> {
         IBindingRecipe recipe = te.getCurrentRecipe();
         if (recipe != null && !recipe.getResultAbility().isEmpty()) {
             ResourceLocation regName = recipe.getResultAbility().getRegistryName();
-            GlStateManager.scale(.9, 0, .9);
-            RendererHelper.renderQuad(new ResourceLocation(regName.getResourceDomain(), "textures/abilities/" + regName.getResourcePath() + ".png"), 1.0F);
+            GlStateManager.translate(0.0D, 0.5D, 0.0D);
+            RendererHelper.renderFacingQuad(new ResourceLocation(regName.getResourceDomain(), "textures/abilities/" + regName.getResourcePath() + ".png"), 0.7F);
         }
         GlStateManager.disableBlend();
         RenderHelper.enableStandardItemLighting();

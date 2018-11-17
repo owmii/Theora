@@ -16,6 +16,8 @@ import java.util.List;
 
 public class LiquidContainer implements IliquidContainer {
 
+    public static final LiquidSlot EMPTY_SLOT = new LiquidSlot(Liquid.EMPTY, false, 0.0F, 0.0F, 0.0F, LiquidSlot.TransferType.ALL);
+
     private LiquidSlot[] liquidSlots = new LiquidSlot[0];
 
     @Override

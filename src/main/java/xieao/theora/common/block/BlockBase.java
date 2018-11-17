@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.IWorldNameable;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import xieao.theora.common.item.IGenericItem;
 import xieao.theora.common.item.ItemBlockBase;
 import xieao.theora.common.lib.helper.NBTHelper;
@@ -50,7 +51,7 @@ public abstract class BlockBase extends Block implements IGenericBlock {
                 tileBase.setFacingAngle(player.getHorizontalFacing().getOpposite().getHorizontalAngle());
                 tileBase.setPlacer(player.getUniqueID());
             }
-            if (tileBase.keepData() && NBTHelper.hasNBT(stack) && NBTHelper.hasKey(stack, "tileDataTag")) {
+            if (tileBase.keepData() && NBTHelper.hasNBT(stack) && NBTHelper.hasKey(stack, "tileDataTag", Constants.NBT.TAG_COMPOUND)) {
                 tileBase.readNBT(NBTHelper.getCompoundTag(stack, "tileDataTag"));
             }
         }

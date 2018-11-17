@@ -3,7 +3,6 @@ package xieao.theora.common.lib.helper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -16,8 +15,8 @@ public class NBTHelper {
         return stack.hasTagCompound();
     }
 
-    public static boolean hasKey(ItemStack stack, String value) {
-        return getNBT(stack).hasKey(value, Constants.NBT.TAG_STRING);
+    public static boolean hasKey(ItemStack stack, String value, int type) {
+        return getNBT(stack).hasKey(value, type);
     }
 
     public static NBTTagCompound getNBT(ItemStack stack) {

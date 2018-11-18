@@ -66,6 +66,8 @@ public class ItemWand extends ItemBase implements IWand {
                         TileOrb orb = (TileOrb) tileEntity1;
                         if (orb.link(pos)) {
                             return EnumActionResult.SUCCESS;
+                        } else if (orb.unlink(pos)) {
+                            return EnumActionResult.SUCCESS;
                         }
                     }
                 }
@@ -94,6 +96,11 @@ public class ItemWand extends ItemBase implements IWand {
             tooltip.add(TextFormatting.RED + "Linked Orb are in unloaded chunk!");
         }
         //TODO localisation
+    }
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return false;
     }
 
     @Override
@@ -161,6 +168,7 @@ public class ItemWand extends ItemBase implements IWand {
     public static void renderLinkable(RenderWorldLastEvent event) {
         Minecraft mc = Minecraft.getMinecraft();
         EntityPlayerSP player = mc.player;
+        if (player == null) return;
         for (EnumHand hand : EnumHand.values()) {
             ItemStack stack = player.getHeldItem(hand);
             if (stack.getItem() == TheoraItems.WAND) {
@@ -178,9 +186,9 @@ public class ItemWand extends ItemBase implements IWand {
                         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 61680.0F, 0.0F);
                         GlStateManager.disableDepth();
                         GlStateManager.pushMatrix();
-                        ColorHelper.glColor(0xc402ef, 0.7F);
+                        ColorHelper.glColor(0x6b3396, 0.9F);
                         GlStateManager.translate(orbPos.getX() + 0.5D, orbPos.getY() + 0.3D, orbPos.getZ() + 0.5D);
-                        RendererHelper.renderFacingQuad(HILIGHT_TEXTURE, 0.5D);
+                        RendererHelper.renderFacingQuad(HILIGHT_TEXTURE, 0.7D);
                         GlStateManager.popMatrix();
                         if (NBTHelper.hasKey(stack, "linkedPosList", Constants.NBT.TAG_LIST)) {
                             NBTTagList tagList = (NBTTagList) NBTHelper.getTag(stack, "linkedPosList");
@@ -188,9 +196,9 @@ public class ItemWand extends ItemBase implements IWand {
                                 NBTTagCompound nbt = tagList.getCompoundTagAt(i);
                                 BlockPos pos = NBTUtil.getPosFromTag(nbt.getCompoundTag("pos"));
                                 GlStateManager.pushMatrix();
-                                ColorHelper.glColor(0x00bf3f, 0.7F);
+                                ColorHelper.glColor(0x4e8448, 0.7F);
                                 GlStateManager.translate(pos.getX() + 0.5D, pos.getY() + 0.3D, pos.getZ() + 0.5D);
-                                RendererHelper.renderFacingQuad(HILIGHT_TEXTURE, 0.5D);
+                                RendererHelper.renderFacingQuad(HILIGHT_TEXTURE, 0.4D);
                                 GlStateManager.popMatrix();
                             }
                         }
@@ -200,9 +208,9 @@ public class ItemWand extends ItemBase implements IWand {
                                 NBTTagCompound nbt = tagList.getCompoundTagAt(i);
                                 BlockPos pos = NBTUtil.getPosFromTag(nbt.getCompoundTag("pos"));
                                 GlStateManager.pushMatrix();
-                                ColorHelper.glColor(0xff5b16, 0.7F);
+                                ColorHelper.glColor(0x686853, 0.3F);
                                 GlStateManager.translate(pos.getX() + 0.5D, pos.getY() + 0.3D, pos.getZ() + 0.5D);
-                                RendererHelper.renderFacingQuad(HILIGHT_TEXTURE, 0.5D);
+                                RendererHelper.renderFacingQuad(HILIGHT_TEXTURE, 0.2D);
                                 GlStateManager.popMatrix();
                             }
                         }

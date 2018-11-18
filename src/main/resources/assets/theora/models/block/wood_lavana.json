@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "theora:blocks/wood_lavana",
+    "side": "theora:blocks/wood_lavana"
+  }
+}

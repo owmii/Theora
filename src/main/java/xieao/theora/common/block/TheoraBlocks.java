@@ -13,6 +13,7 @@ import xieao.theora.common.block.cauldron.BlockCauldron;
 import xieao.theora.common.block.liquidurn.BlockLiquidUrn;
 import xieao.theora.common.block.misc.BlockEmber;
 import xieao.theora.common.block.misc.BlockShroom;
+import xieao.theora.common.block.misc.BlockWood;
 import xieao.theora.common.block.orb.BlockOrb;
 
 import java.util.HashSet;
@@ -24,6 +25,7 @@ public class TheoraBlocks {
     public static final Set<Block> BLOCKS = new HashSet<>();
 
     public static final BlockShroom SHROOM;
+    public static final BlockWood WOOD;
     public static final BlockCauldron CAULDRON;
     public static final BlockEmber EMBER;
     public static final BlockOrb ORB;
@@ -33,6 +35,7 @@ public class TheoraBlocks {
 
     static {
         SHROOM = register(new BlockShroom(), "shroom");
+        WOOD = register(new BlockWood(), "wood");
         CAULDRON = register(new BlockCauldron(), "cauldron");
         EMBER = register(new BlockEmber(), "ember");
         ORB = register(new BlockOrb(), "orb");

@@ -22,6 +22,10 @@ public class TileLiquidUrn extends TileBase {
         );
     }
 
+    public LiquidSlot getLiquidSlot() {
+        return this.liquidContainer.getLiquidSlot(0);
+    }
+
     @Override
     public void readNBT(NBTTagCompound nbt) {
         super.readNBT(nbt);
@@ -50,6 +54,6 @@ public class TileLiquidUrn extends TileBase {
 
     @Override
     public boolean keepData() {
-        return true;
+        return !getLiquidSlot().isEmpty();
     }
 }

@@ -46,13 +46,13 @@ public abstract class BlockBase extends Block implements IGenericBlock {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity instanceof TileBase) {
             TileBase tileBase = (TileBase) tileEntity;
+            if (NBTHelper.hasNBT(stack) && NBTHelper.hasKey(stack, "tileDataTag", Constants.NBT.TAG_COMPOUND)) {
+                tileBase.readNBT(NBTHelper.getCompoundTag(stack, "tileDataTag"));
+            }
             if (placer instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) placer;
                 tileBase.setFacingAngle(player.getHorizontalFacing().getOpposite().getHorizontalAngle());
                 tileBase.setPlacer(player.getUniqueID());
-            }
-            if (tileBase.keepData() && NBTHelper.hasNBT(stack) && NBTHelper.hasKey(stack, "tileDataTag", Constants.NBT.TAG_COMPOUND)) {
-                tileBase.readNBT(NBTHelper.getCompoundTag(stack, "tileDataTag"));
             }
         }
     }

@@ -21,7 +21,7 @@ import static xieao.theora.api.liquid.LiquidSlot.TransferType.*;
 
 public class TileOrb extends TileBase implements ITickable {
 
-    private final Set<BlockPos> linkedPositions = new HashSet<>();
+    public final Set<BlockPos> linkedPositions = new HashSet<>();
 
     @Override
     public void readNBT(NBTTagCompound nbt) {

@@ -13,10 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -157,6 +154,8 @@ public class ItemWand extends ItemBase implements IWand {
         }
     }
 
+    public static final ResourceLocation HILIGHT_TEXTURE = Theora.location("textures/misc/wand_hilight.png");
+
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public static void renderLinkable(RenderWorldLastEvent event) {
@@ -175,13 +174,13 @@ public class ItemWand extends ItemBase implements IWand {
                         GlStateManager.pushMatrix();
                         GlStateManager.translate(-x, -y, -z);
                         GlStateManager.enableBlend();
-                        ColorHelper.glColor(0xc402ef, 0.7F);
                         GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
                         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 61680.0F, 0.0F);
                         GlStateManager.disableDepth();
                         GlStateManager.pushMatrix();
+                        ColorHelper.glColor(0xc402ef, 0.7F);
                         GlStateManager.translate(orbPos.getX() + 0.5D, orbPos.getY() + 0.3D, orbPos.getZ() + 0.5D);
-                        RendererHelper.renderFacingQuad(Theora.location("textures/misc/wand_hilight.png"), .5D);
+                        RendererHelper.renderFacingQuad(HILIGHT_TEXTURE, 0.5D);
                         GlStateManager.popMatrix();
                         if (NBTHelper.hasKey(stack, "linkedPosList", Constants.NBT.TAG_LIST)) {
                             NBTTagList tagList = (NBTTagList) NBTHelper.getTag(stack, "linkedPosList");
@@ -191,7 +190,7 @@ public class ItemWand extends ItemBase implements IWand {
                                 GlStateManager.pushMatrix();
                                 ColorHelper.glColor(0x00bf3f, 0.7F);
                                 GlStateManager.translate(pos.getX() + 0.5D, pos.getY() + 0.3D, pos.getZ() + 0.5D);
-                                RendererHelper.renderFacingQuad(Theora.location("textures/misc/wand_hilight.png"), .5D);
+                                RendererHelper.renderFacingQuad(HILIGHT_TEXTURE, 0.5D);
                                 GlStateManager.popMatrix();
                             }
                         }
@@ -203,7 +202,7 @@ public class ItemWand extends ItemBase implements IWand {
                                 GlStateManager.pushMatrix();
                                 ColorHelper.glColor(0xff5b16, 0.7F);
                                 GlStateManager.translate(pos.getX() + 0.5D, pos.getY() + 0.3D, pos.getZ() + 0.5D);
-                                RendererHelper.renderFacingQuad(Theora.location("textures/misc/wand_hilight.png"), .5D);
+                                RendererHelper.renderFacingQuad(HILIGHT_TEXTURE, 0.5D);
                                 GlStateManager.popMatrix();
                             }
                         }

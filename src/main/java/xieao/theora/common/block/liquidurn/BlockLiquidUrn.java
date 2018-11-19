@@ -22,7 +22,7 @@ public class BlockLiquidUrn extends BlockBase implements ITileEntityProvider {
 
 
     public BlockLiquidUrn() {
-        super(Material.WOOD);
+        super(Material.CLOTH);
         setSoundType(SoundType.WOOD);
     }
 

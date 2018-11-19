@@ -125,4 +125,9 @@ public abstract class BlockBase extends Block implements IGenericBlock {
         if (willHarvest) return true; //If it will harvest, delay deletion of the block until after getDrops
         return super.removedByPlayer(state, world, pos, player, willHarvest);
     }
+
+    @Override
+    public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return false;
+    }
 }

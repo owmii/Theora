@@ -7,7 +7,7 @@ import xieao.theora.common.block.TheoraBlocks;
 public class CraftingRecipes {
 
     public static void initRecipes() {
-        ForgeRegistries.RECIPES.register(new RecipeEmptyLiquidUrn("liquidurn", new ItemStack(TheoraBlocks.LIQUID_URN)));
+        ForgeRegistries.RECIPES.register(new RecipeEmptyLiquidUrn("re-empty_liquid_urn", new ItemStack(TheoraBlocks.LIQUID_URN)));
     }
 
 }

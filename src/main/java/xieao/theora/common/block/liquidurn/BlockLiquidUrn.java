@@ -20,6 +20,7 @@ import java.util.List;
 
 public class BlockLiquidUrn extends BlockBase implements ITileEntityProvider {
 
+
     public BlockLiquidUrn() {
         super(Material.WOOD);
         setSoundType(SoundType.WOOD);
@@ -36,8 +37,8 @@ public class BlockLiquidUrn extends BlockBase implements ITileEntityProvider {
         super.addInformation(stack, player, tooltip, advanced);
         LiquidContainer liquidContainer = new LiquidContainer();
         liquidContainer.addLiquidSlots(LiquidContainer.EMPTY_SLOT);
-        if (NBTHelper.hasNBT(stack) && NBTHelper.hasKey(stack, "tileDataTag", Constants.NBT.TAG_COMPOUND)) {
-            liquidContainer.readNBT(NBTHelper.getCompoundTag(stack, "tileDataTag"));
+        if (NBTHelper.hasNBT(stack) && NBTHelper.hasKey(stack, TAG_TILE_DATA, Constants.NBT.TAG_COMPOUND)) {
+            liquidContainer.readNBT(NBTHelper.getCompoundTag(stack, TAG_TILE_DATA));
         }
         LiquidSlot liquidSlot = liquidContainer.getLiquidSlot(0);
         Liquid liquid = liquidSlot.getLiquid();

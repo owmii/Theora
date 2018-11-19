@@ -113,6 +113,10 @@ public class LiquidSlot {
         return this.stored <= 0;
     }
 
+    public void setEmpty() {
+        setStored(0.0F);
+    }
+
     public boolean isFull() {
         return this.stored >= this.capacity;
     }
@@ -120,6 +124,7 @@ public class LiquidSlot {
     public void setFull() {
         setStored(getCapacity());
     }
+
 
     public TransferType getTransferType() {
         return transferType;

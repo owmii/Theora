@@ -29,6 +29,8 @@ import java.util.Objects;
 
 public abstract class BlockBase extends Block implements IGenericBlock {
 
+    public static final String TAG_TILE_DATA = "tileDataTag";
+
     public BlockBase(Material material) {
         super(material);
         setResistance(10.0F);
@@ -46,8 +48,8 @@ public abstract class BlockBase extends Block implements IGenericBlock {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity instanceof TileBase) {
             TileBase tileBase = (TileBase) tileEntity;
-            if (NBTHelper.hasNBT(stack) && NBTHelper.hasKey(stack, "tileDataTag", Constants.NBT.TAG_COMPOUND)) {
-                tileBase.readNBT(NBTHelper.getCompoundTag(stack, "tileDataTag"));
+            if (NBTHelper.hasNBT(stack) && NBTHelper.hasKey(stack, TAG_TILE_DATA, Constants.NBT.TAG_COMPOUND)) {
+                tileBase.readNBT(NBTHelper.getCompoundTag(stack, TAG_TILE_DATA));
             }
             if (placer instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) placer;
@@ -113,7 +115,7 @@ public abstract class BlockBase extends Block implements IGenericBlock {
                 NBTTagCompound compound = new NBTTagCompound();
                 tileBase.writeNBT(compound);
                 ItemStack stack = drops.get(0);
-                NBTHelper.setTag(stack, "tileDataTag", compound);
+                NBTHelper.setTag(stack, TAG_TILE_DATA, compound);
             }
         }
     }

@@ -23,6 +23,7 @@ public class LiquidContainerCapability {
     }
 
     private static class DefaultLiquidHandlerStorage<T extends IliquidContainer> implements Capability.IStorage<T> {
+
         @Nullable
         @Override
         public NBTBase writeNBT(Capability<T> capability, T instance, EnumFacing side) {

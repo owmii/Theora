@@ -14,6 +14,7 @@ import xieao.theora.api.liquid.LiquidContainerCapability;
 import xieao.theora.api.player.data.PlayerDataCapability;
 import xieao.theora.common.ability.TheoraAbilities;
 import xieao.theora.common.entity.TheoraEntities;
+import xieao.theora.common.item.ItemSummoningSlate;
 import xieao.theora.common.lib.config.Config;
 import xieao.theora.common.liquid.TheoraLiquids;
 import xieao.theora.common.recipe.*;
@@ -61,5 +62,6 @@ public class CommonProxy implements IProxy {
     public void postInit(FMLPostInitializationEvent event) {
         RecipeHandler.sortRecipes();
         PigZomieTrades.postInit();
+        ItemSummoningSlate.postInit();
     }
 }

@@ -22,6 +22,7 @@ public class TheoraItems {
     public static final ItemPigCoin PIG_COIN;
     public static final ItemPigCoinBag PIG_COIN_BAG;
     public static final ItemWitherTear WITHER_TEAR;
+    public static final ItemSummoningSlate SUMMONING_SLATE;
 
     static {
         SHROOM_BIT = register(new ItemShroomBit(), "shroombit");
@@ -32,6 +33,7 @@ public class TheoraItems {
         PIG_COIN = register(new ItemPigCoin(), "pigcoin");
         PIG_COIN_BAG = register(new ItemPigCoinBag(), "pigcoinbag");
         WITHER_TEAR = register(new ItemWitherTear(), "withertear");
+        SUMMONING_SLATE = register(new ItemSummoningSlate(), "summoningslate");
 
         for (Block block : TheoraBlocks.BLOCKS) {
             if (block instanceof IGenericBlock) {

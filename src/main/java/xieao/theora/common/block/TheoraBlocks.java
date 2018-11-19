@@ -10,6 +10,7 @@ import xieao.theora.Theora;
 import xieao.theora.common.block.binding.BlockBindingCenter;
 import xieao.theora.common.block.binding.BlockBindingRing;
 import xieao.theora.common.block.cauldron.BlockCauldron;
+import xieao.theora.common.block.deathchamber.BlockDeathChamber;
 import xieao.theora.common.block.liquidurn.BlockLiquidUrn;
 import xieao.theora.common.block.misc.BlockEmber;
 import xieao.theora.common.block.misc.BlockShroom;
@@ -30,8 +31,11 @@ public class TheoraBlocks {
     public static final BlockEmber EMBER;
     public static final BlockOrb ORB;
     public static final BlockLiquidUrn LIQUID_URN;
+
     public static final BlockBindingCenter BINDING_CENTER;
     public static final BlockBindingRing BINDING_RING;
+
+    public static final BlockDeathChamber DEATH_CHAMBER;
 
     static {
         SHROOM = register(new BlockShroom(), "shroom");
@@ -42,6 +46,7 @@ public class TheoraBlocks {
         LIQUID_URN = register(new BlockLiquidUrn(), "liquidurn");
         BINDING_CENTER = register(new BlockBindingCenter(), "binding");
         BINDING_RING = register(new BlockBindingRing(), "bindingring");
+        DEATH_CHAMBER = register(new BlockDeathChamber(), "deathchamber");
 
         for (Block block : BLOCKS) {
             if (block instanceof ITileEntityProvider) {

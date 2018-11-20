@@ -11,6 +11,7 @@ import xieao.theora.common.block.binding.BlockBindingCenter;
 import xieao.theora.common.block.binding.BlockBindingRing;
 import xieao.theora.common.block.cauldron.BlockCauldron;
 import xieao.theora.common.block.deathchamber.BlockDeathChamber;
+import xieao.theora.common.block.deathchamber.BlockDeathChamberWall;
 import xieao.theora.common.block.liquidurn.BlockLiquidUrn;
 import xieao.theora.common.block.misc.BlockEmber;
 import xieao.theora.common.block.misc.BlockShroom;
@@ -36,6 +37,7 @@ public class TheoraBlocks {
     public static final BlockBindingRing BINDING_RING;
 
     public static final BlockDeathChamber DEATH_CHAMBER;
+    public static final BlockDeathChamberWall DEATH_CHAMBER_WALL;
 
     static {
         SHROOM = register(new BlockShroom(), "shroom");
@@ -47,6 +49,7 @@ public class TheoraBlocks {
         BINDING_CENTER = register(new BlockBindingCenter(), "binding");
         BINDING_RING = register(new BlockBindingRing(), "bindingring");
         DEATH_CHAMBER = register(new BlockDeathChamber(), "deathchamber");
+        DEATH_CHAMBER_WALL = register(new BlockDeathChamberWall(), "deathchamberwall");
 
         for (Block block : BLOCKS) {
             if (block instanceof ITileEntityProvider) {

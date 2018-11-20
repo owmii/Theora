@@ -26,16 +26,12 @@ public class ItemSummoningSlate extends ItemBase implements ISummoningSlate {
     public static final Set<Biome.SpawnListEntry> SPAWN_LIST_OCEAN_MONUMENT = new HashSet<>();
 
     public void initSpawnLists() {
-
         StructureOceanMonument oceanMonument = (StructureOceanMonument) TerrainGen.getModdedMapGen(new StructureOceanMonument(), InitMapGenEvent.EventType.OCEAN_MONUMENT);
         SPAWN_LIST_OCEAN_MONUMENT.addAll(oceanMonument.getMonsters());
-
         MapGenNetherBridge netherBridge = (MapGenNetherBridge) TerrainGen.getModdedMapGen(new MapGenNetherBridge(), InitMapGenEvent.EventType.NETHER_BRIDGE);
         SPAWN_LIST_NETHER.addAll(Biomes.HELL.getSpawnableList(EnumCreatureType.MONSTER));
         SPAWN_LIST_NETHER_FORTRESS.addAll(netherBridge.getSpawnList());
-
         SPAWN_LIST_END.addAll(Biomes.SKY.getSpawnableList(EnumCreatureType.MONSTER));
-
         cleanFromBosses(
                 SPAWN_LIST_NETHER,
                 SPAWN_LIST_NETHER_FORTRESS,
@@ -51,8 +47,7 @@ public class ItemSummoningSlate extends ItemBase implements ISummoningSlate {
                 boolean flag = false;
                 try {
                     flag = !spawnListEntry.newInstance(DimensionManager.getWorld(0)).isNonBoss();
-                } catch (Exception ignor) {
-                    //  e.printStackTrace();
+                } catch (Exception ignored) {
                 }
                 return flag;
             });

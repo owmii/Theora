@@ -11,11 +11,14 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.WeightedRandom;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.theora.api.item.ISummoningSlate;
 import xieao.theora.common.block.TileInvBase;
 import xieao.theora.common.item.TheoraItems;
@@ -35,16 +38,18 @@ public class TileDeathChamber extends TileInvBase implements ITickable {
     @Nullable
     protected FakePlayer killer;
 
-    private boolean buildStatus;
+    public boolean buildStatus;
 
     @Override
     public void readNBT(NBTTagCompound nbt) {
         super.readNBT(nbt);
+        this.buildStatus = nbt.getBoolean("buildStatus");
     }
 
     @Override
     public void writeNBT(NBTTagCompound nbt) {
         super.writeNBT(nbt);
+        nbt.setBoolean("buildStatus", this.buildStatus);
     }
 
     @Override
@@ -53,6 +58,7 @@ public class TileDeathChamber extends TileInvBase implements ITickable {
             if (!this.buildStatus) {
                 if (isBlocksInPlace()) {
                     tryBuild();
+                    syncNBTData();
                 }
             } else if (getWorld().getTotalWorldTime() % 70 == 0) {
                 if (this.killer == null) {
@@ -179,5 +185,11 @@ public class TileDeathChamber extends TileInvBase implements ITickable {
     @Override
     public int getSizeInventory() {
         return 12;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public AxisAlignedBB getRenderBoundingBox() {
+        return this.buildStatus ? INFINITE_EXTENT_AABB : super.getRenderBoundingBox();
     }
 }

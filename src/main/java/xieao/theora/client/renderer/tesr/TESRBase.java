@@ -3,9 +3,12 @@ package xieao.theora.client.renderer.tesr;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import xieao.theora.client.renderer.model.ModelCube;
 import xieao.theora.common.block.TileBase;
 
 public class TESRBase<T extends TileBase> extends TileEntitySpecialRenderer<T> {
+
+    protected static final ModelCube MODEL_CUBE = new ModelCube();
 
     public final Minecraft mc = Minecraft.getMinecraft();
 

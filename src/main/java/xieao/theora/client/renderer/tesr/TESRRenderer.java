@@ -6,6 +6,8 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import xieao.theora.common.block.binding.TileBindingCenter;
 import xieao.theora.common.block.binding.TileBindingRing;
 import xieao.theora.common.block.cauldron.TileCauldron;
+import xieao.theora.common.block.deathchamber.TileDeathChamber;
+import xieao.theora.common.block.deathchamber.TileDeathChamberWall;
 import xieao.theora.common.block.liquidurn.TileLiquidUrn;
 
 public class TESRRenderer {
@@ -15,6 +17,8 @@ public class TESRRenderer {
         bindTESR(TileLiquidUrn.class, new RenderLiquidUrn());
         bindTESR(TileBindingCenter.class, new RenderBindingCenter());
         bindTESR(TileBindingRing.class, new RenderBindingRing());
+        bindTESR(TileDeathChamber.class, new RenderDeathChamber());
+        bindTESR(TileDeathChamberWall.class, new RenderDeathChamberWall());
     }
 
     private static <T extends TileEntity> void bindTESR(Class<T> tileEntityClass, TileEntitySpecialRenderer<? super T> specialRenderer) {

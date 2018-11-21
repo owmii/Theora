@@ -9,7 +9,7 @@ import net.minecraft.world.gen.structure.StructureOceanMonument;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.terraingen.InitMapGenEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
-import xieao.theora.api.item.ISummoningSlate;
+import xieao.theora.api.item.slate.ISummoningSlate;
 import xieao.theora.common.lib.helper.NBTHelper;
 
 import java.util.Collections;
@@ -71,6 +71,11 @@ public class ItemSummoningSlate extends ItemBase implements ISummoningSlate {
     @Override
     public Enum<?>[] getSubTypeValues() {
         return Type.values();
+    }
+
+    @Override
+    public float getLiquidCost(ItemStack stack) {
+        return 0;
     }
 
     public enum Type {

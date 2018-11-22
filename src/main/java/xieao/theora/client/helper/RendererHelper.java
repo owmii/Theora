@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -39,12 +40,12 @@ import java.util.Objects;
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class RendererHelper {
 
-    public static final Minecraft mc = Minecraft.getMinecraft();
     public static int tickCount;
     public static float partialTicks;
 
     @SubscribeEvent
     public static void renderWorldLastTick(RenderWorldLastEvent event) {
+        Minecraft mc = Minecraft.getMinecraft();
         if (mc.currentScreen == null || !mc.currentScreen.doesGuiPauseGame()) {
             partialTicks = event.getPartialTicks();
         }
@@ -52,6 +53,7 @@ public class RendererHelper {
 
     @SubscribeEvent
     public static void clientTick(TickEvent.ClientTickEvent event) {
+        Minecraft mc = Minecraft.getMinecraft();
         if (event.phase == TickEvent.Phase.END) {
             if (mc.currentScreen == null || !mc.currentScreen.doesGuiPauseGame()) {
                 tickCount++;
@@ -68,6 +70,7 @@ public class RendererHelper {
     }
 
     public static void renderQuad(ResourceLocation loc, double dim) {
+        Minecraft mc = Minecraft.getMinecraft();
         mc.getTextureManager().bindTexture(loc);
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder buffer = tessellator.getBuffer();
@@ -97,9 +100,12 @@ public class RendererHelper {
     }
 
     public static void renderFacingQuad(ResourceLocation loc, double scale) {
+        Minecraft mc = Minecraft.getMinecraft();
+        RenderManager rm = mc.getRenderManager();
+        if (rm == null || rm.options == null) return;
         GlStateManager.pushMatrix();
-        GlStateManager.rotate(180.0F - mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate((float) (mc.getRenderManager().options.thirdPersonView == 2 ? -1 : 1) * -mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(180.0F - rm.playerViewY, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate((float) (rm.options.thirdPersonView == 2 ? -1 : 1) * -rm.playerViewX, 1.0F, 0.0F, 0.0F);
         mc.getTextureManager().bindTexture(loc);
         GlStateManager.scale(scale, scale, scale);
         Tessellator tessellator = Tessellator.getInstance();
@@ -119,6 +125,7 @@ public class RendererHelper {
     }
 
     public static void render(IBakedModel model, IBlockAccess world, IBlockState state, boolean smooth) {
+        Minecraft mc = Minecraft.getMinecraft();
         BlockModelRenderer renderer = mc.getBlockRendererDispatcher().getBlockModelRenderer();
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder builder = tessellator.getBuffer();
@@ -158,6 +165,7 @@ public class RendererHelper {
     }
 
     public static void render(IBlockState state, IBlockAccess blockAccess, BlockPos pos) {
+        Minecraft mc = Minecraft.getMinecraft();
         BlockRendererDispatcher brd = mc.getBlockRendererDispatcher();
         BlockModelRenderer modelRenderer = brd.getBlockModelRenderer();
         Tessellator tessellator = Tessellator.getInstance();
@@ -214,6 +222,7 @@ public class RendererHelper {
     }
 
     public static void renderItemStack(ItemStack stack, float scale) {
+        Minecraft mc = Minecraft.getMinecraft();
         if (!stack.isEmpty()) {
             GlStateManager.pushMatrix();
             GlStateManager.scale(scale, scale, scale);

@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ItemSummoningSlate extends ItemBase implements ISummoningSlate {
+public class ItemSlateSummoning extends ItemBase implements ISummoningSlate {
 
     public static final String TAG_BIME_ID = "biomeId";
 

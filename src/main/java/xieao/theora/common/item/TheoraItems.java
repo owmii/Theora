@@ -22,9 +22,10 @@ public class TheoraItems {
     public static final ItemPigCoin PIG_COIN;
     public static final ItemPigCoinBag PIG_COIN_BAG;
     public static final ItemWitherTear WITHER_TEAR;
-    public static final ItemSummoningSlate SUMMONING_SLATE;
-    public static final ItemFortuneSlate FORTUNE_SLATE;
-    public static final ItemXPSlate XP_SLATE;
+    public static final ItemSlateSummoning SUMMONING_SLATE;
+    public static final ItemSlateLooting LOOTING_SLATE;
+    public static final ItemSlateEfficiency EFFICIENCY_SLATE;
+    public static final ItemSlateXP XP_SLATE;
 
     static {
         SHROOM_BIT = register(new ItemShroomBit(), "shroombit");
@@ -35,9 +36,10 @@ public class TheoraItems {
         PIG_COIN = register(new ItemPigCoin(), "pigcoin");
         PIG_COIN_BAG = register(new ItemPigCoinBag(), "pigcoinbag");
         WITHER_TEAR = register(new ItemWitherTear(), "withertear");
-        SUMMONING_SLATE = register(new ItemSummoningSlate(), "summoningslate");
-        FORTUNE_SLATE = register(new ItemFortuneSlate(), "fortuneslate");
-        XP_SLATE = register(new ItemXPSlate(), "xpslate()");
+        SUMMONING_SLATE = register(new ItemSlateSummoning(), "summoningslate");
+        LOOTING_SLATE = register(new ItemSlateLooting(), "lootingslate");
+        EFFICIENCY_SLATE = register(new ItemSlateEfficiency(), "efficiencyslate");
+        XP_SLATE = register(new ItemSlateXP(), "xpslate()");
 
         for (Block block : TheoraBlocks.BLOCKS) {
             if (block instanceof IGenericBlock) {

@@ -1,9 +1,9 @@
 package xieao.theora.common.item;
 
 import net.minecraft.item.ItemStack;
-import xieao.theora.api.item.slate.IFortuneSlate;
+import xieao.theora.api.item.slate.ILootingSlate;
 
-public class ItemFortuneSlate extends ItemBase implements IFortuneSlate {
+public class ItemSlateLooting extends ItemBase implements ILootingSlate {
 
     @Override
     public Enum<?>[] getSubTypeValues() {

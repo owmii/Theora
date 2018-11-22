@@ -2,6 +2,7 @@ package xieao.theora.common.block.deathchamber;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -16,13 +17,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import xieao.theora.api.item.slate.IFortuneSlate;
-import xieao.theora.api.item.slate.ISummoningSlate;
-import xieao.theora.api.item.slate.IXPSlate;
+import xieao.theora.api.item.slate.*;
 import xieao.theora.api.liquid.LiquidContainer;
 import xieao.theora.api.liquid.LiquidSlot;
 import xieao.theora.common.block.TileInvBase;
@@ -30,6 +28,7 @@ import xieao.theora.common.liquid.TheoraLiquids;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,7 +40,7 @@ public class TileDeathChamber extends TileInvBase implements ITickable {
     private static final GameProfile DEATH_CHAMBER = new GameProfile(UUID.fromString("8f3dc5b7-eab1-4768-9b73-f1ca057a82eb"), "Death Chamber");
 
     @Nullable
-    protected FakePlayer killer;
+    protected EntityPlayer killer;
 
     private final LiquidContainer liquidContainer;
 
@@ -76,48 +75,60 @@ public class TileDeathChamber extends TileInvBase implements ITickable {
                     tryBuild();
                     syncNBTData();
                 }
-            } else if (!isEmpty() && this.world.getDifficulty() != EnumDifficulty.PEACEFUL && getWorld().getTotalWorldTime() % 70 == 0) {
-                LiquidSlot liquidSlot = this.liquidContainer.getLiquidSlot(0);
-                if (this.killer == null) {
-                    this.killer = FakePlayerFactory.get(DimensionManager.getWorld(0), DEATH_CHAMBER);
-                } else {
-                    float liquidCost = 0.0F;
-                    ItemStack stack = getStackInSlot(0);
-                    int fortuneLevel = 0;
-                    ItemStack stack1 = getStackInSlot(1);
-                    if (stack1.getItem() instanceof IFortuneSlate) {
-                        IFortuneSlate slate = (IFortuneSlate) stack1.getItem();
-                        fortuneLevel = slate.getFortuneLevel(stack1);
-                        liquidCost += slate.getLiquidCost(stack1);
+            } else if (!isEmpty() && this.world.getDifficulty() != EnumDifficulty.PEACEFUL) {
+                float liquidCost = 0.0F;
+                int lootingLevel = 0, delayTicks = 120, xpMultiPlier = 0;
+                for (int i = 1; i < getSizeInventory() - 1; i++) {
+                    ItemStack stack = getStackInSlot(i);
+                    if (stack.getItem() instanceof ILootingSlate) {
+                        ILootingSlate slate = (ILootingSlate) stack.getItem();
+                        lootingLevel = slate.getFortuneLevel(stack);
+                        liquidCost += slate.getLiquidCost(stack);
+                    } else if (stack.getItem() instanceof IEfficiencySlate) {
+                        IEfficiencySlate slate = (IEfficiencySlate) stack.getItem();
+                        delayTicks = slate.getDelayTicks(stack);
+                        liquidCost += slate.getLiquidCost(stack);
+                    } else if (stack.getItem() instanceof IXPSlate) {
+                        IXPSlate slate = (IXPSlate) stack.getItem();
+                        xpMultiPlier = slate.getXPMultiplier(stack);
+                        liquidCost += slate.getLiquidCost(stack);
                     }
-                    int xpMultiPlier = 0;
-                    ItemStack stack2 = getStackInSlot(2);
-                    if (stack2.getItem() instanceof IXPSlate) {
-                        IXPSlate slate = (IXPSlate) stack2.getItem();
-                        xpMultiPlier = slate.getXPMultiplier(stack2);
-                        liquidCost += slate.getLiquidCost(stack2);
-                    }
-                    if (stack.getItem() instanceof ISummoningSlate) {
-                        ISummoningSlate slate = (ISummoningSlate) stack.getItem();
-                        List<Biome.SpawnListEntry> spawnListEntries = new ArrayList<>(slate.getSpawnListEntries(stack));
-                        Biome.SpawnListEntry spawnListEntry = WeightedRandom.getRandomItem(getWorld().rand, spawnListEntries);
-                        EntityLiving entityLiving = null;
-                        try {
-                            entityLiving = spawnListEntry.newInstance(getWorld());
+                }
+                if (getWorld().getTotalWorldTime() % (delayTicks < 10 ? 10 : delayTicks) == 0) {
+                    LiquidSlot liquidSlot = this.liquidContainer.getLiquidSlot(0);
+                    if (this.killer == null) {
+                        this.killer = FakePlayerFactory.get(DimensionManager.getWorld(0), DEATH_CHAMBER);
+                    } else {
+                        ItemStack stack = getStackInSlot(0);
+                        if (stack.getItem() instanceof ISummoningSlate) {
+                            ISummoningSlate slate = (ISummoningSlate) stack.getItem();
                             liquidCost += slate.getLiquidCost(stack);
-                            if (entityLiving != null && liquidCost >= liquidSlot.getStored()) {
-                                FakePlayer killer = this.killer;
-                                ItemStack weapon = new ItemStack(Items.DIAMOND_SWORD);
-                                weapon.addEnchantment(Enchantments.LOOTING, fortuneLevel);
-                                killer.setHeldItem(EnumHand.MAIN_HAND, weapon);
-                                entityLiving.setInvisible(true);
-                                entityLiving.setPosition(getX() + 0.5D, getY() + 1.1D, getZ() + 0.5D);
-                                entityLiving.attackEntityFrom(DamageSource.causePlayerDamage(killer), Float.MAX_VALUE);
-                                entityLiving.setDead();
-                                liquidSlot.setStored(liquidSlot.getStored() - liquidCost);
-                                syncNBTData();
+                            List<Biome.SpawnListEntry> spawnListEntries = new ArrayList<>(slate.getSpawnListEntries(stack));
+                            Biome.SpawnListEntry spawnListEntry = WeightedRandom.getRandomItem(getWorld().rand, spawnListEntries);
+                            EntityLiving entityLiving = null;
+                            try {
+                                entityLiving = spawnListEntry.newInstance(getWorld());
+                                if (entityLiving.isRiding() || entityLiving.isBeingRidden()) {
+                                    return;
+                                }
+                                if (entityLiving != null && liquidCost >= liquidSlot.getStored()) {
+                                    EntityPlayer killer = this.killer;
+                                    ItemStack weapon = new ItemStack(Items.DIAMOND_SWORD);
+                                    weapon.addEnchantment(Enchantments.LOOTING, lootingLevel);
+                                    killer.setHeldItem(EnumHand.MAIN_HAND, weapon);
+                                    Iterator<ItemStack> itr = entityLiving.getEquipmentAndArmor().iterator();
+                                    while (itr.hasNext()) {
+                                        itr.remove();
+                                    }
+                                    entityLiving.setInvisible(true);
+                                    entityLiving.setPosition(getX() + 0.5D, getY() + 1.1D, getZ() + 0.5D);
+                                    entityLiving.attackEntityFrom(DamageSource.causePlayerDamage(killer), Float.MAX_VALUE);
+                                    entityLiving.setDead();
+                                    liquidSlot.setStored(liquidSlot.getStored() - liquidCost);
+                                    syncNBTData();
+                                }
+                            } catch (Exception ignored) {
                             }
-                        } catch (Exception ignored) {
                         }
                     }
                 }
@@ -212,6 +223,16 @@ public class TileDeathChamber extends TileInvBase implements ITickable {
     @Override
     public int getSizeInventory() {
         return 12;
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
+        for (ItemStack stack1 : this.stacks) {
+            if (stack.getItem() == stack1.getItem()) {
+                return false;
+            }
+        }
+        return stack.getItem() instanceof ISlate;
     }
 
     @Override

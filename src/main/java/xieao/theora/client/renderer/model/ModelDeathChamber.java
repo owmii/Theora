@@ -2,6 +2,7 @@ package xieao.theora.client.renderer.model;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 
 /**
  * Death Chamber - xeaio
@@ -36,11 +37,13 @@ public class ModelDeathChamber extends ModelBase {
     }
 
     public void render(float f5) {
+        GlStateManager.pushMatrix();
+        this.chaber.render(f5);
         this.leg1.render(f5);
         this.leg0.render(f5);
-        this.chaber.render(f5);
         this.leg2.render(f5);
         this.leg3.render(f5);
+        GlStateManager.popMatrix();
     }
 
     public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {

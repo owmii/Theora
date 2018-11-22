@@ -3,7 +3,7 @@ package xieao.theora.common.item;
 import net.minecraft.item.ItemStack;
 import xieao.theora.api.item.slate.IXPSlate;
 
-public class ItemXPSlate extends ItemBase implements IXPSlate {
+public class ItemSlateXP extends ItemBase implements IXPSlate {
 
     @Override
     public Enum<?>[] getSubTypeValues() {

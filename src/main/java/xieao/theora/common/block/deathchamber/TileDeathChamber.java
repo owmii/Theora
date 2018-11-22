@@ -8,20 +8,19 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.WeightedRandom;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.theora.api.item.slate.*;
 import xieao.theora.api.liquid.LiquidContainer;
+import xieao.theora.api.liquid.LiquidContainerCapability;
 import xieao.theora.api.liquid.LiquidSlot;
 import xieao.theora.common.block.TileInvBase;
 import xieao.theora.common.liquid.TheoraLiquids;
@@ -80,18 +79,20 @@ public class TileDeathChamber extends TileInvBase implements ITickable {
                 int lootingLevel = 0, delayTicks = 120, xpMultiPlier = 0;
                 for (int i = 1; i < getSizeInventory() - 1; i++) {
                     ItemStack stack = getStackInSlot(i);
-                    if (stack.getItem() instanceof ILootingSlate) {
-                        ILootingSlate slate = (ILootingSlate) stack.getItem();
-                        lootingLevel = slate.getFortuneLevel(stack);
-                        liquidCost += slate.getLiquidCost(stack);
-                    } else if (stack.getItem() instanceof IEfficiencySlate) {
-                        IEfficiencySlate slate = (IEfficiencySlate) stack.getItem();
-                        delayTicks = slate.getDelayTicks(stack);
-                        liquidCost += slate.getLiquidCost(stack);
-                    } else if (stack.getItem() instanceof IXPSlate) {
-                        IXPSlate slate = (IXPSlate) stack.getItem();
-                        xpMultiPlier = slate.getXPMultiplier(stack);
-                        liquidCost += slate.getLiquidCost(stack);
+                    if (!stack.isEmpty()) {
+                        if (stack.getItem() instanceof ILootingSlate) {
+                            ILootingSlate slate = (ILootingSlate) stack.getItem();
+                            lootingLevel = slate.getFortuneLevel(stack);
+                            liquidCost += slate.getLiquidCost(stack);
+                        } else if (stack.getItem() instanceof IEfficiencySlate) {
+                            IEfficiencySlate slate = (IEfficiencySlate) stack.getItem();
+                            delayTicks = slate.getDelayTicks(stack);
+                            liquidCost += slate.getLiquidCost(stack);
+                        } else if (stack.getItem() instanceof IXPSlate) {
+                            IXPSlate slate = (IXPSlate) stack.getItem();
+                            xpMultiPlier = slate.getXPMultiplier(stack);
+                            liquidCost += slate.getLiquidCost(stack);
+                        }
                     }
                 }
                 if (getWorld().getTotalWorldTime() % (delayTicks < 10 ? 10 : delayTicks) == 0) {
@@ -222,17 +223,34 @@ public class TileDeathChamber extends TileInvBase implements ITickable {
 
     @Override
     public int getSizeInventory() {
-        return 12;
+        return 5;
     }
 
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
+        if (stack.getItem() instanceof ISummoningSlate && index != 0) {
+            return false;
+        }
         for (ItemStack stack1 : this.stacks) {
             if (stack.getItem() == stack1.getItem()) {
                 return false;
             }
         }
-        return stack.getItem() instanceof ISlate;
+        return getStackInSlot(index).isEmpty() && stack.getItem() instanceof ISlate;
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+        return capability == LiquidContainerCapability.CAPABILITY_LIQUID_CONTAINER
+                || super.hasCapability(capability, facing);
+    }
+
+    @Nullable
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+        return capability == LiquidContainerCapability.CAPABILITY_LIQUID_CONTAINER ? (T) this.liquidContainer
+                : super.getCapability(capability, facing);
     }
 
     @Override

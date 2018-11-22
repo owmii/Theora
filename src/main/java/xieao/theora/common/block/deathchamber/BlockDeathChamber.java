@@ -5,12 +5,18 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.items.ItemHandlerHelper;
+import xieao.theora.api.item.slate.ISummoningSlate;
 import xieao.theora.common.block.BlockBase;
 
 import javax.annotation.Nullable;
@@ -25,6 +31,32 @@ public class BlockDeathChamber extends BlockBase implements ITileEntityProvider 
     @Override
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
         return new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.9D, 1.0D);
+    }
+
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if (tileEntity instanceof TileDeathChamber) {
+            TileDeathChamber deathChamber = (TileDeathChamber) tileEntity;
+            if (deathChamber.buildStatus && facing == EnumFacing.DOWN) {
+                ItemStack heldStack = playerIn.getHeldItem(hand);
+                if (!deathChamber.getStackInSlot(0).isEmpty()) {
+                    ItemHandlerHelper.giveItemToPlayer(playerIn, deathChamber.getStackInSlot(0).copy());
+                    deathChamber.setInventorySlotContents(0, ItemStack.EMPTY);
+                    deathChamber.syncNBTData();
+                    return true;
+                }
+                if (deathChamber.getStackInSlot(0).isEmpty() && heldStack.getItem() instanceof ISummoningSlate) {
+                    ItemStack copy = heldStack.copy();
+                    copy.setCount(1);
+                    deathChamber.setInventorySlotContents(0, copy);
+                    deathChamber.syncNBTData();
+                    heldStack.shrink(1);
+                    return true;
+                }
+            }
+        }
+        return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
     }
 
     @Override

@@ -4,6 +4,8 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -71,9 +73,19 @@ public class BlockDeathChamber extends BlockBase implements ITileEntityProvider 
 
     @Override
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-        if (entityIn instanceof EntityItem) {
-            entityIn.setPosition(pos.getX() + 0.5D, pos.getY() - 0.3D, pos.getZ() + 0.5D);
+        if (!worldIn.isRemote) {
+            if (entityIn instanceof EntityItem) {
+                entityIn.setPosition(pos.getX() + 0.5D, pos.getY() - 0.3D, pos.getZ() + 0.5D);
+            } else if (entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)) {
+                entityIn.setInvisible(true);
+                entityIn.setDead();
+            }
         }
+    }
+
+    @Override
+    public boolean canCreatureSpawn(IBlockState state, IBlockAccess world, BlockPos pos, EntityLiving.SpawnPlacementType type) {
+        return false;
     }
 
     @Nullable

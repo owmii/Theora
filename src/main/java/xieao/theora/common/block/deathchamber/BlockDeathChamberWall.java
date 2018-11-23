@@ -3,6 +3,10 @@ package xieao.theora.common.block.deathchamber;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -10,6 +14,7 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemHandlerHelper;
 import xieao.theora.common.block.BlockBase;
@@ -39,7 +44,6 @@ public class BlockDeathChamberWall extends BlockBase implements ITileEntityProvi
                         if (deathChamber.buildStatus) {
                             ItemStack heldStack = playerIn.getHeldItem(hand);
                             int slot = facing.ordinal() - 1;
-                            System.out.println(slot);
                             if (!deathChamber.getStackInSlot(slot).isEmpty()) {
                                 ItemHandlerHelper.giveItemToPlayer(playerIn, deathChamber.getStackInSlot(slot).copy());
                                 deathChamber.setInventorySlotContents(slot, ItemStack.EMPTY);
@@ -60,6 +64,27 @@ public class BlockDeathChamberWall extends BlockBase implements ITileEntityProvi
             }
         }
         return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+    }
+
+    @Override
+    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if (tileEntity instanceof TileDeathChamberWall) {
+            TileDeathChamberWall wall = (TileDeathChamberWall) tileEntity;
+            if (!worldIn.isRemote && !wall.dcPos.equals(BlockPos.ORIGIN)) {
+                if (entityIn instanceof EntityItem) {
+                    entityIn.setPosition(wall.dcPos.getX() + 0.5D, wall.dcPos.getY() - 0.3D, wall.dcPos.getZ() + 0.5D);
+                } else if (entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)) {
+                    entityIn.setInvisible(true);
+                    entityIn.setDead();
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean canCreatureSpawn(IBlockState state, IBlockAccess world, BlockPos pos, EntityLiving.SpawnPlacementType type) {
+        return false;
     }
 
     @Nullable

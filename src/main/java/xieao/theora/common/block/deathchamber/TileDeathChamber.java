@@ -1,10 +1,12 @@
 package xieao.theora.common.block.deathchamber;
 
 import com.mojang.authlib.GameProfile;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -27,7 +29,6 @@ import xieao.theora.common.liquid.TheoraLiquids;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -76,6 +77,7 @@ public class TileDeathChamber extends TileInvBase implements ITickable {
                 }
             } else if (!isEmpty() && this.world.getDifficulty() != EnumDifficulty.PEACEFUL) {
                 float liquidCost = 0.0F;
+                boolean dropEquipment = false;
                 int lootingLevel = 0, delayTicks = 120, xpMultiPlier = 0;
                 for (int i = 1; i < getSizeInventory() - 1; i++) {
                     ItemStack stack = getStackInSlot(i);
@@ -87,6 +89,10 @@ public class TileDeathChamber extends TileInvBase implements ITickable {
                         } else if (stack.getItem() instanceof IEfficiencySlate) {
                             IEfficiencySlate slate = (IEfficiencySlate) stack.getItem();
                             delayTicks = slate.getDelayTicks(stack);
+                            liquidCost += slate.getLiquidCost(stack);
+                        } else if (stack.getItem() instanceof IEquipmentDropSlate) {
+                            IEquipmentDropSlate slate = (IEquipmentDropSlate) stack.getItem();
+                            dropEquipment = true;
                             liquidCost += slate.getLiquidCost(stack);
                         } else if (stack.getItem() instanceof IXPSlate) {
                             IXPSlate slate = (IXPSlate) stack.getItem();
@@ -109,20 +115,32 @@ public class TileDeathChamber extends TileInvBase implements ITickable {
                             EntityLiving entityLiving = null;
                             try {
                                 entityLiving = spawnListEntry.newInstance(getWorld());
-                                if (entityLiving.isRiding() || entityLiving.isBeingRidden()) {
-                                    return;
-                                }
-                                if (entityLiving != null && liquidCost >= liquidSlot.getStored()) {
+                                if (entityLiving != null && liquidCost <= liquidSlot.getStored()) {
                                     EntityPlayer killer = this.killer;
                                     ItemStack weapon = new ItemStack(Items.DIAMOND_SWORD);
                                     weapon.addEnchantment(Enchantments.LOOTING, lootingLevel);
                                     killer.setHeldItem(EnumHand.MAIN_HAND, weapon);
-                                    Iterator<ItemStack> itr = entityLiving.getEquipmentAndArmor().iterator();
-                                    while (itr.hasNext()) {
-                                        itr.remove();
-                                    }
                                     entityLiving.setInvisible(true);
                                     entityLiving.setPosition(getX() + 0.5D, getY() + 1.1D, getZ() + 0.5D);
+                                    entityLiving.onInitialSpawn(getWorld().getDifficultyForLocation(getPos()), null);
+                                    if (entityLiving.isRiding()) {
+                                        Entity ridingEntity = entityLiving.getRidingEntity();
+                                        if (ridingEntity instanceof EntityLiving) {
+                                            EntityLiving entityLiving1 = (EntityLiving) ridingEntity;
+                                            entityLiving1.setInvisible(true);
+                                            entityLiving1.setPosition(getX() + 0.5D, getY() + 1.1D, getZ() + 0.5D);
+                                            entityLiving1.onInitialSpawn(getWorld().getDifficultyForLocation(getPos()), null);
+                                            entityLiving1.attackEntityFrom(DamageSource.causePlayerDamage(killer), Float.MAX_VALUE);
+                                            entityLiving1.setDead();
+                                        } else {
+                                            ridingEntity.setDead();
+                                        }
+                                    }
+                                    if (dropEquipment) {
+                                        for (EntityEquipmentSlot equipmentSlot : EntityEquipmentSlot.values()) {
+                                            entityLiving.setItemStackToSlot(equipmentSlot, ItemStack.EMPTY);
+                                        }
+                                    }
                                     entityLiving.attackEntityFrom(DamageSource.causePlayerDamage(killer), Float.MAX_VALUE);
                                     entityLiving.setDead();
                                     liquidSlot.setStored(liquidSlot.getStored() - liquidCost);

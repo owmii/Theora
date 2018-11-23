@@ -18,13 +18,15 @@ public class RenderDeathChamber extends TESRBase<TileDeathChamber> {
     @Override
     public void render(TileDeathChamber te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         GlStateManager.translate(x, y, z);
         ColorHelper.glColorNormal();
         if (te.buildStatus) {
             GlStateManager.pushMatrix();
             GlStateManager.scale(1.0F, -1.0F, -1.0F);
             GlStateManager.translate(0.5D, 0.5D, -0.5D);
-            mc.getTextureManager().bindTexture(MAIN_TEXTURE);
+            this.mc.getTextureManager().bindTexture(MAIN_TEXTURE);
             MODEL_DEATH_CHAMBER.render(0.0625f);
             GlStateManager.popMatrix();
             if (!te.getStackInSlot(0).isEmpty()) {
@@ -38,36 +40,37 @@ public class RenderDeathChamber extends TESRBase<TileDeathChamber> {
                 GlStateManager.pushMatrix();
                 GlStateManager.translate(0.5D, 1.5D, -1.01D);
                 GlStateManager.rotate(0, 0, 1, 0);
-                RendererHelper.renderItemStack(te.getStackInSlot(1), 0.7F);
+                RendererHelper.renderItemStack(te.getStackInSlot(1), 0.85F);
                 GlStateManager.popMatrix();
             }
             if (!te.getStackInSlot(2).isEmpty()) {
                 GlStateManager.pushMatrix();
                 GlStateManager.translate(0.5D, 1.5D, 2.01D);
                 GlStateManager.rotate(180, 0, 1, 0);
-                RendererHelper.renderItemStack(te.getStackInSlot(2), 0.7F);
+                RendererHelper.renderItemStack(te.getStackInSlot(2), 0.85F);
                 GlStateManager.popMatrix();
             }
             if (!te.getStackInSlot(3).isEmpty()) {
                 GlStateManager.pushMatrix();
                 GlStateManager.translate(-1.01D, 1.5D, 0.5D);
                 GlStateManager.rotate(90, 0, 1, 0);
-                RendererHelper.renderItemStack(te.getStackInSlot(3), 0.7F);
+                RendererHelper.renderItemStack(te.getStackInSlot(3), 0.85F);
                 GlStateManager.popMatrix();
             }
             if (!te.getStackInSlot(4).isEmpty()) {
                 GlStateManager.pushMatrix();
                 GlStateManager.translate(2.01D, 1.5D, 0.5D);
                 GlStateManager.rotate(270, 0, 1, 0);
-                RendererHelper.renderItemStack(te.getStackInSlot(4), 0.7F);
+                RendererHelper.renderItemStack(te.getStackInSlot(4), 0.85F);
                 GlStateManager.popMatrix();
             }
         } else {
             GlStateManager.scale(1.0F, -1.0F, -1.0F);
             GlStateManager.translate(0.5D, -1.5D, -0.5D);
-            mc.getTextureManager().bindTexture(CUBE_TEXTURE);
+            this.mc.getTextureManager().bindTexture(CUBE_TEXTURE);
             MODEL_CUBE.render(0.0625f);
         }
+        GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
 }

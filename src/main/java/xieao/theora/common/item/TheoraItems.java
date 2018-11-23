@@ -25,6 +25,7 @@ public class TheoraItems {
     public static final ItemSlateSummoning SUMMONING_SLATE;
     public static final ItemSlateLooting LOOTING_SLATE;
     public static final ItemSlateEfficiency EFFICIENCY_SLATE;
+    public static final ItemSlateEquipmentDrop EQUIPMENT_DROP_SLATE;
     public static final ItemSlateXP XP_SLATE;
 
     static {
@@ -39,6 +40,7 @@ public class TheoraItems {
         SUMMONING_SLATE = register(new ItemSlateSummoning(), "summoningslate");
         LOOTING_SLATE = register(new ItemSlateLooting(), "lootingslate");
         EFFICIENCY_SLATE = register(new ItemSlateEfficiency(), "efficiencyslate");
+        EQUIPMENT_DROP_SLATE = register(new ItemSlateEquipmentDrop(), "equipmentdropslate");
         XP_SLATE = register(new ItemSlateXP(), "xpslate");
 
         for (Block block : TheoraBlocks.BLOCKS) {

@@ -63,12 +63,15 @@ public class ItemSlateSummoning extends ItemBase implements ISummoningSlate {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         ItemStack stack = playerIn.getHeldItem(handIn);
-        if (!NBTHelper.hasKey(stack, TAG_BIOME_ID, Constants.NBT.TAG_INT)) {
-            int biomeId = Biome.getIdForBiome(worldIn.getBiome(playerIn.getPosition()));
-            NBTHelper.setInteger(stack, TAG_BIOME_ID, biomeId);
-        } else {
-            playerIn.sendStatusMessage(new TextComponentString("theora.chat.slate.has.biome"), true);
+        if (Type.values()[stack.getMetadata()] == Type.BIOME) {
+            if (!NBTHelper.hasKey(stack, TAG_BIOME_ID, Constants.NBT.TAG_INT)) {
+                int biomeId = Biome.getIdForBiome(worldIn.getBiome(playerIn.getPosition()));
+                NBTHelper.setInteger(stack, TAG_BIOME_ID, biomeId);
+            } else {
+                playerIn.sendStatusMessage(new TextComponentString("theora.chat.slate.has.biome"), true);
+            }
         }
+        //TODO success and failed sounds
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }
 

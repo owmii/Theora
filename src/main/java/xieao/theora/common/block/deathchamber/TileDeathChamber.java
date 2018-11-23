@@ -3,6 +3,7 @@ package xieao.theora.common.block.deathchamber;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
@@ -18,6 +19,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayerFactory;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.theora.api.item.slate.*;
@@ -141,8 +143,15 @@ public class TileDeathChamber extends TileInvBase implements ITickable {
                                             entityLiving.setItemStackToSlot(equipmentSlot, ItemStack.EMPTY);
                                         }
                                     }
+                                    entityLiving.spawnExplosionParticle();
                                     entityLiving.attackEntityFrom(DamageSource.causePlayerDamage(killer), Float.MAX_VALUE);
                                     entityLiving.setDead();
+                                    int xpDrop = ForgeEventFactory.getExperienceDrop(entityLiving, killer, 0) * xpMultiPlier;
+                                    while (xpDrop > 0) {
+                                        int i = EntityXPOrb.getXPSplit(xpDrop);
+                                        xpDrop -= i;
+                                        getWorld().spawnEntity(new EntityXPOrb(getWorld(), getX() + 0.5D, getY() - 0.3D, getZ() + 0.5D, i));
+                                    }
                                     liquidSlot.setStored(liquidSlot.getStored() - liquidCost);
                                     syncNBTData();
                                 }

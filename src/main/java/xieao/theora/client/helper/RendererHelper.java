@@ -53,8 +53,8 @@ public class RendererHelper {
 
     @SubscribeEvent
     public static void clientTick(TickEvent.ClientTickEvent event) {
-        Minecraft mc = Minecraft.getMinecraft();
         if (event.phase == TickEvent.Phase.END) {
+            Minecraft mc = Minecraft.getMinecraft();
             if (mc.currentScreen == null || !mc.currentScreen.doesGuiPauseGame()) {
                 tickCount++;
             }
@@ -222,12 +222,12 @@ public class RendererHelper {
     }
 
     public static void renderItemStack(ItemStack stack, float scale) {
-        Minecraft mc = Minecraft.getMinecraft();
         if (!stack.isEmpty()) {
             GlStateManager.pushMatrix();
             GlStateManager.scale(scale, scale, scale);
+            Minecraft mc = Minecraft.getMinecraft();
             RenderItem renderItem = mc.getRenderItem();
-            renderItem.renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
+            renderItem.renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
             GlStateManager.popMatrix();
         }
     }

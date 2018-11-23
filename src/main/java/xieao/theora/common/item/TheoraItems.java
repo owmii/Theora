@@ -39,7 +39,7 @@ public class TheoraItems {
         SUMMONING_SLATE = register(new ItemSlateSummoning(), "summoningslate");
         LOOTING_SLATE = register(new ItemSlateLooting(), "lootingslate");
         EFFICIENCY_SLATE = register(new ItemSlateEfficiency(), "efficiencyslate");
-        XP_SLATE = register(new ItemSlateXP(), "xpslate()");
+        XP_SLATE = register(new ItemSlateXP(), "xpslate");
 
         for (Block block : TheoraBlocks.BLOCKS) {
             if (block instanceof IGenericBlock) {

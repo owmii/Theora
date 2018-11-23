@@ -1,12 +1,18 @@
 package xieao.theora.common.item;
 
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.structure.MapGenNetherBridge;
 import net.minecraft.world.gen.structure.StructureOceanMonument;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.terraingen.InitMapGenEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 import xieao.theora.api.item.slate.ISummoningSlate;
@@ -18,7 +24,7 @@ import java.util.Set;
 
 public class ItemSlateSummoning extends ItemBase implements ISummoningSlate {
 
-    public static final String TAG_BIME_ID = "biomeId";
+    public static final String TAG_BIOME_ID = "biomeId";
 
     public static final Set<Biome.SpawnListEntry> SPAWN_LIST_NETHER = new HashSet<>();
     public static final Set<Biome.SpawnListEntry> SPAWN_LIST_NETHER_FORTRESS = new HashSet<>();
@@ -55,11 +61,25 @@ public class ItemSlateSummoning extends ItemBase implements ISummoningSlate {
     }
 
     @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+        ItemStack stack = playerIn.getHeldItem(handIn);
+        if (!NBTHelper.hasKey(stack, TAG_BIOME_ID, Constants.NBT.TAG_INT)) {
+            int biomeId = Biome.getIdForBiome(worldIn.getBiome(playerIn.getPosition()));
+            NBTHelper.setInteger(stack, TAG_BIOME_ID, biomeId);
+        } else {
+            playerIn.sendStatusMessage(new TextComponentString("theora.chat.slate.has.biome"), true);
+        }
+        return super.onItemRightClick(worldIn, playerIn, handIn);
+    }
+
+    @Override
     public Set<Biome.SpawnListEntry> getSpawnListEntries(ItemStack stack) {
         if (Type.values()[stack.getMetadata()] == Type.BIOME) {
-            int biomeId = NBTHelper.getInteger(stack, TAG_BIME_ID);
-            Biome biome = Biome.getBiome(biomeId);
-            return new HashSet<>(biome.getSpawnableList(EnumCreatureType.MONSTER));
+            if (NBTHelper.hasKey(stack, TAG_BIOME_ID, Constants.NBT.TAG_INT)) {
+                int biomeId = NBTHelper.getInteger(stack, TAG_BIOME_ID);
+                Biome biome = Biome.getBiome(biomeId);
+                return new HashSet<>(biome.getSpawnableList(EnumCreatureType.MONSTER));
+            }
         } else {
             if (SPAWN_LIST_NETHER.isEmpty()) {
                 initSpawnLists();
@@ -83,7 +103,8 @@ public class ItemSlateSummoning extends ItemBase implements ISummoningSlate {
         NETHER(SPAWN_LIST_NETHER),
         NETHER_FORTRESS(SPAWN_LIST_NETHER_FORTRESS),
         END(SPAWN_LIST_END),
-        OCEAN_MONUMENT(SPAWN_LIST_OCEAN_MONUMENT);
+        OCEAN_MONUMENT(SPAWN_LIST_OCEAN_MONUMENT),
+        VIBRANT(Collections.emptySet());
 
         public final Set<Biome.SpawnListEntry> spawnListEntries;
 

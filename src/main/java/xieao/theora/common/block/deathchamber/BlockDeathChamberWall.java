@@ -29,7 +29,7 @@ public class BlockDeathChamberWall extends BlockBase implements ITileEntityProvi
             TileDeathChamberWall wall = (TileDeathChamberWall) tileEntity;
             if (wall.hasDeathChamber() && facing != EnumFacing.UP && facing != EnumFacing.DOWN) {
                 double opX = facing.getOpposite().getFrontOffsetX();
-                double opY = facing.getOpposite().getFrontOffsetY();
+                double opY = facing.getOpposite().getFrontOffsetY() - 1;
                 double opZ = facing.getOpposite().getFrontOffsetZ();
                 BlockPos pos1 = pos.add(opX, opY, opZ);
                 if (wall.dcPos.equals(pos1)) {

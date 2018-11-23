@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "theora:items/lootingslate_level_2"
+  }
+}

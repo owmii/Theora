@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "theora:items/xpslate_level_2"
+  }
+}

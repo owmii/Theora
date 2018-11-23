@@ -138,7 +138,7 @@ public class TileDeathChamber extends TileInvBase implements ITickable {
                                             ridingEntity.setDead();
                                         }
                                     }
-                                    if (dropEquipment) {
+                                    if (!dropEquipment) {
                                         for (EntityEquipmentSlot equipmentSlot : EntityEquipmentSlot.values()) {
                                             entityLiving.setItemStackToSlot(equipmentSlot, ItemStack.EMPTY);
                                         }
@@ -146,11 +146,12 @@ public class TileDeathChamber extends TileInvBase implements ITickable {
                                     entityLiving.spawnExplosionParticle();
                                     entityLiving.attackEntityFrom(DamageSource.causePlayerDamage(killer), Float.MAX_VALUE);
                                     entityLiving.setDead();
-                                    int xpDrop = ForgeEventFactory.getExperienceDrop(entityLiving, killer, 0) * xpMultiPlier;
+                                    int xpDrop = entityLiving.experienceValue + this.rand.nextInt(3);
+                                    xpDrop = ForgeEventFactory.getExperienceDrop(entityLiving, killer, xpDrop) * xpMultiPlier;
                                     while (xpDrop > 0) {
                                         int i = EntityXPOrb.getXPSplit(xpDrop);
                                         xpDrop -= i;
-                                        getWorld().spawnEntity(new EntityXPOrb(getWorld(), getX() + 0.5D, getY() - 0.3D, getZ() + 0.5D, i));
+                                        getWorld().spawnEntity(new EntityXPOrb(getWorld(), getX() + 0.5D, getY() - 1.1D, getZ() + 0.5D, i));
                                     }
                                     liquidSlot.setStored(liquidSlot.getStored() - liquidCost);
                                     syncNBTData();

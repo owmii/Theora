@@ -11,6 +11,7 @@ public class TheoraEntities {
 
     public static void register() {
         register(EntityInteractor.class, "interactor", 64, 10, false);
+        register(EntitySoul.class, "soul", 64, 10, true);
     }
 
     private static void register(Class<? extends Entity> entityClass, String entityName, int updateFrequency, int trackingRange, boolean sendsVelocityUpdates) {

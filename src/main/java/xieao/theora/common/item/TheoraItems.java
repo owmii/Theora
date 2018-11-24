@@ -7,12 +7,12 @@ import xieao.theora.Theora;
 import xieao.theora.common.block.IGenericBlock;
 import xieao.theora.common.block.TheoraBlocks;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TheoraItems {
 
-    public static final Set<Item> ITEMS = new HashSet<>();
+    public static final List<Item> ITEMS = new ArrayList<>();
 
     public static final ItemShroomBit SHROOM_BIT;
     public static final ItemGliophin GLIOPHIN;
@@ -22,6 +22,8 @@ public class TheoraItems {
     public static final ItemPigCoin PIG_COIN;
     public static final ItemPigCoinBag PIG_COIN_BAG;
     public static final ItemWitherTear WITHER_TEAR;
+    public static final ItemSoulEgg SOUL_EGG;
+    public static final ItemBase EMPTY_SLATE;
     public static final ItemSlateSummoning SUMMONING_SLATE;
     public static final ItemSlateLooting LOOTING_SLATE;
     public static final ItemSlateEfficiency EFFICIENCY_SLATE;
@@ -37,6 +39,8 @@ public class TheoraItems {
         PIG_COIN = register(new ItemPigCoin(), "pigcoin");
         PIG_COIN_BAG = register(new ItemPigCoinBag(), "pigcoinbag");
         WITHER_TEAR = register(new ItemWitherTear(), "withertear");
+        SOUL_EGG = register(new ItemSoulEgg(), "soulegg");
+        EMPTY_SLATE = register(new ItemBase(), "emptyslate");
         SUMMONING_SLATE = register(new ItemSlateSummoning(), "summoningslate");
         LOOTING_SLATE = register(new ItemSlateLooting(), "lootingslate");
         EFFICIENCY_SLATE = register(new ItemSlateEfficiency(), "efficiencyslate");

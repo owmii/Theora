@@ -1,6 +1,8 @@
 package xieao.theora.api;
 
 import net.minecraft.entity.player.EntityPlayer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import xieao.theora.api.player.data.IPlayerData;
 import xieao.theora.api.player.data.PlayerDataCapability;
 import xieao.theora.api.recipe.IRecipeRegistry;
@@ -12,7 +14,9 @@ import java.util.Set;
 public class TheoraAPI {
 
     public static final TheoraAPI API = new TheoraAPI();
-    private static final Set<IRecipeRegistry> RECIPE_REGISTRIES = new HashSet<>();
+    private final Set<IRecipeRegistry> recipeRegistries = new HashSet<>();
+
+    public static final Logger LOG = LogManager.getLogger("theora");
 
     @Nullable
     @SuppressWarnings("unchecked")
@@ -22,10 +26,10 @@ public class TheoraAPI {
 
     public void register(IRecipeRegistry registry) {
         registry.initRecipes();
-        RECIPE_REGISTRIES.add(registry);
+        recipeRegistries.add(registry);
     }
 
     public Set<IRecipeRegistry> getRecipeRegistries() {
-        return RECIPE_REGISTRIES;
+        return recipeRegistries;
     }
 }

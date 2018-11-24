@@ -18,13 +18,13 @@ import xieao.theora.common.block.misc.BlockShroom;
 import xieao.theora.common.block.misc.BlockWood;
 import xieao.theora.common.block.orb.BlockOrb;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public class TheoraBlocks {
 
-    public static final Set<Block> BLOCKS = new HashSet<>();
+    public static final List<Block> BLOCKS = new ArrayList<>();
 
     public static final BlockShroom SHROOM;
     public static final BlockWood WOOD;

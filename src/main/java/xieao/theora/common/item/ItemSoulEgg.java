@@ -77,7 +77,9 @@ public class ItemSoulEgg extends ItemBase {
             List<EntitySoul> souls = player.world.getEntitiesWithinAABB(EntitySoul.class, new AxisAlignedBB(player.getPosition()).grow(16));
             if (!souls.isEmpty()) {
                 EntitySoul soul = souls.get(0);
-                soul.spawnExplosionParticle();
+                soul.motionX = (player.posX - soul.posX) * 0.05D;
+                soul.motionY = ((player.posY + 0.5D) - soul.posY) * 1.8D;
+                soul.motionZ = (player.posZ - soul.posZ) * 0.05D;
             }
         }
     }

@@ -16,6 +16,8 @@ import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import xieao.theora.client.particle.ParticleEngine;
+import xieao.theora.client.particle.ParticleGlow;
 import xieao.theora.common.item.ItemSoulEgg;
 
 import javax.annotation.Nullable;
@@ -23,6 +25,7 @@ import javax.annotation.Nullable;
 @Mod.EventBusSubscriber
 public class EntitySoul extends EntityLiving {
 
+    private int age = 600;
     private String soulOwnerClassName = "";
 
     @Nullable
@@ -108,7 +111,19 @@ public class EntitySoul extends EntityLiving {
     @Override
     public void onUpdate() {
         super.onUpdate();
-        //  this.motionY *= 0.6000000238418579D;
+        if (this.world.isRemote) {
+            for (int i = 0; i < 4; i++) {
+                double d0 = this.rand.nextGaussian() * 0.04D;
+                double d1 = this.rand.nextGaussian() * 0.04D;
+                double d2 = this.rand.nextGaussian() * 0.04D;
+                ParticleEngine.INSTANCE.addEffect(new ParticleGlow(world, getPositionVector(),
+                        getPositionVector(), 0, 15, 4.0F, 0xffffff, 0));
+            }
+        } else {
+            if (this.age-- <= 0) {
+                setDead();
+            }
+        }
     }
 
     @Override
@@ -123,7 +138,7 @@ public class EntitySoul extends EntityLiving {
         double d1 = (double) this.spawnPosition.getY() + 0.1D - this.posY;
         double d2 = (double) this.spawnPosition.getZ() + 0.5D - this.posZ;
         this.motionX += (Math.signum(d0) * 0.5D - this.motionX) * 0.02D;
-        this.motionY = 0;
+        this.motionY *= 0.02D;
         this.motionY += (Math.signum(d1) * 0.6D - this.motionY) * 0.02D;
         this.motionZ += (Math.signum(d2) * 0.5D - this.motionZ) * 0.02D;
         float f = (float) (MathHelper.atan2(this.motionZ, this.motionX) * (180D / Math.PI)) - 90.0F;

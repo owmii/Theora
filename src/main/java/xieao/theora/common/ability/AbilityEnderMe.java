@@ -9,6 +9,7 @@ public class AbilityEnderMe extends Ability {
     // TODO looking to an enderman will teleport to you
     // TODO using an eye of ender will teleport you to the end dimontion
     // TODO water hert you unless you wering armor
+    // TODO right click ender dragon egg to pick it up
 
 
 }

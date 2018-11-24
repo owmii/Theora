@@ -17,7 +17,7 @@ public class ParticleGlow extends ParticleBase {
         super.onUpdate();
         float f0 = (float) this.particleAge / (float) this.particleMaxAge;
         this.particleAlpha = (1.0F - f0);
-        this.particleScale = (1.0F - f0) * 0.90F;
+        this.particleScale *= 0.90F;
         this.motionX = (end.x - this.posX) * this.speed;
         this.motionY = (end.y - this.posY) * this.speed;
         this.motionZ = (end.z - this.posZ) * this.speed;

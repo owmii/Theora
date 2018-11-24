@@ -26,8 +26,9 @@ public class RenderInteractor extends Render<EntityInteractor> {
         GlStateManager.pushMatrix();
         GlStateManager.translate(x + .5, y + 1.0F, z + .5);
         RenderHelper.disableStandardItemLighting();
-        GlStateManager.enableBlend();
+        GlStateManager.enableBlend(); //TODO fix
         // GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         ColorHelper.glColor(new Color(entity.getColor()).darker(), 1.0F);
 
         GlStateManager.pushMatrix();
@@ -59,6 +60,7 @@ public class RenderInteractor extends Render<EntityInteractor> {
         RendererHelper.renderQuad(TheoraTextureMap.liquid_interact_ov, 1.0D);
         GlStateManager.popMatrix();
 
+        GlStateManager.disableBlend();
         RenderHelper.enableStandardItemLighting();
         GlStateManager.popMatrix();
     }

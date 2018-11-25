@@ -109,7 +109,7 @@ public class BlockDeathChamberWall extends BlockBase implements ITileEntityProvi
         if (tileEntity instanceof TileDeathChamberWall) {
             TileEntity tileEntity1 = worldIn.getTileEntity(((TileDeathChamberWall) tileEntity).dcPos);
             if (tileEntity1 instanceof TileDeathChamber) {
-                ((TileDeathChamber) tileEntity1).dimolish();
+                //  ((TileDeathChamber) tileEntity1).dimolish();
                 ((TileDeathChamber) tileEntity1).syncNBTData();
             }
         }

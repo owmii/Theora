@@ -98,7 +98,7 @@ public class BlockDeathChamber extends BlockBase implements ITileEntityProvider 
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity instanceof TileDeathChamber) {
-            ((TileDeathChamber) tileEntity).dimolish();
+            // ((TileDeathChamber) tileEntity).dimolish();
             ((TileDeathChamber) tileEntity).syncNBTData();
         }
         super.breakBlock(worldIn, pos, state);

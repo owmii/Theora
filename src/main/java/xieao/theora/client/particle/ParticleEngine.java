@@ -20,16 +20,16 @@ public class ParticleEngine {
 
     public static final ParticleEngine INSTANCE = new ParticleEngine();
     private static final Minecraft mc = Minecraft.getMinecraft();
-    private final List<ParticleBase> particles = new ArrayList<>();
+    private final List<ParticleGeneric> particles = new ArrayList<>();
     private final Random rand = new Random();
 
     @SubscribeEvent
     public static void tickParticles(TickEvent.ClientTickEvent event) {
         if (event.side == Side.CLIENT && event.phase == TickEvent.Phase.START) {
             if (mc.currentScreen == null || !mc.currentScreen.doesGuiPauseGame()) {
-                Iterator<ParticleBase> iterator = INSTANCE.particles.iterator();
+                Iterator<ParticleGeneric> iterator = INSTANCE.particles.iterator();
                 while (iterator.hasNext()) {
-                    ParticleBase particle = iterator.next();
+                    ParticleGeneric particle = iterator.next();
                     particle.onUpdate();
                     if (!particle.isAlive()) {
                         iterator.remove();
@@ -57,7 +57,7 @@ public class ParticleEngine {
         GlStateManager.alphaFunc(516, 0.003921569F);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         for (int i = 0; i < INSTANCE.particles.size(); i++) {
-            ParticleBase particle = INSTANCE.particles.get(i);
+            ParticleGeneric particle = INSTANCE.particles.get(i);
             GlStateManager.depthMask(!particle.shouldDisableDepth());
             particle.renderParticle(partialTicks, f0, f4, f1, f2, f3);
         }
@@ -66,7 +66,7 @@ public class ParticleEngine {
         GlStateManager.alphaFunc(516, 0.1F);
     }
 
-    public void addEffect(ParticleBase... effects) {
+    public void addEffect(ParticleGeneric... effects) {
         if (mc.currentScreen == null || !mc.currentScreen.doesGuiPauseGame()) {
             this.particles.addAll(Arrays.asList(effects));
         }

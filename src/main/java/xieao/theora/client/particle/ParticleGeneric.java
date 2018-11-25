@@ -14,26 +14,33 @@ import org.lwjgl.opengl.GL11;
 import xieao.theora.Theora;
 
 @SideOnly(Side.CLIENT)
-public class ParticleBase extends Particle {
+public class ParticleGeneric extends Particle {
 
-    protected final Vec3d start;
-    protected final Vec3d end;
-    protected final double speed;
-    protected String particleTexture;
+    protected ParticleTetxure tetxure;
+    protected Vec3d start;
+    protected Vec3d end;
+    protected double speed;
+    protected int alphaMode;
+    protected int scaleMode;
+    protected float scaleFactor;
+    protected float rotSpeed;
+    protected float rotX;
+    protected float rotY;
+    protected float rotZ;
 
-    public ParticleBase(World world, Vec3d start, Vec3d end, double speed, int maxAge, float scale, int color, float alpha) {
+    public ParticleGeneric(ParticleTetxure tetxure, World world, Vec3d start, int maxAge) {
         super(world, start.x, start.y, start.z);
         this.start = start;
-        this.end = end;
-        this.speed = speed;
+        this.end = start;
+        this.speed = 0.2D;
         this.motionX = 0.0D;
         this.motionY = 0.0D;
         this.motionZ = 0.0D;
         this.particleMaxAge = maxAge;
-        this.particleScale = scale;
-        setColor(color);
-        this.particleAlpha = alpha;
-        this.particleTexture = "glow2";
+        this.particleScale = 1.0F;
+        setColor(0xffffff);
+        this.particleAlpha = 0.0F;
+        this.tetxure = tetxure;
     }
 
     @Override
@@ -41,6 +48,15 @@ public class ParticleBase extends Particle {
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
+        float f0 = (float) this.particleAge / (float) this.particleMaxAge;
+        this.particleAlpha = this.alphaMode == 1 ? (1.0F - f0) : this.particleAlpha;
+        this.particleScale = this.scaleMode == 1 ? (1.0F - f0) : this.scaleMode == 2 ? this.particleScale *= this.scaleFactor : this.particleScale;
+        if (!this.start.equals(this.end)) {
+            this.motionX = (end.x - this.posX) * this.speed;
+            this.motionY = (end.y - this.posY) * this.speed;
+            this.motionZ = (end.z - this.posZ) * this.speed;
+            move(this.motionX, this.motionY, this.motionZ);
+        }
         killExpiredParticle();
     }
 
@@ -64,7 +80,7 @@ public class ParticleBase extends Particle {
                 posVec[l] = vec3d.scale(2.0D * posVec[l].dotProduct(vec3d)).add(posVec[l].scale(d5 * d5 - vec3d.dotProduct(vec3d))).add(vec3d.crossProduct(posVec[l]).scale(2.0F * d5));
             }
         }
-        Minecraft.getMinecraft().getTextureManager().bindTexture(Theora.location("textures/particles/" + this.particleTexture + ".png"));
+        Minecraft.getMinecraft().getTextureManager().bindTexture(Theora.location("textures/particles/" + this.tetxure.name + ".png"));
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferbuilder = tessellator.getBuffer();
         bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
@@ -81,7 +97,38 @@ public class ParticleBase extends Particle {
         }
     }
 
-    protected void setColor(int color) {
+    public ParticleGeneric setEnd(Vec3d end) {
+        this.end = end;
+        return this;
+    }
+
+    public ParticleGeneric setSpeed(double speed) {
+        this.speed = speed;
+        return this;
+    }
+
+    public ParticleGeneric setAlpha(float alpha, int mode) {
+        this.particleAlpha = alpha;
+        this.alphaMode = mode;
+        return this;
+    }
+
+    public ParticleGeneric scale(float scale, int mode, float scaleFactor) {
+        this.particleScale = scale;
+        this.scaleMode = mode;
+        this.scaleFactor = scaleFactor;
+        return this;
+    }
+
+    public ParticleGeneric rotate(float rotSpeed, float rotX, float rotY, float rotZ) {
+        this.rotSpeed = rotSpeed;
+        this.rotX = rotX;
+        this.rotY = rotY;
+        this.rotZ = rotZ;
+        return this;
+    }
+
+    public void setColor(int color) {
         this.particleRed = (float) (color >> 16) / 255.0F;
         this.particleGreen = (float) (color >> 8 & 255) / 255.0F;
         this.particleBlue = (float) (color & 255) / 255.0F;

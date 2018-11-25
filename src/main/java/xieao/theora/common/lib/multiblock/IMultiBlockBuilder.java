@@ -1,7 +1,7 @@
 package xieao.theora.common.lib.multiblock;
 
-import xieao.theora.common.block.BlockBase;
+import xieao.theora.common.block.TileBase;
 
-public interface IMultiBlockBuilder<T extends BlockBase> {
+public interface IMultiBlockBuilder<T extends TileBase> {
 
 }

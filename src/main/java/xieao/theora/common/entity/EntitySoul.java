@@ -16,6 +16,9 @@ import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import xieao.theora.client.particle.ParticleEngine;
+import xieao.theora.client.particle.ParticleGeneric;
+import xieao.theora.client.particle.ParticleTetxure;
 import xieao.theora.common.item.ItemSoulEgg;
 
 import javax.annotation.Nullable;
@@ -23,7 +26,7 @@ import javax.annotation.Nullable;
 @Mod.EventBusSubscriber
 public class EntitySoul extends EntityLiving {
 
-    private int age = 600;
+    private int age = 2400;
     private String soulOwnerClassName = "";
 
     @Nullable
@@ -110,13 +113,8 @@ public class EntitySoul extends EntityLiving {
     public void onUpdate() {
         super.onUpdate();
         if (this.world.isRemote) {
-//            for (int i = 0; i < 4; i++) {
-//                double d0 = this.rand.nextGaussian() * 0.04D;
-//                double d1 = this.rand.nextGaussian() * 0.04D;
-//                double d2 = this.rand.nextGaussian() * 0.04D;
-//                ParticleEngine.INSTANCE.addEffect(new ParticleGlow(world, getPositionVector(),
-//                        getPositionVector(), 0, 15, 4.0F, 0xffffff, 0));
-//            }
+            ParticleEngine.INSTANCE.addEffect(new ParticleGeneric(ParticleTetxure.GLOW_MID, this.world, getPositionVector(), 7)
+                    .scale(2.8F, 2, 0.8F).setAlpha(1.0F, 1).setColor(0xfff7d3, 0xa89e70).blendFunc());
         } else {
             if (this.age-- <= 0) {
                 setDead();

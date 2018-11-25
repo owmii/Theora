@@ -5,6 +5,8 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -65,6 +67,10 @@ public class ParticleEngine {
         GlStateManager.depthMask(true);
         GlStateManager.disableBlend();
         GlStateManager.alphaFunc(516, 0.1F);
+    }
+
+    public ParticleGeneric particle(ParticleTetxure tetxure, World world, Vec3d start, int maxAge) {
+        return new ParticleGeneric(tetxure, world, start, maxAge);
     }
 
     public void addEffect(ParticleGeneric... effects) {

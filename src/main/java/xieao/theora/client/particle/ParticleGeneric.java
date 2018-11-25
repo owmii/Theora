@@ -3,6 +3,7 @@ package xieao.theora.client.particle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.MathHelper;
@@ -21,6 +22,7 @@ public class ParticleGeneric extends Particle {
     protected Vec3d start;
     protected Vec3d end;
     protected boolean noDepth;
+    protected boolean blendFunc;
     protected boolean bright;
     protected double speed;
     protected int alphaMode;
@@ -45,7 +47,7 @@ public class ParticleGeneric extends Particle {
         this.motionZ = 0.0D;
         this.particleMaxAge = maxAge;
         this.particleScale = 1.0F;
-        setColor(0xffffff, -1);
+        setColor(0xffffff);
         this.particleAlpha = 0.0F;
         this.tetxure = tetxure;
     }
@@ -71,6 +73,9 @@ public class ParticleGeneric extends Particle {
     }
 
     public void renderParticle(float partialTicks, double rotX, double rotZ, double rotYZ, double rotXY, double rotXZ) {
+        if (this.blendFunc) {
+            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
+        }
         double d0 = 0.1F * this.particleScale;//TODO particle rotation
         double d1 = this.prevPosX + (this.posX - this.prevPosX) * partialTicks - interpPosX;
         double d2 = this.prevPosY + (this.posY - this.prevPosY) * partialTicks - interpPosY;
@@ -104,6 +109,9 @@ public class ParticleGeneric extends Particle {
         bufferbuilder.pos(d1 + posVec[2].x, d2 + posVec[2].y, d3 + posVec[2].z).tex(0.0D, 0.0D).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j, k).endVertex();
         bufferbuilder.pos(d1 + posVec[3].x, d2 + posVec[3].y, d3 + posVec[3].z).tex(0.0D, 1.0D).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j, k).endVertex();
         tessellator.draw();
+        if (this.blendFunc) {
+            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        }
     }
 
     protected void killExpiredParticle() {
@@ -151,6 +159,7 @@ public class ParticleGeneric extends Particle {
     }
 
     public ParticleGeneric setColor(int fromColor, int toColor) {
+        setColor(fromColor);
         this.fromColor = fromColor;
         this.toColor = toColor;
         this.dinamicColor = true;
@@ -162,8 +171,14 @@ public class ParticleGeneric extends Particle {
         return this.bright ? 15728880 : super.getBrightnessForRender(p_189214_1_);
     }
 
-    public void depth() {
+    public ParticleGeneric blendFunc() {
+        this.blendFunc = true;
+        return this;
+    }
+
+    public ParticleGeneric depth() {
         this.noDepth = false;
+        return this;
     }
 
     @Override

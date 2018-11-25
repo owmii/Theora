@@ -52,7 +52,7 @@ public class EntitySoul extends EntityLiving {
     @SubscribeEvent
     public static void spawnSoul(LivingDeathEvent event) {
         EntityLivingBase target = event.getEntityLiving();
-        if (ItemSoulEgg.SOUL_EGGS.containsKey(target.getClass())) {
+        if (ItemSoulEgg.SOULS.containsKey(target.getClass())) {
             DamageSource damageSource = event.getSource();
             if (damageSource.getTrueSource() instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) damageSource.getTrueSource();

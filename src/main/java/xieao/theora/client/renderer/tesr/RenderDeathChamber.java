@@ -22,7 +22,7 @@ public class RenderDeathChamber extends TESRBase<TileDeathChamber> {
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         GlStateManager.translate(x, y, z);
         ColorHelper.glColorNormal();
-        if (te.buildStatus) {
+        if (te.built) {
             GlStateManager.pushMatrix();
             GlStateManager.scale(1.0F, -1.0F, -1.0F);
             GlStateManager.translate(0.5D, 0.5D, -0.5D);

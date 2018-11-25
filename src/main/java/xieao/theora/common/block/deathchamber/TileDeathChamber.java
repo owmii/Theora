@@ -10,10 +10,8 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.DimensionManager;
@@ -27,6 +25,8 @@ import xieao.theora.api.liquid.LiquidContainer;
 import xieao.theora.api.liquid.LiquidContainerCapability;
 import xieao.theora.api.liquid.LiquidSlot;
 import xieao.theora.common.block.TileInvBase;
+import xieao.theora.common.lib.multiblock.IMultiBlock;
+import xieao.theora.common.lib.multiblock.IMultiBlockBuilder;
 import xieao.theora.common.liquid.TheoraLiquids;
 
 import javax.annotation.Nullable;
@@ -34,11 +34,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class TileDeathChamber extends TileInvBase implements ITickable {
+public class TileDeathChamber extends TileInvBase implements ITickable, IMultiBlockBuilder<TileDeathChamber> {
 
-    public static final int[][] CHAMBER_LAYER = new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
-    public static final int[][] LEGS_LAYER = new int[][]{{2, 2}, {2, -2}, {-2, 2}, {-2, -2}};
-
+    private static final IMultiBlock MULTI_BLOCK = new MBDeathChamber();
     private static final GameProfile DEATH_CHAMBER = new GameProfile(UUID.fromString("8f3dc5b7-eab1-4768-9b73-f1ca057a82eb"), "Death Chamber");
 
     @Nullable
@@ -46,7 +44,7 @@ public class TileDeathChamber extends TileInvBase implements ITickable {
 
     private final LiquidContainer liquidContainer;
 
-    public boolean buildStatus;
+    public boolean built;
 
     public TileDeathChamber() {
         this.liquidContainer = new LiquidContainer();
@@ -59,22 +57,23 @@ public class TileDeathChamber extends TileInvBase implements ITickable {
     public void readNBT(NBTTagCompound nbt) {
         super.readNBT(nbt);
         this.liquidContainer.readNBT(nbt);
-        this.buildStatus = nbt.getBoolean("buildStatus");
+        this.built = nbt.getBoolean("built");
     }
 
     @Override
     public void writeNBT(NBTTagCompound nbt) {
         super.writeNBT(nbt);
         this.liquidContainer.writeNBT(nbt);
-        nbt.setBoolean("buildStatus", this.buildStatus);
+        nbt.setBoolean("built", this.built);
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void update() {
         if (isServerWorld()) {
-            if (!this.buildStatus) {
-                if (isBlocksInPlace()) {
-                    tryBuild();
+            if (!this.built) {
+                if (getMultiBlock().isAllInPlace(this)) {
+                    build(this);
                     syncNBTData();
                 }
             } else if (!isEmpty() && this.world.getDifficulty() != EnumDifficulty.PEACEFUL) {
@@ -165,88 +164,19 @@ public class TileDeathChamber extends TileInvBase implements ITickable {
         }
     }
 
-    public boolean isBlocksInPlace() {
-        boolean flag = true;
-        for (int i = 0; i < 4; i++) {
-            for (int[] offset : CHAMBER_LAYER) {
-                BlockPos pos = getPos().add(offset[0], i, offset[1]);
-                TileEntity tileEntity = getTileEntity(pos);
-                if (!isWallConnectable(pos)) {
-                    flag = false;
-                }
-            }
-        }
-        if (flag) {
-            for (int i = 0; i > -3; i--) {
-                for (int[] offset : LEGS_LAYER) {
-                    BlockPos pos = getPos().add(offset[0], i, offset[1]);
-                    if (!isWallConnectable(pos)) {
-                        flag = false;
-                    }
-                }
-            }
-        }
-        return flag && isWallConnectable(getPos().add(0, 3, 0));
+    @Override
+    public IMultiBlock getMultiBlock() {
+        return MULTI_BLOCK;
     }
 
-    protected boolean isWallConnectable(BlockPos pos) {
-        TileEntity tileEntity = getTileEntity(pos);
-        if (tileEntity instanceof TileDeathChamberWall) {
-            TileDeathChamberWall wall = (TileDeathChamberWall) tileEntity;
-            BlockPos pos1 = wall.dcPos;
-            if (pos1 != BlockPos.ORIGIN) {
-                TileEntity tileEntity1 = getTileEntity(pos1);
-                if (tileEntity1 instanceof TileDeathChamberWall) {
-                    TileDeathChamber chamber = (TileDeathChamber) tileEntity1;
-                    return chamber.buildStatus;
-                }
-                return true;
-            } else {
-                return true;
-            }
-        }
-        return false;
+    @Override
+    public boolean built() {
+        return built;
     }
 
-    public void tryBuild() {
-        for (int i = 0; i < 4; i++) {
-            for (int[] offset : CHAMBER_LAYER) {
-                BlockPos pos = getPos().add(offset[0], i, offset[1]);
-                setWallChamberPos(pos, getPos());
-            }
-        }
-        for (int i = 0; i > -3; i--) {
-            for (int[] offset : LEGS_LAYER) {
-                BlockPos pos = getPos().add(offset[0], i, offset[1]);
-                setWallChamberPos(pos, getPos());
-            }
-        }
-        setWallChamberPos(getPos().add(0, 3, 0), getPos());
-        this.buildStatus = true;
-    }
-
-    public void dimolish() {
-        for (int i = 0; i < 4; i++) {
-            for (int[] offset : CHAMBER_LAYER) {
-                BlockPos pos = getPos().add(offset[0], i, offset[1]);
-                setWallChamberPos(pos, BlockPos.ORIGIN);
-            }
-        }
-        for (int i = 0; i > -3; i--) {
-            for (int[] offset : LEGS_LAYER) {
-                BlockPos pos = getPos().add(offset[0], i, offset[1]);
-                setWallChamberPos(pos, BlockPos.ORIGIN);
-            }
-        }
-        setWallChamberPos(getPos().add(0, 3, 0), BlockPos.ORIGIN);
-        this.buildStatus = false;
-    }
-
-    private void setWallChamberPos(BlockPos wallPos, BlockPos chamberPos) {
-        TileEntity tileEntity = getTileEntity(wallPos);
-        if (tileEntity instanceof TileDeathChamberWall) {
-            ((TileDeathChamberWall) tileEntity).setDeathChamberPos(chamberPos);
-        }
+    @Override
+    public void setBuilt(boolean built) {
+        this.built = built;
     }
 
     @Override
@@ -284,6 +214,6 @@ public class TileDeathChamber extends TileInvBase implements ITickable {
     @Override
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox() {
-        return this.buildStatus ? INFINITE_EXTENT_AABB : super.getRenderBoundingBox();
+        return this.built ? INFINITE_EXTENT_AABB : super.getRenderBoundingBox();
     }
 }

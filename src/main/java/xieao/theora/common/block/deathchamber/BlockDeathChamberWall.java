@@ -41,7 +41,7 @@ public class BlockDeathChamberWall extends BlockBase implements ITileEntityProvi
                     TileEntity tileEntity1 = worldIn.getTileEntity(pos1);
                     if (tileEntity1 instanceof TileDeathChamber) {
                         TileDeathChamber deathChamber = (TileDeathChamber) tileEntity1;
-                        if (deathChamber.buildStatus) {
+                        if (deathChamber.built) {
                             ItemStack heldStack = playerIn.getHeldItem(hand);
                             int slot = facing.ordinal() - 1;
                             if (!deathChamber.getStackInSlot(slot).isEmpty()) {

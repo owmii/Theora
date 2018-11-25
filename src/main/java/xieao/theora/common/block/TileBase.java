@@ -118,6 +118,10 @@ public class TileBase extends TileEntity {
         return getWorld().getTileEntity(pos);
     }
 
+    public IBlockState getBlockState(BlockPos pos) {
+        return getWorld().getBlockState(pos);
+    }
+
     public void syncNBTData() {
         if (!isGhostTile() && hasWorld() && isServerWorld()) {
             IBlockState state = getWorld().getBlockState(getPos());

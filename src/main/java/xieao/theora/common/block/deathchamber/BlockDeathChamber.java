@@ -40,7 +40,7 @@ public class BlockDeathChamber extends BlockBase implements ITileEntityProvider 
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity instanceof TileDeathChamber) {
             TileDeathChamber deathChamber = (TileDeathChamber) tileEntity;
-            if (deathChamber.buildStatus && facing == EnumFacing.DOWN) {
+            if (deathChamber.built && facing == EnumFacing.DOWN) {
                 ItemStack heldStack = playerIn.getHeldItem(hand);
                 if (!deathChamber.getStackInSlot(0).isEmpty()) {
                     ItemHandlerHelper.giveItemToPlayer(playerIn, deathChamber.getStackInSlot(0).copy());

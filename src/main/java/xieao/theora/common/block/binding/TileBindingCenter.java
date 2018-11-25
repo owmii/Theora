@@ -9,7 +9,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import xieao.theora.api.liquid.LiquidContainer;
@@ -17,8 +16,6 @@ import xieao.theora.api.liquid.LiquidContainerCapability;
 import xieao.theora.api.liquid.LiquidSlot;
 import xieao.theora.api.player.ability.Ability;
 import xieao.theora.api.recipe.binding.IBindingRecipe;
-import xieao.theora.client.particle.ParticleEngine;
-import xieao.theora.client.particle.ParticleGlow;
 import xieao.theora.common.block.TileBase;
 import xieao.theora.common.liquid.TheoraLiquids;
 import xieao.theora.common.recipe.RecipeHandler;
@@ -143,12 +140,12 @@ public class TileBindingCenter extends TileBase implements ITickable {
 //                    }
 //                }
 //            }
-            if (this.ready && !this.ability.isEmpty()) {
-                for (int i = 0; i < 7; i++) {
-                    ParticleEngine.INSTANCE.addEffect(new ParticleGlow(getWorld(), getPosVec().addVector(this.rand.nextDouble(), .2 + this.rand.nextDouble() * 0.9D, this.rand.nextDouble())
-                            , getPosVec().addVector(this.rand.nextDouble(), .2 + this.rand.nextDouble() * 0.9D, this.rand.nextDouble()), .03, 10, 0.7F, 0xffffff, 0.6F));
-                }
-            }
+//            if (this.ready && !this.ability.isEmpty()) {
+//                for (int i = 0; i < 7; i++) {
+//                    ParticleEngine.INSTANCE.addEffect(new ParticleGlow(getWorld(), getPosVec().addVector(this.rand.nextDouble(), .2 + this.rand.nextDouble() * 0.9D, this.rand.nextDouble())
+//                            , getPosVec().addVector(this.rand.nextDouble(), .2 + this.rand.nextDouble() * 0.9D, this.rand.nextDouble()), .03, 10, 0.7F, 0xffffff, 0.6F));
+//                }
+//            }
 //            if (!this.ready && this.binding > 0) {
 //                for (int i = 0; i < 7; i++) {
 //                    // Vec3d activeVec = new Vec3d(activePos).addVector(0.125 + (this.rand.nextDouble() * 0.750), 0.05, 0.125 + (this.rand.nextDouble() * 0.750));
@@ -156,29 +153,29 @@ public class TileBindingCenter extends TileBase implements ITickable {
 //                            , getPosVec().addVector(this.rand.nextDouble(), .2 + this.rand.nextDouble() * 0.9D, this.rand.nextDouble()), .03, 10, 0.7F, 0xffffff, 0.6F));
 //                }
 //            }
-            if (this.buildTicks > 0) {
-                for (BlockPos activePos : this.activeRings) {
-                    for (int i = 0; i < 7; i++) {
-                        if (this.rand.nextInt(8) == 0) {
-                            double d0 = this.rand.nextDouble();
-                            Vec3d activeVec = new Vec3d(activePos).addVector(0.125 + (d0 * 0.750), 0.05, 0.125 + (d0 * 0.750));
-                            ParticleEngine.INSTANCE.addEffect(new ParticleGlow(getWorld(), activeVec, getPosVec().addVector(d0, 0.55D, d0), 1, 40, 0.7F, 0xffffff, 0.6F));
-                        }
-                    }
-                }
-                this.buildTicks--;
-                if (this.buildTicks <= 5) {
-                    for (int i = 0; i < 20; i++) {
-                        if (this.rand.nextInt(5) == 0) {
-                            ParticleEngine.INSTANCE.addEffect(
-                                    new ParticleGlow(getWorld(), getPosVec().addVector(
-                                            this.rand.nextDouble(), 0.05, this.rand.nextDouble()), getPosVec().addVector(
-                                            this.rand.nextDouble(), 2.55D, this.rand.nextDouble()), 1, 40, 0.7F, 0xffffff, 0.6F)
-                            );
-                        }
-                    }
-                }
-            }
+//            if (this.buildTicks > 0) {
+//                for (BlockPos activePos : this.activeRings) {
+//                    for (int i = 0; i < 7; i++) {
+//                        if (this.rand.nextInt(8) == 0) {
+//                            double d0 = this.rand.nextDouble();
+//                            Vec3d activeVec = new Vec3d(activePos).addVector(0.125 + (d0 * 0.750), 0.05, 0.125 + (d0 * 0.750));
+//                            ParticleEngine.INSTANCE.addEffect(new ParticleGlow(getWorld(), activeVec, getPosVec().addVector(d0, 0.55D, d0), 1, 40, 0.7F, 0xffffff, 0.6F));
+//                        }
+//                    }
+//                }
+//                this.buildTicks--;
+//                if (this.buildTicks <= 5) {
+//                    for (int i = 0; i < 20; i++) {
+//                        if (this.rand.nextInt(5) == 0) {
+//                            ParticleEngine.INSTANCE.addEffect(
+//                                    new ParticleGlow(getWorld(), getPosVec().addVector(
+//                                            this.rand.nextDouble(), 0.05, this.rand.nextDouble()), getPosVec().addVector(
+//                                            this.rand.nextDouble(), 2.55D, this.rand.nextDouble()), 1, 40, 0.7F, 0xffffff, 0.6F)
+//                            );
+//                        }
+//                    }
+//                }
+//            }
         }
     }
 

@@ -64,8 +64,9 @@ public class ItemSoulEgg extends ItemBase {
         if (!hasEntityClassName(stack)) {
             List<EntitySoul> souls = worldIn.getEntitiesWithinAABB(EntitySoul.class, new AxisAlignedBB(entityLiving.getPosition()).grow(16));
             if (!souls.isEmpty()) {
-                setEntityClassName(stack, souls.get(0).getSoulOwnerClassName());
-                souls.get(0).setDead();
+                EntitySoul soul = souls.get(0);
+                setEntityClassName(stack, soul.getSoulOwnerClassName());
+                soul.setDead();
             }
         }
         return stack;

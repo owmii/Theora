@@ -16,8 +16,6 @@ import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import xieao.theora.client.particle.ParticleEngine;
-import xieao.theora.client.particle.ParticleGlow;
 import xieao.theora.common.item.ItemSoulEgg;
 
 import javax.annotation.Nullable;
@@ -112,13 +110,13 @@ public class EntitySoul extends EntityLiving {
     public void onUpdate() {
         super.onUpdate();
         if (this.world.isRemote) {
-            for (int i = 0; i < 4; i++) {
-                double d0 = this.rand.nextGaussian() * 0.04D;
-                double d1 = this.rand.nextGaussian() * 0.04D;
-                double d2 = this.rand.nextGaussian() * 0.04D;
-                ParticleEngine.INSTANCE.addEffect(new ParticleGlow(world, getPositionVector(),
-                        getPositionVector(), 0, 15, 4.0F, 0xffffff, 0));
-            }
+//            for (int i = 0; i < 4; i++) {
+//                double d0 = this.rand.nextGaussian() * 0.04D;
+//                double d1 = this.rand.nextGaussian() * 0.04D;
+//                double d2 = this.rand.nextGaussian() * 0.04D;
+//                ParticleEngine.INSTANCE.addEffect(new ParticleGlow(world, getPositionVector(),
+//                        getPositionVector(), 0, 15, 4.0F, 0xffffff, 0));
+//            }
         } else {
             if (this.age-- <= 0) {
                 setDead();

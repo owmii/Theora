@@ -12,6 +12,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 import xieao.theora.Theora;
+import xieao.theora.client.helper.ColorHelper;
 
 @SideOnly(Side.CLIENT)
 public class ParticleGeneric extends Particle {
@@ -19,10 +20,15 @@ public class ParticleGeneric extends Particle {
     protected ParticleTetxure tetxure;
     protected Vec3d start;
     protected Vec3d end;
+    protected boolean noDepth;
+    protected boolean bright;
     protected double speed;
     protected int alphaMode;
     protected int scaleMode;
     protected float scaleFactor;
+    protected boolean dinamicColor;
+    protected int fromColor;
+    protected int toColor;
     protected float rotSpeed;
     protected float rotX;
     protected float rotY;
@@ -32,13 +38,14 @@ public class ParticleGeneric extends Particle {
         super(world, start.x, start.y, start.z);
         this.start = start;
         this.end = start;
+        this.noDepth = true;
         this.speed = 0.2D;
         this.motionX = 0.0D;
         this.motionY = 0.0D;
         this.motionZ = 0.0D;
         this.particleMaxAge = maxAge;
         this.particleScale = 1.0F;
-        setColor(0xffffff);
+        setColor(0xffffff, -1);
         this.particleAlpha = 0.0F;
         this.tetxure = tetxure;
     }
@@ -49,6 +56,9 @@ public class ParticleGeneric extends Particle {
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
         float f0 = (float) this.particleAge / (float) this.particleMaxAge;
+        if (this.dinamicColor) {
+            this.setColor(ColorHelper.blend(this.fromColor, this.toColor, f0));
+        }
         this.particleAlpha = this.alphaMode == 1 ? (1.0F - f0) : this.particleAlpha;
         this.particleScale = this.scaleMode == 1 ? (1.0F - f0) : this.scaleMode == 2 ? this.particleScale *= this.scaleFactor : this.particleScale;
         if (!this.start.equals(this.end)) {
@@ -61,14 +71,19 @@ public class ParticleGeneric extends Particle {
     }
 
     public void renderParticle(float partialTicks, double rotX, double rotZ, double rotYZ, double rotXY, double rotXZ) {
-        double d0 = 0.1F * this.particleScale;
+        double d0 = 0.1F * this.particleScale;//TODO particle rotation
         double d1 = this.prevPosX + (this.posX - this.prevPosX) * partialTicks - interpPosX;
         double d2 = this.prevPosY + (this.posY - this.prevPosY) * partialTicks - interpPosY;
         double d3 = this.prevPosZ + (this.posZ - this.prevPosZ) * partialTicks - interpPosZ;
         int i = getBrightnessForRender(partialTicks);
         int j = i >> 16 & 65535;
         int k = i & 65535;
-        Vec3d[] posVec = new Vec3d[]{new Vec3d(-rotX * d0 - rotXY * d0, -rotZ * d0, -rotYZ * d0 - rotXZ * d0), new Vec3d(-rotX * d0 + rotXY * d0, rotZ * d0, -rotYZ * d0 + rotXZ * d0), new Vec3d(rotX * d0 + rotXY * d0, rotZ * d0, rotYZ * d0 + rotXZ * d0), new Vec3d(rotX * d0 - rotXY * d0, -rotZ * d0, rotYZ * d0 - rotXZ * d0)};
+        Vec3d[] posVec = new Vec3d[]{
+                new Vec3d(-rotX * d0 - rotXY * d0, -rotZ * d0, -rotYZ * d0 - rotXZ * d0),
+                new Vec3d(-rotX * d0 + rotXY * d0, rotZ * d0, -rotYZ * d0 + rotXZ * d0),
+                new Vec3d(rotX * d0 + rotXY * d0, rotZ * d0, rotYZ * d0 + rotXZ * d0),
+                new Vec3d(rotX * d0 - rotXY * d0, -rotZ * d0, rotYZ * d0 - rotXZ * d0)
+        };
         if (this.particleAngle != 0.0F) {
             double d4 = this.particleAngle + (this.particleAngle - this.prevParticleAngle) * partialTicks;
             double d5 = MathHelper.cos((float) (d4 * 0.5F));
@@ -128,14 +143,31 @@ public class ParticleGeneric extends Particle {
         return this;
     }
 
-    public void setColor(int color) {
+    public ParticleGeneric setColor(int color) {
         this.particleRed = (float) (color >> 16) / 255.0F;
         this.particleGreen = (float) (color >> 8 & 255) / 255.0F;
         this.particleBlue = (float) (color & 255) / 255.0F;
+        return this;
+    }
+
+    public ParticleGeneric setColor(int fromColor, int toColor) {
+        this.fromColor = fromColor;
+        this.toColor = toColor;
+        this.dinamicColor = true;
+        return this;
+    }
+
+    @Override
+    public int getBrightnessForRender(float p_189214_1_) {
+        return this.bright ? 15728880 : super.getBrightnessForRender(p_189214_1_);
+    }
+
+    public void depth() {
+        this.noDepth = false;
     }
 
     @Override
     public boolean shouldDisableDepth() {
-        return true;
+        return this.noDepth;
     }
 }

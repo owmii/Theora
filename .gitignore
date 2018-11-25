@@ -18,5 +18,6 @@ build
 .gradle
 
 # other
+*.todu
 eclipse
 run

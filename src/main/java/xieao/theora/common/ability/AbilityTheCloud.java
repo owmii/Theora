@@ -12,6 +12,8 @@ import xieao.theora.api.player.ability.Ability;
 
 public class AbilityTheCloud extends Ability {
 
+    //TODO trowing snow ball on entity will hit them with lightning
+
     @Override
     public void tickAbility(EntityPlayer player, World world, int abilityLevel, NBTTagCompound abilityNbt) {
         if (world.isRainingAt(player.getPosition())) {

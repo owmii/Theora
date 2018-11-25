@@ -19,13 +19,13 @@ import java.util.*;
 public class ParticleEngine {
 
     public static final ParticleEngine INSTANCE = new ParticleEngine();
-    private static final Minecraft mc = Minecraft.getMinecraft();
     private final List<ParticleGeneric> particles = new ArrayList<>();
     private final Random rand = new Random();
 
     @SubscribeEvent
     public static void tickParticles(TickEvent.ClientTickEvent event) {
         if (event.side == Side.CLIENT && event.phase == TickEvent.Phase.START) {
+            Minecraft mc = Minecraft.getMinecraft();
             if (mc.currentScreen == null || !mc.currentScreen.doesGuiPauseGame()) {
                 Iterator<ParticleGeneric> iterator = INSTANCE.particles.iterator();
                 while (iterator.hasNext()) {
@@ -46,6 +46,7 @@ public class ParticleEngine {
         float f2 = ActiveRenderInfo.getRotationYZ();
         float f3 = ActiveRenderInfo.getRotationXY();
         float f4 = ActiveRenderInfo.getRotationXZ();
+        Minecraft mc = Minecraft.getMinecraft();
         EntityPlayerSP player = mc.player;
         float partialTicks = event.getPartialTicks();
         Particle.interpPosX = player.lastTickPosX + (player.posX - player.lastTickPosX) * (double) partialTicks;
@@ -67,6 +68,7 @@ public class ParticleEngine {
     }
 
     public void addEffect(ParticleGeneric... effects) {
+        Minecraft mc = Minecraft.getMinecraft();
         if (mc.currentScreen == null || !mc.currentScreen.doesGuiPauseGame()) {
             this.particles.addAll(Arrays.asList(effects));
         }

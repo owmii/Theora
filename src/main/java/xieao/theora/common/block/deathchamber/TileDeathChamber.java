@@ -80,22 +80,18 @@ public class TileDeathChamber extends TileInvBase implements ITickable, IMultiBl
                 for (int i = 1; i < getSizeInventory() - 1; i++) {
                     ItemStack stack = getStackInSlot(i);
                     if (!stack.isEmpty()) {
-                        if (stack.getItem() instanceof ILootingSlate) {
-                            ILootingSlate slate = (ILootingSlate) stack.getItem();
-                            lootingLevel = slate.getFortuneLevel(stack);
+                        if (stack.getItem() instanceof ISlate) {
+                            ISlate slate = (ISlate) stack.getItem();
                             liquidCost += slate.getLiquidCost(stack);
-                        } else if (stack.getItem() instanceof IEfficiencySlate) {
-                            IEfficiencySlate slate = (IEfficiencySlate) stack.getItem();
-                            delayTicks = slate.getDelayTicks(stack);
-                            liquidCost += slate.getLiquidCost(stack);
-                        } else if (stack.getItem() instanceof IEquipmentDropSlate) {
-                            IEquipmentDropSlate slate = (IEquipmentDropSlate) stack.getItem();
-                            dropEquipment = true;
-                            liquidCost += slate.getLiquidCost(stack);
-                        } else if (stack.getItem() instanceof IXPSlate) {
-                            IXPSlate slate = (IXPSlate) stack.getItem();
-                            xpMultiPlier = slate.getXPMultiplier(stack);
-                            liquidCost += slate.getLiquidCost(stack);
+                            if (slate instanceof ILootingSlate) {
+                                lootingLevel = ((ILootingSlate) slate).getFortuneLevel(stack);
+                            } else if (slate instanceof IEfficiencySlate) {
+                                delayTicks = ((IEfficiencySlate) slate).getDelayTicks(stack);
+                            } else if (slate instanceof IEquipmentDropSlate) {
+                                dropEquipment = true;
+                            } else if (slate instanceof IXPSlate) {
+                                xpMultiPlier = ((IXPSlate) slate).getXPMultiplier(stack);
+                            }
                         }
                     }
                 }

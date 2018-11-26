@@ -13,6 +13,7 @@ import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.liquid.LiquidContainerCapability;
 import xieao.theora.api.player.data.PlayerDataCapability;
 import xieao.theora.common.ability.TheoraAbilities;
+import xieao.theora.common.enchantment.TheoraEnchantments;
 import xieao.theora.common.entity.TheoraEntities;
 import xieao.theora.common.lib.config.Config;
 import xieao.theora.common.liquid.TheoraLiquids;
@@ -43,6 +44,7 @@ public class CommonProxy implements IProxy {
 
         CraftingRecipes.initRecipes();
 
+        TheoraEnchantments.register();
         TheoraLiquids.register();
         TheoraAbilities.register();
         TheoraEntities.register();

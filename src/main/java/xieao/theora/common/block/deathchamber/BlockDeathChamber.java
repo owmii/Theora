@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -98,8 +99,9 @@ public class BlockDeathChamber extends BlockBase implements ITileEntityProvider 
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity instanceof TileDeathChamber) {
-            // ((TileDeathChamber) tileEntity).dimolish();
-            ((TileDeathChamber) tileEntity).syncNBTData();
+            TileDeathChamber chamber = (TileDeathChamber) tileEntity;
+            chamber.dimolish(chamber);
+            InventoryHelper.dropInventoryItems(worldIn, pos, chamber);
         }
         super.breakBlock(worldIn, pos, state);
     }

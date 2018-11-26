@@ -36,8 +36,8 @@ import java.util.UUID;
 
 public class TileDeathChamber extends TileInvBase implements ITickable, IMultiBlockBuilder<TileDeathChamber> {
 
-    private static final IMultiBlock MULTI_BLOCK = new MBDeathChamber();
     private static final GameProfile DEATH_CHAMBER = new GameProfile(UUID.fromString("8f3dc5b7-eab1-4768-9b73-f1ca057a82eb"), "Death Chamber");
+    private static final IMultiBlock MULTI_BLOCK = new MBDeathChamber();
 
     @Nullable
     protected EntityPlayer killer;
@@ -72,10 +72,7 @@ public class TileDeathChamber extends TileInvBase implements ITickable, IMultiBl
     public void update() {
         if (isServerWorld()) {
             if (!this.built) {
-                if (getMultiBlock().isAllInPlace(this)) {
-                    build(this);
-                    syncNBTData();
-                }
+                tryBuild(this);
             } else if (!isEmpty() && this.world.getDifficulty() != EnumDifficulty.PEACEFUL) {
                 float liquidCost = 0.0F;
                 boolean dropEquipment = false;

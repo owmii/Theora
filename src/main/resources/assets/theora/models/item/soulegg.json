@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "theora:items/soulegg_0",
+    "layer1": "theora:items/soulegg_1"
+  }
+}

@@ -10,6 +10,7 @@ public interface IMultiBlock<T extends TileBase & IMultiBlockBuilder> {
     Set[] getSets();
 
     default boolean isAllInPlace(T builder) {
+        boolean flag = true;
         for (Set set : getSets()) {
             int[][] offsets = set.offsets;
             for (int[] offset : offsets) {
@@ -20,16 +21,20 @@ public interface IMultiBlock<T extends TileBase & IMultiBlockBuilder> {
                     if (tileEntity instanceof IMultiBlockPart) {
                         IMultiBlockPart part = (IMultiBlockPart) tileEntity;
                         IMultiBlockBuilder builder1 = part.getBuilder();
-                        if (builder1 == null) {
-                            return true;
-                        } else {
-                            return !builder1.built();
+                        if (builder1 != null) {
+                            if (builder1.built()) {
+                                flag = false;
+                            }
                         }
+                    } else {
+                        flag = false;
                     }
+                } else {
+                    flag = false;
                 }
             }
         }
-        return false;
+        return flag;
     }
 
     class Set {

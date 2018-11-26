@@ -32,12 +32,12 @@ public class BlockDeathChamberWall extends BlockBase implements ITileEntityProvi
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity instanceof TileDeathChamberWall) {
             TileDeathChamberWall wall = (TileDeathChamberWall) tileEntity;
-            if (wall.hasDeathChamber() && facing != EnumFacing.UP && facing != EnumFacing.DOWN) {
+            if (wall.getBuilder() != null && facing != EnumFacing.UP && facing != EnumFacing.DOWN) {
                 double opX = facing.getOpposite().getFrontOffsetX();
                 double opY = facing.getOpposite().getFrontOffsetY() - 1;
                 double opZ = facing.getOpposite().getFrontOffsetZ();
                 BlockPos pos1 = pos.add(opX, opY, opZ);
-                if (wall.dcPos.equals(pos1)) {
+                if (wall.builderPos.equals(pos1)) {
                     TileEntity tileEntity1 = worldIn.getTileEntity(pos1);
                     if (tileEntity1 instanceof TileDeathChamber) {
                         TileDeathChamber deathChamber = (TileDeathChamber) tileEntity1;
@@ -71,9 +71,9 @@ public class BlockDeathChamberWall extends BlockBase implements ITileEntityProvi
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity instanceof TileDeathChamberWall) {
             TileDeathChamberWall wall = (TileDeathChamberWall) tileEntity;
-            if (!worldIn.isRemote && !wall.dcPos.equals(BlockPos.ORIGIN)) {
+            if (!worldIn.isRemote && !wall.builderPos.equals(BlockPos.ORIGIN)) {
                 if (entityIn instanceof EntityItem) {
-                    entityIn.setPosition(wall.dcPos.getX() + 0.5D, wall.dcPos.getY() - 0.3D, wall.dcPos.getZ() + 0.5D);
+                    entityIn.setPosition(wall.builderPos.getX() + 0.5D, wall.builderPos.getY() - 0.3D, wall.builderPos.getZ() + 0.5D);
                 } else if (entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer)) {
                     entityIn.setInvisible(true);
                     entityIn.setDead();
@@ -107,10 +107,11 @@ public class BlockDeathChamberWall extends BlockBase implements ITileEntityProvi
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity instanceof TileDeathChamberWall) {
-            TileEntity tileEntity1 = worldIn.getTileEntity(((TileDeathChamberWall) tileEntity).dcPos);
-            if (tileEntity1 instanceof TileDeathChamber) {
-                //  ((TileDeathChamber) tileEntity1).dimolish();
-                ((TileDeathChamber) tileEntity1).syncNBTData();
+            TileDeathChamberWall wall = (TileDeathChamberWall) tileEntity;
+            if (wall.getBuilder() instanceof TileDeathChamber) {
+                TileDeathChamber chamber = wall.getBuilder();
+                chamber.dimolish(chamber);
+                chamber.syncNBTData();
             }
         }
         super.breakBlock(worldIn, pos, state);

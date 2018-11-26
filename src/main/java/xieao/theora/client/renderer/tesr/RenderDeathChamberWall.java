@@ -18,7 +18,7 @@ public class RenderDeathChamberWall extends TESRBase<TileDeathChamberWall> {
         GlStateManager.scale(1.0F, -1.0F, -1.0F);
         GlStateManager.translate(0.5D, -1.5D, -0.5D);
         ColorHelper.glColorNormal();
-        if (!te.hasDeathChamber()) {
+        if (te.getBuilder() == null) {
             mc.getTextureManager().bindTexture(CUBE_TEXTURE);
             MODEL_CUBE.render(0.0625f);
         }

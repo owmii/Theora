@@ -9,22 +9,26 @@ public interface IMultiBlockBuilder<T extends TileBase> {
 
     IMultiBlock getMultiBlock();
 
-    default void build(T builder) {
-        for (IMultiBlock.Set set : getMultiBlock().getSets()) {
-            int[][] offsets = set.offsets;
-            for (int[] offset : offsets) {
-                BlockPos pos = builder.getPos().add(offset[0], offset[1], offset[2]);
-                IBlockState state = builder.getBlockState(pos);
-                if (state.equals(set.state)) {
-                    TileEntity tileEntity = builder.getTileEntity(pos);
-                    if (tileEntity instanceof IMultiBlockPart) {
-                        IMultiBlockPart part = (IMultiBlockPart) tileEntity;
-                        part.setBuilderPos(builder.getPos());
+    @SuppressWarnings("unchecked")
+    default void tryBuild(T builder) {
+        if (getMultiBlock().isAllInPlace(builder)) {
+            for (IMultiBlock.Set set : getMultiBlock().getSets()) {
+                int[][] offsets = set.offsets;
+                for (int[] offset : offsets) {
+                    BlockPos pos = builder.getPos().add(offset[0], offset[1], offset[2]);
+                    IBlockState state = builder.getBlockState(pos);
+                    if (state.equals(set.state)) {
+                        TileEntity tileEntity = builder.getTileEntity(pos);
+                        if (tileEntity instanceof IMultiBlockPart) {
+                            IMultiBlockPart part = (IMultiBlockPart) tileEntity;
+                            part.setBuilderPos(builder.getPos());
+                        }
                     }
                 }
             }
+            setBuilt(true);
+            builder.syncNBTData();
         }
-        setBuilt(true);
     }
 
     default void dimolish(T builder) {
@@ -37,7 +41,7 @@ public interface IMultiBlockBuilder<T extends TileBase> {
                     TileEntity tileEntity = builder.getTileEntity(pos);
                     if (tileEntity instanceof IMultiBlockPart) {
                         IMultiBlockPart part = (IMultiBlockPart) tileEntity;
-                        part.setBuilderPos(builder.getPos());
+                        part.setBuilderPos(null);
                     }
                 }
             }

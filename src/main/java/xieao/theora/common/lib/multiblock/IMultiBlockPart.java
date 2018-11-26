@@ -7,10 +7,6 @@ import javax.annotation.Nullable;
 
 public interface IMultiBlockPart {
 
-    boolean isLinked();
-
-    void setLinked(boolean linked);
-
     @Nullable
     BlockPos getBuilderPos();
 

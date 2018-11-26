@@ -39,10 +39,11 @@ public class TileDeathChamber extends TileInvBase implements ITickable, IMultiBl
     private static final GameProfile DEATH_CHAMBER = new GameProfile(UUID.fromString("8f3dc5b7-eab1-4768-9b73-f1ca057a82eb"), "Death Chamber");
     private static final IMultiBlock MULTI_BLOCK = new MBDeathChamber();
 
+    private final LiquidContainer liquidContainer;
+
     @Nullable
     protected EntityPlayer killer;
 
-    private final LiquidContainer liquidContainer;
 
     public boolean built;
 

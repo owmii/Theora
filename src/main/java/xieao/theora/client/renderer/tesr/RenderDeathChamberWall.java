@@ -12,16 +12,16 @@ public class RenderDeathChamberWall extends TESRBase<TileDeathChamberWall> {
 
     @Override
     public void render(TileDeathChamberWall te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(x, y, z);
-        GlStateManager.enableRescaleNormal();
-        GlStateManager.scale(1.0F, -1.0F, -1.0F);
-        GlStateManager.translate(0.5D, -1.5D, -0.5D);
-        ColorHelper.glColorNormal();
         if (te.getBuilder() == null) {
+            GlStateManager.pushMatrix();
+            GlStateManager.translate(x, y, z);
+            GlStateManager.enableRescaleNormal();
+            GlStateManager.scale(1.0F, -1.0F, -1.0F);
+            GlStateManager.translate(0.5D, -1.5D, -0.5D);
+            ColorHelper.glColorNormal();
             mc.getTextureManager().bindTexture(CUBE_TEXTURE);
             MODEL_CUBE.render(0.0625f);
+            GlStateManager.popMatrix();
         }
-        GlStateManager.popMatrix();
     }
 }

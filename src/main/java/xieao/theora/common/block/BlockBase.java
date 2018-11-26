@@ -23,6 +23,8 @@ import net.minecraftforge.common.util.Constants;
 import xieao.theora.common.item.IGenericItem;
 import xieao.theora.common.item.ItemBlockBase;
 import xieao.theora.common.lib.helper.NBTHelper;
+import xieao.theora.common.lib.multiblock.IMultiBlockBuilder;
+import xieao.theora.common.lib.multiblock.IMultiBlockPart;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -71,7 +73,22 @@ public abstract class BlockBase extends Block implements IGenericBlock {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if (tileEntity instanceof TileBase) {
+            TileBase tileBase = (TileBase) tileEntity;
+            if (tileBase instanceof IMultiBlockBuilder) {
+                IMultiBlockBuilder builder = (IMultiBlockBuilder) tileBase;
+                builder.dimolish(tileBase);
+            } else if (tileBase instanceof IMultiBlockPart) {
+                IMultiBlockPart part = (IMultiBlockPart) tileEntity;
+                IMultiBlockBuilder builder = part.getBuilder();
+                if (builder != null) {
+                    builder.dimolish(part.getBuilder());
+                }
+            }
+        }
         super.breakBlock(worldIn, pos, state);
         worldIn.removeTileEntity(pos);
     }

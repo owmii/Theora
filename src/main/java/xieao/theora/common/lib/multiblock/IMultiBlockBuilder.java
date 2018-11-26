@@ -47,6 +47,7 @@ public interface IMultiBlockBuilder<T extends TileBase> {
             }
         }
         setBuilt(false);
+        builder.syncNBTData();
     }
 
     boolean built();

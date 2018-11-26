@@ -100,7 +100,6 @@ public class BlockDeathChamber extends BlockBase implements ITileEntityProvider 
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity instanceof TileDeathChamber) {
             TileDeathChamber chamber = (TileDeathChamber) tileEntity;
-            chamber.dimolish(chamber);
             InventoryHelper.dropInventoryItems(worldIn, pos, chamber);
         }
         super.breakBlock(worldIn, pos, state);

@@ -104,20 +104,6 @@ public class BlockDeathChamberWall extends BlockBase implements ITileEntityProvi
     }
 
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        TileEntity tileEntity = worldIn.getTileEntity(pos);
-        if (tileEntity instanceof TileDeathChamberWall) {
-            TileDeathChamberWall wall = (TileDeathChamberWall) tileEntity;
-            if (wall.getBuilder() instanceof TileDeathChamber) {
-                TileDeathChamber chamber = wall.getBuilder();
-                chamber.dimolish(chamber);
-                chamber.syncNBTData();
-            }
-        }
-        super.breakBlock(worldIn, pos, state);
-    }
-
-    @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.INVISIBLE;
     }

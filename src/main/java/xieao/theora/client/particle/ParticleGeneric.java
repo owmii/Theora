@@ -19,6 +19,7 @@ import xieao.theora.client.helper.ColorHelper;
 public class ParticleGeneric extends Particle {
 
     protected ParticleTetxure tetxure;
+    protected int textureID;
     protected Vec3d start;
     protected Vec3d end;
     protected boolean noDepth;
@@ -31,13 +32,17 @@ public class ParticleGeneric extends Particle {
     protected boolean dinamicColor;
     protected int fromColor;
     protected int toColor;
+    protected boolean rotate;
+    protected int rotMode;
+    protected float rotRadius;
     protected float rotSpeed;
-    protected float rotX;
-    protected float rotY;
-    protected float rotZ;
+    protected int rotDirection;
 
     public ParticleGeneric(ParticleTetxure tetxure, World world, Vec3d start, int maxAge) {
         super(world, start.x, start.y, start.z);
+        if (tetxure.frames > 1 && tetxure.randomize) {
+            this.textureID = this.rand.nextInt(tetxure.frames);
+        }
         this.start = start;
         this.end = start;
         this.noDepth = true;
@@ -57,6 +62,9 @@ public class ParticleGeneric extends Particle {
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
+        if (this.tetxure.frames > 1 && !this.tetxure.randomize) {
+            this.textureID = this.particleAge * this.tetxure.frames / this.particleMaxAge;
+        }
         float f0 = (float) this.particleAge / (float) this.particleMaxAge;
         if (this.dinamicColor) {
             this.setColor(ColorHelper.blend(this.fromColor, this.toColor, f0));
@@ -67,9 +75,17 @@ public class ParticleGeneric extends Particle {
             this.motionX = (end.x - this.posX) * this.speed;
             this.motionY = (end.y - this.posY) * this.speed;
             this.motionZ = (end.z - this.posZ) * this.speed;
-            move(this.motionX, this.motionY, this.motionZ);
         }
-        killExpiredParticle();
+        if (this.rotate && this.rotMode == 1) {
+            int rotationTicks = this.rotDirection == 0 ? this.particleAge : -this.particleAge;
+            this.posX = this.start.x + this.rotRadius * Math.cos(2.0D * 3.141D * (rotationTicks / 20.0) * 1);
+            this.posZ = this.start.z + this.rotRadius * Math.sin(2.0D * 3.141D * (rotationTicks / 20.0) * 1);
+        }
+        this.motionY -= 0.04D * (double) this.particleGravity;
+        move(this.motionX, this.motionY, this.motionZ);
+        if (this.particleAge++ >= this.particleMaxAge) {
+            setExpired();
+        }
     }
 
     public void renderParticle(float partialTicks, double rotX, double rotZ, double rotYZ, double rotXY, double rotXZ) {
@@ -100,7 +116,8 @@ public class ParticleGeneric extends Particle {
                 posVec[l] = vec3d.scale(2.0D * posVec[l].dotProduct(vec3d)).add(posVec[l].scale(d5 * d5 - vec3d.dotProduct(vec3d))).add(vec3d.crossProduct(posVec[l]).scale(2.0F * d5));
             }
         }
-        Minecraft.getMinecraft().getTextureManager().bindTexture(Theora.location("textures/particles/" + this.tetxure.name + ".png"));
+        String textureSuffix = this.tetxure.frames > 1 ? "_" + this.textureID : "";
+        Minecraft.getMinecraft().getTextureManager().bindTexture(Theora.location("textures/particles/" + this.tetxure.name + textureSuffix + ".png"));
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferbuilder = tessellator.getBuffer();
         bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
@@ -111,12 +128,6 @@ public class ParticleGeneric extends Particle {
         tessellator.draw();
         if (this.blendFunc) {
             GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        }
-    }
-
-    protected void killExpiredParticle() {
-        if (this.particleAge++ >= this.particleMaxAge) {
-            this.setExpired();
         }
     }
 
@@ -143,11 +154,12 @@ public class ParticleGeneric extends Particle {
         return this;
     }
 
-    public ParticleGeneric rotate(float rotSpeed, float rotX, float rotY, float rotZ) {
+    public ParticleGeneric rotate(int rotMode, float rotSpeed, float rotRadius, int rotDirection) {
+        this.rotMode = rotMode;
         this.rotSpeed = rotSpeed;
-        this.rotX = rotX;
-        this.rotY = rotY;
-        this.rotZ = rotZ;
+        this.rotRadius = rotRadius;
+        this.rotDirection = rotDirection;
+        this.rotate = true;
         return this;
     }
 
@@ -178,6 +190,11 @@ public class ParticleGeneric extends Particle {
 
     public ParticleGeneric depth() {
         this.noDepth = false;
+        return this;
+    }
+
+    public ParticleGeneric setGravity(Float gravity) {
+        this.particleGravity = gravity;
         return this;
     }
 

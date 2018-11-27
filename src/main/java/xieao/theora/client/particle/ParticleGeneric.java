@@ -83,7 +83,7 @@ public class ParticleGeneric extends Particle {
         }
         this.motionY -= 0.04D * (double) this.particleGravity;
         move(this.motionX, this.motionY, this.motionZ);
-        if (this.particleAge++ >= this.particleMaxAge) {
+        if (this.particleAge++ > this.particleMaxAge) {
             setExpired();
         }
     }

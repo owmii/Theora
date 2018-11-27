@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class TheoraEnchantments {
 
-    public static final Enchantment SOULANDER = new EnchantmentSoulander(Enchantment.Rarity.UNCOMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});
+    public static final Enchantment SOULANDER = new EnchantmentSoulander(Enchantment.Rarity.VERY_RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND});
 
     public static void register() {
         register("soulander", SOULANDER);

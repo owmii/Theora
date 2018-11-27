@@ -11,8 +11,6 @@ import xieao.theora.api.recipe.binding.IBindingRecipe;
 import xieao.theora.api.recipe.binding.IBindingRegistry;
 import xieao.theora.api.recipe.cauldron.ICauldronRecipe;
 import xieao.theora.api.recipe.cauldron.ICauldronRegistry;
-import xieao.theora.api.recipe.fermentingjar.IFermentingRecipe;
-import xieao.theora.api.recipe.fermentingjar.IFermentingRegistry;
 import xieao.theora.api.recipe.liquidinteract.ILiquidInteractRecipe;
 import xieao.theora.api.recipe.liquidinteract.ILiquidInteractRegistry;
 
@@ -24,7 +22,6 @@ import java.util.Set;
 public class RecipeHandler {
 
     public static final Set<ICauldronRecipe> CAULDRON_RECIPES = new HashSet<>();
-    public static final Set<IFermentingRecipe> FERMENTING_RECIPES = new HashSet<>();
     public static final Set<ILiquidInteractRecipe> LIQUID_INTERACT_RECIPES = new HashSet<>();
     public static final Set<IBindingRecipe> BINDING_STONE_RECIPES = new HashSet<>();
 
@@ -33,9 +30,6 @@ public class RecipeHandler {
             if (registry instanceof ICauldronRegistry) {
                 ICauldronRegistry cauldronRegistry = (ICauldronRegistry) registry;
                 CAULDRON_RECIPES.addAll(cauldronRegistry.getRecipes());
-            } else if (registry instanceof IFermentingRegistry) {
-                IFermentingRegistry fermentingRegistry = (IFermentingRegistry) registry;
-                FERMENTING_RECIPES.addAll(fermentingRegistry.getRecipes());
             } else if (registry instanceof ILiquidInteractRegistry) {
                 ILiquidInteractRegistry liquidInteractRegistry = (ILiquidInteractRegistry) registry;
                 LIQUID_INTERACT_RECIPES.addAll(liquidInteractRegistry.getRecipes());
@@ -50,16 +44,6 @@ public class RecipeHandler {
     public static ICauldronRecipe findCauldronRecipe(IInventory inventory, World world, BlockPos pos) {
         for (ICauldronRecipe recipe : CAULDRON_RECIPES) {
             if (recipe.matches(inventory, world, pos)) {
-                return recipe;
-            }
-        }
-        return null;
-    }
-
-    @Nullable
-    public static IFermentingRecipe findFermentingRecipe(ItemStack stack, World world, BlockPos pos) {
-        for (IFermentingRecipe recipe : FERMENTING_RECIPES) {
-            if (recipe.matches(stack, world, pos)) {
                 return recipe;
             }
         }

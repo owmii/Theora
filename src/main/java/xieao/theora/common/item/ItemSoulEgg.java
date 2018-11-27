@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.*;
+import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
@@ -25,6 +26,7 @@ import xieao.theora.common.entity.EntitySoul;
 import xieao.theora.common.lib.helper.NBTHelper;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
@@ -35,12 +37,19 @@ public class ItemSoulEgg extends ItemBase implements IColoredItem {
     public static final String TAG_ENTITY_CLASS_NAME = "entityClassName";
 
     static {
+        // Nutrals
+        SOULS.put(EntityBat.class, 0x888236);
+
+        // Monsters
         SOULS.put(EntityEvoker.class, 0x888236);
         SOULS.put(EntityZombie.class, 0x487833);
         SOULS.put(EntitySkeleton.class, 0xcecdbf);
         SOULS.put(EntityWitherSkeleton.class, 0x454340);
         SOULS.put(EntityEnderman.class, 0x9436bf);
         SOULS.put(EntityBlaze.class, 0xcc950f);
+        SOULS.put(EntityWitch.class, 0x9b1745);
+        SOULS.put(EntityGuardian.class, 0x5a9c7a);
+        SOULS.put(EntityElderGuardian.class, 0xafaa8f);
 
         // Bosses
         SOULS.put(EntityDragon.class, 0xce08b7);
@@ -50,6 +59,7 @@ public class ItemSoulEgg extends ItemBase implements IColoredItem {
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         if (isInCreativeTab(tab)) {
+            new Color(0xAFAA8F);
             items.add(new ItemStack(this));
             for (Class<? extends Entity> entityClass : SOULS.keySet()) {
                 ItemStack stack = new ItemStack(this);

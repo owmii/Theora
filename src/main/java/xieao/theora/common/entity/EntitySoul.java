@@ -22,6 +22,7 @@ import xieao.theora.client.particle.ParticleGeneric;
 import xieao.theora.client.particle.ParticleTetxure;
 import xieao.theora.common.enchantment.TheoraEnchantments;
 import xieao.theora.common.item.ItemSoulEgg;
+import xieao.theora.common.item.TheoraItems;
 
 import javax.annotation.Nullable;
 
@@ -61,6 +62,16 @@ public class EntitySoul extends EntityLiving {
                 if (!player.world.isRemote) {
                     ItemStack stack = player.getHeldItemMainhand();
                     if (EnchantmentHelper.getEnchantmentLevel(TheoraEnchantments.SOULANDER, stack) > 0) {
+                        boolean flag = false;
+                        for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+                            ItemStack stack1 = player.inventory.getStackInSlot(i);
+                            if (stack1.getItem() == TheoraItems.SOUL_EGG) {
+                                if (!TheoraItems.SOUL_EGG.hasEntityClassName(stack1)) {
+                                    flag = true;
+                                }
+                            }
+                        }
+                        if (!flag) return;
                         EntitySoul soul = new EntitySoul(player.world);
                         soul.setSoulOwnerClassName(target.getClass().getCanonicalName());
                         soul.setPosition(target.posX, target.posY + ((double) target.getEyeHeight() / 2.0D), target.posZ);

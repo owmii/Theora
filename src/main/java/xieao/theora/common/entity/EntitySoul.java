@@ -1,6 +1,7 @@
 package xieao.theora.common.entity;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,6 +20,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import xieao.theora.client.particle.ParticleEngine;
 import xieao.theora.client.particle.ParticleGeneric;
 import xieao.theora.client.particle.ParticleTetxure;
+import xieao.theora.common.enchantment.TheoraEnchantments;
 import xieao.theora.common.item.ItemSoulEgg;
 
 import javax.annotation.Nullable;
@@ -57,15 +59,12 @@ public class EntitySoul extends EntityLiving {
             if (damageSource.getTrueSource() instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) damageSource.getTrueSource();
                 if (!player.world.isRemote) {
-                    ItemStack stack = player.getHeldItemOffhand(); //TODO expermenting stack
-                    if (stack.getItem() instanceof ItemSoulEgg) {
-                        ItemSoulEgg soulEgg = (ItemSoulEgg) stack.getItem();
-                        if (!soulEgg.hasEntityClassName(stack)) {
-                            EntitySoul soul = new EntitySoul(player.world);
-                            soul.setSoulOwnerClassName(target.getClass().getCanonicalName());
-                            soul.setPosition(target.posX, target.posY, target.posZ);
-                            player.world.spawnEntity(soul);
-                        }
+                    ItemStack stack = player.getHeldItemMainhand();
+                    if (EnchantmentHelper.getEnchantmentLevel(TheoraEnchantments.SOULANDER, stack) > 0) {
+                        EntitySoul soul = new EntitySoul(player.world);
+                        soul.setSoulOwnerClassName(target.getClass().getCanonicalName());
+                        soul.setPosition(target.posX, target.posY + ((double) target.getEyeHeight() / 2.0D), target.posZ);
+                        player.world.spawnEntity(soul);
                     }
                 }
             }

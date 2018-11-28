@@ -56,7 +56,7 @@ public class TheoraItems {
         }
     }
 
-    public static <T extends Item & IGenericItem> T register(T item, String name) {
+    private static <T extends Item & IGenericItem> T register(T item, String name) {
         item.setRegistryName(name);
         item.setUnlocalizedName(name);
         item.setCreativeTab(Theora.TAB);

@@ -17,6 +17,7 @@ import xieao.theora.client.renderer.item.IColoredItem;
 import xieao.theora.client.renderer.tesr.TESRRenderer;
 import xieao.theora.common.item.IGenericItem;
 import xieao.theora.common.item.TheoraItems;
+import xieao.theora.common.lib.book.TheoraBook;
 
 public class ClientProxy extends CommonProxy {
 
@@ -33,6 +34,7 @@ public class ClientProxy extends CommonProxy {
         EntityRenderer.register();
         MinecraftForge.EVENT_BUS.register(new TheoraTextureMap());
         OBJLoader.INSTANCE.addDomain(Theora.MOD_ID);
+        TheoraBook.register();
     }
 
     @Override

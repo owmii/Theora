@@ -1,10 +1,7 @@
 package xieao.theora.client.gui.player;
 
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -15,6 +12,7 @@ import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.player.ability.Abilities;
 import xieao.theora.api.player.ability.Ability;
 import xieao.theora.api.player.data.PlayerData;
+import xieao.theora.client.helper.GuiHelper;
 import xieao.theora.network.TheoraNetwork;
 import xieao.theora.network.packets.PacketAbilityStatus;
 
@@ -82,7 +80,7 @@ public class GuiAbilities extends GuiScreen {
                         GlStateManager.color(0.0F, 0.0F, 0.0F, 1.0F);
                     }
                     this.mc.getTextureManager().bindTexture(this.textures[index]);
-                    drawTexturedModalRect(17 + j * 35, 17 + i * 35, 32, 32);
+                    GuiHelper.drawTexturedModalRect(17 + j * 35, 17 + i * 35, 32, 32, this.zLevel);
                     GlStateManager.popMatrix();
                 }
             }
@@ -96,19 +94,6 @@ public class GuiAbilities extends GuiScreen {
         if (this.mc.world.getTotalWorldTime() % 20 == 0) {
             refreshAbilities();
         }
-    }
-
-    public void drawTexturedModalRect(int x, int y, int width, int height) {
-        float f0 = 1.0F / (float) width;
-        float f1 = 1.0F / (float) height;
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
-        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-        bufferbuilder.pos((double) (x), (double) (y + height), (double) this.zLevel).tex((double) (f0), (double) ((float) (height) * f1)).endVertex();
-        bufferbuilder.pos((double) (x + width), (double) (y + height), (double) this.zLevel).tex((double) ((float) (width) * f0), (double) ((float) (height) * f1)).endVertex();
-        bufferbuilder.pos((double) (x + width), (double) (y), (double) this.zLevel).tex((double) ((float) (width) * f0), (double) ((float) f1)).endVertex();
-        bufferbuilder.pos((double) (x), (double) (y), (double) this.zLevel).tex((double) (f0), (double) ((float) f1)).endVertex();
-        tessellator.draw();
     }
 
     private void refreshAbilities() {

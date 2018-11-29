@@ -15,6 +15,8 @@ public class TheoraBook {
     public static final BookCategory CAT_ITEMS = new BookCategory("items");
     public static final BookCategory CAT_BLOCKS = new BookCategory("blocks");
     public static final BookCategory CAT_LIQUIDS = new BookCategory("liquids");
+    public static final BookCategory CAT_ABILITIES = new BookCategory("abilities");
+    public static final BookCategory CAT_MISC = new BookCategory("misc");
 
     // Items category
     public static final BookCategory SUB_CAT_SHROOM_BIT = new BookCategory(new ItemStack(TheoraItems.SHROOM_BIT));
@@ -26,7 +28,7 @@ public class TheoraBook {
                         SUB_CAT_SHROOM_BIT.addEntry(
                                 new PageItem().setText("shroom.bit0"),
                                 new PageText("shroom.bit1")
-                        ),
+                        ).setName("shroom.bit"),
                         SUB_CAT_WAND.addEntry(
                                 new PageItem().setText("wand0"),
                                 new PageText("wand1")
@@ -39,5 +41,7 @@ public class TheoraBook {
         BOOK_CATEGORIES.add(CAT_ITEMS);
         BOOK_CATEGORIES.add(CAT_BLOCKS);
         BOOK_CATEGORIES.add(CAT_LIQUIDS);
+        BOOK_CATEGORIES.add(CAT_ABILITIES);
+        BOOK_CATEGORIES.add(CAT_MISC);
     }
 }

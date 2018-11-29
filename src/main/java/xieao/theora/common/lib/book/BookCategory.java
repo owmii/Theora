@@ -21,12 +21,12 @@ public class BookCategory {
 
     public BookCategory(String name, ItemStack stack) {
         this.texture = Theora.location("null");
-        this.name = I18n.format("theora.book.cat." + name);
+        setName(name);
         this.stack = stack;
     }
 
     public BookCategory(String name) {
-        this.name = I18n.format("theora.book.cat." + name);
+        setName(name);
         this.texture = Theora.location("textures/gui/book/categories/" + name + ".png");
     }
 
@@ -34,6 +34,11 @@ public class BookCategory {
         this.entry = new BookEntry();
         this.entry.setBookPages(pages);
         this.entry.setParentCategoty(this);
+        return this;
+    }
+
+    public BookCategory setName(String name) {
+        this.name = I18n.format("theora.book.cat." + name);
         return this;
     }
 }

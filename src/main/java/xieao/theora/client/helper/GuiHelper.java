@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
@@ -29,8 +30,10 @@ public class GuiHelper {
         mc.getRenderItem().zLevel = 200.0F;
         FontRenderer font = stack.getItem().getFontRenderer(stack);
         if (font == null) font = mc.fontRenderer;
+        RenderHelper.enableGUIStandardItemLighting();
         mc.getRenderItem().renderItemAndEffectIntoGUI(stack, x, y);
         mc.getRenderItem().renderItemOverlayIntoGUI(font, stack, x, y, altText);
+        RenderHelper.disableStandardItemLighting();
         mc.getRenderItem().zLevel = 0.0F;
     }
 }

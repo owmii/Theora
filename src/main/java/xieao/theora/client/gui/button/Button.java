@@ -21,10 +21,11 @@ public class Button extends GuiButton {
 
     @Nullable
     private ResourceLocation icon;
-    private ItemStack stack = ItemStack.EMPTY;
     private int iconW;
     private int iconH;
     private int iconColor;
+    private ItemStack stack = ItemStack.EMPTY;
+    private float scale;
     private boolean iconOnly;
 
     private int textColor;
@@ -54,7 +55,12 @@ public class Button extends GuiButton {
                 GuiHelper.drawTexturedModalRect(this.x + (this.width - this.iconW) / 2, this.y + (this.height - this.iconH) / 2, this.iconW, this.iconH, this.zLevel);
             }
             if (!this.stack.isEmpty()) {
-                GuiHelper.drawItemStack(this.stack, this.x, this.y, "");
+                GlStateManager.pushMatrix();
+                GlStateManager.translate(this.x + ((float) this.width - 16 * this.scale) / 2.0F, this.y + ((float) this.width - 16 * this.scale) / 2.0F, 0.0D);
+                GlStateManager.scale(this.scale, this.scale, 0.0F);
+
+                GuiHelper.drawItemStack(this.stack, 0, 0, "");
+                GlStateManager.popMatrix();
             }
             mouseDragged(mc, mouseX, mouseY);
             if (!this.iconOnly) {
@@ -71,8 +77,9 @@ public class Button extends GuiButton {
         return this;
     }
 
-    public Button setIcon(ItemStack stack, boolean iconOnly) {
+    public Button setIcon(ItemStack stack, float scale, boolean iconOnly) {
         this.stack = stack;
+        this.scale = scale;
         this.iconOnly = iconOnly;
         return this;
     }

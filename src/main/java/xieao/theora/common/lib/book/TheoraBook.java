@@ -28,7 +28,7 @@ public class TheoraBook {
                         SUB_CAT_SHROOM_BIT.addEntry(
                                 new PageItem().setText("shroom.bit0"),
                                 new PageText("shroom.bit1")
-                        ).setName("shroom.bit"),
+                        ).setName("shroom.bits"),
                         SUB_CAT_WAND.addEntry(
                                 new PageItem().setText("wand0"),
                                 new PageText("wand1")

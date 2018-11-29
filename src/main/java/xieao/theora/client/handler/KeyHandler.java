@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
+import xieao.theora.client.gui.book.GuiBook;
 import xieao.theora.network.TheoraNetwork;
 import xieao.theora.network.packets.PacketRequestAbilitiesGui;
 
@@ -32,7 +33,7 @@ public class KeyHandler {
             if (KEY_ABILITIES.isPressed()) {
                 TheoraNetwork.sendToServer(new PacketRequestAbilitiesGui());
             } else if (KEY_GUIDE.isPressed()) {
-                // Minecraft.getMinecraft().displayGuiScreen(new GuiBook());
+                Minecraft.getMinecraft().displayGuiScreen(new GuiBook());
             }
         }
     }

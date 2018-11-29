@@ -9,7 +9,7 @@ public class BookCategory {
 
     public String name = "";
     public ResourceLocation texture;
-    public BookEntry entry = new BookEntry();
+    public BookEntry entry = null;
     public ItemStack stack = ItemStack.EMPTY;
 
 
@@ -31,6 +31,7 @@ public class BookCategory {
     }
 
     public BookCategory addEntry(Page... pages) {
+        this.entry = new BookEntry();
         this.entry.setBookPages(pages);
         this.entry.setParentCategoty(this);
         return this;

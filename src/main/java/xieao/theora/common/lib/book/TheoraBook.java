@@ -10,6 +10,8 @@ public class TheoraBook {
 
     public static final List<BookCategory> BOOK_CATEGORIES = new ArrayList<>();
 
+    public static final BookEntry HOME = new BookEntry().setBookPages(new Page().setTitle("home"));
+
     public static final BookCategory CAT_ITEMS = new BookCategory("items");
     public static final BookCategory CAT_BLOCKS = new BookCategory("blocks");
     public static final BookCategory CAT_LIQUIDS = new BookCategory("liquids");

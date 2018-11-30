@@ -15,15 +15,15 @@ public class PageSubCategory extends Page {
 
     @Override
     public void initGui(GuiBook gui) {
-        for (int i = 0; i < 3; ++i) {
-            for (int j = 0; j < 4; ++j) {
-                int index = j + i * 4;
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 6; ++j) {
+                int index = j + i * 6;
                 if (index < this.subCategories.length) {
                     BookCategory category = this.subCategories[index];
                     ItemStack stack = category.stack;
-                    Button button = new Button(index + 20, gui.x + 12 + j * 30, gui.y + 12 + i * 30).setIcon(stack, 1.25f, true)
-                            .setName(category.name.isEmpty() ? category.stack.getDisplayName() : category.name, 0).setDim(26, 26)
-                            .setBg(GuiBook.BOOK_TEXTURE, gui.w / 2, 0, false);
+                    Button button = new Button(index + 20, gui.x + 13 + j * 29, gui.y + 13 + i * 29).setIcon(stack, 1.25f, true)
+                            .setName(category.name.isEmpty() ? category.stack.getDisplayName() : category.name, 0).setDim(24, 24)
+                            .setBg(GuiBook.BOOK_TEXTURE, gui.w, 34, false);
                     gui.getButtonList().add(button);
                 }
             }
@@ -32,7 +32,8 @@ public class PageSubCategory extends Page {
 
     @Override
     public void actionPerformed(GuiBook gui, GuiButton button) {
-
+        BookCategory category = this.subCategories[button.id - 20];
+        gui.mc.displayGuiScreen(new GuiBook(category.entry, 0));
     }
 
     @Override

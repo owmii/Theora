@@ -11,7 +11,6 @@ import xieao.theora.common.lib.book.BookEntry;
 import xieao.theora.common.lib.book.Page;
 import xieao.theora.common.lib.book.TheoraBook;
 
-import java.io.IOException;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
@@ -58,7 +57,7 @@ public class GuiBook extends GuiScreen {
     }
 
     @Override
-    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    protected void keyTyped(char typedChar, int keyCode) {
         if (keyCode == 1 || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode)) {
             this.mc.player.closeScreen();
         }

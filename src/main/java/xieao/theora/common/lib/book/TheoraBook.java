@@ -28,6 +28,7 @@ public class TheoraBook {
     public static final BookCategory SUB_CAT_PIG_COIN = new BookCategory(new ItemStack(TheoraItems.PIG_COIN));
     public static final BookCategory SUB_CAT_PIG_COIN_BAG = new BookCategory(new ItemStack(TheoraItems.PIG_COIN_BAG));
     public static final BookCategory SUB_CAT_WITHER_TEAR = new BookCategory(new ItemStack(TheoraItems.WITHER_TEAR));
+    public static final BookCategory SUB_CAT_SLATES = new BookCategory(new ItemStack(TheoraItems.XP_SLATE));
 
     static {
         CAT_ITEMS.addEntry(
@@ -40,7 +41,8 @@ public class TheoraBook {
                         SUB_CAT_VIAL.addEntry(new PageItem().setText("vial0")),
                         SUB_CAT_PIG_COIN.addEntry(new PageItem().setText("pig.coin0")),
                         SUB_CAT_PIG_COIN_BAG.addEntry(new PageItem().setText("pig.coin.bag0")),
-                        SUB_CAT_WITHER_TEAR.addEntry(new PageItem().setText("wither.tear0"))
+                        SUB_CAT_WITHER_TEAR.addEntry(new PageItem().setText("wither.tear0")),
+                        SUB_CAT_SLATES.addEntry(new PageItem().setText("empty.slate0")).setName("slates")
                 )
         );
     }

@@ -7,9 +7,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import xieao.theora.client.renderer.item.ItemRenderer;
+import xieao.theora.common.lib.book.BookEntry;
 
-public class ItemBlockBase extends ItemBlock implements IGenericItem {
+import javax.annotation.Nullable;
+
+public class ItemBlockBase extends ItemBlock implements IGenericItem, IBookItemBlock {
+
+    @Nullable
+    private Pair<BookEntry, Integer> bookPage;
 
     public ItemBlockBase(Block block) {
         super(block);
@@ -46,5 +54,18 @@ public class ItemBlockBase extends ItemBlock implements IGenericItem {
     @Override
     public Enum<?>[] getSubTypeValues() {
         return new Enum[0];
+    }
+
+    @Override
+    @Nullable
+    public Pair<BookEntry, Integer> getBookPage() {
+        return bookPage;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends ItemBlockBase & IBookItemBlock> T setBookPage(BookEntry entry, int index) {
+        this.bookPage = new ImmutablePair<>(entry, index);
+        return (T) this;
     }
 }

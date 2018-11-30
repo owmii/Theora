@@ -6,6 +6,7 @@ import net.minecraft.util.ResourceLocation;
 import xieao.theora.Theora;
 import xieao.theora.common.block.IGenericBlock;
 import xieao.theora.common.block.TheoraBlocks;
+import xieao.theora.common.lib.book.TheoraBook;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,21 +32,21 @@ public class TheoraItems {
     public static final ItemSlateXP XP_SLATE;
 
     static {
-        SHROOM_BIT = register(new ItemShroomBit(), "shroombit");
-        GLIOPHIN = register(new ItemGliophin(), "gliophin");
+        SHROOM_BIT = register(new ItemShroomBit(), "shroombit").setBookPage(TheoraBook.SUB_CAT_SHROOM_BIT.entry, 0);
+        GLIOPHIN = register(new ItemGliophin(), "gliophin").setBookPage(TheoraBook.SUB_CAT_GLIOPHIN.entry, 0);
         CLEAR_SLIME = register(new ItemClearSlime(), "clearslime");
-        WAND = register(new ItemWand(), "wand");
-        VIAL = register(new ItemVial(), "vial");
-        PIG_COIN = register(new ItemPigCoin(), "pigcoin");
-        PIG_COIN_BAG = register(new ItemPigCoinBag(), "pigcoinbag");
-        WITHER_TEAR = register(new ItemWitherTear(), "withertear");
-        SOUL_EGG = register(new ItemSoulEgg(), "soulegg");
-        EMPTY_SLATE = register(new ItemBase(), "emptyslate");
-        SUMMONING_SLATE = register(new ItemSlateSummoning(), "summoningslate");
-        LOOTING_SLATE = register(new ItemSlateLooting(), "lootingslate");
-        EFFICIENCY_SLATE = register(new ItemSlateEfficiency(), "efficiencyslate");
-        EQUIPMENT_DROP_SLATE = register(new ItemSlateEquipmentDrop(), "equipmentdropslate");
-        XP_SLATE = register(new ItemSlateXP(), "xpslate");
+        WAND = register(new ItemWand(), "wand").setBookPage(TheoraBook.SUB_CAT_WAND.entry, 0);
+        VIAL = register(new ItemVial(), "vial").setBookPage(TheoraBook.SUB_CAT_VIAL.entry, 0);
+        PIG_COIN = register(new ItemPigCoin(), "pigcoin").setBookPage(TheoraBook.SUB_CAT_PIG_COIN.entry, 0);
+        PIG_COIN_BAG = register(new ItemPigCoinBag(), "pigcoinbag").setBookPage(TheoraBook.SUB_CAT_PIG_COIN_BAG.entry, 0);
+        WITHER_TEAR = register(new ItemWitherTear(), "withertear").setBookPage(TheoraBook.SUB_CAT_WITHER_TEAR.entry, 0);
+        SOUL_EGG = register(new ItemSoulEgg(), "soulegg").setBookPage(TheoraBook.SUB_CAT_SOUL_EGG.entry, 0);
+        EMPTY_SLATE = register(new ItemBase(), "emptyslate").setBookPage(TheoraBook.SUB_CAT_SLATES.entry, 0);
+        SUMMONING_SLATE = register(new ItemSlateSummoning(), "summoningslate").setBookPage(TheoraBook.SUB_CAT_SLATES.entry, 0);
+        LOOTING_SLATE = register(new ItemSlateLooting(), "lootingslate").setBookPage(TheoraBook.SUB_CAT_SLATES.entry, 0);
+        EFFICIENCY_SLATE = register(new ItemSlateEfficiency(), "efficiencyslate").setBookPage(TheoraBook.SUB_CAT_SLATES.entry, 0);
+        EQUIPMENT_DROP_SLATE = register(new ItemSlateEquipmentDrop(), "equipmentdropslate").setBookPage(TheoraBook.SUB_CAT_SLATES.entry, 0);
+        XP_SLATE = register(new ItemSlateXP(), "xpslate").setBookPage(TheoraBook.SUB_CAT_SLATES.entry, 0);
 
         for (Block block : TheoraBlocks.BLOCKS) {
             if (block instanceof IGenericBlock) {

@@ -20,8 +20,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.IWorldNameable;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import org.apache.commons.lang3.tuple.Pair;
+import xieao.theora.common.item.IBookItem;
 import xieao.theora.common.item.IGenericItem;
+import xieao.theora.common.item.ItemBase;
 import xieao.theora.common.item.ItemBlockBase;
+import xieao.theora.common.lib.book.BookEntry;
 import xieao.theora.common.lib.helper.NBTHelper;
 import xieao.theora.common.lib.multiblock.IMultiBlockBuilder;
 import xieao.theora.common.lib.multiblock.IMultiBlockPart;
@@ -29,7 +33,7 @@ import xieao.theora.common.lib.multiblock.IMultiBlockPart;
 import javax.annotation.Nullable;
 import java.util.Objects;
 
-public abstract class BlockBase extends Block implements IGenericBlock {
+public abstract class BlockBase extends Block implements IGenericBlock, IBookBlock {
 
     public static final String TAG_TILE_DATA = "tileDataTag";
 
@@ -146,5 +150,21 @@ public abstract class BlockBase extends Block implements IGenericBlock {
     @Override
     public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
         return false;
+    }
+
+    @Override
+    public IBookItem getBookItem() {
+        return getItemBlock();
+    }
+
+    @Nullable
+    @Override
+    public Pair<BookEntry, Integer> getBookPage() {
+        return getBookItem().getBookPage();
+    }
+
+    @Override
+    public <T extends ItemBase & IBookItem> T setBookPage(BookEntry entry, int index) {
+        return getBookItem().setBookPage(entry, index);
     }
 }

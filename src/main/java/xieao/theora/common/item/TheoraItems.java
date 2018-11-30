@@ -6,6 +6,7 @@ import net.minecraft.util.ResourceLocation;
 import xieao.theora.Theora;
 import xieao.theora.common.block.IGenericBlock;
 import xieao.theora.common.block.TheoraBlocks;
+import xieao.theora.common.item.slates.*;
 import xieao.theora.common.lib.book.TheoraBook;
 
 import java.util.ArrayList;

@@ -1,7 +1,8 @@
-package xieao.theora.common.item;
+package xieao.theora.common.item.slates;
 
 import net.minecraft.item.ItemStack;
 import xieao.theora.api.item.slate.IXPSlate;
+import xieao.theora.common.item.ItemBase;
 
 public class ItemSlateXP extends ItemBase implements IXPSlate {
 

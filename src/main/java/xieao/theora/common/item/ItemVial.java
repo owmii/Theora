@@ -42,11 +42,6 @@ public class ItemVial extends ItemBase implements IColoredItem {
                 ItemStack stack = new ItemStack(this);
                 IliquidContainer.Item vial = LiquidUtil.getContainerItem(stack);
                 if (vial != null) {
-                    LiquidSlot[] liquidSlots = vial.getLiquidSlots();
-                    if (liquidSlots.length < 1) {
-                        LiquidSlot liquidSlot = new LiquidSlot(Liquid.EMPTY, false, 200.0F, 0.0F, 200.0F, TransferType.ALL);
-                        vial.setLiquidSlots(new LiquidSlot[]{liquidSlot});
-                    }
                     LiquidSlot LiquidSlot = vial.getLiquidSlot(0);
                     LiquidSlot.setLiquid(liquid);
                     if (!liquid.isEmpty()) {
@@ -125,7 +120,9 @@ public class ItemVial extends ItemBase implements IColoredItem {
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-        return new LiquidContainer.Item(stack);
+        LiquidContainer.Item provider = new LiquidContainer.Item(stack);
+        provider.setLiquidSlots(new LiquidSlot[]{new LiquidSlot(Liquid.EMPTY, false, 200.0F, 0.0F, 200.0F, TransferType.ALL)});
+        return provider;
     }
 
     @Override

@@ -26,8 +26,9 @@ public class LiquidContainer implements IliquidContainer {
     }
 
     @Override
-    public void setLiquidSlots(LiquidSlot[] liquidSlots) {
+    public IliquidContainer setLiquidSlots(LiquidSlot[] liquidSlots) {
         this.liquidSlots = liquidSlots;
+        return this;
     }
 
     @Override
@@ -36,8 +37,9 @@ public class LiquidContainer implements IliquidContainer {
     }
 
     @Override
-    public void setLiquidSlot(int index, LiquidSlot liquidSlot) {
+    public IliquidContainer setLiquidSlot(int index, LiquidSlot liquidSlot) {
         this.liquidSlots[index] = liquidSlot;
+        return this;
     }
 
     public void addLiquidSlots(LiquidSlot liquidSlot, int count) {
@@ -95,7 +97,7 @@ public class LiquidContainer implements IliquidContainer {
         }
 
         @Override
-        public void setLiquidSlot(int index, LiquidSlot liquidSlot) {
+        public IliquidContainer setLiquidSlot(int index, LiquidSlot liquidSlot) {
             super.setLiquidSlot(index, liquidSlot);
             NBTTagCompound nbt = new NBTTagCompound();
             writeNBT(nbt);
@@ -103,6 +105,7 @@ public class LiquidContainer implements IliquidContainer {
                 this.itemStack.setTagCompound(new NBTTagCompound());
             }
             this.itemStack.getTagCompound().setTag("liquidSlots", nbt);
+            return this;
         }
 
         public ItemStack getItemStack() {

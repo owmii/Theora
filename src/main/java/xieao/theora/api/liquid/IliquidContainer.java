@@ -6,11 +6,11 @@ public interface IliquidContainer {
 
     LiquidSlot[] getLiquidSlots();
 
-    void setLiquidSlots(LiquidSlot[] liquidSlots);
+    IliquidContainer setLiquidSlots(LiquidSlot[] liquidSlots);
 
     LiquidSlot getLiquidSlot(int index);
 
-    void setLiquidSlot(int index, LiquidSlot liquidSlot);
+    IliquidContainer setLiquidSlot(int index, LiquidSlot liquidSlot);
 
     void readNBT(NBTTagCompound compound);
 

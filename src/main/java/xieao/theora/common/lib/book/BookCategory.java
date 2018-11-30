@@ -41,4 +41,9 @@ public class BookCategory {
         this.name = I18n.format("theora.book.cat." + name);
         return this;
     }
+
+    public BookCategory setStack(ItemStack stack) {
+        this.stack = stack;
+        return this;
+    }
 }

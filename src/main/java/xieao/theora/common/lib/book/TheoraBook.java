@@ -30,7 +30,7 @@ public class TheoraBook {
     public static final BookCategory SUB_CAT_WITHER_TEAR = new BookCategory(new ItemStack(TheoraItems.WITHER_TEAR));
     public static final BookCategory SUB_CAT_SLATES = new BookCategory(new ItemStack(TheoraItems.XP_SLATE));
 
-    static {
+    public static void register() {
         CAT_ITEMS.addEntry(
                 new PageSubCategory(
                         SUB_CAT_SHROOM_BIT.addEntry(new PageItem().setText("shroom.bit0"), new PageText("shroom.bit1")).setName("shroom.bits"),
@@ -45,9 +45,8 @@ public class TheoraBook {
                         SUB_CAT_SLATES.addEntry(new PageItem().setText("empty.slate0")).setName("slates")
                 )
         );
-    }
 
-    public static void register() {
+        // Main caregries
         BOOK_CATEGORIES.add(CAT_ITEMS);
         BOOK_CATEGORIES.add(CAT_BLOCKS);
         BOOK_CATEGORIES.add(CAT_LIQUIDS);

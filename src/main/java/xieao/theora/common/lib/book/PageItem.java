@@ -14,6 +14,11 @@ public class PageItem extends PageText {
         this.stack = this.parentEntry.parentCategoty.stack;
     }
 
+    public PageItem(ItemStack stack) {
+        super("");
+        this.stack = stack;
+    }
+
     @Override
     public void draw(GuiBook gui, int mouseX, int mouseY, float partialTicks) {
         GlStateManager.scale(2.0F, 2.0F, 0.0F);

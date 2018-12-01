@@ -1,23 +1,25 @@
 package xieao.theora.common.lib.book;
 
+import xieao.theora.common.lib.book.page.Page;
+
 public class Entry {
 
-    public Page[] bookPages = new Page[0];
-    public Section parentCategoty = new Section("null");
+    public Page[] pages = new Page[0];
+    public Section parentSection = new Section("null");
 
-    public Entry setBookPages(Page... bookPages) {
-        for (Page page : bookPages) {
+    public Entry setPages(Page... pages) {
+        for (Page page : pages) {
             page.setParentEntry(this);
         }
-        this.bookPages = bookPages;
+        this.pages = pages;
         return this;
     }
 
-    public Page getBookPage(int index) {
-        return bookPages[index];
+    public Page getPage(int index) {
+        return pages[index];
     }
 
-    public void setParentCategoty(Section parentCategoty) {
-        this.parentCategoty = parentCategoty;
+    public void setParentSection(Section section) {
+        this.parentSection = section;
     }
 }

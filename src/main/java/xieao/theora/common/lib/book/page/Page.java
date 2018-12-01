@@ -1,4 +1,4 @@
-package xieao.theora.common.lib.book;
+package xieao.theora.common.lib.book.page;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -8,6 +8,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.theora.client.gui.book.GuiBook;
 import xieao.theora.client.gui.button.Button;
 import xieao.theora.common.lib.TheoraSounds;
+import xieao.theora.common.lib.book.Entry;
+import xieao.theora.common.lib.book.Section;
+import xieao.theora.common.lib.book.TheoraBook;
 
 import java.util.List;
 
@@ -31,11 +34,11 @@ public class Page {
             for (int i = 0; i < 3; ++i) {
                 for (int j = 0; j < 4; ++j) {
                     int index = j + i * 4;
-                    List<Section> categories = TheoraBook.MAIN_SECTIONS;
-                    if (index < categories.size()) {
+                    List<Section> sections = TheoraBook.MAIN_SECTIONS;
+                    if (index < sections.size()) {
                         Button button = new Button(index + 20, gui.x + 17 + j * 42, gui.y + 17 + i * 42).setDim(34, 34)
-                                .setBg(GuiBook.BOOK_TEXTURE, gui.w, 0, false).setName(categories.get(index).name, 0)
-                                .setIcon(categories.get(index).texture, 28, 28, true, 0x875a58).setSound(TheoraSounds.PAGE_FLIP);
+                                .setBg(GuiBook.BOOK_TEXTURE, gui.w, 0, false).setName(sections.get(index).name, 0)
+                                .setIcon(sections.get(index).texture, 28, 28, true, 0x875a58).setSound(TheoraSounds.PAGE_FLIP);
                         gui.getButtonList().add(button);
                     }
                 }
@@ -46,9 +49,9 @@ public class Page {
     @SideOnly(Side.CLIENT)
     public void actionPerformed(GuiBook gui, GuiButton button) {
         if (this.title.equals("home")) {
-            Section category = TheoraBook.MAIN_SECTIONS.get(button.id - 20);
-            if (category.entry != null) {
-                gui.mc.displayGuiScreen(new GuiBook(category.entry, 0));
+            Section section = TheoraBook.MAIN_SECTIONS.get(button.id - 20);
+            if (section.entry != null) {
+                GuiBook.instance.open(section.entry, 0);
             }
         }
     }

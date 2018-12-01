@@ -5,7 +5,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.theora.client.gui.book.GuiBook;
-import xieao.theora.common.lib.book.Page;
 
 public class PageText extends Page {
 

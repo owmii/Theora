@@ -1,6 +1,5 @@
 package xieao.theora.common.item;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -12,9 +11,7 @@ public class ItemBook extends ItemBase {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-        if (worldIn.isRemote) {
-            Minecraft.getMinecraft().displayGuiScreen(GuiBook.gui);
-        }
+        if (worldIn.isRemote) GuiBook.instance.open();
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }
 }

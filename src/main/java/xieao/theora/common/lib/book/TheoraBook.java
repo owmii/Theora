@@ -2,6 +2,7 @@ package xieao.theora.common.lib.book;
 
 import net.minecraft.item.ItemStack;
 import xieao.theora.common.item.TheoraItems;
+import xieao.theora.common.lib.book.page.Page;
 import xieao.theora.common.lib.book.page.PageButtons;
 import xieao.theora.common.lib.book.page.PageItem;
 import xieao.theora.common.lib.book.page.PageText;
@@ -13,14 +14,14 @@ public class TheoraBook {
 
     public static final List<Section> MAIN_SECTIONS = new ArrayList<>();
 
-    public static final Entry HOME = new Entry().setBookPages(new Page().setTitle("home"));
-
     public static final Section GETTING_STARTED = new Section("getting.started");
     public static final Section ITEMS = new Section("items");
     public static final Section BLOCKS = new Section("blocks");
     public static final Section LIQUIDS = new Section("liquids");
     public static final Section ABILITIES = new Section("abilities");
     public static final Section MISC = new Section("misc");
+
+    public static final Entry HOME = new Entry().setPages(new Page().setTitle("home"));
 
     // Items category
     public static final Section SHROOM_BIT = new Section(new ItemStack(TheoraItems.SHROOM_BIT));
@@ -33,6 +34,7 @@ public class TheoraBook {
     public static final Section PIG_COIN_BAG = new Section(new ItemStack(TheoraItems.PIG_COIN_BAG));
     public static final Section WITHER_TEAR = new Section(new ItemStack(TheoraItems.WITHER_TEAR));
     public static final Section SLATES = new Section(new ItemStack(TheoraItems.XP_SLATE));
+
 
     static {
         ITEMS.addEntry(

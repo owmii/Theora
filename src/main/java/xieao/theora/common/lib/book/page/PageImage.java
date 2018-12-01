@@ -13,7 +13,7 @@ public class PageImage extends PageText {
 
     public PageImage(String texture, int w, int h) {
         super("");
-        this.texture = Theora.location("textures/gui/book/data/" + texture + ".png");
+        this.texture = Theora.location("textures/instance/book/data/" + texture + ".png");
         this.w = w;
         this.h = h;
     }

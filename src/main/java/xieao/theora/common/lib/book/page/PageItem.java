@@ -12,7 +12,7 @@ public class PageItem extends PageText {
 
     public PageItem() {
         super("");
-        this.stack = this.parentEntry.parentCategoty.stack;
+        this.stack = this.parentEntry.parentSection.stack;
     }
 
     public PageItem(ItemStack stack) {
@@ -25,10 +25,10 @@ public class PageItem extends PageText {
         GlStateManager.pushMatrix();
         GlStateManager.translate((gui.w / 2.0D) - 16, 12, 0);
         GlStateManager.scale(2.0F, 2.0F, 0.0F);
-        GuiHelper.drawItemStack(this.parentEntry.parentCategoty.stack, 0, 0, "");
+        GuiHelper.drawItemStack(this.parentEntry.parentSection.stack, 0, 0, "");
         GlStateManager.popMatrix();
         FontRenderer fr = gui.mc.fontRenderer;
-        drawTitle(gui, fr, this.parentEntry.parentCategoty.name, 47);
+        drawTitle(gui, fr, this.parentEntry.parentSection.name, 47);
         drawText(gui, fr, this.text, 68);
     }
 

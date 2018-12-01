@@ -4,6 +4,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import xieao.theora.Theora;
+import xieao.theora.common.lib.book.page.Page;
 
 import javax.annotation.Nullable;
 
@@ -36,8 +37,8 @@ public class Section {
 
     public Section addEntry(Page... pages) {
         this.entry = new Entry();
-        this.entry.setBookPages(pages);
-        this.entry.setParentCategoty(this);
+        this.entry.setPages(pages);
+        this.entry.setParentSection(this);
         return this;
     }
 

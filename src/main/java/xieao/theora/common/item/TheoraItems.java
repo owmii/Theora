@@ -15,6 +15,7 @@ public class TheoraItems {
 
     public static final List<Item> ITEMS = new ArrayList<>();
 
+    public static final ItemBook BOOK;
     public static final ItemShroomBit SHROOM_BIT;
     public static final ItemGliophin GLIOPHIN;
     public static final ItemClearSlime CLEAR_SLIME;
@@ -32,6 +33,7 @@ public class TheoraItems {
     public static final ItemSlateXP XP_SLATE;
 
     static {
+        BOOK = register(new ItemBook(), "book");
         SHROOM_BIT = register(new ItemShroomBit(), "shroombit");
         GLIOPHIN = register(new ItemGliophin(), "gliophin");
         CLEAR_SLIME = register(new ItemClearSlime(), "clearslime");

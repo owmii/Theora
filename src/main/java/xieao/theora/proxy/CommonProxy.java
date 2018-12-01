@@ -53,6 +53,7 @@ public class CommonProxy implements IProxy {
         TheoraEntities.register();
         PigZomieTrades.register();
 
+        TheoraBook.register();
         Config.preInit(event);
     }
 
@@ -66,6 +67,5 @@ public class CommonProxy implements IProxy {
     public void postInit(FMLPostInitializationEvent event) {
         RecipeHandler.sortRecipes();
         PigZomieTrades.postInit();
-        TheoraBook.register();
     }
 }

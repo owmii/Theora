@@ -11,14 +11,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import xieao.theora.client.renderer.item.ItemRenderer;
-import xieao.theora.common.lib.book.BookEntry;
+import xieao.theora.common.lib.book.Entry;
 
 import javax.annotation.Nullable;
 
 public class ItemBase extends Item implements IGenericItem, IBookItem {
 
     @Nullable
-    private Pair<BookEntry, Integer> bookPage;
+    private Pair<Entry, Integer> bookPage;
 
     public ItemBase() {
         setTileEntityItemStackRenderer(
@@ -73,13 +73,13 @@ public class ItemBase extends Item implements IGenericItem, IBookItem {
 
     @Override
     @Nullable
-    public Pair<BookEntry, Integer> getBookPage() {
+    public Pair<Entry, Integer> getBookPage() {
         return bookPage;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends ItemBase & IBookItem> T setBookPage(BookEntry entry, int index) {
+    public <T extends ItemBase & IBookItem> T setBookPage(Entry entry, int index) {
         this.bookPage = new ImmutablePair<>(entry, index);
         return (T) this;
     }

@@ -15,6 +15,7 @@ public class TheoraEnchantments {
 
     public static void register(String name, Enchantment enchantment) {
         enchantment.setRegistryName(name);
+        enchantment.setName(enchantment.getRegistryName().toString().replace(":", "."));
         ForgeRegistries.ENCHANTMENTS.register(enchantment);
     }
 }

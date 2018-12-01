@@ -1,11 +1,14 @@
 package xieao.theora.client.gui.button;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import xieao.theora.client.helper.ColorHelper;
 import xieao.theora.client.helper.GuiHelper;
 
@@ -23,12 +26,18 @@ public class Button extends GuiButton {
     private ResourceLocation icon;
     private int iconW;
     private int iconH;
+    private boolean single;
+    private int iconX;
+    private int iconY;
     private int iconColor;
     private ItemStack stack = ItemStack.EMPTY;
     private float scale;
     private boolean iconOnly;
 
     private int textColor;
+
+    @Nullable
+    private SoundEvent sound;
 
     public Button(int id, int x, int y) {
         super(id, x, y, "");
@@ -52,7 +61,11 @@ public class Button extends GuiButton {
             if (this.icon != null) {
                 mc.getTextureManager().bindTexture(this.icon);
                 ColorHelper.glColor(this.iconColor);
-                GuiHelper.drawTexturedModalRect(this.x + (this.width - this.iconW) / 2, this.y + (this.height - this.iconH) / 2, this.iconW, this.iconH, this.zLevel);
+                if (this.single) {
+                    GuiHelper.drawTexturedModalRect(this.x + (this.width - this.iconW) / 2, this.y + (this.height - this.iconH) / 2, this.iconW, this.iconH, this.zLevel);
+                } else {
+                    drawTexturedModalRect(this.x + (this.width - this.iconW) / 2, this.y + (this.height - this.iconH) / 2, this.iconX, this.iconY, this.iconW, this.iconH);
+                }
             }
             if (!this.stack.isEmpty()) {
                 GlStateManager.pushMatrix();
@@ -90,6 +103,18 @@ public class Button extends GuiButton {
         this.iconH = iconH;
         this.iconOnly = iconOnly;
         this.iconColor = iconColor;
+        this.single = true;
+        return this;
+    }
+
+    public Button setIcon(@Nullable ResourceLocation icon, int iconW, int iconH, int iconX, int iconY, boolean iconOnly, int iconColor) {
+        this.icon = icon;
+        this.iconW = iconW;
+        this.iconH = iconH;
+        this.iconX = iconX;
+        this.iconY = iconY;
+        this.iconOnly = iconOnly;
+        this.iconColor = iconColor;
         return this;
     }
 
@@ -103,5 +128,19 @@ public class Button extends GuiButton {
         this.displayString = name;
         this.textColor = textColor;
         return this;
+    }
+
+    public Button setSound(@Nullable SoundEvent sound) {
+        this.sound = sound;
+        return this;
+    }
+
+    @Override
+    public void playPressSound(SoundHandler soundHandlerIn) {
+        if (this.sound != null) {
+            soundHandlerIn.playSound(PositionedSoundRecord.getMasterRecord(this.sound, 1.0F));
+        } else {
+            super.playPressSound(soundHandlerIn);
+        }
     }
 }

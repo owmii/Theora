@@ -1,9 +1,11 @@
-package xieao.theora.common.lib.book;
+package xieao.theora.common.lib.book.page;
 
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.theora.client.gui.book.GuiBook;
+import xieao.theora.common.lib.book.Page;
 
 public class PageText extends Page {
 
@@ -21,6 +23,17 @@ public class PageText extends Page {
     @Override
     @SideOnly(Side.CLIENT)
     public void draw(GuiBook gui, int mouseX, int mouseY, float partialTicks) {
+        int yOffset = 0;
+        if (!this.title.isEmpty()) {
+            drawTitle(gui, gui.mc.fontRenderer, this.title, 17);
+            yOffset = 12;
+        }
+        drawText(gui, gui.mc.fontRenderer, this.text, yOffset + 17);
+    }
 
+    protected void drawText(GuiBook gui, FontRenderer fr, String text, int y) {
+        fr.FONT_HEIGHT = 11;
+        fr.drawSplitString(text, 12, y, gui.w - 24, 0x2C553C);
+        fr.FONT_HEIGHT = 9;
     }
 }

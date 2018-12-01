@@ -1,11 +1,11 @@
 package xieao.theora.common.lib.book;
 
-public class BookEntry {
+public class Entry {
 
     public Page[] bookPages = new Page[0];
-    public BookCategory parentCategoty = new BookCategory("null");
+    public Section parentCategoty = new Section("null");
 
-    public BookEntry setBookPages(Page... bookPages) {
+    public Entry setBookPages(Page... bookPages) {
         for (Page page : bookPages) {
             page.setParentEntry(this);
         }
@@ -17,7 +17,7 @@ public class BookEntry {
         return bookPages[index];
     }
 
-    public void setParentCategoty(BookCategory parentCategoty) {
+    public void setParentCategoty(Section parentCategoty) {
         this.parentCategoty = parentCategoty;
     }
 }

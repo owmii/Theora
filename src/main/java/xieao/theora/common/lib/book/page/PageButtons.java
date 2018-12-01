@@ -1,15 +1,18 @@
-package xieao.theora.common.lib.book;
+package xieao.theora.common.lib.book.page;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.item.ItemStack;
 import xieao.theora.client.gui.book.GuiBook;
 import xieao.theora.client.gui.button.Button;
+import xieao.theora.common.lib.TheoraSounds;
+import xieao.theora.common.lib.book.Page;
+import xieao.theora.common.lib.book.Section;
 
-public class PageSubCategory extends Page {
+public class PageButtons extends Page {
 
-    public BookCategory[] subCategories;
+    public Section[] subCategories;
 
-    public PageSubCategory(BookCategory... subCategories) {
+    public PageButtons(Section... subCategories) {
         this.subCategories = subCategories;
     }
 
@@ -19,11 +22,11 @@ public class PageSubCategory extends Page {
             for (int j = 0; j < 6; ++j) {
                 int index = j + i * 6;
                 if (index < this.subCategories.length) {
-                    BookCategory category = this.subCategories[index];
+                    Section category = this.subCategories[index];
                     ItemStack stack = category.stack;
                     Button button = new Button(index + 20, gui.x + 13 + j * 29, gui.y + 13 + i * 29).setIcon(stack, 1.25f, true)
                             .setName(category.name.isEmpty() ? category.stack.getDisplayName() : category.name, 0).setDim(24, 24)
-                            .setBg(GuiBook.BOOK_TEXTURE, gui.w, 34, false);
+                            .setBg(GuiBook.BOOK_TEXTURE, gui.w, 34, false).setSound(TheoraSounds.PAGE_FLIP);
                     gui.getButtonList().add(button);
                 }
             }
@@ -32,8 +35,10 @@ public class PageSubCategory extends Page {
 
     @Override
     public void actionPerformed(GuiBook gui, GuiButton button) {
-        BookCategory category = this.subCategories[button.id - 20];
-        gui.mc.displayGuiScreen(new GuiBook(category.entry, 0));
+        Section category = this.subCategories[button.id - 20];
+        if (category.entry != null && category.entry.bookPages.length > 0) {
+            gui.mc.displayGuiScreen(new GuiBook(category.entry, 0));
+        }
     }
 
     @Override

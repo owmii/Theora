@@ -25,7 +25,7 @@ import xieao.theora.common.item.IBookItem;
 import xieao.theora.common.item.IGenericItem;
 import xieao.theora.common.item.ItemBase;
 import xieao.theora.common.item.ItemBlockBase;
-import xieao.theora.common.lib.book.BookEntry;
+import xieao.theora.common.lib.book.Entry;
 import xieao.theora.common.lib.helper.NBTHelper;
 import xieao.theora.common.lib.multiblock.IMultiBlockBuilder;
 import xieao.theora.common.lib.multiblock.IMultiBlockPart;
@@ -159,12 +159,12 @@ public abstract class BlockBase extends Block implements IGenericBlock, IBookBlo
 
     @Nullable
     @Override
-    public Pair<BookEntry, Integer> getBookPage() {
+    public Pair<Entry, Integer> getBookPage() {
         return getBookItem().getBookPage();
     }
 
     @Override
-    public <T extends ItemBase & IBookItem> T setBookPage(BookEntry entry, int index) {
+    public <T extends ItemBase & IBookItem> T setBookPage(Entry entry, int index) {
         return getBookItem().setBookPage(entry, index);
     }
 }

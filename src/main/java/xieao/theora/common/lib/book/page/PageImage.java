@@ -1,4 +1,4 @@
-package xieao.theora.common.lib.book;
+package xieao.theora.common.lib.book.page;
 
 import net.minecraft.util.ResourceLocation;
 import xieao.theora.Theora;

@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "theora:blocks/knowledgestone_captiosus",
+    "side": "theora:blocks/knowledgestone_captiosus"
+  }
+}

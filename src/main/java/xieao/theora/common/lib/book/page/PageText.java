@@ -25,9 +25,9 @@ public class PageText extends Page {
         int yOffset = 0;
         if (!this.title.isEmpty()) {
             drawTitle(gui, gui.mc.fontRenderer, this.title, 17);
-            yOffset = 12;
+            yOffset = 20;
         }
-        drawText(gui, gui.mc.fontRenderer, this.text, yOffset + 17);
+        drawText(gui, gui.mc.fontRenderer, this.text, yOffset + 14);
     }
 
     protected void drawText(GuiBook gui, FontRenderer fr, String text, int y) {

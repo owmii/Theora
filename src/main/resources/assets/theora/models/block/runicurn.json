@@ -1,0 +1,52 @@
+{
+  "credit": "Made with Blockbench",
+  "parent": "block/block",
+  "textures": {
+    "0": "theora:blocks/runicurn",
+    "1": "theora:blocks/runicurn_1",
+    "2": "theora:blocks/runicurn_2",
+    "3": "theora:blocks/runicurn_3",
+    "particle": "theora:blocks/runicurn"
+  },
+  "elements": [
+    {
+      "name": "urnBottom",
+      "from": [0.5, 0, 0.5],
+      "to": [15.5, 2, 15.5],
+      "faces": {
+        "north": {"uv": [0, 12.99995, 14.99972, 14.99971], "texture": "#2"},
+        "east": {"uv": [0, 12.99995, 14.99972, 14.99971], "texture": "#2"},
+        "south": {"uv": [0, 12.99995, 14.99972, 14.99971], "texture": "#2"},
+        "west": {"uv": [0, 12.99995, 14.99972, 14.99971], "texture": "#2"},
+        "up": {"uv": [0, 0, 15, 15], "texture": "#missing"},
+        "down": {"uv": [0, 0, 15, 15], "texture": "#2"}
+      }
+    },
+    {
+      "name": "urnTop",
+      "from": [0, 2, 0],
+      "to": [16, 7, 16],
+      "faces": {
+        "north": {"uv": [0, 0, 16, 5], "texture": "#0"},
+        "east": {"uv": [0, 0, 16, 5], "texture": "#0"},
+        "south": {"uv": [0, 0, 16, 5], "texture": "#0"},
+        "west": {"uv": [0, 0, 16, 5], "texture": "#0"},
+        "up": {"uv": [0, 0, 16, 16], "texture": "#1"},
+        "down": {"uv": [0, 0, 16, 16], "texture": "#1"}
+      }
+    },
+    {
+      "name": "urnCap",
+      "from": [2, 6.5, 2],
+      "to": [14, 7.5, 14],
+      "faces": {
+        "north": {"uv": [0, 0, 12, 1], "texture": "#3"},
+        "east": {"uv": [0, 0, 12, 1], "texture": "#3"},
+        "south": {"uv": [0, 0, 12, 1], "texture": "#3"},
+        "west": {"uv": [0, 0, 12, 1], "texture": "#3"},
+        "up": {"uv": [0, 0, 11.99956, 11.99956], "texture": "#3"},
+        "down": {"uv": [0, 0, 12, 12], "texture": "#missing"}
+      }
+    }
+  ]
+}

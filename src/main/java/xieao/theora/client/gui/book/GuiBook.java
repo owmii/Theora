@@ -106,11 +106,14 @@ public class GuiBook extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawDefaultBackground();
         GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.translate(this.x, this.y, 0.0D);
         this.mc.getTextureManager().bindTexture(BOOK_TEXTURE);
         drawTexturedModalRect(0, 0, 0, 0, this.w, this.h);
         this.page.draw(this, mouseX, mouseY, partialTicks);
+        GlStateManager.disableBlend();
         GlStateManager.popMatrix();
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
@@ -132,7 +135,8 @@ public class GuiBook extends GuiScreen {
     }
 
     public void open(Entry entry, int i) {
-        this.mc.displayGuiScreen(new GuiBook(entry, i).setPrevGui(this));
+        Minecraft.getMinecraft().displayGuiScreen(
+                new GuiBook(entry, i).setPrevGui(this));
     }
 
     public GuiBook setPrevGui(@Nullable GuiBook prevGui) {

@@ -19,17 +19,10 @@ public class HudHandler {
         if (event.getType() == RenderGameOverlayEvent.ElementType.ALL) {
             Minecraft mc = Minecraft.getMinecraft();
             EntityPlayerSP player = mc.player;
-
             int width = event.getResolution().getScaledWidth();
             int height = event.getResolution().getScaledHeight();
-
             PlayerData data = TheoraAPI.getPlayerData(player);
             if (data != null) {
-//                if (data.hasAcidVial()) {
-//                    float max = data.getMaxAcid();
-//                    float cur = data.getStoredAcid();
-//                    mc.fontRenderer.drawString(cur + "/" + max, 0, 0, 0xffffff);
-//                }
             }
         }
     }

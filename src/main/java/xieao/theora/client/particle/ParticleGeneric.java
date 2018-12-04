@@ -81,7 +81,7 @@ public class ParticleGeneric extends Particle {
             this.posX = this.start.x + this.rotRadius * Math.cos(2.0D * 3.141D * (rotationTicks / 20.0) * 1);
             this.posZ = this.start.z + this.rotRadius * Math.sin(2.0D * 3.141D * (rotationTicks / 20.0) * 1);
         }
-        this.motionY -= 0.04D * (double) this.particleGravity;
+        this.motionY = (double) -this.particleGravity;
         move(this.motionX, this.motionY, this.motionZ);
         if (this.particleAge++ > this.particleMaxAge) {
             setExpired();

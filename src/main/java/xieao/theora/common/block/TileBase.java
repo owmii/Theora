@@ -29,6 +29,9 @@ public class TileBase extends TileEntity {
     @SideOnly(Side.CLIENT)
     public int tickCount;
 
+    @SideOnly(Side.CLIENT)
+    public boolean killParticles;
+
     @Nullable
     public UUID getPlacer() {
         return placer;
@@ -44,6 +47,10 @@ public class TileBase extends TileEntity {
 
     public void setGhostTile(boolean ghostTile) {
         this.ghostTile = ghostTile;
+    }
+
+    public void killParticles() {
+        this.killParticles = true;
     }
 
     @Override

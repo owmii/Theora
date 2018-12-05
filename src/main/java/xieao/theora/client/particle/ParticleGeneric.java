@@ -6,6 +6,8 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -14,6 +16,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 import xieao.theora.Theora;
 import xieao.theora.client.helper.ColorHelper;
+import xieao.theora.common.block.TileBase;
+
+import javax.annotation.Nullable;
 
 @SideOnly(Side.CLIENT)
 public class ParticleGeneric extends Particle {
@@ -37,6 +42,9 @@ public class ParticleGeneric extends Particle {
     protected float rotRadius;
     protected float rotSpeed;
     protected int rotDirection;
+
+    @Nullable
+    protected BlockPos tePos;
 
     public ParticleGeneric(ParticleTetxure tetxure, World world, Vec3d start, int maxAge) {
         super(world, start.x, start.y, start.z);
@@ -83,7 +91,18 @@ public class ParticleGeneric extends Particle {
         }
         this.motionY = (double) -this.particleGravity;
         move(this.motionX, this.motionY, this.motionZ);
-        if (this.particleAge++ > this.particleMaxAge) {
+        boolean kill = false;
+        if (this.tePos != null) {
+            TileEntity tileEntity = world.getTileEntity(this.tePos);
+            if (tileEntity instanceof TileBase) {
+                if (((TileBase) tileEntity).killParticles) {
+                    kill = true;
+                }
+            } else {
+                kill = true;
+            }
+        }
+        if (kill || this.particleAge++ > this.particleMaxAge) {
             setExpired();
         }
     }
@@ -201,5 +220,9 @@ public class ParticleGeneric extends Particle {
     @Override
     public boolean shouldDisableDepth() {
         return this.noDepth;
+    }
+
+    public void setTePos(@Nullable BlockPos tePos) {
+        this.tePos = tePos;
     }
 }

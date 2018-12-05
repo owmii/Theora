@@ -135,7 +135,7 @@ public class ParticleGeneric extends Particle {
                 posVec[l] = vec3d.scale(2.0D * posVec[l].dotProduct(vec3d)).add(posVec[l].scale(d5 * d5 - vec3d.dotProduct(vec3d))).add(vec3d.crossProduct(posVec[l]).scale(2.0F * d5));
             }
         }
-        String textureSuffix = this.tetxure.frames > 1 ? "_" + this.textureID : "";
+        String textureSuffix = this.tetxure.frames > 1 ? "" + this.textureID : "";
         Minecraft.getMinecraft().getTextureManager().bindTexture(Theora.location("textures/particles/" + this.tetxure.name + textureSuffix + ".png"));
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferbuilder = tessellator.getBuffer();

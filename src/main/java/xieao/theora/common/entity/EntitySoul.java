@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import xieao.theora.client.particle.ParticleEngine;
 import xieao.theora.client.particle.ParticleGeneric;
-import xieao.theora.client.particle.ParticleTetxure;
+import xieao.theora.client.particle.ParticleTexture;
 import xieao.theora.common.enchantment.TheoraEnchantments;
 import xieao.theora.common.item.ItemSoulEgg;
 import xieao.theora.common.item.TheoraItems;
@@ -123,7 +123,7 @@ public class EntitySoul extends EntityLiving {
     public void onUpdate() {
         super.onUpdate();
         if (this.world.isRemote) {
-            ParticleEngine.INSTANCE.addEffect(new ParticleGeneric(ParticleTetxure.GLOW_MID, this.world, getPositionVector(), 7)
+            ParticleEngine.INSTANCE.addEffect(new ParticleGeneric(ParticleTexture.GLOW_MID, this.world, getPositionVector(), 7)
                     .scale(2.8F, 2, 0.8F).setAlpha(1.0F, 1).setColor(0xfff7d3, 0xa89e70).blendFunc());
         } else {
             if (this.age-- <= 0) {

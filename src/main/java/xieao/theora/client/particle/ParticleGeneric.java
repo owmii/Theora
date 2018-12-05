@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 @SideOnly(Side.CLIENT)
 public class ParticleGeneric extends Particle {
 
-    protected ParticleTetxure tetxure;
+    protected ParticleTexture texture;
     protected int textureID;
     protected Vec3d start;
     protected Vec3d end;
@@ -46,10 +46,10 @@ public class ParticleGeneric extends Particle {
     @Nullable
     protected BlockPos tePos;
 
-    public ParticleGeneric(ParticleTetxure tetxure, World world, Vec3d start, int maxAge) {
+    public ParticleGeneric(ParticleTexture texture, World world, Vec3d start, int maxAge) {
         super(world, start.x, start.y, start.z);
-        if (tetxure.frames > 1 && tetxure.randomize) {
-            this.textureID = this.rand.nextInt(tetxure.frames);
+        if (texture.frames > 1 && texture.randomize) {
+            this.textureID = this.rand.nextInt(texture.frames);
         }
         this.start = start;
         this.end = start;
@@ -62,7 +62,8 @@ public class ParticleGeneric extends Particle {
         this.particleScale = 1.0F;
         setColor(0xffffff);
         this.particleAlpha = 0.0F;
-        this.tetxure = tetxure;
+        this.texture = texture;
+        this.canCollide = false;
     }
 
     @Override
@@ -70,8 +71,8 @@ public class ParticleGeneric extends Particle {
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
-        if (this.tetxure.frames > 1 && !this.tetxure.randomize) {
-            this.textureID = this.particleAge * this.tetxure.frames / this.particleMaxAge;
+        if (this.texture.frames > 1 && !this.texture.randomize) {
+            this.textureID = this.particleAge * this.texture.frames / this.particleMaxAge;
         }
         float f0 = (float) this.particleAge / (float) this.particleMaxAge;
         if (this.dinamicColor) {
@@ -135,8 +136,8 @@ public class ParticleGeneric extends Particle {
                 posVec[l] = vec3d.scale(2.0D * posVec[l].dotProduct(vec3d)).add(posVec[l].scale(d5 * d5 - vec3d.dotProduct(vec3d))).add(vec3d.crossProduct(posVec[l]).scale(2.0F * d5));
             }
         }
-        String textureSuffix = this.tetxure.frames > 1 ? "" + this.textureID : "";
-        Minecraft.getMinecraft().getTextureManager().bindTexture(Theora.location("textures/particles/" + this.tetxure.name + textureSuffix + ".png"));
+        String textureSuffix = this.texture.frames > 1 ? "" + this.textureID : "";
+        Minecraft.getMinecraft().getTextureManager().bindTexture(Theora.location("textures/particles/" + this.texture.name + textureSuffix + ".png"));
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferbuilder = tessellator.getBuffer();
         bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
@@ -212,6 +213,11 @@ public class ParticleGeneric extends Particle {
         return this;
     }
 
+    public ParticleGeneric collide() {
+        this.canCollide = true;
+        return this;
+    }
+
     public ParticleGeneric setGravity(Float gravity) {
         this.particleGravity = gravity;
         return this;
@@ -222,7 +228,8 @@ public class ParticleGeneric extends Particle {
         return this.noDepth;
     }
 
-    public void setTePos(@Nullable BlockPos tePos) {
+    public ParticleGeneric setTePos(@Nullable BlockPos tePos) {
         this.tePos = tePos;
+        return this;
     }
 }

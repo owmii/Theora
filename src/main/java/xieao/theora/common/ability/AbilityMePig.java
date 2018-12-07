@@ -32,6 +32,10 @@ import java.util.List;
 @Mod.EventBusSubscriber
 public class AbilityMePig extends Ability {
 
+    public AbilityMePig() {
+        setLevelCosts(0.0F, 0.0F, 0.0F);
+    }
+
     @SubscribeEvent
     public static void entityDeath(LivingDeathEvent event) {
         EntityLivingBase livingBase = event.getEntityLiving();
@@ -43,8 +47,7 @@ public class AbilityMePig extends Ability {
                 PlayerData data = TheoraAPI.getPlayerData(player);
                 if (data != null) {
                     Abilities abilities = data.getAbilities();
-                    if (abilities.hasAbility(TheoraAbilities.ME_PIG)) {
-                        abilities.lose(TheoraAbilities.ME_PIG);
+                    if (abilities.lose(player, TheoraAbilities.ME_PIG)) {
                         abilities.sync(true);
                     }
                 }

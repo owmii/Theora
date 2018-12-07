@@ -110,7 +110,7 @@ public class GuiAbilities extends GuiScreen {
             for (Ability ability : map.keySet()) {
                 ResourceLocation regName = ability.getRegistryName();
                 this.regNames[index] = ability.getRegistryString();
-                this.textures[index] = new ResourceLocation(regName.getResourceDomain(), "textures/abilities/" + regName.getResourcePath() + ".png");
+                this.textures[index] = ability.getIcon();
                 this.status[index] = abilities.isActive(ability);
                 this.levels[index] = abilities.getAbilityLevel(ability);
                 index++;

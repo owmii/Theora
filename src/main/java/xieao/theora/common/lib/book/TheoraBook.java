@@ -27,7 +27,6 @@ public class TheoraBook {
     public static final Section SHROOM_BIT = new Section(new ItemStack(TheoraItems.SHROOM_BIT));
     public static final Section GLIOPHIN = new Section(new ItemStack(TheoraItems.GLIOPHIN));
     public static final Section WAND = new Section(new ItemStack(TheoraItems.WAND));
-    public static final Section CLEAR_SLIME = new Section(new ItemStack(TheoraItems.CLEAR_SLIME));
     public static final Section SOUL_EGG = new Section(new ItemStack(TheoraItems.SOUL_EGG));
     public static final Section VIAL = new Section(new ItemStack(TheoraItems.VIAL));
     public static final Section PIG_COIN = new Section(new ItemStack(TheoraItems.PIG_COIN));
@@ -45,7 +44,6 @@ public class TheoraBook {
                         ).setName("shroom.bits"),
                         GLIOPHIN.addEntry(new PageItem().setText("gliophin0")),
                         WAND.addEntry(new PageItem().setText("wand0")),
-                        CLEAR_SLIME.addEntry(new PageItem().setText("clear.slime0")),
                         SOUL_EGG.addEntry(new PageItem().setText("soul.egg0")),
                         VIAL.addEntry(new PageItem().setText("vial0")),
                         PIG_COIN.addEntry(new PageItem().setText("pig.coin0")),

@@ -26,6 +26,14 @@ public class RegistryEntry<T> {
         return (T) this;
     }
 
+    public String getResourceDomain() {
+        return getRegistryName().getResourceDomain();
+    }
+
+    public String getResourcePath() {
+        return getRegistryName().getResourcePath();
+    }
+
     public final ResourceLocation getRegistryName() {
         return registryName;
     }

@@ -7,10 +7,10 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import xieao.theora.common.lib.helper.math.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -101,8 +101,8 @@ public class TileBase extends TileEntity {
         return writeToNBT(new NBTTagCompound());
     }
 
-    public Vec3d getPosVec() {
-        return new Vec3d(getPos());
+    public Vec3 getPosVec() {
+        return new Vec3(getPos());
     }
 
     public double getX() {
@@ -121,6 +121,7 @@ public class TileBase extends TileEntity {
         return hasWorld() && !getWorld().isRemote;
     }
 
+    @Nullable
     public TileEntity getTileEntity(BlockPos pos) {
         return getWorld().getTileEntity(pos);
     }

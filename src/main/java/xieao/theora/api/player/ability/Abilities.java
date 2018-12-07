@@ -1,5 +1,6 @@
 package xieao.theora.api.player.ability;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
@@ -10,11 +11,11 @@ import java.util.TreeMap;
 
 public class Abilities implements INBTSerializable<NBTTagCompound> {
 
-    private final TreeMap<Ability, NBTTagCompound> abilityMap = new TreeMap<>((a0, a1) -> a0 != null && a1 != null ? a0.getRegistryString().compareTo(a1.getRegistryString()) : 1);
-
     public static final String TAG_STATUS = "abilityStatus";
     public static final String TAG_LEVEL = "abilityLevel";
     public static final String TAG_SUB_NBT = "abilitySubNbt";
+
+    private final TreeMap<Ability, NBTTagCompound> abilityMap = new TreeMap<>((a0, a1) -> a0 != null && a1 != null ? a0.getRegistryString().compareTo(a1.getRegistryString()) : 1);
 
     private boolean sync;
 
@@ -22,21 +23,24 @@ public class Abilities implements INBTSerializable<NBTTagCompound> {
         return this.abilityMap.containsKey(ability);
     }
 
-    public boolean acquire(Ability ability) {
+    public boolean acquire(EntityPlayer player, Ability ability) {
         if (!ability.isEmpty() && !hasAbility(ability)) {
             NBTTagCompound nbt = new NBTTagCompound();
             nbt.setBoolean(TAG_STATUS, true);
             nbt.setInteger(TAG_LEVEL, 0);
             nbt.setTag(TAG_SUB_NBT, new NBTTagCompound());
             this.abilityMap.put(ability, nbt);
+            ability.onAdded(player, player.world, getAbilityLevel(ability), getAbilityNbt(ability));
             return true;
         }
         return false;
     }
 
-    public boolean lose(Ability ability) {
+    public boolean lose(EntityPlayer player, Ability ability) {
         if (hasAbility(ability)) {
             this.abilityMap.remove(ability);
+            ability.onRemoved(player, player.world, getAbilityLevel(ability));
+            return true;
         }
         return false;
     }

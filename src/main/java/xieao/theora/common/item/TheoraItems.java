@@ -18,7 +18,6 @@ public class TheoraItems {
     public static final ItemBook BOOK;
     public static final ItemShroomBit SHROOM_BIT;
     public static final ItemGliophin GLIOPHIN;
-    public static final ItemClearSlime CLEAR_SLIME;
     public static final ItemWand WAND;
     public static final ItemVial VIAL;
     public static final ItemPigCoin PIG_COIN;
@@ -36,7 +35,6 @@ public class TheoraItems {
         BOOK = register(new ItemBook(), "book");
         SHROOM_BIT = register(new ItemShroomBit(), "shroombit");
         GLIOPHIN = register(new ItemGliophin(), "gliophin");
-        CLEAR_SLIME = register(new ItemClearSlime(), "clearslime");
         WAND = register(new ItemWand(), "wand");
         VIAL = register(new ItemVial(), "vial");
         PIG_COIN = register(new ItemPigCoin(), "pigcoin");

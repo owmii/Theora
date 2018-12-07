@@ -67,7 +67,7 @@ public class AbilityMePig extends Ability {
                     Item resultItem = event.getResultStack().getItem();
                     if (resultItem == Items.CARROT) {
                         if (abilities.isActive(TheoraAbilities.ME_PIG)) {
-                            //TODO carrot action
+                            //TODO carrot action (Night vision?)
                         }
                     } else {
                         Item[] items = {Items.PORKCHOP, Items.COOKED_PORKCHOP};

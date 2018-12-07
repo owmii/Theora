@@ -147,6 +147,10 @@ public class Abilities implements INBTSerializable<NBTTagCompound> {
         }
     }
 
+    public boolean isEmpty() {
+        return getAbilityMap().isEmpty();
+    }
+
     public TreeMap<Ability, NBTTagCompound> getAbilityMap() {
         return abilityMap;
     }

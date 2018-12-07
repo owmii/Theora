@@ -17,7 +17,7 @@ public class RegistryEntry<T> {
 
     @SuppressWarnings("unchecked")
     public final T setRegistryName(String name) {
-        if (!getRegistryName().getResourcePath().equals("null")) {
+        if (!getRegistryString().equals("theora:null")) {
             throw new IllegalStateException("Attempted to set registry name with existing registry name! New: " + name + " Old: " + getRegistryName());
         } else if (name.isEmpty()) {
             throw new IllegalStateException("Empty name!!");

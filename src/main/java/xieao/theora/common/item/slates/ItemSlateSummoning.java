@@ -82,7 +82,9 @@ public class ItemSlateSummoning extends ItemBase implements ISummoningSlate {
             if (NBTHelper.hasKey(stack, TAG_BIOME_ID, Constants.NBT.TAG_INT)) {
                 int biomeId = NBTHelper.getInteger(stack, TAG_BIOME_ID);
                 Biome biome = Biome.getBiome(biomeId);
-                return new HashSet<>(biome.getSpawnableList(EnumCreatureType.MONSTER));
+                if (biome != null) {
+                    return new HashSet<>(biome.getSpawnableList(EnumCreatureType.MONSTER));
+                }
             }
         } else {
             if (SPAWN_LIST_NETHER.isEmpty()) {

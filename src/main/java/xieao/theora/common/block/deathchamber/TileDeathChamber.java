@@ -10,21 +10,21 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.theora.api.item.slate.*;
-import xieao.theora.api.liquid.LiquidContainer;
-import xieao.theora.api.liquid.LiquidContainerCapability;
 import xieao.theora.api.liquid.LiquidSlot;
-import xieao.theora.common.block.TileInvBase;
+import xieao.theora.common.block.TileInvLiquidContainer;
 import xieao.theora.common.lib.multiblock.IMultiBlock;
 import xieao.theora.common.lib.multiblock.IMultiBlockBuilder;
 import xieao.theora.common.liquid.TheoraLiquids;
@@ -34,21 +34,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class TileDeathChamber extends TileInvBase implements ITickable, IMultiBlockBuilder<TileDeathChamber> {
+public class TileDeathChamber extends TileInvLiquidContainer implements ITickable, IMultiBlockBuilder<TileDeathChamber> {
 
     private static final GameProfile DEATH_CHAMBER = new GameProfile(UUID.fromString("8f3dc5b7-eab1-4768-9b73-f1ca057a82eb"), "Death Chamber");
     private static final IMultiBlock MULTI_BLOCK = new MBDeathChamber();
 
-    private final LiquidContainer liquidContainer;
-
     @Nullable
     protected EntityPlayer killer;
-
 
     public boolean built;
 
     public TileDeathChamber() {
-        this.liquidContainer = new LiquidContainer();
         this.liquidContainer.addLiquidSlots(
                 new LiquidSlot(TheoraLiquids.LEQUEN, true, 10000.0F, 0.0F, 400.0F, LiquidSlot.TransferType.RECEIVE)
         );
@@ -57,19 +53,16 @@ public class TileDeathChamber extends TileInvBase implements ITickable, IMultiBl
     @Override
     public void readNBT(NBTTagCompound nbt) {
         super.readNBT(nbt);
-        this.liquidContainer.readNBT(nbt);
         this.built = nbt.getBoolean("built");
     }
 
     @Override
     public void writeNBT(NBTTagCompound nbt) {
         super.writeNBT(nbt);
-        this.liquidContainer.writeNBT(nbt);
         nbt.setBoolean("built", this.built);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void update() {
         if (isServerWorld()) {
             if (!this.built) {
@@ -107,10 +100,10 @@ public class TileDeathChamber extends TileInvBase implements ITickable, IMultiBl
                             liquidCost += slate.getLiquidCost(stack);
                             List<Biome.SpawnListEntry> spawnListEntries = new ArrayList<>(slate.getSpawnListEntries(stack));
                             Biome.SpawnListEntry spawnListEntry = WeightedRandom.getRandomItem(getWorld().rand, spawnListEntries);
-                            EntityLiving entityLiving = null;
+                            EntityLiving entityLiving;
                             try {
                                 entityLiving = spawnListEntry.newInstance(getWorld());
-                                if (entityLiving != null && liquidCost <= liquidSlot.getStored()) {
+                                if (liquidCost <= liquidSlot.getStored()) {
                                     EntityPlayer killer = this.killer;
                                     ItemStack weapon = new ItemStack(Items.DIAMOND_SWORD);
                                     weapon.addEnchantment(Enchantments.LOOTING, lootingLevel);
@@ -127,7 +120,7 @@ public class TileDeathChamber extends TileInvBase implements ITickable, IMultiBl
                                             entityLiving1.onInitialSpawn(getWorld().getDifficultyForLocation(getPos()), null);
                                             entityLiving1.attackEntityFrom(DamageSource.causePlayerDamage(killer), Float.MAX_VALUE);
                                             entityLiving1.setDead();
-                                        } else {
+                                        } else if (ridingEntity != null) {
                                             ridingEntity.setDead();
                                         }
                                     }
@@ -189,20 +182,6 @@ public class TileDeathChamber extends TileInvBase implements ITickable, IMultiBl
             }
         }
         return getStackInSlot(index).isEmpty() && stack.getItem() instanceof ISlate;
-    }
-
-    @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-        return capability == LiquidContainerCapability.CAPABILITY_LIQUID_CONTAINER
-                || super.hasCapability(capability, facing);
-    }
-
-    @Nullable
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-        return capability == LiquidContainerCapability.CAPABILITY_LIQUID_CONTAINER ? (T) this.liquidContainer
-                : super.getCapability(capability, facing);
     }
 
     @Override

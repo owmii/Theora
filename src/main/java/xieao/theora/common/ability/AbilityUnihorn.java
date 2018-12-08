@@ -25,7 +25,7 @@ import xieao.theora.network.packets.PacketSyncFlight;
 public class AbilityUnihorn extends Ability {
 
     @Override
-    public void tickAbility(EntityPlayer player, World world, int abilityLevel, NBTTagCompound abilityNbt) {
+    public void onUpdate(EntityPlayer player, World world, int abilityLevel, NBTTagCompound abilityNbt) {
         player.stepHeight = 1.1F;
     }
 

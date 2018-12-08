@@ -51,7 +51,7 @@ public class EventHandler {
                     Ability ability = e.getKey();
                     NBTTagCompound nbt = e.getValue();
                     if (abilities.isActive(ability)) {
-                        ability.tickAbility(player, player.world, abilities.getAbilityLevel(ability), abilities.getSubNbt(ability));
+                        ability.onUpdate(player, player.world, abilities.getAbilityLevel(ability), abilities.getSubNbt(ability));
                     }
                 }
                 if (event.side == Side.SERVER) {

@@ -25,13 +25,19 @@ public class Ability extends RegistryEntry<Ability> {
         EMPTY = register(new Ability(), "theora:empty");
     }
 
-    public void tickAbility(EntityPlayer player, World world, int abilityLevel, NBTTagCompound abilityNbt) {
+    public void onUpdate(EntityPlayer player, World world, int level, NBTTagCompound data) {
     }
 
-    public void onAdded(EntityPlayer player, World world, int abilityLevel, NBTTagCompound abilityNbt) {
+    public void onAcquired(EntityPlayer player, World world, int level, NBTTagCompound data) {
     }
 
-    public void onRemoved(EntityPlayer player, World world, int abilityLevel) {
+    public void onRemoved(EntityPlayer player, World world, int level) {
+    }
+
+    public void onLevelUp(EntityPlayer player, World world, int level, NBTTagCompound data) {
+    }
+
+    public void onLevelDown(EntityPlayer player, World world, int level, NBTTagCompound data) {
     }
 
     @Nullable
@@ -66,6 +72,10 @@ public class Ability extends RegistryEntry<Ability> {
 
     public float[] getLevelCosts() {
         return levelCosts;
+    }
+
+    public int getMaxLevel() {
+        return this.levelCosts.length + 1;
     }
 
     public void setLevelCosts(float... levelCosts) {

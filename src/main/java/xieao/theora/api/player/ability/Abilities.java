@@ -30,7 +30,7 @@ public class Abilities implements INBTSerializable<NBTTagCompound> {
             nbt.setInteger(TAG_LEVEL, 0);
             nbt.setTag(TAG_SUB_NBT, new NBTTagCompound());
             this.abilityMap.put(ability, nbt);
-            ability.onAdded(player, player.world, getAbilityLevel(ability), getAbilityNbt(ability));
+            ability.onAcquired(player, player.world, getAbilityLevel(ability), getAbilityNbt(ability).getCompoundTag(TAG_SUB_NBT));
             return true;
         }
         return false;
@@ -53,13 +53,17 @@ public class Abilities implements INBTSerializable<NBTTagCompound> {
         return 0;
     }
 
-
-    public boolean setAbilityLevel(Ability ability, int level) {
+    public boolean setAbilityLevel(EntityPlayer player, Ability ability, int level) {
         NBTTagCompound nbt = this.abilityMap.get(ability);
         if (nbt != null) {
             int curLevel = nbt.getInteger(TAG_LEVEL);
-            if (curLevel != level) {
+            if (level < ability.getMaxLevel() && curLevel != level) {
                 nbt.setInteger(TAG_LEVEL, level);
+                if (curLevel < level) {
+                    ability.onLevelUp(player, player.world, level, getAbilityNbt(ability).getCompoundTag(TAG_SUB_NBT));
+                } else {
+                    ability.onLevelDown(player, player.world, level, getAbilityNbt(ability).getCompoundTag(TAG_SUB_NBT));
+                }
                 return true;
             }
         }
@@ -138,9 +142,9 @@ public class Abilities implements INBTSerializable<NBTTagCompound> {
         NBTTagList tagList = nbt.getTagList("tagList", Constants.NBT.TAG_COMPOUND);
         for (int i = 0; i < tagList.tagCount(); i++) {
             NBTTagCompound nbt1 = tagList.getCompoundTagAt(i);
-            String regestryName = nbt1.getString("registryName");
+            String registryName = nbt1.getString("registryName");
             NBTTagCompound abilityNbt = nbt1.getCompoundTag("abilityNbt");
-            Ability ability = Ability.getAbility(regestryName);
+            Ability ability = Ability.getAbility(registryName);
             if (!ability.isEmpty()) {
                 this.abilityMap.put(ability, abilityNbt);
             }
@@ -154,6 +158,4 @@ public class Abilities implements INBTSerializable<NBTTagCompound> {
     public TreeMap<Ability, NBTTagCompound> getAbilityMap() {
         return abilityMap;
     }
-
-
 }

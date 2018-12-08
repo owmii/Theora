@@ -5,18 +5,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
-import xieao.theora.api.liquid.LiquidContainer;
-import xieao.theora.api.liquid.LiquidContainerCapability;
 import xieao.theora.api.liquid.LiquidSlot;
 import xieao.theora.api.player.ability.Ability;
 import xieao.theora.api.recipe.binding.IBindingRecipe;
-import xieao.theora.common.block.TileBase;
+import xieao.theora.common.block.TileLiquidContainer;
 import xieao.theora.common.liquid.TheoraLiquids;
 import xieao.theora.common.recipe.RecipeHandler;
 
@@ -24,14 +20,13 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileBindingCenter extends TileBase implements ITickable {
+public class TileBindingCenter extends TileLiquidContainer implements ITickable {
 
     public static final int[][] RING_OFFSETS = {{0, 3}, {3, 0}, {0, -3}, {-3, 0}, {2, 2}, {-2, -2}, {2, -2}, {-2, 2}};
 
     public final int maxBuildTicks = 40;
     public int buildTicks;
 
-    private final LiquidContainer liquidContainer;
     public Ability ability = Ability.EMPTY;
     public boolean ready;
 
@@ -42,7 +37,6 @@ public class TileBindingCenter extends TileBase implements ITickable {
     public BlockPos[] activeRings = new BlockPos[0];
 
     public TileBindingCenter() {
-        this.liquidContainer = new LiquidContainer();
         this.liquidContainer.addLiquidSlots(
                 new LiquidSlot(TheoraLiquids.GLIOPHIN, true, 10000.0F, 0.0F, 100.0F, LiquidSlot.TransferType.RECEIVE)
         );
@@ -51,7 +45,6 @@ public class TileBindingCenter extends TileBase implements ITickable {
     @Override
     public void readNBT(NBTTagCompound nbt) {
         super.readNBT(nbt);
-        this.liquidContainer.readNBT(nbt);
         this.ability = Ability.readNBT(nbt);
         this.binding = nbt.getInteger("binding");
         this.startBinding = nbt.getBoolean("startBinding");
@@ -69,7 +62,6 @@ public class TileBindingCenter extends TileBase implements ITickable {
     @Override
     public void writeNBT(NBTTagCompound nbt) {
         super.writeNBT(nbt);
-        this.liquidContainer.writeNBT(nbt);
         Ability.writeNBT(this.ability, nbt);
         nbt.setInteger("binding", this.binding);
         nbt.setBoolean("startBinding", this.startBinding);
@@ -155,20 +147,6 @@ public class TileBindingCenter extends TileBase implements ITickable {
 
     public boolean hasAbility() {
         return !this.ability.isEmpty();
-    }
-
-    @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-        return capability == LiquidContainerCapability.CAPABILITY_LIQUID_CONTAINER
-                || super.hasCapability(capability, facing);
-    }
-
-    @Nullable
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-        return capability == LiquidContainerCapability.CAPABILITY_LIQUID_CONTAINER ? (T) this.liquidContainer
-                : super.getCapability(capability, facing);
     }
 
     @Override

@@ -52,7 +52,7 @@ public class TileBindingCenter extends TileBase implements ITickable {
     public void readNBT(NBTTagCompound nbt) {
         super.readNBT(nbt);
         this.liquidContainer.readNBT(nbt);
-        this.ability = Ability.readAbility(nbt);
+        this.ability = Ability.readNBT(nbt);
         this.binding = nbt.getInteger("binding");
         this.startBinding = nbt.getBoolean("startBinding");
         this.ready = nbt.getBoolean("ready");
@@ -70,7 +70,7 @@ public class TileBindingCenter extends TileBase implements ITickable {
     public void writeNBT(NBTTagCompound nbt) {
         super.writeNBT(nbt);
         this.liquidContainer.writeNBT(nbt);
-        Ability.writeAbility(this.ability, nbt);
+        Ability.writeNBT(this.ability, nbt);
         nbt.setInteger("binding", this.binding);
         nbt.setBoolean("startBinding", this.startBinding);
         nbt.setBoolean("ready", this.ready);
@@ -128,57 +128,10 @@ public class TileBindingCenter extends TileBase implements ITickable {
                     syncNBTData();
                 }
             }
-        } else {
-//            for (int[] offset : RING_OFFSETS) { //TODO remake particles
-//                for (int i = 0; i < 20; i++) {
-//                    if (this.rand.nextInt(8) == 0) {
-//                        ParticleEngine.INSTANCE.addEffect(
-//                                new ParticleGlow(getWorld(), getPosVec().addVector(
-//                                        offset[0] + 0.125 + (this.rand.nextDouble() * 0.750), 0.05, offset[1] + 0.125 + (this.rand.nextDouble() * 0.750)), getPosVec().addVector(
-//                                        this.rand.nextDouble(), 0.55D, this.rand.nextDouble()), 1, 40, 0.7F, 0xffffff, 0.6F)
-//                        );
-//                    }
-//                }
-//            }
-//            if (this.ready && !this.ability.isEmpty()) {
-//                for (int i = 0; i < 7; i++) {
-//                    ParticleEngine.INSTANCE.addEffect(new ParticleGlow(getWorld(), getPosVec().addVector(this.rand.nextDouble(), .2 + this.rand.nextDouble() * 0.9D, this.rand.nextDouble())
-//                            , getPosVec().addVector(this.rand.nextDouble(), .2 + this.rand.nextDouble() * 0.9D, this.rand.nextDouble()), .03, 10, 0.7F, 0xffffff, 0.6F));
-//                }
-//            }
-//            if (!this.ready && this.binding > 0) {
-//                for (int i = 0; i < 7; i++) {
-//                    // Vec3d activeVec = new Vec3d(activePos).addVector(0.125 + (this.rand.nextDouble() * 0.750), 0.05, 0.125 + (this.rand.nextDouble() * 0.750));
-//                    ParticleEngine.INSTANCE.addEffect(new ParticleGlow(getWorld(), getPosVec().addVector(this.rand.nextDouble(), .2 + this.rand.nextDouble() * 0.9D, this.rand.nextDouble())
-//                            , getPosVec().addVector(this.rand.nextDouble(), .2 + this.rand.nextDouble() * 0.9D, this.rand.nextDouble()), .03, 10, 0.7F, 0xffffff, 0.6F));
-//                }
-//            }
-//            if (this.buildTicks > 0) {
-//                for (BlockPos activePos : this.activeRings) {
-//                    for (int i = 0; i < 7; i++) {
-//                        if (this.rand.nextInt(8) == 0) {
-//                            double d0 = this.rand.nextDouble();
-//                            Vec3d activeVec = new Vec3d(activePos).addVector(0.125 + (d0 * 0.750), 0.05, 0.125 + (d0 * 0.750));
-//                            ParticleEngine.INSTANCE.addEffect(new ParticleGlow(getWorld(), activeVec, getPosVec().addVector(d0, 0.55D, d0), 1, 40, 0.7F, 0xffffff, 0.6F));
-//                        }
-//                    }
-//                }
-//                this.buildTicks--;
-//                if (this.buildTicks <= 5) {
-//                    for (int i = 0; i < 20; i++) {
-//                        if (this.rand.nextInt(5) == 0) {
-//                            ParticleEngine.INSTANCE.addEffect(
-//                                    new ParticleGlow(getWorld(), getPosVec().addVector(
-//                                            this.rand.nextDouble(), 0.05, this.rand.nextDouble()), getPosVec().addVector(
-//                                            this.rand.nextDouble(), 2.55D, this.rand.nextDouble()), 1, 40, 0.7F, 0xffffff, 0.6F)
-//                            );
-//                        }
-//                    }
-//                }
-//            }
         }
     }
 
+    @Nullable
     public IBindingRecipe getCurrentRecipe() {
         LiquidSlot liquidSlot = this.liquidContainer.getLiquidSlot(0);
         return RecipeHandler.findBindingStoneRecipe(getRecipeStacks(), liquidSlot.getStored(), getWorld(), getPos());

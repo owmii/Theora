@@ -43,7 +43,7 @@ public class TileBindingRing extends TileInvBase {
                     }
                 }
                 if (!flag) {
-                    int[] arrs = CENTR_OFFSETS[i];
+                    int[] arrs = CENTER_OFFSETS[i];
                     BlockPos centerPos = getPos().add(arrs[0], 0, arrs[1]);
                     if (getWorld().isAirBlock(centerPos)) {
                         getWorld().setBlockState(centerPos, TheoraBlocks.BINDING_CENTER.getDefaultState(), 2);
@@ -86,7 +86,7 @@ public class TileBindingRing extends TileInvBase {
         }
     }
 
-    public static final int[][] CENTR_OFFSETS = {{2, -2}, {0, -3}, {-2, -2}, {-3, 0}, {-2, 2}, {0, 3}, {2, 2}, {3, 0}};
+    public static final int[][] CENTER_OFFSETS = {{2, -2}, {0, -3}, {-2, -2}, {-3, 0}, {-2, 2}, {0, 3}, {2, 2}, {3, 0}};
     public static final int[][][] RINGS_OFFSETS = {
             {{0, 0}, {2, 1}, {4, 0}, {5, -2}, {4, -4}, {2, -5}, {0, -4}, {-1, -2}},
             {{0, 0}, {2, -1}, {3, -3}, {2, -5}, {0, -6}, {-2, -5}, {-3, -3}, {-2, -1}},

@@ -56,11 +56,11 @@ public class Ability extends RegistryEntry<Ability> {
         return ability == null ? EMPTY : ability;
     }
 
-    public static Ability readAbility(NBTTagCompound compound) {
+    public static Ability readNBT(NBTTagCompound compound) {
         return getAbility(compound.getString("regName"));
     }
 
-    public static void writeAbility(Ability ability, NBTTagCompound compound) {
+    public static void writeNBT(Ability ability, NBTTagCompound compound) {
         compound.setString("regName", ability.getRegistryString());
     }
 

@@ -5,12 +5,21 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import xieao.theora.api.liquid.LiquidContainer;
 import xieao.theora.api.liquid.LiquidContainerCapability;
+import xieao.theora.api.liquid.LiquidSlot;
 
 import javax.annotation.Nullable;
 
 public abstract class TileInvLiquidContainer extends TileInvBase {
 
     protected final LiquidContainer liquidContainer = new LiquidContainer();
+
+    public LiquidSlot[] getLiquidSlots() {
+        return this.liquidContainer.getLiquidSlots();
+    }
+
+    public LiquidSlot getLiquidSlot(int index) {
+        return this.liquidContainer.getLiquidSlot(index);
+    }
 
     @Override
     public void readNBT(NBTTagCompound nbt) {

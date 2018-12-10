@@ -28,7 +28,7 @@ import xieao.theora.common.block.TheoraBlocks;
 import xieao.theora.common.item.IGenericItem;
 import xieao.theora.common.item.ItemBlockBase;
 import xieao.theora.common.item.ItemCauldron;
-import xieao.theora.common.recipe.RecipeHandler;
+import xieao.theora.common.lib.recipe.RecipeHandler;
 
 import javax.annotation.Nullable;
 

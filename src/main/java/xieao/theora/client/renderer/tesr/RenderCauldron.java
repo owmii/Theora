@@ -29,7 +29,7 @@ public class RenderCauldron extends TESRBase<TileCauldron> {
             bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
             RendererHelper.render(TheoraBlocks.EMBER.getDefaultState(), mc.world, BlockPos.ORIGIN);
         }
-        LiquidSlot liquidTank = te.liquidContainer.getLiquidSlot(0);
+        LiquidSlot liquidTank = te.getLiquidSlot(0);
         boolean hasWater = te.hasWater();
         if (te.fill > 0 || hasWater) {
             float blend = te.blend / (float) te.boilingTime;

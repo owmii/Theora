@@ -3,13 +3,17 @@ package xieao.theora.client.renderer.tesr;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.theora.Theora;
+import xieao.theora.api.player.ability.Ability;
 import xieao.theora.api.recipe.binding.IBindingRecipe;
 import xieao.theora.client.helper.ColorHelper;
 import xieao.theora.client.helper.RendererHelper;
 import xieao.theora.common.block.binding.TileBindingCenter;
+
+import java.awt.*;
 
 @SideOnly(Side.CLIENT)
 public class RenderBindingCenter extends TESRBase<TileBindingCenter> {
@@ -21,29 +25,41 @@ public class RenderBindingCenter extends TESRBase<TileBindingCenter> {
     public void render(TileBindingCenter te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         float ticks = RendererHelper.tickCount + partialTicks;
         GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        RenderHelper.disableStandardItemLighting();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
         GlStateManager.translate(x, y, z);
         GlStateManager.translate(0.5D, 0.0002D, 0.5D);
-        RenderHelper.disableStandardItemLighting();
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
         float f0 = ((float) te.maxBuildTicks / ((float) (te.buildTicks + 1) * 10)) / 6.5F;
-        ColorHelper.glColor(0x999999, f0);
+
+        ColorHelper.glColor(0xffffff, f0 / 2);
         GlStateManager.pushMatrix();
-        GlStateManager.rotate(-ticks, 0, 1, 0);
-        RendererHelper.renderQuad(RUNS_TEXTURE, 2.5F);
+        GlStateManager.rotate(-ticks / 4.0F, 0, 1, 0);
+        RendererHelper.renderQuad(RUNS_TEXTURE, 2.2F);
         GlStateManager.popMatrix();
+
         ColorHelper.glColor(0x555555, f0 / 2.0F);
         RendererHelper.renderQuad(AURA_TEXTURE, 2.5F);
         GlStateManager.translate(0.0D, 0.0001D, 0.0D);
-        ColorHelper.glColor(0xffffff, 0.7F);
+
+        ColorHelper.glColor(new Color(0x5D6955).getRGB(), 0.7F);
         IBindingRecipe recipe = te.getCurrentRecipe();
-        if (recipe != null && !recipe.getResultAbility().isEmpty()) {
-            ResourceLocation regName = recipe.getResultAbility().getRegistryName();
-            GlStateManager.translate(0.0D, 0.5D, 0.0D);
-            RendererHelper.renderFacingQuad(new ResourceLocation(regName.getResourceDomain(), "textures/abilities/" + regName.getResourcePath() + ".png"), 0.7F);
+        if (recipe != null) {
+            Ability ability = recipe.getResultAbility();
+            if (!ability.isEmpty()) {
+                GlStateManager.translate(0.0D, 0.01D, 0.0D);
+                double d0 = mc.player.posX - (double) ((float) te.getPos().getX() + 0.5F);
+                double d1 = mc.player.posZ - (double) ((float) te.getPos().getZ() + 0.5F);
+                double d2 = MathHelper.atan2(d1, d0);
+                double d3 = Math.toDegrees(-d2);
+                GlStateManager.rotate((float) (d3 + 90.0F), 0.0F, 1.0F, 0.0F);
+                RendererHelper.renderQuad(ability.getIcon(), 0.6F);
+            }
         }
-        GlStateManager.disableBlend();
+
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         RenderHelper.enableStandardItemLighting();
+        GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
 }

@@ -30,7 +30,7 @@ public class RenderBindingRing extends TESRBase<TileBindingRing> {
         RenderHelper.enableStandardItemLighting();
         GlStateManager.translate(0.0D, 0.4D, 0.0D);
         GlStateManager.rotate(-ticks * 2.5F, 0, 1, 0);
-        RendererHelper.renderItemStack(te.getStackInSlot(0), 1.0F);
+        RendererHelper.renderItemStack(te.getStackInSlot(0), 0.5F);
         GlStateManager.popMatrix();
     }
 }

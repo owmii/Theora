@@ -28,7 +28,7 @@ public class ItemPigCoin extends ItemBase {
             if (data != null) {
                 Abilities abilities = data.getAbilities();
                 if (abilities.hasAbility(TheoraAbilities.ME_PIG)) {
-                    List<ResourceLocation> sortedTrades = PigZombieTradeHandler.getSortedTrades(pigZombie, 2, 5, itemRand);
+                    List<ResourceLocation> sortedTrades = PigZombieTradeHandler.getSortedTrades(pigZombie, pigZombie.world.rand, 2, 5);
                     TheoraNetwork.sendToPlayer(new PacketOpenPigZombieTradeGui(pigZombie.getUniqueID(), sortedTrades), (EntityPlayerMP) playerIn);
                     return true;
                 }

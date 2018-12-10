@@ -17,7 +17,7 @@ import xieao.theora.api.liquid.LiquidSlot.TransferType;
 import xieao.theora.api.recipe.liquidinteract.ILiquidInteractRecipe;
 import xieao.theora.client.renderer.item.IColoredItem;
 import xieao.theora.common.entity.EntityInteractor;
-import xieao.theora.common.recipe.RecipeHandler;
+import xieao.theora.common.lib.recipe.RecipeHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;

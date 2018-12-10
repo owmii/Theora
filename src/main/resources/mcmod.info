@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "theora",
+  "name": "Theora",
+  "description": "A magical experience.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["xieao"],
+  "credits": "Theora team.",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

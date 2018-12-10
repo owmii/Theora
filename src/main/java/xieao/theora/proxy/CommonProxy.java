@@ -17,13 +17,13 @@ import xieao.theora.common.enchantment.TheoraEnchantments;
 import xieao.theora.common.entity.TheoraEntities;
 import xieao.theora.common.lib.book.TheoraBook;
 import xieao.theora.common.lib.config.Config;
+import xieao.theora.common.lib.recipe.BindingRecipes;
+import xieao.theora.common.lib.recipe.CauldronRecipes;
+import xieao.theora.common.lib.recipe.LiquidInteractRecipes;
+import xieao.theora.common.lib.recipe.RecipeHandler;
+import xieao.theora.common.lib.recipe.crafting.CraftingRecipes;
+import xieao.theora.common.lib.trade.PigZomieTrades;
 import xieao.theora.common.liquid.TheoraLiquids;
-import xieao.theora.common.recipe.BindingRecipes;
-import xieao.theora.common.recipe.CauldronRecipes;
-import xieao.theora.common.recipe.LiquidInteractRecipes;
-import xieao.theora.common.recipe.RecipeHandler;
-import xieao.theora.common.recipe.crafting.CraftingRecipes;
-import xieao.theora.common.trade.PigZomieTrades;
 import xieao.theora.common.world.gen.WorldGenShrooms;
 import xieao.theora.network.GuiHandler;
 import xieao.theora.network.TheoraNetwork;
@@ -37,7 +37,7 @@ public class CommonProxy implements IProxy {
     public void preInit(FMLPreInitializationEvent event) {
         ForgeRegistries.ITEMS.registerAll(ITEMS.toArray(new Item[0]));
         ForgeRegistries.BLOCKS.registerAll(BLOCKS.toArray(new Block[0]));
-        TheoraNetwork.registerPackets();
+        TheoraNetwork.register();
         PlayerDataCapability.register();
         LiquidContainerCapability.register();
 

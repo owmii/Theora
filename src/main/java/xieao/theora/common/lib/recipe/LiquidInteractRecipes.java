@@ -1,4 +1,4 @@
-package xieao.theora.common.recipe;
+package xieao.theora.common.lib.recipe;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;

@@ -1,9 +1,9 @@
 package xieao.theora.common.lib.book;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import xieao.theora.Theora;
+import xieao.theora.client.helper.I18nHelper;
 import xieao.theora.common.lib.book.page.Page;
 
 import javax.annotation.Nullable;
@@ -43,7 +43,7 @@ public class Section {
     }
 
     public Section setName(String name) {
-        this.name = I18n.format("theora.book.cat." + name);
+        this.name = I18nHelper.formatBookSection(name);
         return this;
     }
 

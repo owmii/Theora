@@ -1,4 +1,4 @@
-package xieao.theora.common.trade;
+package xieao.theora.common.lib.trade;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;

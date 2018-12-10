@@ -1,4 +1,4 @@
-package xieao.theora.common.recipe.crafting;
+package xieao.theora.common.lib.recipe.crafting;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;

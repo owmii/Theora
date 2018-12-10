@@ -1,7 +1,7 @@
 @ParametersAreNonnullByDefault
 @FieldsAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-package xieao.theora.common.recipe.crafting;
+package xieao.theora.common.lib.trade;
 
 import mcp.MethodsReturnNonnullByDefault;
 import xieao.theora.api.annotation.FieldsAreNonnullByDefault;

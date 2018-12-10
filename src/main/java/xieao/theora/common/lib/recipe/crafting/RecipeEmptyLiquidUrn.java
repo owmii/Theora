@@ -1,4 +1,4 @@
-package xieao.theora.common.recipe.crafting;
+package xieao.theora.common.lib.recipe.crafting;
 
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;

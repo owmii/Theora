@@ -8,6 +8,8 @@ import java.util.List;
 
 public class Vec3 extends Vec3d {
 
+    public static final Vec3 ORIGIN = new Vec3(0.0D, 0.0D, 0.0D);
+
     public Vec3(double xIn, double yIn, double zIn) {
         super(xIn, yIn, zIn);
     }

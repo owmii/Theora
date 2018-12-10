@@ -1,17 +1,17 @@
 package xieao.theora.common.lib.book.page;
 
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.theora.client.gui.book.GuiBook;
+import xieao.theora.client.helper.I18nHelper;
 
 public class PageText extends Page {
 
     public String text;
 
     public PageText(String text) {
-        this.text = I18n.format("theora.book.text." + text);
+        this.text = I18nHelper.formatBookText(text);
     }
 
     public PageText setText(String text) {

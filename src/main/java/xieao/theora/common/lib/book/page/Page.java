@@ -10,6 +10,7 @@ import xieao.theora.Theora;
 import xieao.theora.client.gui.book.GuiBook;
 import xieao.theora.client.gui.button.Button;
 import xieao.theora.client.helper.GuiHelper;
+import xieao.theora.client.helper.I18nHelper;
 import xieao.theora.common.lib.TheoraSounds;
 import xieao.theora.common.lib.book.Entry;
 import xieao.theora.common.lib.book.Section;
@@ -25,7 +26,7 @@ public class Page {
     public Entry parentEntry = new Entry();
 
     public Page setTitle(String title) {
-        this.title = title;
+        this.title = I18nHelper.formatBookTitle(title);
         return this;
     }
 

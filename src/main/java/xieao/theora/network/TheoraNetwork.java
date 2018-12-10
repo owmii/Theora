@@ -10,12 +10,11 @@ public class TheoraNetwork {
     public static final SimpleNetworkWrapper NETWORK_WRAPPER = new SimpleNetworkWrapper(Theora.MOD_ID);
     private static int ID;
 
-    public static void registerPackets() {
+    public static void register() {
         registerPacket(new PacketSyncAbilities());
         registerPacket(new PacketRequestAbilitiesGui());
         registerPacket(new PacketOpenAbilitiesGui());
         registerPacket(new PacketAbilityStatus());
-        registerPacket(new PacketSyncVial());
         registerPacket(new PacketOpenPigZombieTradeGui());
         registerPacket(new PacketPigZombieTradBuy());
         registerPacket(new PacketSyncFlight());

@@ -69,40 +69,44 @@ public class RendererHelper {
         }
     }
 
-    public static void renderQuad(ResourceLocation loc, double dim) {
+    public static void renderQuad(ResourceLocation loc, double scale) {
         Minecraft mc = Minecraft.getMinecraft();
         mc.getTextureManager().bindTexture(loc);
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder buffer = tessellator.getBuffer();
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-        dim /= 2.0D;
-        buffer.pos(dim, 0.0D, dim).tex(1, 1).endVertex();
-        buffer.pos(dim, 0.0D, -dim).tex(1, 0).endVertex();
-        buffer.pos(-dim, 0.0D, -dim).tex(0, 0).endVertex();
-        buffer.pos(-dim, 0.0D, dim).tex(0, 1).endVertex();
+        GlStateManager.pushMatrix();
+        GlStateManager.scale(scale, scale, scale);
+        buffer.pos(0.5D, 0.0D, 0.5D).tex(1, 1).endVertex();
+        buffer.pos(0.5D, 0.0D, -0.5D).tex(1, 0).endVertex();
+        buffer.pos(-0.5D, 0.0D, -0.5D).tex(0, 0).endVertex();
+        buffer.pos(-0.5D, 0.0D, 0.5D).tex(0, 1).endVertex();
         tessellator.draw();
+        GlStateManager.popMatrix();
     }
 
-    public static void renderQuad(TextureAtlasSprite texture, double dim) {
+    public static void renderQuad(TextureAtlasSprite texture, double scale) {
         float f0 = texture.getMinU();
         float f1 = texture.getMaxU();
         float f2 = texture.getMinV();
         float f3 = texture.getMaxV();
-        dim /= 2.0D;
+        GlStateManager.pushMatrix();
+        GlStateManager.scale(scale, scale, scale);
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder buffer = tessellator.getBuffer();
         buffer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
-        buffer.pos(-dim, 0.0D, -dim).tex((double) f0, (double) f3).normal(0.0F, 1.0F, 0.0F).endVertex();
-        buffer.pos(-dim, 0.0D, dim).tex((double) f1, (double) f3).normal(0.0F, 1.0F, 0.0F).endVertex();
-        buffer.pos(dim, 0.0D, dim).tex((double) f1, (double) f2).normal(0.0F, 1.0F, 0.0F).endVertex();
-        buffer.pos(dim, 0.0D, -dim).tex((double) f0, (double) f2).normal(0.0F, 1.0F, 0.0F).endVertex();
+        buffer.pos(-0.5D, 0.0D, -0.5D).tex((double) f0, (double) f3).normal(0.0F, 1.0F, 0.0F).endVertex();
+        buffer.pos(-0.5D, 0.0D, 0.5D).tex((double) f1, (double) f3).normal(0.0F, 1.0F, 0.0F).endVertex();
+        buffer.pos(0.5D, 0.0D, 0.5D).tex((double) f1, (double) f2).normal(0.0F, 1.0F, 0.0F).endVertex();
+        buffer.pos(0.5D, 0.0D, -0.5D).tex((double) f0, (double) f2).normal(0.0F, 1.0F, 0.0F).endVertex();
         tessellator.draw();
+        GlStateManager.popMatrix();
     }
 
     public static void renderFacingQuad(ResourceLocation loc, double scale) {
         Minecraft mc = Minecraft.getMinecraft();
         RenderManager rm = mc.getRenderManager();
-        if (rm == null || rm.options == null) return;
+        if (rm.options == null) return;
         GlStateManager.pushMatrix();
         GlStateManager.rotate(180.0F - rm.playerViewY, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate((float) (rm.options.thirdPersonView == 2 ? -1 : 1) * -rm.playerViewX, 1.0F, 0.0F, 0.0F);

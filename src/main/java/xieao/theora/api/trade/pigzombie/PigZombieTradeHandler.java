@@ -19,7 +19,7 @@ public class PigZombieTradeHandler {
     public static final String TAG_TRADES_LIST = "theora:tradesList";
 
 
-    public static List<ResourceLocation> getSortedTrades(EntityPigZombie pigZombie, int min, int max, Random rand) {
+    public static List<ResourceLocation> getSortedTrades(EntityPigZombie pigZombie, Random rand, int min, int max) {
         List<ResourceLocation> list = new ArrayList<>();
         NBTTagCompound nbt = pigZombie.getEntityData();
         boolean hasTrades = nbt.getBoolean(TAG_HAS_TRADES);

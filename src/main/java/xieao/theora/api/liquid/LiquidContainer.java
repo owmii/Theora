@@ -16,7 +16,7 @@ import java.util.List;
 
 public class LiquidContainer implements IliquidContainer {
 
-    public static final LiquidSlot EMPTY_SLOT = new LiquidSlot(Liquid.EMPTY, false, 0.0F, 0.0F, 0.0F, LiquidSlot.TransferType.ALL);
+    public static final LiquidSlot EMPTY_SLOT = new LiquidSlot(Liquid.EMPTY, true, 0.0F, 0.0F, 0.0F, LiquidSlot.TransferType.ALL);
 
     private LiquidSlot[] liquidSlots = new LiquidSlot[0];
 
@@ -117,9 +117,9 @@ public class LiquidContainer implements IliquidContainer {
             return capability == LiquidContainerCapability.CAPABILITY_LIQUID_CONTAINER_ITEM;
         }
 
-        @SuppressWarnings("unchecked")
         @Nullable
         @Override
+        @SuppressWarnings("unchecked")
         public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
             return capability == LiquidContainerCapability.CAPABILITY_LIQUID_CONTAINER_ITEM ? (T) this : null;
         }

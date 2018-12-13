@@ -10,12 +10,11 @@ import xieao.theora.Theora;
 @SuppressWarnings("NullableProblems")
 public class TheoraTextureMap {
 
-    public static TextureAtlasSprite liquid_interact_ov;
+    public static TextureAtlasSprite LIQUID_INTERACT_OV;
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void registerSprites(TextureStitchEvent.Pre event) {
-        liquid_interact_ov = event.getMap().registerSprite(Theora.location("misc/liquid_interact_ov"));
+    public void register(TextureStitchEvent.Pre event) {
+        LIQUID_INTERACT_OV = event.getMap().registerSprite(Theora.location("misc/liquid_interact_ov"));
     }
-
 }

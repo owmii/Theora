@@ -8,15 +8,19 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.common.IShearable;
 import xieao.theora.common.block.BlockPlant;
 import xieao.theora.common.item.IGenericItem;
 import xieao.theora.common.item.ItemBlockBase;
 import xieao.theora.common.item.ItemShroom;
 import xieao.theora.common.item.TheoraItems;
 
+import java.util.List;
 import java.util.Random;
 
-public class BlockShroom extends BlockPlant {
+public class BlockShroom extends BlockPlant implements IShearable {
 
     public static final PropertyEnum<Type> TYPE = PropertyEnum.create("type", Type.class);
 
@@ -62,11 +66,26 @@ public class BlockShroom extends BlockPlant {
         return (T) new ItemShroom(this);
     }
 
+    @Override
+    public boolean isShearable(ItemStack item, IBlockAccess world, BlockPos pos) {
+        return true;
+    }
+
+    @Override
+    public List<ItemStack> onSheared(ItemStack item, IBlockAccess world, BlockPos pos, int fortune) {
+        return NonNullList.withSize(1, new ItemStack(this, 1, world.getBlockState(pos).getValue(TYPE).ordinal()));
+    }
+
     public enum Type implements IStringSerializable {
-        WHITE_BEECH(19),
-        GLIOPHORUS(24),
-        WITCH_HAT(7),
-        BLUE_HORN(16),
+        WHITE_BEECH(400),
+        GLIOPHORUS(700),
+        WITCH_HAT(300),
+        BLUE_HORN(500),
+        BLACK_HORN(500),
+        DRAGON(80),
+        BLIND(80),
+        DEAD(80),
+        MOON(80),
         ;
 
         private final int weight;

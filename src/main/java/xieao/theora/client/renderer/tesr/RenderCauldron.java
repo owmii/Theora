@@ -4,7 +4,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import xieao.theora.Theora;
 import xieao.theora.api.liquid.LiquidSlot;
 import xieao.theora.client.helper.ColorHelper;
@@ -27,7 +26,7 @@ public class RenderCauldron extends TESRBase<TileCauldron> {
         RenderHelper.disableStandardItemLighting();
         if (te.heated) {
             bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-            RendererHelper.render(TheoraBlocks.EMBER.getDefaultState(), mc.world, BlockPos.ORIGIN);
+            RendererHelper.render(TheoraBlocks.EMBER.getDefaultState());
         }
         LiquidSlot liquidTank = te.getLiquidSlot(0);
         boolean hasWater = te.hasWater();

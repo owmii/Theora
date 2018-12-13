@@ -35,26 +35,26 @@ public class CommonProxy implements IProxy {
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
-        ForgeRegistries.ITEMS.registerAll(ITEMS.toArray(new Item[0]));
-        ForgeRegistries.BLOCKS.registerAll(BLOCKS.toArray(new Block[0]));
+        Config.preInit(event);
         TheoraNetwork.register();
         PlayerDataCapability.register();
         LiquidContainerCapability.register();
 
-        TheoraAPI.API.register(new CauldronRecipes());
-        TheoraAPI.API.register(new LiquidInteractRecipes());
-        TheoraAPI.API.register(new BindingRecipes());
-
-        CraftingRecipes.initRecipes();
+        ForgeRegistries.BLOCKS.registerAll(BLOCKS.toArray(new Block[0]));
+        ForgeRegistries.ITEMS.registerAll(ITEMS.toArray(new Item[0]));
 
         TheoraEnchantments.register();
         TheoraLiquids.register();
         TheoraAbilities.register();
         TheoraEntities.register();
+
+        TheoraAPI.API.register(new CauldronRecipes());
+        TheoraAPI.API.register(new LiquidInteractRecipes());
+        TheoraAPI.API.register(new BindingRecipes());
+        CraftingRecipes.initRecipes();
         PigZomieTrades.register();
 
         TheoraBook.register();
-        Config.preInit(event);
     }
 
     @Override

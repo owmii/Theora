@@ -62,7 +62,7 @@ public class Button extends GuiButton {
                 mc.getTextureManager().bindTexture(this.icon);
                 ColorHelper.glColor(this.iconColor);
                 if (this.single) {
-                    GuiHelper.drawTexturedModalRect(this.x + (this.width - this.iconW) / 2, this.y + (this.height - this.iconH) / 2, this.iconW, this.iconH, this.zLevel);
+                    GuiHelper.drawSizedTextureModalRect(this.x + (this.width - this.iconW) / 2, this.y + (this.height - this.iconH) / 2, this.iconW, this.iconH);
                 } else {
                     drawTexturedModalRect(this.x + (this.width - this.iconW) / 2, this.y + (this.height - this.iconH) / 2, this.iconX, this.iconY, this.iconW, this.iconH);
                 }

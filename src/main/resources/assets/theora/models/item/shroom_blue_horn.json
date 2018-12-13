@@ -1,3 +1,6 @@
 {
-  "parent": "theora:block/shroom_blue_horn"
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "theora:blocks/shroom_blue_horn"
+  }
 }

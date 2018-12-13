@@ -1,10 +1,12 @@
 package xieao.theora.network.packets;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 
-import java.util.UUID;
+import javax.annotation.Nullable;
+import java.io.IOException;
 
 public class ByteBuffer extends PacketBuffer {
 
@@ -15,13 +17,15 @@ public class ByteBuffer extends PacketBuffer {
         this.byteBuf = byteBuf;
     }
 
-    public ByteBuffer writeUuid(UUID uuid) {
-        writeString(uuid.toString());
-        return this;
-    }
-
-    public UUID readUuid() {
-        return UUID.fromString(readString());
+    @Nullable
+    @Override
+    public NBTTagCompound readCompoundTag() {
+        try {
+            return super.readCompoundTag();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public ByteBuffer writeString(String string) {

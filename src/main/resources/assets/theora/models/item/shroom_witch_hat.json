@@ -1,3 +1,6 @@
 {
-  "parent": "theora:block/shroom_witch_hat"
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "theora:blocks/shroom_witch_hat"
+  }
 }

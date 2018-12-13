@@ -21,9 +21,7 @@ public class Liquid extends RegistryEntry<Liquid> {
     }
 
     public static Liquid register(String name, int darkColor, int brightColor) {
-        Liquid liquid = new Liquid();
-        register(liquid, name, darkColor, brightColor);
-        return liquid;
+        return register(new Liquid(), name, darkColor, brightColor);
     }
 
     public static Liquid register(Liquid liquid, String name, int darkColor, int brightColor) {
@@ -33,7 +31,6 @@ public class Liquid extends RegistryEntry<Liquid> {
         REGISTRY.put(liquid.getRegistryName(), liquid);
         return liquid;
     }
-
 
     public static Liquid getLiquid(String name) {
         Liquid liquid = REGISTRY.get(new ResourceLocation(name));

@@ -21,7 +21,7 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public class GuiAbilities extends GuiScreen {
 
-    public static final ResourceLocation BACKGROUND_TEXTURE = Theora.location("textures/instance/ability/background.png");
+    public static final ResourceLocation BACKGROUND_TEXTURE = Theora.location("textures/gui/ability/background.png");
 
     private final EntityPlayer player;
     private int x, y, w = 256, h = 234;
@@ -80,7 +80,7 @@ public class GuiAbilities extends GuiScreen {
                         GlStateManager.color(0.0F, 0.0F, 0.0F, 1.0F);
                     }
                     this.mc.getTextureManager().bindTexture(this.textures[index]);
-                    GuiHelper.drawTexturedModalRect(17 + j * 35, 17 + i * 35, 32, 32, this.zLevel);
+                    GuiHelper.drawSizedTextureModalRect(17 + j * 35, 17 + i * 35, 32, 32);
                     GlStateManager.popMatrix();
                 }
             }

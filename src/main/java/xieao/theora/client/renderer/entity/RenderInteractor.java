@@ -33,31 +33,31 @@ public class RenderInteractor extends Render<EntityInteractor> {
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.0F, 0.0001F, 0.0F);
-        RendererHelper.renderQuad(TheoraTextureMap.liquid_interact_ov, 1.0D);
+        RendererHelper.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.0F, -0.5F, 0.5001F);
         GlStateManager.rotate(90.0F, 1, 0, 0);
-        RendererHelper.renderQuad(TheoraTextureMap.liquid_interact_ov, 1.0D);
+        RendererHelper.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(-0.5001F, -0.5F, 0.0F);
         GlStateManager.rotate(90.0F, 0, 0, 1);
-        RendererHelper.renderQuad(TheoraTextureMap.liquid_interact_ov, 1.0D);
+        RendererHelper.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.0F, -0.5F, -0.5001F);
         GlStateManager.rotate(-90.0F, 1, 0, 0);
-        RendererHelper.renderQuad(TheoraTextureMap.liquid_interact_ov, 1.0D);
+        RendererHelper.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.5001F, -0.5F, 0.0F);
         GlStateManager.rotate(-90.0F, 0, 0, 1);
-        RendererHelper.renderQuad(TheoraTextureMap.liquid_interact_ov, 1.0D);
+        RendererHelper.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.disableBlend();

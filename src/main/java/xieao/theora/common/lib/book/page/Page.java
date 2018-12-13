@@ -36,7 +36,7 @@ public class Page {
 
     @SideOnly(Side.CLIENT)
     public void initGui(GuiBook gui) {
-        if (this.title.equals("home")) {
+        if (TheoraBook.HOME.equals(gui.entry)) {
             for (int i = 0; i < 3; ++i) {
                 for (int j = 0; j < 4; ++j) {
                     int index = j + i * 4;
@@ -54,7 +54,7 @@ public class Page {
 
     @SideOnly(Side.CLIENT)
     public void actionPerformed(GuiBook gui, GuiButton button) {
-        if (this.title.equals("home")) {
+        if (TheoraBook.HOME.equals(gui.entry)) {
             Section section = TheoraBook.MAIN_SECTIONS.get(button.id - 20);
             if (section.entry != null) {
                 GuiBook.instance.open(section.entry, 0);
@@ -64,12 +64,11 @@ public class Page {
 
     @SideOnly(Side.CLIENT)
     public void draw(GuiBook gui, int mouseX, int mouseY, float partialTicks) {
-        if (this.title.equals("home")) {
+        if (TheoraBook.HOME.equals(gui.entry)) {
             gui.mc.getTextureManager().bindTexture(LOGO);
-            GuiHelper.drawTexturedModalRect(32, 17, 132, 32, 0);
+            GuiHelper.drawSizedTextureModalRect(32, 17, 132, 32);
             FontRenderer fr = gui.mc.fontRenderer;
             fr.drawString("Theora " + Theora.MOD_VERSION, (gui.w / 2) - fr.getStringWidth("Theora " + Theora.MOD_VERSION) / 2, 51, 0xbda5a5);
-
         }
     }
 

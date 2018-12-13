@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 import xieao.theora.common.block.TheoraBlocks;
 import xieao.theora.proxy.IProxy;
 
-@Mod.EventBusSubscriber
+@SuppressWarnings("NullableProblems")
 @Mod(name = Theora.MOD_NAME, modid = Theora.MOD_ID, version = Theora.MOD_VERSION)
 public class Theora {
 
@@ -24,12 +24,10 @@ public class Theora {
     public static final String SIDE_SERVER = "xieao.theora.proxy.CommonProxy";
     public static final String SIDE_CLIENT = "xieao.theora.proxy.ClientProxy";
 
-    @SuppressWarnings("NullableProblems")
     @SidedProxy(serverSide = SIDE_SERVER, clientSide = SIDE_CLIENT)
     public static IProxy proxy;
 
     @Mod.Instance(MOD_ID)
-    @SuppressWarnings("NullableProblems")
     public static Theora instance;
 
     public static final Logger LOG = LogManager.getLogger(MOD_ID);

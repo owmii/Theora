@@ -36,8 +36,7 @@
   },
   "page.flip": {
     "sounds": [
-      "theora:page_flip_0",
-      "theora:page_flip_1"
+      "theora:page_flip_0", "theora:page_flip_1"
     ]
   }
 }

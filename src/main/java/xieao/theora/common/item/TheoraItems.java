@@ -52,7 +52,9 @@ public class TheoraItems {
             if (block instanceof IGenericBlock) {
                 IGenericBlock block1 = (IGenericBlock) block;
                 ResourceLocation location = block.getRegistryName();
-                register(block1.getItemBlock(), location.toString());
+                if (location != null) {
+                    register(block1.getItemBlock(), location.toString());
+                }
             }
         }
     }

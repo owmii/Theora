@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemBlock;
@@ -15,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.model.Attributes;
 import net.minecraftforge.client.model.ModelLoader;
@@ -44,7 +44,7 @@ public class RendererHelper {
     public static float partialTicks;
 
     @SubscribeEvent
-    public static void renderWorldLastTick(RenderWorldLastEvent event) {
+    public static void setPartialTicks(RenderWorldLastEvent event) {
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.currentScreen == null || !mc.currentScreen.doesGuiPauseGame()) {
             partialTicks = event.getPartialTicks();
@@ -52,20 +52,12 @@ public class RendererHelper {
     }
 
     @SubscribeEvent
-    public static void clientTick(TickEvent.ClientTickEvent event) {
+    public static void setClientTicks(TickEvent.ClientTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
             Minecraft mc = Minecraft.getMinecraft();
             if (mc.currentScreen == null || !mc.currentScreen.doesGuiPauseGame()) {
                 tickCount++;
             }
-        }
-    }
-
-    public static void setShadeModel() {
-        if (Minecraft.isAmbientOcclusionEnabled()) {
-            GlStateManager.shadeModel(GL11.GL_SMOOTH);
-        } else {
-            GlStateManager.shadeModel(GL11.GL_FLAT);
         }
     }
 
@@ -123,41 +115,48 @@ public class RendererHelper {
         GlStateManager.popMatrix();
     }
 
-    public static void render(TileBase tile, boolean inGui) {
-        tile.setGhostTile(inGui);
-        TileEntityRendererDispatcher.instance.render(tile, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F);
+    public static void render(TileBase tile, boolean ghostTile) {
+        tile.setGhostTile(ghostTile);
+        TileEntityRendererDispatcher.instance.render(tile, 0.0D, 0.0D, 0.0D, partialTicks, 1.0F);
     }
 
-    public static void render(IBakedModel model, IBlockAccess world, IBlockState state, boolean smooth) {
+    public static void render(IBakedModel model, IBlockState state, BlockPos posIn, boolean smooth) {
         Minecraft mc = Minecraft.getMinecraft();
         BlockModelRenderer renderer = mc.getBlockRendererDispatcher().getBlockModelRenderer();
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder builder = tessellator.getBuffer();
         builder.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-        if (smooth) {
-            renderer.renderModelSmooth(world, model, state, BlockPos.ORIGIN, builder, true, 0);
+        mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+        if (Minecraft.isAmbientOcclusionEnabled()) {
+            GlStateManager.shadeModel(GL11.GL_SMOOTH);
         } else {
-            renderer.renderModelFlat(world, model, state, BlockPos.ORIGIN, builder, false, 0);
+            GlStateManager.shadeModel(GL11.GL_FLAT);
+        }
+        if (smooth) {
+            renderer.renderModelSmooth(mc.world, model, state, posIn, builder, true, 0);
+        } else {
+            renderer.renderModelFlat(mc.world, model, state, posIn, builder, false, 0);
         }
         tessellator.draw();
     }
 
-    public static IBakedModel getOBJModel(String path) {
-        return getOBJModel(path, ImmutableMap.of(), TRSRTransformation.identity());
+    public static IBakedModel getBakedOBJModel(String path) {
+        return getBakedOBJModel(path, ImmutableMap.of(), TRSRTransformation.identity());
     }
 
-    public static IBakedModel getOBJModel(String path, IModelState modelState) {
-        return getOBJModel(path, ImmutableMap.of(), modelState);
+    public static IBakedModel getBakedOBJModel(String path, IModelState modelState) {
+        return getBakedOBJModel(path, ImmutableMap.of(), modelState);
     }
 
-    public static IBakedModel getOBJModel(String path, ImmutableMap<String, String> textures) {
-        return getOBJModel(path, textures, TRSRTransformation.identity());
+    public static IBakedModel getBakedOBJModel(String path, ImmutableMap<String, String> textures) {
+        return getBakedOBJModel(path, textures, TRSRTransformation.identity());
     }
 
-    public static IBakedModel getOBJModel(String path, ImmutableMap<String, String> textures, IModelState modelState) {
+    public static IBakedModel getBakedOBJModel(String path, ImmutableMap<String, String> textures, IModelState modelState) {
         OBJModel model = null;
         try {
-            model = (OBJModel) OBJLoader.INSTANCE.loadModel(Theora.location("models/" + path)).process(ImmutableMap.of("flip-v", "true"));
+            model = (OBJModel) OBJLoader.INSTANCE.loadModel(Theora.location("models/" + path))
+                    .process(ImmutableMap.of("flip-v", "true"));
             if (!textures.isEmpty()) {
                 model = (OBJModel) model.retexture(textures);
             }
@@ -168,16 +167,16 @@ public class RendererHelper {
         return model.bake(modelState, Attributes.DEFAULT_BAKED_FORMAT, ModelLoader.defaultTextureGetter());
     }
 
-    public static void render(IBlockState state, IBlockAccess blockAccess, BlockPos pos) {
+    public static void render(IBlockState state) {
         Minecraft mc = Minecraft.getMinecraft();
-        BlockRendererDispatcher brd = mc.getBlockRendererDispatcher();
-        BlockModelRenderer modelRenderer = brd.getBlockModelRenderer();
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
         bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
+        BlockRendererDispatcher brd = mc.getBlockRendererDispatcher();
+        BlockModelRenderer modelRenderer = brd.getBlockModelRenderer();
         IBakedModel model = brd.getModelForState(state);
-        state = state.getBlock().getExtendedState(state, blockAccess, pos);
-        modelRenderer.renderModel(blockAccess, model, state, BlockPos.ORIGIN, bufferBuilder, true);
+        state = state.getBlock().getExtendedState(state, mc.world, BlockPos.ORIGIN);
+        modelRenderer.renderModel(mc.world, model, state, BlockPos.ORIGIN, bufferBuilder, true);
         tessellator.draw();
     }
 

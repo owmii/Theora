@@ -42,7 +42,7 @@ public class BlockBindingCenter extends BlockBase implements ITileEntityProvider
             TileBindingCenter bindingStone = (TileBindingCenter) tileEntity;
             if (!bindingStone.ready && bindingStone.ability.isEmpty()) {
                 bindingStone.startBinding = true;
-                bindingStone.syncNBTData();
+                bindingStone.markDirtyAndSync();
                 return true;
             }
         }

@@ -6,8 +6,9 @@ import java.awt.*;
 
 public class TheoraLiquids {
 
-    public static final Liquid LAOWM = new Liquid();
     public static final Liquid GLIOPHIN = new Liquid();
+
+    public static final Liquid LAOWM = new Liquid();
     public static final Liquid VEANTA = new Liquid();
     public static final Liquid VERVY = new Liquid();
 

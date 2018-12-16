@@ -77,7 +77,7 @@ public class BlockCauldron extends BlockBase implements IHeatedBlock, IWandable,
                         flag = true;
                     }
                 }
-                cauldron.syncNBTData();
+                cauldron.markDirtyAndSync();
             }
             if (!flag) {
                 cauldron.takeStack(playerIn, facing);
@@ -95,7 +95,7 @@ public class BlockCauldron extends BlockBase implements IHeatedBlock, IWandable,
             ICauldronRecipe recipe = RecipeHandler.findCauldronRecipe(cauldron, world, pos);
             if (cauldron.hasWater() && cauldron.waterHeating >= 100 && recipe != null) {
                 cauldron.started = true;
-                cauldron.syncNBTData();
+                cauldron.markDirtyAndSync();
                 return true;
             }
         }
@@ -159,7 +159,7 @@ public class BlockCauldron extends BlockBase implements IHeatedBlock, IWandable,
         if (tileEntity instanceof TileCauldron) {
             TileCauldron cauldron = (TileCauldron) tileEntity;
             cauldron.heated = true;
-            cauldron.syncNBTData();
+            cauldron.markDirtyAndSync();
         }
     }
 }

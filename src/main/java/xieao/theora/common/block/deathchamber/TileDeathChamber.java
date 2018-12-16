@@ -140,7 +140,7 @@ public class TileDeathChamber extends TileInvLiquidContainer implements ITickabl
                                         getWorld().spawnEntity(new EntityXPOrb(getWorld(), getX() + 0.5D, getY() - 1.1D, getZ() + 0.5D, i));
                                     }
                                     liquidSlot.setStored(liquidSlot.getStored() - liquidCost);
-                                    syncNBTData();
+                                    markDirtyAndSync();
                                 }
                             } catch (Exception ignored) {
                             }

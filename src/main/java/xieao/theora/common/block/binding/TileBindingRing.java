@@ -51,7 +51,7 @@ public class TileBindingRing extends TileInvBase {
                         if (tileEntity instanceof TileBindingCenter) {
                             TileBindingCenter bindingStone = (TileBindingCenter) tileEntity;
                             bindingStone.buildTicks = bindingStone.maxBuildTicks;
-                            bindingStone.syncNBTData();
+                            bindingStone.markDirtyAndSync();
                         }
                         for (int[] offset : offsets_arrs) {
                             BlockPos ringPos = getPos().add(offset[0], 0, offset[1]);
@@ -59,7 +59,7 @@ public class TileBindingRing extends TileInvBase {
                             if (tileEntity1 instanceof TileBindingRing) {
                                 TileBindingRing bindingRing = (TileBindingRing) tileEntity1;
                                 bindingRing.centerPos = centerPos;
-                                bindingRing.syncNBTData();
+                                bindingRing.markDirtyAndSync();
                             }
                         }
                     }

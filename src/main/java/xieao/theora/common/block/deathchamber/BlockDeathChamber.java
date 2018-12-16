@@ -46,14 +46,14 @@ public class BlockDeathChamber extends BlockBase implements ITileEntityProvider 
                 if (!deathChamber.getStackInSlot(0).isEmpty()) {
                     ItemHandlerHelper.giveItemToPlayer(playerIn, deathChamber.getStackInSlot(0).copy());
                     deathChamber.setInventorySlotContents(0, ItemStack.EMPTY);
-                    deathChamber.syncNBTData();
+                    deathChamber.markDirtyAndSync();
                     return true;
                 }
                 if (deathChamber.getStackInSlot(0).isEmpty() && heldStack.getItem() instanceof ISummoningSlate) {
                     ItemStack copy = heldStack.copy();
                     copy.setCount(1);
                     deathChamber.setInventorySlotContents(0, copy);
-                    deathChamber.syncNBTData();
+                    deathChamber.markDirtyAndSync();
                     heldStack.shrink(1);
                     return true;
                 }

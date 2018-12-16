@@ -27,7 +27,7 @@ public class WorldGenShrooms {
         if (ConfigWorldGen.enabled) {
             for (BlockShroom.Type type : BlockShroom.Type.values()) {
                 MUSHROOM_ENTRIES.add(new MushroomEntry(TheoraBlocks.SHROOM.getDefaultState()
-                        .withProperty(BlockShroom.TYPE, type), type.getWeight()));
+                        .withProperty(BlockShroom.TYPE, type), type.weight));
             }
         }
     }

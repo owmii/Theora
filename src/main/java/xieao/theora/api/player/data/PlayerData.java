@@ -6,7 +6,6 @@ import xieao.theora.api.player.ability.Abilities;
 public final class PlayerData implements IPlayerData {
 
     private final Abilities abilities = new Abilities();
-
     public boolean allowFlying;
 
     @Override

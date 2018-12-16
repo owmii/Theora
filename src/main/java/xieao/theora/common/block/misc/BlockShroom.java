@@ -6,11 +6,14 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.IShearable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.theora.common.block.BlockPlant;
 import xieao.theora.common.item.IGenericItem;
 import xieao.theora.common.item.ItemBlockBase;
@@ -67,6 +70,12 @@ public class BlockShroom extends BlockPlant implements IShearable {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer() {
+        return BlockRenderLayer.TRANSLUCENT;
+    }
+
+    @Override
     public boolean isShearable(ItemStack item, IBlockAccess world, BlockPos pos) {
         return true;
     }
@@ -77,25 +86,15 @@ public class BlockShroom extends BlockPlant implements IShearable {
     }
 
     public enum Type implements IStringSerializable {
-        WHITE_BEECH(400),
-        GLIOPHORUS(700),
-        WITCH_HAT(300),
-        BLUE_HORN(500),
-        BLACK_HORN(500),
-        DRAGON(80),
-        BLIND(80),
-        DEAD(80),
-        MOON(80),
-        ;
+        GLIOPHORUS(762),
+        WHITE_BEECH(541),
+        WITCH_HAT(109),
+        BLUE_HORN(278);
 
-        private final int weight;
+        public final int weight;
 
         Type(int weight) {
             this.weight = weight;
-        }
-
-        public int getWeight() {
-            return weight;
         }
 
         @Override

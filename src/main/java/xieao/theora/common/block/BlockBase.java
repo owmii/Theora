@@ -65,6 +65,17 @@ public abstract class BlockBase extends Block implements IGenericBlock, IBookBlo
         }
     }
 
+    @Override
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        if (tileEntity instanceof TileBase) {
+            TileBase tileBase = (TileBase) tileEntity;
+            if (tileBase.isPowered()) {
+                tileBase.onRedstonePulse();
+            }
+        }
+    }
+
     protected boolean isInvalidNeighbor(World worldIn, BlockPos pos, EnumFacing facing) {
         return worldIn.getBlockState(pos.offset(facing)).getMaterial() == Material.CACTUS;
     }

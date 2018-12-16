@@ -23,7 +23,7 @@ public class Vec3 extends Vec3d {
     }
 
     public Vec3 down(double factor) {
-        return (Vec3) addVector(0.0D, -factor, 0.0D);
+        return addVector(0.0D, -factor, 0.0D);
     }
 
     public Vec3 up() {
@@ -31,7 +31,7 @@ public class Vec3 extends Vec3d {
     }
 
     public Vec3 up(double factor) {
-        return (Vec3) addVector(0.0D, factor, 0.0D);
+        return addVector(0.0D, factor, 0.0D);
     }
 
     public Vec3 north() {
@@ -39,7 +39,7 @@ public class Vec3 extends Vec3d {
     }
 
     public Vec3 north(double factor) {
-        return (Vec3) addVector(0.0D, 0.0D, -factor);
+        return addVector(0.0D, 0.0D, -factor);
     }
 
     public Vec3 south() {
@@ -47,7 +47,7 @@ public class Vec3 extends Vec3d {
     }
 
     public Vec3 south(double factor) {
-        return (Vec3) addVector(0.0D, 0.0D, factor);
+        return addVector(0.0D, 0.0D, factor);
     }
 
     public Vec3 east() {
@@ -55,7 +55,7 @@ public class Vec3 extends Vec3d {
     }
 
     public Vec3 east(double factor) {
-        return (Vec3) addVector(factor, 0.0D, 0.0D);
+        return addVector(factor, 0.0D, 0.0D);
     }
 
     public Vec3 west() {
@@ -63,7 +63,16 @@ public class Vec3 extends Vec3d {
     }
 
     public Vec3 west(double factor) {
-        return (Vec3) addVector(-factor, 0.0D, 0.0D);
+        return addVector(-factor, 0.0D, 0.0D);
+    }
+
+    public Vec3 center() {
+        return new Vec3(((int) this.x) + 0.5D, ((int) this.y) + 0.5D, ((int) this.z) + 0.5D);
+    }
+
+    @Override
+    public Vec3 addVector(double x, double y, double z) {
+        return new Vec3(this.x + x, this.y + y, this.z + z);
     }
 
     public List<Vec3> getRoundedVecList(int count, double radius) {
@@ -77,7 +86,7 @@ public class Vec3 extends Vec3d {
             double angle = slice * i;
             double x = radius * Math.cos(angle + ticks * speed);
             double z = radius * Math.sin(angle + ticks * speed);
-            list.add((Vec3) addVector(x, 0.0D, z));
+            list.add(addVector(x, 0.0D, z));
         }
         return list;
     }

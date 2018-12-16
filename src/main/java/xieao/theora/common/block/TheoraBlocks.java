@@ -55,7 +55,10 @@ public class TheoraBlocks {
         BINDING_RING = register(new BlockBindingRing(), "bindingring");
         DEATH_CHAMBER = register(new BlockDeathChamber(), "deathchamber");
         DEATH_CHAMBER_WALL = register(new BlockDeathChamberWall(), "deathchamberwall");
+        registerTileEntities();
+    }
 
+    static void registerTileEntities() {
         for (Block block : BLOCKS) {
             if (block instanceof ITileEntityProvider) {
                 ITileEntityProvider tep = (ITileEntityProvider) block;
@@ -69,7 +72,7 @@ public class TheoraBlocks {
         }
     }
 
-    private static <T extends Block & IGenericBlock> T register(T block, String name) {
+    static <T extends Block & IGenericBlock> T register(T block, String name) {
         block.setRegistryName(name);
         block.setUnlocalizedName(name);
         block.setCreativeTab(Theora.TAB);

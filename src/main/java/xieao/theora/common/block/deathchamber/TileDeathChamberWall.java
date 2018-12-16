@@ -38,7 +38,7 @@ public class TileDeathChamberWall extends TileBase implements IMultiBlockPart {
     @Override
     public void setBuilderPos(@Nullable BlockPos pos) {
         this.builderPos = pos;
-        syncNBTData();
+        markDirtyAndSync();
     }
 
     @Nullable

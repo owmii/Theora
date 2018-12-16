@@ -19,4 +19,6 @@ public class HudHandler {
     @SubscribeEvent
     public static void postRender(RenderGameOverlayEvent.Post event) {
     }
+
+
 }

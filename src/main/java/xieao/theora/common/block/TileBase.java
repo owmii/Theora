@@ -20,7 +20,7 @@ public class TileBase extends TileEntity {
 
     protected final Random rand = new Random();
 
-    protected float facingAngle = EnumFacing.NORTH.getHorizontalAngle();
+    protected EnumFacing facing = EnumFacing.NORTH;
 
     @Nullable
     protected UUID placer;
@@ -72,14 +72,14 @@ public class TileBase extends TileEntity {
     }
 
     public void readNBT(NBTTagCompound nbt) {
-        this.facingAngle = nbt.getFloat("facingAngle");
+        this.facing = EnumFacing.values()[nbt.getInteger("facing")];
         if (nbt.hasUniqueId("placerId")) {
             this.placer = nbt.getUniqueId("placerId");
         }
     }
 
     public void writeNBT(NBTTagCompound nbt) {
-        nbt.setFloat("facingAngle", this.facingAngle);
+        nbt.setFloat("facing", this.facing.ordinal());
         if (this.placer != null) {
             nbt.setUniqueId("placerId", this.placer);
         }
@@ -130,11 +130,13 @@ public class TileBase extends TileEntity {
         return getWorld().getBlockState(pos);
     }
 
-    public void syncNBTData() {
-        if (!isGhostTile() && hasWorld() && isServerWorld()) {
-            IBlockState state = getWorld().getBlockState(getPos());
-            getWorld().notifyBlockUpdate(getPos(), state, state, 3);
+    public void markDirtyAndSync() {
+        if (!isGhostTile()) {
             markDirty();
+            if (isServerWorld()) {
+                IBlockState state = getWorld().getBlockState(getPos());
+                getWorld().notifyBlockUpdate(getPos(), state, state, 3);
+            }
         }
     }
 
@@ -143,18 +145,25 @@ public class TileBase extends TileEntity {
     }
 
     public EnumFacing getFacing() {
-        return EnumFacing.fromAngle(this.facingAngle);
+        return this.facing;
     }
 
     public void setFacing(EnumFacing facing) {
-        this.facingAngle = facing.getHorizontalAngle();
+        this.facing = facing;
     }
 
     public float getFacingAngle() {
-        return facingAngle;
+        return facing.getHorizontalAngle();
     }
 
     public void setFacingAngle(float facingAngle) {
-        this.facingAngle = facingAngle;
+        this.facing = EnumFacing.fromAngle(facingAngle);
+    }
+
+    public boolean isPowered() {
+        return getWorld().isBlockPowered(getPos());
+    }
+
+    public void onRedstonePulse() {
     }
 }

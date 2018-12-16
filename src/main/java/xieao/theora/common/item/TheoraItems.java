@@ -32,6 +32,7 @@ public class TheoraItems {
     public static final ItemSlateXP XP_SLATE;
 
     static {
+        registerItemBlocks();
         BOOK = register(new ItemBook(), "book");
         SHROOM_BIT = register(new ItemShroomBit(), "shroombit");
         GLIOPHIN = register(new ItemGliophin(), "gliophin");
@@ -47,7 +48,9 @@ public class TheoraItems {
         EFFICIENCY_SLATE = register(new ItemSlateEfficiency(), "efficiencyslate");
         EQUIPMENT_DROP_SLATE = register(new ItemSlateEquipmentDrop(), "equipmentdropslate");
         XP_SLATE = register(new ItemSlateXP(), "xpslate");
+    }
 
+    static void registerItemBlocks() {
         for (Block block : TheoraBlocks.BLOCKS) {
             if (block instanceof IGenericBlock) {
                 IGenericBlock block1 = (IGenericBlock) block;
@@ -59,7 +62,7 @@ public class TheoraItems {
         }
     }
 
-    private static <T extends Item & IGenericItem> T register(T item, String name) {
+    static <T extends Item & IGenericItem> T register(T item, String name) {
         item.setRegistryName(name);
         item.setUnlocalizedName(name);
         item.setCreativeTab(Theora.TAB);

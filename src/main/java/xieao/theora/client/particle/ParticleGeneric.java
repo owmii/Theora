@@ -34,7 +34,7 @@ public class ParticleGeneric extends Particle {
     protected int alphaMode;
     protected int scaleMode;
     protected float scaleFactor;
-    protected boolean dinamicColor;
+    protected boolean dynamicColor;
     protected int fromColor;
     protected int toColor;
     protected boolean rotate;
@@ -75,11 +75,17 @@ public class ParticleGeneric extends Particle {
             this.textureID = this.particleAge * this.texture.frames / this.particleMaxAge;
         }
         float f0 = (float) this.particleAge / (float) this.particleMaxAge;
-        if (this.dinamicColor) {
+        if (this.dynamicColor) {
             this.setColor(ColorHelper.blend(this.fromColor, this.toColor, f0));
         }
         this.particleAlpha = this.alphaMode == 1 ? (1.0F - f0) : this.particleAlpha;
-        this.particleScale = this.scaleMode == 1 ? (1.0F - f0) : this.scaleMode == 2 ? this.particleScale *= this.scaleFactor : this.particleScale;
+        if (this.scaleMode == 3) {
+            this.particleScale = MathHelper.sin((float) (f0 * Math.PI));
+        } else if (this.scaleMode == 2) {
+            this.particleScale *= this.scaleFactor;
+        } else if (this.scaleMode == 1) {
+            this.particleScale = 1.0F - f0;
+        }
         if (!this.start.equals(this.end)) {
             this.motionX = (end.x - this.posX) * this.speed;
             this.motionY = (end.y - this.posY) * this.speed;
@@ -133,7 +139,9 @@ public class ParticleGeneric extends Particle {
             double d8 = MathHelper.sin((float) (d4 * 0.5F)) * cameraViewDir.z;
             Vec3d vec3d = new Vec3d(d6, d7, d8);
             for (int l = 0; l < 4; ++l) {
-                posVec[l] = vec3d.scale(2.0D * posVec[l].dotProduct(vec3d)).add(posVec[l].scale(d5 * d5 - vec3d.dotProduct(vec3d))).add(vec3d.crossProduct(posVec[l]).scale(2.0F * d5));
+                posVec[l] = vec3d.scale(2.0D * posVec[l].dotProduct(vec3d))
+                        .add(posVec[l].scale(d5 * d5 - vec3d.dotProduct(vec3d)))
+                        .add(vec3d.crossProduct(posVec[l]).scale(2.0F * d5));
             }
         }
         String textureSuffix = this.texture.frames > 1 ? "" + this.textureID : "";
@@ -167,8 +175,15 @@ public class ParticleGeneric extends Particle {
         return this;
     }
 
+    /**
+     * Mod: 0 = normal <br />
+     * Mod: 1 = 1.0F - ageFactor <br />
+     * Mod: 2 = scale * scaleFactor <br />
+     * Mod: 3 = blob <br />
+     */
+
     public ParticleGeneric scale(float scale, int mode, float scaleFactor) {
-        this.particleScale = scale;
+        this.particleScale = mode == 3 ? 0 : scale;
         this.scaleMode = mode;
         this.scaleFactor = scaleFactor;
         return this;
@@ -194,13 +209,13 @@ public class ParticleGeneric extends Particle {
         setColor(fromColor);
         this.fromColor = fromColor;
         this.toColor = toColor;
-        this.dinamicColor = true;
+        this.dynamicColor = true;
         return this;
     }
 
     @Override
-    public int getBrightnessForRender(float p_189214_1_) {
-        return this.bright ? 15728880 : super.getBrightnessForRender(p_189214_1_);
+    public int getBrightnessForRender(float f) {
+        return this.bright ? 15728880 : super.getBrightnessForRender(f);
     }
 
     public ParticleGeneric blendFunc() {

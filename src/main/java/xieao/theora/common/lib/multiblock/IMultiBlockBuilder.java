@@ -27,7 +27,7 @@ public interface IMultiBlockBuilder<T extends TileBase> {
                 }
             }
             setBuilt(true);
-            builder.syncNBTData();
+            builder.markDirtyAndSync();
         }
     }
 
@@ -47,7 +47,7 @@ public interface IMultiBlockBuilder<T extends TileBase> {
             }
         }
         setBuilt(false);
-        builder.syncNBTData();
+        builder.markDirtyAndSync();
     }
 
     boolean built();

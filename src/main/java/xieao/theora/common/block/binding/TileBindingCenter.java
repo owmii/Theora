@@ -12,6 +12,9 @@ import net.minecraftforge.common.util.Constants;
 import xieao.theora.api.liquid.LiquidSlot;
 import xieao.theora.api.player.ability.Ability;
 import xieao.theora.api.recipe.binding.IBindingRecipe;
+import xieao.theora.client.particle.ParticleEngine;
+import xieao.theora.client.particle.ParticleGeneric;
+import xieao.theora.client.particle.ParticleTexture;
 import xieao.theora.common.block.TileLiquidContainer;
 import xieao.theora.common.lib.recipe.RecipeHandler;
 import xieao.theora.common.liquid.TheoraLiquids;
@@ -82,7 +85,7 @@ public class TileBindingCenter extends TileLiquidContainer implements ITickable 
             if (this.buildTicks > 0) {
                 this.buildTicks--;
                 if (this.buildTicks <= 0) {
-                    syncNBTData();
+                    markDirtyAndSync();
                 }
             } else {
                 LiquidSlot liquidSlot = this.liquidContainer.getLiquidSlot(0);
@@ -98,7 +101,7 @@ public class TileBindingCenter extends TileLiquidContainer implements ITickable 
                                     TileBindingRing bindingRing = (TileBindingRing) tileEntity;
                                     if (!bindingRing.getStackInSlot(0).isEmpty()) {
                                         bindingRing.setInventorySlotContents(0, ItemStack.EMPTY);
-                                        bindingRing.syncNBTData();
+                                        bindingRing.markDirtyAndSync();
                                         list.add(ringPos);
                                     }
                                 }
@@ -107,19 +110,23 @@ public class TileBindingCenter extends TileLiquidContainer implements ITickable 
                             liquidSlot.setStored(liquidSlot.getStored() - recipe.getLiquidAmount());
                             this.ability = recipe.getResultAbility();
                             this.startBinding = false;
-                            syncNBTData();
+                            markDirtyAndSync();
                         }
                     }
                 } else if (!this.ready && this.binding++ >= this.maxTime) {
                     this.ready = true;
                     this.binding = 0;
                     this.activeRings = new BlockPos[0];
-                    syncNBTData();
+                    markDirtyAndSync();
                 }
                 if (this.binding == 1) {
-                    syncNBTData();
+                    markDirtyAndSync();
                 }
             }
+        } else {
+            if (world.getTotalWorldTime() % 30 == 0)
+                ParticleEngine.INSTANCE.addEffect(new ParticleGeneric(ParticleTexture.GLOW_SMALL, this.world, getPosVec(), 12)
+                        .scale(1, 3, 0.8F).setAlpha(1.0F, 0).setColor(0xfff7d3, 0xa89e70).blendFunc().setGravity(-.03F));
         }
     }
 

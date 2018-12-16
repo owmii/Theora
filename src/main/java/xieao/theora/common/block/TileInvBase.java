@@ -41,7 +41,7 @@ public abstract class TileInvBase extends TileBase implements ISidedInventory {
                         stack1.setCount(max);
                         stack.shrink(max);
                         setInventorySlotContents(i, stack1);
-                        syncNBTData();
+                        markDirtyAndSync();
                         return true;
                     }
                 }
@@ -57,7 +57,7 @@ public abstract class TileInvBase extends TileBase implements ISidedInventory {
                 if (canExtractItem(i, stack, facing)) {
                     ItemHandlerHelper.giveItemToPlayer(player, stack.copy());
                     setInventorySlotContents(i, ItemStack.EMPTY);
-                    syncNBTData();
+                    markDirtyAndSync();
                     return true;
                 }
             }
@@ -92,7 +92,7 @@ public abstract class TileInvBase extends TileBase implements ISidedInventory {
         if (isItemValidForSlot(slot, copyStack)) {
             setInventorySlotContents(slot, copyStack);
             stack.shrink(amount);
-            syncNBTData();
+            markDirtyAndSync();
             return true;
         }
         return false;
@@ -198,7 +198,7 @@ public abstract class TileInvBase extends TileBase implements ISidedInventory {
         for (int i = 0; i < getSizeInventory(); i++) {
             setInventorySlotContents(i, ItemStack.EMPTY);
         }
-        syncNBTData();
+        markDirtyAndSync();
     }
 
     public void setCustomName(String customName) {

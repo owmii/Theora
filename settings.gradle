@@ -1,0 +1,2 @@
+include ":onelib"
+project(":onelib").projectDir = file("../../One Lib/One Lib 1.12")

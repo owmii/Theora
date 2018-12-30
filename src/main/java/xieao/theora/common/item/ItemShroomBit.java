@@ -2,6 +2,7 @@ package xieao.theora.common.item;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import xieao.lib.item.ItemBase;
 import xieao.theora.common.block.misc.BlockShroom;
 import xieao.theora.common.lib.book.Entry;
 import xieao.theora.common.lib.book.TheoraBook;

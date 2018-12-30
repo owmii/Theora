@@ -9,10 +9,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import xieao.lib.block.BlockBase;
 import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.liquid.LiquidContainer;
 import xieao.theora.api.liquid.LiquidSlot;
-import xieao.theora.common.block.BlockBase;
 import xieao.theora.common.lib.helper.NBTHelper;
 
 import javax.annotation.Nullable;

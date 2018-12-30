@@ -6,7 +6,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import xieao.theora.common.block.BlockBase;
+import xieao.lib.block.BlockBase;
 
 import javax.annotation.Nullable;
 

@@ -14,9 +14,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
+import xieao.lib.block.TileBase;
 import xieao.theora.Theora;
 import xieao.theora.client.helper.ColorHelper;
-import xieao.theora.common.block.TileBase;
 import xieao.theora.common.lib.helper.math.Vec3D;
 
 import javax.annotation.Nullable;

@@ -5,9 +5,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import xieao.theora.common.block.BlockBase;
-import xieao.theora.common.item.IGenericItem;
-import xieao.theora.common.item.ItemBlockBase;
+import xieao.lib.block.BlockBase;
+import xieao.lib.item.IGenericItem;
+import xieao.lib.item.ItemBlockBase;
 import xieao.theora.common.item.ItemEmber;
 
 import javax.annotation.Nullable;

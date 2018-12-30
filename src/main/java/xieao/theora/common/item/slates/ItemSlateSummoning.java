@@ -15,8 +15,8 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.terraingen.InitMapGenEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import xieao.lib.item.ItemBase;
 import xieao.theora.api.item.slate.ISummoningSlate;
-import xieao.theora.common.item.ItemBase;
 import xieao.theora.common.lib.helper.NBTHelper;
 
 import java.util.Collections;

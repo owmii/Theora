@@ -10,6 +10,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import xieao.lib.item.ItemBlockBase;
 import xieao.theora.common.block.IHeatedBlock;
 import xieao.theora.common.lib.TheoraSounds;
 

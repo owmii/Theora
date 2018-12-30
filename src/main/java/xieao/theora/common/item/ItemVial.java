@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import xieao.lib.item.ItemBase;
 import xieao.theora.api.liquid.*;
 import xieao.theora.api.liquid.LiquidSlot.TransferType;
 import xieao.theora.api.recipe.liquidinteract.ILiquidInteractRecipe;

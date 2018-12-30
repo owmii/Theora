@@ -1,8 +1,8 @@
 package xieao.theora.common.item.slates;
 
 import net.minecraft.item.ItemStack;
+import xieao.lib.item.ItemBase;
 import xieao.theora.api.item.slate.IEfficiencySlate;
-import xieao.theora.common.item.ItemBase;
 
 public class ItemSlateEfficiency extends ItemBase implements IEfficiencySlate {
 

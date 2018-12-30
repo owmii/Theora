@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemHandlerHelper;
-import xieao.theora.common.block.BlockBase;
+import xieao.lib.block.BlockBase;
 
 import javax.annotation.Nullable;
 

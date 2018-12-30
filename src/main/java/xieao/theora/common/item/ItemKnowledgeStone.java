@@ -1,6 +1,7 @@
 package xieao.theora.common.item;
 
 import net.minecraft.block.Block;
+import xieao.lib.item.ItemBlockBase;
 import xieao.theora.common.block.misc.BlockKnowledgeStone;
 
 public class ItemKnowledgeStone extends ItemBlockBase {

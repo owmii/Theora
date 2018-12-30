@@ -3,7 +3,7 @@ package xieao.theora.common.lib.multiblock;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import xieao.theora.common.block.TileBase;
+import xieao.lib.block.TileBase;
 
 public interface IMultiBlock<T extends TileBase & IMultiBlockBuilder> {
 

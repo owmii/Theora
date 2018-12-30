@@ -9,9 +9,9 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
-import xieao.theora.common.block.BlockBase;
-import xieao.theora.common.item.IGenericItem;
-import xieao.theora.common.item.ItemBlockBase;
+import xieao.lib.block.BlockBase;
+import xieao.lib.item.IGenericItem;
+import xieao.lib.item.ItemBlockBase;
 import xieao.theora.common.item.ItemWood;
 
 public class BlockWood extends BlockBase {

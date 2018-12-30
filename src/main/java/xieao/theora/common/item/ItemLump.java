@@ -1,5 +1,6 @@
 package xieao.theora.common.item;
 
+import xieao.lib.item.ItemBase;
 import xieao.theora.common.block.misc.BlockMineral;
 
 public class ItemLump extends ItemBase {

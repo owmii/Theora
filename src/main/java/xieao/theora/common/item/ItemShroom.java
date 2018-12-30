@@ -1,6 +1,7 @@
 package xieao.theora.common.item;
 
 import net.minecraft.block.Block;
+import xieao.lib.item.ItemBlockBase;
 import xieao.theora.common.block.misc.BlockShroom;
 
 public class ItemShroom extends ItemBlockBase {

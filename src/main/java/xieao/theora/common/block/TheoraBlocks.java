@@ -6,6 +6,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import xieao.lib.block.IGenericBlock;
 import xieao.theora.Theora;
 import xieao.theora.common.block.binding.BlockBindingCenter;
 import xieao.theora.common.block.binding.BlockBindingRing;

@@ -29,8 +29,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
+import xieao.lib.block.TileBase;
 import xieao.theora.Theora;
-import xieao.theora.common.block.TileBase;
 
 import java.util.ArrayList;
 import java.util.List;

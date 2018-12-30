@@ -14,9 +14,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import xieao.lib.block.BlockBase;
 import xieao.theora.api.item.wand.IWand;
 import xieao.theora.api.item.wand.IWandable;
-import xieao.theora.common.block.BlockBase;
 
 import javax.annotation.Nullable;
 import java.util.Random;

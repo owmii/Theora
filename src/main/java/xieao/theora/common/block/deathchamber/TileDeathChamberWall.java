@@ -4,7 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import xieao.theora.common.block.TileBase;
+import xieao.lib.block.TileBase;
 import xieao.theora.common.lib.multiblock.IMultiBlockBuilder;
 import xieao.theora.common.lib.multiblock.IMultiBlockPart;
 

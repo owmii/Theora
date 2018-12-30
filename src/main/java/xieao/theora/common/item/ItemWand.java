@@ -23,6 +23,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import xieao.lib.item.ItemBase;
 import xieao.theora.Theora;
 import xieao.theora.api.item.wand.IWand;
 import xieao.theora.api.item.wand.IWandable;

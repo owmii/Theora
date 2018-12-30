@@ -6,6 +6,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import xieao.lib.item.ItemBase;
 import xieao.theora.client.gui.book.GuiBook;
 
 public class ItemBook extends ItemBase {

@@ -10,15 +10,16 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import xieao.lib.proxy.IProxy;
 import xieao.theora.common.block.TheoraBlocks;
-import xieao.theora.proxy.IProxy;
 
-@Mod(name = Theora.MOD_NAME, modid = Theora.MOD_ID, version = Theora.MOD_VERSION)
+@Mod(name = Theora.MOD_NAME, modid = Theora.MOD_ID, version = Theora.MOD_VERSION, dependencies = Theora.DEPENDENCIES)
 public class Theora {
 
     public static final String MOD_NAME = "Theora";
     public static final String MOD_ID = "theora";
     public static final String MOD_VERSION = "@VERSION@";
+    public static final String DEPENDENCIES = "required-after:onelib";
 
     public static final String SIDE_SERVER = "xieao.theora.proxy.CommonProxy";
     public static final String SIDE_CLIENT = "xieao.theora.proxy.ClientProxy";

@@ -7,6 +7,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import xieao.lib.item.ItemBase;
 import xieao.theora.api.recipe.liquidinteract.ILiquidInteractRecipe;
 import xieao.theora.common.entity.EntityInteractor;
 import xieao.theora.common.lib.recipe.RecipeHandler;

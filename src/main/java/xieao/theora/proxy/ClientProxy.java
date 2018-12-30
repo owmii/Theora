@@ -8,6 +8,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import xieao.lib.item.IGenericItem;
 import xieao.theora.Theora;
 import xieao.theora.client.handler.KeyHandler;
 import xieao.theora.client.renderer.TheoraTextureMap;
@@ -15,7 +16,6 @@ import xieao.theora.client.renderer.blockstate.TheoraStateMapper;
 import xieao.theora.client.renderer.entity.EntityRenderer;
 import xieao.theora.client.renderer.item.IColoredItem;
 import xieao.theora.client.renderer.tesr.TESRRenderer;
-import xieao.theora.common.item.IGenericItem;
 import xieao.theora.common.item.TheoraItems;
 
 public class ClientProxy extends CommonProxy {

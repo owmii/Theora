@@ -11,6 +11,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.items.ItemHandlerHelper;
+import xieao.lib.block.TileBase;
 
 import java.util.stream.IntStream;
 

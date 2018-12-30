@@ -1,7 +1,7 @@
 package xieao.theora.common.lib.multiblock;
 
 import net.minecraft.util.math.BlockPos;
-import xieao.theora.common.block.TileBase;
+import xieao.lib.block.TileBase;
 
 import javax.annotation.Nullable;
 

@@ -15,7 +15,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import xieao.theora.common.block.BlockBase;
+import xieao.lib.block.BlockBase;
 
 import javax.annotation.Nullable;
 

@@ -3,6 +3,7 @@ package xieao.theora.common.block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
+import xieao.lib.block.TileBase;
 import xieao.theora.api.liquid.LiquidContainer;
 import xieao.theora.api.liquid.LiquidContainerCapability;
 import xieao.theora.api.liquid.LiquidSlot;

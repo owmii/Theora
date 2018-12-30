@@ -21,6 +21,7 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import xieao.lib.item.ItemBase;
 import xieao.theora.client.renderer.item.IColoredItem;
 import xieao.theora.common.entity.EntitySoul;
 import xieao.theora.common.lib.helper.NBTHelper;

@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import xieao.lib.item.ItemBase;
 import xieao.theora.common.lib.TheoraSounds;
 import xieao.theora.common.lib.helper.NBTHelper;
 

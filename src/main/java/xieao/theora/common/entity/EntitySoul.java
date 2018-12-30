@@ -23,6 +23,7 @@ import xieao.theora.client.particle.ParticleTexture;
 import xieao.theora.common.enchantment.TheoraEnchantments;
 import xieao.theora.common.item.ItemSoulEgg;
 import xieao.theora.common.item.TheoraItems;
+import xieao.theora.common.lib.helper.math.Vec3D;
 
 import javax.annotation.Nullable;
 
@@ -130,6 +131,11 @@ public class EntitySoul extends EntityLiving {
                 setDead();
             }
         }
+    }
+
+    @Override
+    public Vec3D getPositionVector() {
+        return new Vec3D(this.posX, this.posY, this.posZ);
     }
 
     @Override

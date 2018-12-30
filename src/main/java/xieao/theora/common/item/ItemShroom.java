@@ -16,7 +16,7 @@ public class ItemShroom extends ItemBlockBase {
     }
 
     @Override
-    public Enum<?>[] getSubTypeValues() {
+    public Enum<?>[] getSubTypes() {
         return BlockShroom.Type.values();
     }
 }

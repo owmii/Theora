@@ -28,9 +28,9 @@ public class ItemBlockBase extends ItemBlock implements IGenericItem, IBookItemB
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        if (getSubTypeValues().length > 0) {
+        if (getSubTypes().length > 0) {
             int meta = stack.getMetadata();
-            return super.getUnlocalizedName() + "." + getSubTypeValues()[meta]
+            return super.getUnlocalizedName() + "." + getSubTypes()[meta]
                     .toString().toLowerCase().replace("_", ".");
         } else {
             return super.getUnlocalizedName(stack);
@@ -40,8 +40,8 @@ public class ItemBlockBase extends ItemBlock implements IGenericItem, IBookItemB
     @Override
     @SideOnly(Side.CLIENT)
     public void renderItem() {
-        if (getSubTypeValues().length > 0) {
-            for (Enum<?> enumType : getSubTypeValues()) {
+        if (getSubTypes().length > 0) {
+            for (Enum<?> enumType : getSubTypes()) {
                 ModelResourceLocation mrl = new ModelResourceLocation(getRegistryName() + "_" + enumType.name().toLowerCase(), "inventory");
                 ModelLoader.setCustomModelResourceLocation(this, enumType.ordinal(), mrl);
             }
@@ -52,7 +52,7 @@ public class ItemBlockBase extends ItemBlock implements IGenericItem, IBookItemB
     }
 
     @Override
-    public Enum<?>[] getSubTypeValues() {
+    public Enum<?>[] getSubTypes() {
         return new Enum[0];
     }
 

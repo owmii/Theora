@@ -7,7 +7,7 @@ import xieao.theora.common.item.ItemBase;
 public class ItemSlateXP extends ItemBase implements IXPSlate {
 
     @Override
-    public Enum<?>[] getSubTypeValues() {
+    public Enum<?>[] getSubTypes() {
         return Level.values();
     }
 

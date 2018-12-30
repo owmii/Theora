@@ -12,5 +12,5 @@ public interface IGenericItem {
     @SideOnly(Side.CLIENT)
     void renderItem();
 
-    Enum<?>[] getSubTypeValues();
+    Enum<?>[] getSubTypes();
 }

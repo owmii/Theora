@@ -13,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 import xieao.theora.common.block.TheoraBlocks;
 import xieao.theora.proxy.IProxy;
 
-@SuppressWarnings("NullableProblems")
 @Mod(name = Theora.MOD_NAME, modid = Theora.MOD_ID, version = Theora.MOD_VERSION)
 public class Theora {
 

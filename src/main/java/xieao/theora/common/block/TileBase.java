@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import xieao.theora.common.lib.helper.math.Vec3;
+import xieao.theora.common.lib.helper.math.Vec3D;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -101,8 +101,8 @@ public class TileBase extends TileEntity {
         return writeToNBT(new NBTTagCompound());
     }
 
-    public Vec3 getPosVec() {
-        return new Vec3(getPos());
+    public Vec3D getPosVec() {
+        return new Vec3D(getPos());
     }
 
     public double getX() {

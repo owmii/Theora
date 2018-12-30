@@ -3,7 +3,10 @@ package xieao.theora.client.sound;
 import net.minecraft.client.audio.MovingSound;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class SoundMoving extends MovingSound {
 
     protected SoundMoving(SoundEvent soundIn, SoundCategory categoryIn) {

@@ -17,7 +17,7 @@ public class ItemSlateEfficiency extends ItemBase implements IEfficiencySlate {
     }
 
     @Override
-    public Enum<?>[] getSubTypeValues() {
+    public Enum<?>[] getSubTypes() {
         return Level.values();
     }
 

@@ -16,7 +16,7 @@ public class ItemWood extends ItemBlockBase {
     }
 
     @Override
-    public Enum<?>[] getSubTypeValues() {
+    public Enum<?>[] getSubTypes() {
         return BlockWood.Type.values();
     }
 }

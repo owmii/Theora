@@ -16,7 +16,7 @@ public class ItemKnowledgeStone extends ItemBlockBase {
     }
 
     @Override
-    public Enum<?>[] getSubTypeValues() {
+    public Enum<?>[] getSubTypes() {
         return BlockKnowledgeStone.Type.values();
     }
 }

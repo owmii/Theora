@@ -95,7 +95,7 @@ public class ItemSlateSummoning extends ItemBase implements ISummoningSlate {
     }
 
     @Override
-    public Enum<?>[] getSubTypeValues() {
+    public Enum<?>[] getSubTypes() {
         return Type.values();
     }
 

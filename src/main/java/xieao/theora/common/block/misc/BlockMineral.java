@@ -57,7 +57,7 @@ public class BlockMineral extends BlockBase {
     }
 
     public enum Type implements IStringSerializable {
-        LAVANA;
+        HANK_STEEL;
 
         @Override
         public String getName() {

@@ -28,9 +28,9 @@ public class ItemBase extends Item implements IGenericItem, IBookItem {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        if (getSubTypeValues().length > 0) {
+        if (getSubTypes().length > 0) {
             int meta = stack.getMetadata();
-            return super.getUnlocalizedName() + "." + getSubTypeValues()[meta]
+            return super.getUnlocalizedName() + "." + getSubTypes()[meta]
                     .toString().toLowerCase().replace("_", ".");
         } else {
             return super.getUnlocalizedName(stack);
@@ -41,7 +41,7 @@ public class ItemBase extends Item implements IGenericItem, IBookItem {
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         if (isInCreativeTab(tab)) {
             boolean flag = false;
-            for (Enum<?> type : getSubTypeValues()) {
+            for (Enum<?> type : getSubTypes()) {
                 items.add(new ItemStack(this, 1, type.ordinal()));
                 flag = true;
             }
@@ -54,8 +54,8 @@ public class ItemBase extends Item implements IGenericItem, IBookItem {
     @Override
     @SideOnly(Side.CLIENT)
     public void renderItem() {
-        if (getSubTypeValues().length > 0) {
-            for (Enum<?> enumType : getSubTypeValues()) {
+        if (getSubTypes().length > 0) {
+            for (Enum<?> enumType : getSubTypes()) {
                 ModelResourceLocation mrl = new ModelResourceLocation(getRegistryName() + "_" + enumType.name().toLowerCase(), "inventory");
                 ModelLoader.setCustomModelResourceLocation(this, enumType.ordinal(), mrl);
             }
@@ -67,7 +67,7 @@ public class ItemBase extends Item implements IGenericItem, IBookItem {
 
 
     @Override
-    public Enum<?>[] getSubTypeValues() {
+    public Enum<?>[] getSubTypes() {
         return new Enum[0];
     }
 

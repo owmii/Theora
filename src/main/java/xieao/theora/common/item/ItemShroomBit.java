@@ -15,7 +15,7 @@ public class ItemShroomBit extends ItemBase {
     }
 
     @Override
-    public Enum<?>[] getSubTypeValues() {
+    public Enum<?>[] getSubTypes() {
         return BlockShroom.Type.values();
     }
 

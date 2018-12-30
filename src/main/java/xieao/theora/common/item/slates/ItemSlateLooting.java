@@ -7,7 +7,7 @@ import xieao.theora.common.item.ItemBase;
 public class ItemSlateLooting extends ItemBase implements ILootingSlate {
 
     @Override
-    public Enum<?>[] getSubTypeValues() {
+    public Enum<?>[] getSubTypes() {
         return Level.values();
     }
 

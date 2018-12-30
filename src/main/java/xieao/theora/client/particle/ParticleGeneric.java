@@ -17,6 +17,7 @@ import org.lwjgl.opengl.GL11;
 import xieao.theora.Theora;
 import xieao.theora.client.helper.ColorHelper;
 import xieao.theora.common.block.TileBase;
+import xieao.theora.common.lib.helper.math.Vec3D;
 
 import javax.annotation.Nullable;
 
@@ -25,8 +26,8 @@ public class ParticleGeneric extends Particle {
 
     protected ParticleTexture texture;
     protected int textureID;
-    protected Vec3d start;
-    protected Vec3d end;
+    protected Vec3D start;
+    protected Vec3D end;
     protected boolean noDepth;
     protected boolean blendFunc;
     protected boolean bright;
@@ -46,7 +47,7 @@ public class ParticleGeneric extends Particle {
     @Nullable
     protected BlockPos tePos;
 
-    public ParticleGeneric(ParticleTexture texture, World world, Vec3d start, int maxAge) {
+    public ParticleGeneric(ParticleTexture texture, World world, Vec3D start, int maxAge) {
         super(world, start.x, start.y, start.z);
         if (texture.frames > 1 && texture.randomize) {
             this.textureID = this.rand.nextInt(texture.frames);
@@ -159,7 +160,7 @@ public class ParticleGeneric extends Particle {
         }
     }
 
-    public ParticleGeneric setEnd(Vec3d end) {
+    public ParticleGeneric setEnd(Vec3D end) {
         this.end = end;
         return this;
     }

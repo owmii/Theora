@@ -7,12 +7,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import xieao.lib.util.GuiUtil;
 import xieao.theora.Theora;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.player.ability.Abilities;
 import xieao.theora.api.player.ability.Ability;
 import xieao.theora.api.player.data.PlayerData;
-import xieao.theora.client.helper.GuiHelper;
 import xieao.theora.network.TheoraNetwork;
 import xieao.theora.network.packets.PacketAbilityStatus;
 
@@ -80,7 +80,7 @@ public class GuiAbilities extends GuiScreen {
                         GlStateManager.color(0.0F, 0.0F, 0.0F, 1.0F);
                     }
                     this.mc.getTextureManager().bindTexture(this.textures[index]);
-                    GuiHelper.drawSizedTextureModalRect(17 + j * 35, 17 + i * 35, 32, 32);
+                    GuiUtil.drawSizedTextureModalRect(17 + j * 35, 17 + i * 35, 32, 32);
                     GlStateManager.popMatrix();
                 }
             }

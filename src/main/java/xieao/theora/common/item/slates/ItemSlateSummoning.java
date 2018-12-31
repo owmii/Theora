@@ -16,8 +16,8 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.terraingen.InitMapGenEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 import xieao.lib.item.ItemBase;
+import xieao.lib.util.NBTUtil;
 import xieao.theora.api.item.slate.ISummoningSlate;
-import xieao.theora.common.lib.helper.NBTHelper;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -65,9 +65,9 @@ public class ItemSlateSummoning extends ItemBase implements ISummoningSlate {
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         ItemStack stack = playerIn.getHeldItem(handIn);
         if (Type.values()[stack.getMetadata()] == Type.BIOME) {
-            if (!NBTHelper.hasKey(stack, TAG_BIOME_ID, Constants.NBT.TAG_INT)) {
+            if (!NBTUtil.hasKey(stack, TAG_BIOME_ID, Constants.NBT.TAG_INT)) {
                 int biomeId = Biome.getIdForBiome(worldIn.getBiome(playerIn.getPosition()));
-                NBTHelper.setInteger(stack, TAG_BIOME_ID, biomeId);
+                NBTUtil.setInteger(stack, TAG_BIOME_ID, biomeId);
             } else {
                 playerIn.sendStatusMessage(new TextComponentString("theora.chat.slate.has.biome"), true);
             }
@@ -79,8 +79,8 @@ public class ItemSlateSummoning extends ItemBase implements ISummoningSlate {
     @Override
     public Set<Biome.SpawnListEntry> getSpawnListEntries(ItemStack stack) {
         if (Type.values()[stack.getMetadata()] == Type.BIOME) {
-            if (NBTHelper.hasKey(stack, TAG_BIOME_ID, Constants.NBT.TAG_INT)) {
-                int biomeId = NBTHelper.getInteger(stack, TAG_BIOME_ID);
+            if (NBTUtil.hasKey(stack, TAG_BIOME_ID, Constants.NBT.TAG_INT)) {
+                int biomeId = NBTUtil.getInteger(stack, TAG_BIOME_ID);
                 Biome biome = Biome.getBiome(biomeId);
                 if (biome != null) {
                     return new HashSet<>(biome.getSpawnableList(EnumCreatureType.MONSTER));

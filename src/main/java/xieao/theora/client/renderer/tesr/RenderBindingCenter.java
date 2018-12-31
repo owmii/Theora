@@ -6,11 +6,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import xieao.lib.util.ColorUtil;
+import xieao.lib.util.RenderUtil;
 import xieao.theora.Theora;
 import xieao.theora.api.player.ability.Ability;
 import xieao.theora.api.recipe.binding.IBindingRecipe;
-import xieao.theora.client.helper.ColorHelper;
-import xieao.theora.client.helper.RendererHelper;
 import xieao.theora.common.block.binding.TileBindingCenter;
 
 import java.awt.*;
@@ -23,7 +23,7 @@ public class RenderBindingCenter extends TESRBase<TileBindingCenter> {
 
     @Override
     public void render(TileBindingCenter te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        float ticks = RendererHelper.tickCount + partialTicks;
+        float ticks = RenderUtil.tickCount + partialTicks;
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
         RenderHelper.disableStandardItemLighting();
@@ -32,17 +32,17 @@ public class RenderBindingCenter extends TESRBase<TileBindingCenter> {
         GlStateManager.translate(0.5D, 0.0002D, 0.5D);
         float f0 = ((float) te.maxBuildTicks / ((float) (te.buildTicks + 1) * 10)) / 6.5F;
 
-        ColorHelper.glColor(0xffffff, f0 / 2);
+        ColorUtil.glColor(0xffffff, f0 / 2);
         GlStateManager.pushMatrix();
         GlStateManager.rotate(-ticks / 4.0F, 0, 1, 0);
-        RendererHelper.renderQuad(RUNS_TEXTURE, 2.2F);
+        RenderUtil.renderQuad(RUNS_TEXTURE, 2.2F);
         GlStateManager.popMatrix();
 
-        ColorHelper.glColor(0x555555, f0 / 2.0F);
-        RendererHelper.renderQuad(AURA_TEXTURE, 2.5F);
+        ColorUtil.glColor(0x555555, f0 / 2.0F);
+        RenderUtil.renderQuad(AURA_TEXTURE, 2.5F);
         GlStateManager.translate(0.0D, 0.0001D, 0.0D);
 
-        ColorHelper.glColor(new Color(0x5D6955).getRGB(), 0.7F);
+        ColorUtil.glColor(new Color(0x5D6955).getRGB(), 0.7F);
         IBindingRecipe recipe = te.getCurrentRecipe();
         if (recipe != null) {
             Ability ability = recipe.getResultAbility();
@@ -53,7 +53,7 @@ public class RenderBindingCenter extends TESRBase<TileBindingCenter> {
                 double d2 = MathHelper.atan2(d1, d0);
                 double d3 = Math.toDegrees(-d2);
                 GlStateManager.rotate((float) (d3 + 90.0F), 0.0F, 1.0F, 0.0F);
-                RendererHelper.renderQuad(ability.getIcon(), 0.6F);
+                RenderUtil.renderQuad(ability.getIcon(), 0.6F);
             }
         }
 

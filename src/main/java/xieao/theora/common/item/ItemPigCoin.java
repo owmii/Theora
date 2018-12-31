@@ -8,12 +8,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import xieao.lib.item.ItemBase;
+import xieao.lib.util.NBTUtil;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.player.ability.Abilities;
 import xieao.theora.api.player.data.PlayerData;
 import xieao.theora.api.trade.pigzombie.PigZombieTradeHandler;
 import xieao.theora.common.ability.TheoraAbilities;
-import xieao.theora.common.lib.helper.NBTHelper;
 import xieao.theora.network.TheoraNetwork;
 import xieao.theora.network.packets.PacketOpenPigZombieTradeGui;
 
@@ -46,7 +46,7 @@ public class ItemPigCoin extends ItemBase {
             if (stack.getItem() == TheoraItems.PIG_COIN) {
                 count += size;
             } else if (stack.getItem() == TheoraItems.PIG_COIN_BAG) {
-                int coins = NBTHelper.getInteger(stack, ItemPigCoinBag.TAG_PIG_COINS);
+                int coins = NBTUtil.getInteger(stack, ItemPigCoinBag.TAG_PIG_COINS);
                 count += coins;
             }
         }
@@ -63,9 +63,9 @@ public class ItemPigCoin extends ItemBase {
                     amount -= toShrink;
                     stack.shrink(toShrink);
                 } else if (stack.getItem() == TheoraItems.PIG_COIN_BAG) {
-                    int coins = NBTHelper.getInteger(stack, ItemPigCoinBag.TAG_PIG_COINS);
+                    int coins = NBTUtil.getInteger(stack, ItemPigCoinBag.TAG_PIG_COINS);
                     int toShrink = Math.min(coins, amount);
-                    NBTHelper.setInteger(stack, ItemPigCoinBag.TAG_PIG_COINS, coins - toShrink);
+                    NBTUtil.setInteger(stack, ItemPigCoinBag.TAG_PIG_COINS, coins - toShrink);
                     amount -= toShrink;
                 }
                 if (amount <= 0) {

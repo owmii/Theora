@@ -22,9 +22,9 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.lib.item.ItemBase;
+import xieao.lib.util.NBTUtil;
 import xieao.theora.client.renderer.item.IColoredItem;
 import xieao.theora.common.entity.EntitySoul;
-import xieao.theora.common.lib.helper.NBTHelper;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -120,15 +120,15 @@ public class ItemSoulEgg extends ItemBase implements IColoredItem {
     }
 
     public boolean hasEntityClassName(ItemStack stack) {
-        return NBTHelper.hasKey(stack, TAG_ENTITY_CLASS_NAME, Constants.NBT.TAG_STRING);
+        return NBTUtil.hasKey(stack, TAG_ENTITY_CLASS_NAME, Constants.NBT.TAG_STRING);
     }
 
     public String getEntityClassName(ItemStack stack) {
-        return NBTHelper.getString(stack, TAG_ENTITY_CLASS_NAME);
+        return NBTUtil.getString(stack, TAG_ENTITY_CLASS_NAME);
     }
 
     public void setEntityClassName(ItemStack stack, String entityClassName) {
-        NBTHelper.setString(stack, TAG_ENTITY_CLASS_NAME, entityClassName);
+        NBTUtil.setString(stack, TAG_ENTITY_CLASS_NAME, entityClassName);
     }
 
     @Nullable

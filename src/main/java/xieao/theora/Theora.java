@@ -12,7 +12,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import xieao.lib.proxy.IProxy;
 import xieao.theora.common.block.TheoraBlocks;
-
 @Mod(name = Theora.MOD_NAME, modid = Theora.MOD_ID, version = Theora.MOD_VERSION, dependencies = Theora.DEPENDENCIES)
 public class Theora {
 

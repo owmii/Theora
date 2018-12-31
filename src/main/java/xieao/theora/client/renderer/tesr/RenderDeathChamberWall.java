@@ -2,8 +2,8 @@ package xieao.theora.client.renderer.tesr;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
+import xieao.lib.util.ColorUtil;
 import xieao.theora.Theora;
-import xieao.theora.client.helper.ColorHelper;
 import xieao.theora.common.block.deathchamber.TileDeathChamberWall;
 
 public class RenderDeathChamberWall extends TESRBase<TileDeathChamberWall> {
@@ -18,7 +18,7 @@ public class RenderDeathChamberWall extends TESRBase<TileDeathChamberWall> {
             GlStateManager.enableRescaleNormal();
             GlStateManager.scale(1.0F, -1.0F, -1.0F);
             GlStateManager.translate(0.5D, -1.5D, -0.5D);
-            ColorHelper.glColorNormal();
+            ColorUtil.glColorNormal();
             mc.getTextureManager().bindTexture(CUBE_TEXTURE);
             MODEL_CUBE.render(0.0625f);
             GlStateManager.popMatrix();

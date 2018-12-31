@@ -13,8 +13,8 @@ import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import xieao.lib.item.ItemBase;
+import xieao.lib.util.NBTUtil;
 import xieao.theora.common.lib.TheoraSounds;
-import xieao.theora.common.lib.helper.NBTHelper;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -31,14 +31,14 @@ public class ItemPigCoinBag extends ItemBase {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand) {
         ItemStack bag = player.getHeldItem(hand);
-        NBTHelper.checkAndSetNbt(bag);
+        NBTUtil.checkAndSetNbt(bag);
         boolean flag = false;
         for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
             ItemStack stack = player.inventory.getStackInSlot(i);
             int size = stack.getCount();
             if (stack.getItem() == TheoraItems.PIG_COIN) {
-                int coins = NBTHelper.getInteger(bag, TAG_PIG_COINS);
-                NBTHelper.setInteger(bag, TAG_PIG_COINS, coins + size);
+                int coins = NBTUtil.getInteger(bag, TAG_PIG_COINS);
+                NBTUtil.setInteger(bag, TAG_PIG_COINS, coins + size);
                 stack.shrink(size);
                 flag = true;
             }
@@ -58,8 +58,8 @@ public class ItemPigCoinBag extends ItemBase {
             if (stack.getItem() == TheoraItems.PIG_COIN) {
                 ItemStack bag = getPigCoinBag(player);
                 if (!bag.isEmpty()) {
-                    int coins = NBTHelper.getInteger(bag, ItemPigCoinBag.TAG_PIG_COINS);
-                    NBTHelper.setInteger(bag, TAG_PIG_COINS, coins + stack.getCount());
+                    int coins = NBTUtil.getInteger(bag, ItemPigCoinBag.TAG_PIG_COINS);
+                    NBTUtil.setInteger(bag, TAG_PIG_COINS, coins + stack.getCount());
                     event.getItem().getItem().shrink(stack.getCount());
                     event.setCanceled(true);
 
@@ -81,7 +81,7 @@ public class ItemPigCoinBag extends ItemBase {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add("Coins: " + NBTHelper.getInteger(stack, TAG_PIG_COINS));
+        tooltip.add("Coins: " + NBTUtil.getInteger(stack, TAG_PIG_COINS));
     }
 
     @Override

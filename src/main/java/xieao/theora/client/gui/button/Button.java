@@ -9,8 +9,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import xieao.theora.client.helper.ColorHelper;
-import xieao.theora.client.helper.GuiHelper;
+import xieao.lib.util.ColorUtil;
+import xieao.lib.util.GuiUtil;
 
 import javax.annotation.Nullable;
 
@@ -60,9 +60,9 @@ public class Button extends GuiButton {
             }
             if (this.icon != null) {
                 mc.getTextureManager().bindTexture(this.icon);
-                ColorHelper.glColor(this.iconColor);
+                ColorUtil.glColor(this.iconColor);
                 if (this.single) {
-                    GuiHelper.drawSizedTextureModalRect(this.x + (this.width - this.iconW) / 2, this.y + (this.height - this.iconH) / 2, this.iconW, this.iconH);
+                    GuiUtil.drawSizedTextureModalRect(this.x + (this.width - this.iconW) / 2, this.y + (this.height - this.iconH) / 2, this.iconW, this.iconH);
                 } else {
                     drawTexturedModalRect(this.x + (this.width - this.iconW) / 2, this.y + (this.height - this.iconH) / 2, this.iconX, this.iconY, this.iconW, this.iconH);
                 }
@@ -72,7 +72,7 @@ public class Button extends GuiButton {
                 GlStateManager.translate(this.x + ((float) this.width - 16 * this.scale) / 2.0F, this.y + ((float) this.width - 16 * this.scale) / 2.0F, 0.0D);
                 GlStateManager.scale(this.scale, this.scale, 0.0F);
 
-                GuiHelper.drawItemStack(this.stack, 0, 0, "");
+                GuiUtil.drawItemStack(this.stack, 0, 0, "");
                 GlStateManager.popMatrix();
             }
             mouseDragged(mc, mouseX, mouseY);

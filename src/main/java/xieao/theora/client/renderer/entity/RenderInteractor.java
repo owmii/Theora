@@ -7,8 +7,8 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import xieao.theora.client.helper.ColorHelper;
-import xieao.theora.client.helper.RendererHelper;
+import xieao.lib.util.ColorUtil;
+import xieao.lib.util.RenderUtil;
 import xieao.theora.client.renderer.TheoraTextureMap;
 import xieao.theora.common.entity.EntityInteractor;
 
@@ -29,35 +29,35 @@ public class RenderInteractor extends Render<EntityInteractor> {
         GlStateManager.enableBlend(); //TODO fix
         // GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        ColorHelper.glColor(new Color(entity.getColor()).darker(), 1.0F);
+        ColorUtil.glColor(new Color(entity.getColor()).darker(), 1.0F);
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.0F, 0.0001F, 0.0F);
-        RendererHelper.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
+        RenderUtil.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.0F, -0.5F, 0.5001F);
         GlStateManager.rotate(90.0F, 1, 0, 0);
-        RendererHelper.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
+        RenderUtil.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(-0.5001F, -0.5F, 0.0F);
         GlStateManager.rotate(90.0F, 0, 0, 1);
-        RendererHelper.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
+        RenderUtil.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.0F, -0.5F, -0.5001F);
         GlStateManager.rotate(-90.0F, 1, 0, 0);
-        RendererHelper.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
+        RenderUtil.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.5001F, -0.5F, 0.0F);
         GlStateManager.rotate(-90.0F, 0, 0, 1);
-        RendererHelper.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
+        RenderUtil.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.disableBlend();

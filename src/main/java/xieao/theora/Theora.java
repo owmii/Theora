@@ -18,7 +18,7 @@ public class Theora {
     public static final String MOD_NAME = "Theora";
     public static final String MOD_ID = "theora";
     public static final String MOD_VERSION = "@VERSION@";
-    public static final String DEPENDENCIES = "required-after:onelib";
+    public static final String DEPENDENCIES = "required-after:onelib@[@LIB_VERSION@)";
 
     public static final String SIDE_SERVER = "xieao.theora.proxy.CommonProxy";
     public static final String SIDE_CLIENT = "xieao.theora.proxy.ClientProxy";

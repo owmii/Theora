@@ -11,27 +11,27 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'idea'
 
-version = "${mc_ver}-${major}.${minor}.${revision}.${build}"
+ext {
+    onelib = project(":OneLib")
+}
+
+version = onelib.mc_version + "-" + mod_version
 group = "xieao.theora"
-archivesBaseName = "${mod_id}"
+archivesBaseName = "theora"
 
 sourceCompatibility = targetCompatibility = '1.8'
 compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
 }
 
-ext {
-    onelib = project(":OneLib")
-}
-
 minecraft {
-    version = "${mc_ver}-${forge_ver}"
+    version = onelib.mc_version + "-" + onelib.forge_version
+    mappings = onelib.mcp_mappings
     runDir = "run"
-    mappings = "${project.mappings}"
-    replace 'required-after:onelib', "required-after:onelib@[${lib_ver})"
-    replace "@VERSION@", project.version
-    replaceIn 'Theora.java'
     makeObfSourceJar = false
+    replaceIn 'Theora.java'
+    replace "@VERSION@", project.version
+    replace "@LIB_VERSION@", onelib.mc_version + "-" + onelib.mod_version
 }
 
 repositories {
@@ -41,48 +41,6 @@ repositories {
 dependencies {
     deobfCompile "mezz.jei:jei_1.12.2:4.9.2.196"
     compile onelib
-}
-
-task alpha {
-    dependsOn 'build'
-    doLast {
-        int next = "${revision}".toInteger() + 1
-        editProp("gradle", "revision", next)
-        nextBuildNum()
-    }
-}
-
-task beta {
-    dependsOn 'build'
-    doLast {
-        int next = "${minor}".toInteger() + 1
-        editProp("gradle", "minor", next)
-        editProp("gradle", "revision", 0)
-        nextBuildNum()
-    }
-}
-
-task release {
-    dependsOn 'build'
-    doLast {
-        int next = "${major}".toInteger() + 1
-        editProp("gradle", "major", next)
-        editProp("gradle", "minor", 0)
-        editProp("gradle", "revision", 0)
-        nextBuildNum()
-    }
-}
-
-task rebuild {
-    dependsOn 'build'
-    doLast {
-        nextBuildNum()
-    }
-}
-
-def nextBuildNum() {
-    int next = "${build}".toInteger() + 1
-    editProp("gradle", "build", next)
 }
 
 jar {
@@ -102,10 +60,4 @@ processResources {
         exclude 'mcmod.info'
     }
     rename '(.+_at.cfg)', 'META-INF/$1'
-}
-
-def editProp(name, key, value) {
-    ant.propertyfile(file: "${name}.properties") {
-        ant.entry(key: key, value: value)
-    }
 }

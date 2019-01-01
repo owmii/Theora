@@ -10,6 +10,8 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.items.ItemHandlerHelper;
+import xieao.lib.network.ByteBuffer;
+import xieao.lib.network.IPacket;
 import xieao.theora.Theora;
 import xieao.theora.api.trade.pigzombie.PigZombieTrade;
 import xieao.theora.common.item.ItemPigCoin;

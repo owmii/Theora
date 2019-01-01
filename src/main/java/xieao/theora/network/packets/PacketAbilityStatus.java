@@ -5,6 +5,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
+import xieao.lib.network.ByteBuffer;
+import xieao.lib.network.IPacket;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.player.ability.Abilities;
 import xieao.theora.api.player.ability.Ability;

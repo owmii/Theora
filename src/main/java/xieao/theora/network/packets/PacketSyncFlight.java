@@ -4,6 +4,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
+import xieao.lib.network.ByteBuffer;
+import xieao.lib.network.IPacket;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.player.data.PlayerData;
 
@@ -33,7 +35,7 @@ public class PacketSyncFlight implements IPacket<PacketSyncFlight> {
     @Nullable
     @Override
     public IPacket onMessage(PacketSyncFlight message, MessageContext ctx, World world, EntityPlayer player) {
-        minecraft().addScheduledTask(() -> {
+        mc().addScheduledTask(() -> {
             PlayerData data = TheoraAPI.getPlayerData(player);
             if (data != null) {
                 player.capabilities.allowFlying = message.allowFlying;

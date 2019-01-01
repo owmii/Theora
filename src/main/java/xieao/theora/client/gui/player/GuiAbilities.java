@@ -47,7 +47,7 @@ public class GuiAbilities extends GuiScreen {
                     if (mousePressed(this.x + 17 + j * 35, this.y + 17 + i * 35, mouseX, mouseY)) {
                         if (mouseButton == 0) {
                             this.status[index] = !this.status[index];
-                            TheoraNetwork.sendToServer(new PacketAbilityStatus(Ability.getAbility(this.regNames[index]), this.status[index]));
+                            TheoraNetwork.NET.sendToServer(new PacketAbilityStatus(Ability.getAbility(this.regNames[index]), this.status[index]));
                         }
                     }
                 }

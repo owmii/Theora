@@ -14,7 +14,6 @@ import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.liquid.LiquidContainerCapability;
 import xieao.theora.api.player.data.PlayerDataCapability;
 import xieao.theora.common.ability.TheoraAbilities;
-import xieao.theora.common.enchantment.TheoraEnchantments;
 import xieao.theora.common.entity.TheoraEntities;
 import xieao.theora.common.lib.book.TheoraBook;
 import xieao.theora.common.lib.config.Config;
@@ -44,7 +43,6 @@ public class CommonProxy implements IProxy {
         ForgeRegistries.BLOCKS.registerAll(BLOCKS.toArray(new Block[0]));
         ForgeRegistries.ITEMS.registerAll(ITEMS.toArray(new Item[0]));
 
-        TheoraEnchantments.register();
         TheoraLiquids.register();
         TheoraAbilities.register();
         TheoraEntities.register();

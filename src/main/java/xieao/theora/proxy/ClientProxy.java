@@ -9,12 +9,12 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xieao.lib.item.IGenericItem;
+import xieao.lib.render.item.IColoredItem;
 import xieao.theora.Theora;
 import xieao.theora.client.handler.KeyHandler;
-import xieao.theora.client.renderer.TheoraTextureMap;
+import xieao.theora.client.renderer.TheoraTextures;
 import xieao.theora.client.renderer.blockstate.TheoraStateMapper;
 import xieao.theora.client.renderer.entity.EntityRenderer;
-import xieao.theora.client.renderer.item.IColoredItem;
 import xieao.theora.client.renderer.tesr.TESRRenderer;
 import xieao.theora.common.item.TheoraItems;
 
@@ -31,7 +31,7 @@ public class ClientProxy extends CommonProxy {
         TheoraStateMapper.register();
         KeyHandler.register();
         EntityRenderer.register();
-        MinecraftForge.EVENT_BUS.register(new TheoraTextureMap());
+        MinecraftForge.EVENT_BUS.register(new TheoraTextures());
         OBJLoader.INSTANCE.addDomain(Theora.MOD_ID);
     }
 

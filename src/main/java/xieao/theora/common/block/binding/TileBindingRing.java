@@ -4,8 +4,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import xieao.lib.block.TileInvBase;
 import xieao.theora.common.block.TheoraBlocks;
-import xieao.theora.common.block.TileInvBase;
 
 public class TileBindingRing extends TileInvBase {
 

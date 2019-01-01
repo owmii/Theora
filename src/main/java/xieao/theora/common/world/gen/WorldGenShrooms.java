@@ -8,10 +8,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import xieao.lib.util.WorldUtil;
 import xieao.theora.common.block.TheoraBlocks;
 import xieao.theora.common.block.misc.BlockShroom;
 import xieao.theora.common.lib.config.ConfigWorldGen;
-import xieao.theora.common.lib.helper.WorldHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public class WorldGenShrooms {
                         int z = (chunkPos.z << 4) + rand.nextInt(16) + 8;
                         BlockPos pos = world.getTopSolidOrLiquidBlock(new BlockPos(x, 0, z));
                         Biome biome = world.getBiome(pos);
-                        if (!WorldHelper.hasBiomeTypes(biome, HOT, DRY, BEACH, DEAD, END, OCEAN, NETHER)) {
+                        if (!WorldUtil.hasBiomeTypes(biome, HOT, DRY, BEACH, DEAD, END, OCEAN, NETHER)) {
                             IBlockState state = randomItem.state;
                             if (world.isAirBlock(pos) || world.getBlockState(pos).getBlock().isReplaceable(world, pos) && state.getBlock().canPlaceBlockAt(world, pos)) {
                                 world.setBlockState(pos, state, 2);

@@ -13,10 +13,10 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.lib.item.ItemBase;
+import xieao.lib.render.item.IColoredItem;
 import xieao.theora.api.liquid.*;
 import xieao.theora.api.liquid.LiquidSlot.TransferType;
 import xieao.theora.api.recipe.liquidinteract.ILiquidInteractRecipe;
-import xieao.theora.client.renderer.item.IColoredItem;
 import xieao.theora.common.entity.EntityInteractor;
 import xieao.theora.common.lib.recipe.RecipeHandler;
 

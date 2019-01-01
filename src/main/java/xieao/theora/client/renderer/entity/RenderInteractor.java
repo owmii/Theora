@@ -9,7 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import xieao.lib.util.ColorUtil;
 import xieao.lib.util.RenderUtil;
-import xieao.theora.client.renderer.TheoraTextureMap;
+import xieao.theora.client.renderer.TheoraTextures;
 import xieao.theora.common.entity.EntityInteractor;
 
 import javax.annotation.Nullable;
@@ -33,31 +33,31 @@ public class RenderInteractor extends Render<EntityInteractor> {
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.0F, 0.0001F, 0.0F);
-        RenderUtil.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
+        RenderUtil.renderQuad(TheoraTextures.LIQUID_INTERACT_OV, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.0F, -0.5F, 0.5001F);
         GlStateManager.rotate(90.0F, 1, 0, 0);
-        RenderUtil.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
+        RenderUtil.renderQuad(TheoraTextures.LIQUID_INTERACT_OV, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(-0.5001F, -0.5F, 0.0F);
         GlStateManager.rotate(90.0F, 0, 0, 1);
-        RenderUtil.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
+        RenderUtil.renderQuad(TheoraTextures.LIQUID_INTERACT_OV, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.0F, -0.5F, -0.5001F);
         GlStateManager.rotate(-90.0F, 1, 0, 0);
-        RenderUtil.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
+        RenderUtil.renderQuad(TheoraTextures.LIQUID_INTERACT_OV, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.5001F, -0.5F, 0.0F);
         GlStateManager.rotate(-90.0F, 0, 0, 1);
-        RenderUtil.renderQuad(TheoraTextureMap.LIQUID_INTERACT_OV, 1.0D);
+        RenderUtil.renderQuad(TheoraTextures.LIQUID_INTERACT_OV, 1.0D);
         GlStateManager.popMatrix();
 
         GlStateManager.disableBlend();

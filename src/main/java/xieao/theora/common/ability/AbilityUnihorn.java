@@ -43,7 +43,7 @@ public class AbilityUnihorn extends Ability {
                             player.capabilities.allowFlying = true;
                             if (!data.allowFlying) {
                                 data.allowFlying = true;
-                                TheoraNetwork.sendToPlayer(new PacketSyncFlight(true), (EntityPlayerMP) player);
+                                TheoraNetwork.NET.sendTo(new PacketSyncFlight(true), (EntityPlayerMP) player);
                             }
                             flag = true;
                         }
@@ -54,7 +54,7 @@ public class AbilityUnihorn extends Ability {
                             if (!isSpecial) {
                                 player.capabilities.allowFlying = false;
                                 player.capabilities.isFlying = false;
-                                TheoraNetwork.sendToPlayer(new PacketSyncFlight(false), (EntityPlayerMP) player);
+                                TheoraNetwork.NET.sendTo(new PacketSyncFlight(false), (EntityPlayerMP) player);
                             }
                             data.allowFlying = false;
                         }

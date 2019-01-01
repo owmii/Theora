@@ -1,7 +1,7 @@
 package xieao.theora.client.gui.player;
 
 import net.minecraft.client.gui.GuiScreen;
-import xieao.theora.client.gui.button.Button;
+import xieao.lib.gui.button.Button;
 
 public class PlayerGui extends GuiScreen {
 

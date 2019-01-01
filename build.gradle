@@ -31,11 +31,13 @@ minecraft {
     makeObfSourceJar = false
     replaceIn 'Theora.java'
     replace "@VERSION@", project.version
-    replace "@LIB_VERSION@", onelib.mc_version + "-" + onelib.mod_version
+    replace 'required-after:onelib', "required-after:onelib@[${onelib.mc_version}-${onelib.mod_version},)"
 }
 
 repositories {
-    maven { url "http://dvs1.progwml6.com/files/maven" }
+    maven {
+        url "http://dvs1.progwml6.com/files/maven"
+    }
 }
 
 dependencies {

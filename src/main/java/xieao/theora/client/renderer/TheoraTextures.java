@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.theora.Theora;
 
 @SuppressWarnings("NullableProblems")
-public class TheoraTextureMap {
+public class TheoraTextures {
 
     public static TextureAtlasSprite LIQUID_INTERACT_OV;
 

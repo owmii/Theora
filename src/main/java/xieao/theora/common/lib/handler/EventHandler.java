@@ -56,7 +56,7 @@ public class EventHandler {
                 }
                 if (event.side == Side.SERVER) {
                     if (abilities.doSync() && player instanceof EntityPlayerMP) {
-                        TheoraNetwork.sendToPlayer(new PacketSyncAbilities(abilities.serializeNBT()), (EntityPlayerMP) player);
+                        TheoraNetwork.NET.sendTo(new PacketSyncAbilities(abilities.serializeNBT()), (EntityPlayerMP) player);
                         abilities.sync(false);
                     }
                 }

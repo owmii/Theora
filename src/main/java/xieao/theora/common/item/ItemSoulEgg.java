@@ -22,8 +22,8 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.lib.item.ItemBase;
+import xieao.lib.render.item.IColoredItem;
 import xieao.lib.util.NBTUtil;
-import xieao.theora.client.renderer.item.IColoredItem;
 import xieao.theora.common.entity.EntitySoul;
 
 import javax.annotation.Nullable;

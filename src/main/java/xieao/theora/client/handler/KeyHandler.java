@@ -28,7 +28,7 @@ public class KeyHandler {
     public static void handleKeys(TickEvent.PlayerTickEvent event) {
         if (event.side == Side.CLIENT && event.phase == TickEvent.Phase.START) {
             if (KEY_ABILITIES.isPressed()) {
-                TheoraNetwork.sendToServer(new PacketRequestAbilitiesGui());
+                TheoraNetwork.NET.sendToServer(new PacketRequestAbilitiesGui());
             }
         }
     }

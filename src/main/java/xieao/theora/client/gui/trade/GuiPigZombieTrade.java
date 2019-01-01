@@ -66,7 +66,7 @@ public class GuiPigZombieTrade extends GuiScreen {
                     this.currTrade--;
                 break;
             case 12:
-                TheoraNetwork.sendToServer(new PacketPigZombieTradBuy(this.trades.get(this.currTrade).getRegistryName()));
+                TheoraNetwork.NET.sendToServer(new PacketPigZombieTradBuy(this.trades.get(this.currTrade).getRegistryName()));
                 break;
         }
     }

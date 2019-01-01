@@ -2,6 +2,7 @@ package xieao.theora.client.renderer.tesr;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
+import xieao.lib.render.tesr.TESRBase;
 import xieao.lib.util.ColorUtil;
 import xieao.lib.util.RenderUtil;
 import xieao.theora.Theora;

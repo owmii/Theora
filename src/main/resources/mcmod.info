@@ -11,6 +11,6 @@
   "credits": "Theora team.",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": []
+  "dependencies": ["onelib"]
 }
 ]

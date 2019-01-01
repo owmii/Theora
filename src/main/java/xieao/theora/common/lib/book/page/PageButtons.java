@@ -2,8 +2,8 @@ package xieao.theora.common.lib.book.page;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.item.ItemStack;
+import xieao.lib.gui.button.Button;
 import xieao.theora.client.gui.book.GuiBook;
-import xieao.theora.client.gui.button.Button;
 import xieao.theora.common.lib.TheoraSounds;
 import xieao.theora.common.lib.book.Section;
 

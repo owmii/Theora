@@ -5,6 +5,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
+import xieao.lib.network.ByteBuffer;
+import xieao.lib.network.IPacket;
 import xieao.theora.client.gui.trade.GuiPigZombieTrade;
 
 import javax.annotation.Nullable;
@@ -49,7 +51,7 @@ public class PacketOpenPigZombieTradeGui implements IPacket<PacketOpenPigZombieT
     @Nullable
     @Override
     public IPacket onMessage(PacketOpenPigZombieTradeGui message, MessageContext ctx, World world, EntityPlayer player) {
-        minecraft().addScheduledTask(() -> minecraft().displayGuiScreen(new GuiPigZombieTrade(message.pigZombieId, message.trades)));
+        mc().addScheduledTask(() -> mc().displayGuiScreen(new GuiPigZombieTrade(message.pigZombieId, message.trades)));
         return null;
     }
 

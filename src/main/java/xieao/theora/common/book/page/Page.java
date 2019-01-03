@@ -6,8 +6,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import xieao.lib.gui.GuiBase;
 import xieao.lib.gui.button.Button;
-import xieao.lib.util.GuiUtil;
 import xieao.theora.Theora;
 import xieao.theora.client.gui.book.GuiBook;
 import xieao.theora.client.helper.I18nHelper;
@@ -43,7 +43,7 @@ public class Page {
                     List<Section> sections = TheoraBook.MAIN_SECTIONS;
                     if (index < sections.size()) {
                         Button button = new Button(index + 20, gui.x + 17 + j * 42, gui.y + 77 + i * 42).setDim(34, 34)
-                                .setBg(GuiBook.BOOK_TEXTURE, gui.w, 0, false).setName(sections.get(index).name, 0)
+                                .setBg(gui.bg, gui.w, 0, false).setName(sections.get(index).name, 0)
                                 .setIcon(sections.get(index).texture, 28, 28, true, 0x875a58).setSound(TheoraSounds.PAGE_FLIP);
                         gui.getButtonList().add(button);
                     }
@@ -66,7 +66,7 @@ public class Page {
     public void draw(GuiBook gui, int mouseX, int mouseY, float partialTicks) {
         if (TheoraBook.HOME.equals(gui.entry)) {
             gui.mc.getTextureManager().bindTexture(LOGO);
-            GuiUtil.drawSizedTextureModalRect(32, 17, 132, 32);
+            GuiBase.drawSizedTextureModalRect(32, 17, 132, 32);
             FontRenderer fr = gui.mc.fontRenderer;
             fr.drawString("Theora " + Theora.MOD_VERSION, (gui.w / 2) - fr.getStringWidth("Theora " + Theora.MOD_VERSION) / 2, 51, 0xbda5a5);
         }

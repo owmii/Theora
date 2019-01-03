@@ -25,7 +25,7 @@ public class PageButtons extends Page {
                     ItemStack stack = section.stack;
                     Button button = new Button(index + 20, gui.x + 13 + j * 29, gui.y + 13 + i * 29).setIcon(stack, 1.25f, true)
                             .setName(section.name.isEmpty() ? section.stack.getDisplayName() : section.name, 0).setDim(24, 24)
-                            .setBg(GuiBook.BOOK_TEXTURE, gui.w, 34, false).setSound(TheoraSounds.PAGE_FLIP);
+                            .setBg(gui.bg, gui.w, 34, false).setSound(TheoraSounds.PAGE_FLIP);
                     gui.getButtonList().add(button);
                 }
             }

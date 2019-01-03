@@ -2,11 +2,9 @@ package xieao.theora.client.gui.book;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import xieao.lib.gui.GuiBase;
 import xieao.lib.gui.button.Button;
 import xieao.theora.Theora;
 import xieao.theora.common.TheoraSounds;
@@ -19,21 +17,21 @@ import java.util.Arrays;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public class GuiBook extends GuiScreen {
+public class GuiBook extends GuiBase {
 
-    public static final ResourceLocation BOOK_TEXTURE = Theora.location("textures/gui/book/background.png");
     public static GuiBook instance = new GuiBook();
 
     @Nullable
     public GuiBook prevGui;
 
-    public int x, y, w = 196, h = 230;
     public final Entry entry;
     public final Page page;
     public int curPage;
     private Button[] buttons = new Button[4];
 
     public GuiBook(Entry entry, int index) {
+        super(196, 230);
+        this.bg = Theora.location(PATH + "book/background.png");
         this.entry = entry;
         this.page = entry.getPage(index);
         this.curPage = index;
@@ -45,12 +43,11 @@ public class GuiBook extends GuiScreen {
 
     @Override
     public void initGui() {
-        this.x = (this.width - this.w) / 2;
-        this.y = (this.height - this.h) / 2;
-        this.buttons[0] = new Button(0, this.x - 20, this.y + 32).setIcon(BOOK_TEXTURE, 15, 15, 196, 81, true, 0xffffff).setSound(TheoraSounds.PAGE_FLIP);
-        this.buttons[1] = new Button(1, this.x - 20, this.y + 32 + 18).setIcon(BOOK_TEXTURE, 14, 13, 196, 96, true, 0xffffff).setSound(TheoraSounds.PAGE_FLIP);
-        this.buttons[2] = new Button(2, this.x + this.w, this.y + this.h - 32).setIcon(BOOK_TEXTURE, 12, 23, 208, 58, true, 0xffffff).setSound(TheoraSounds.PAGE_FLIP);
-        this.buttons[3] = new Button(3, this.x - 20, this.y + this.h - 32).setIcon(BOOK_TEXTURE, 12, 23, 196, 58, true, 0xffffff).setSound(TheoraSounds.PAGE_FLIP);
+        super.initGui();
+        this.buttons[0] = new Button(0, this.x - 20, this.y + 32).setIcon(this.bg, 15, 15, 196, 81, true, 0xffffff).setSound(TheoraSounds.PAGE_FLIP);
+        this.buttons[1] = new Button(1, this.x - 20, this.y + 32 + 18).setIcon(this.bg, 14, 13, 196, 96, true, 0xffffff).setSound(TheoraSounds.PAGE_FLIP);
+        this.buttons[2] = new Button(2, this.x + this.w, this.y + this.h - 32).setIcon(this.bg, 12, 23, 208, 58, true, 0xffffff).setSound(TheoraSounds.PAGE_FLIP);
+        this.buttons[3] = new Button(3, this.x - 20, this.y + this.h - 32).setIcon(this.bg, 12, 23, 196, 58, true, 0xffffff).setSound(TheoraSounds.PAGE_FLIP);
         this.buttonList.addAll(Arrays.asList(this.buttons));
         this.page.initGui(this);
         instance = this;
@@ -94,19 +91,8 @@ public class GuiBook extends GuiScreen {
     }
 
     @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        drawDefaultBackground();
-        GlStateManager.pushMatrix();
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.translate(this.x, this.y, 0.0D);
-        this.mc.getTextureManager().bindTexture(BOOK_TEXTURE);
-        drawTexturedModalRect(0, 0, 0, 0, this.w, this.h);
+    public void drawForeground(int mouseX, int mouseY, float partialTicks) {
         this.page.draw(this, mouseX, mouseY, partialTicks);
-        GlStateManager.disableBlend();
-        GlStateManager.popMatrix();
-        super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
     @Override

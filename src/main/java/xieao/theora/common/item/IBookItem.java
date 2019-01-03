@@ -2,7 +2,7 @@ package xieao.theora.common.item;
 
 import org.apache.commons.lang3.tuple.Pair;
 import xieao.lib.item.ItemBase;
-import xieao.theora.common.lib.book.Entry;
+import xieao.theora.common.book.Entry;
 
 import javax.annotation.Nullable;
 

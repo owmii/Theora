@@ -5,8 +5,8 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import xieao.lib.block.TileBase;
-import xieao.theora.common.lib.multiblock.IMultiBlockBuilder;
-import xieao.theora.common.lib.multiblock.IMultiBlockPart;
+import xieao.theora.common.multiblock.IMultiBlockBuilder;
+import xieao.theora.common.multiblock.IMultiBlockPart;
 
 import javax.annotation.Nullable;
 

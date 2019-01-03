@@ -16,7 +16,7 @@ ext {
 }
 
 version = onelib.mc_version + "-" + mod_version
-group = "xieao.theora"
+group = "xieao"
 archivesBaseName = "theora"
 
 sourceCompatibility = targetCompatibility = '1.8'

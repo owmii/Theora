@@ -9,10 +9,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.lib.gui.button.Button;
 import xieao.theora.Theora;
-import xieao.theora.common.lib.TheoraSounds;
-import xieao.theora.common.lib.book.Entry;
-import xieao.theora.common.lib.book.TheoraBook;
-import xieao.theora.common.lib.book.page.Page;
+import xieao.theora.common.TheoraSounds;
+import xieao.theora.common.book.Entry;
+import xieao.theora.common.book.TheoraBook;
+import xieao.theora.common.book.page.Page;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;

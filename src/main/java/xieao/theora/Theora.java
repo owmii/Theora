@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import xieao.lib.network.NetworkWrapper;
 import xieao.lib.proxy.IProxy;
 import xieao.theora.common.block.TheoraBlocks;
 
@@ -31,14 +32,15 @@ public class Theora {
     @Mod.Instance(MOD_ID)
     public static Theora instance;
 
-    public static final Logger LOG = LogManager.getLogger(MOD_ID);
-
+    public static final NetworkWrapper NET = new NetworkWrapper(MOD_ID);
     public static final CreativeTabs TAB = new CreativeTabs(MOD_ID) {
         @Override
         public ItemStack getTabIconItem() {
             return new ItemStack(TheoraBlocks.SHROOM);
         }
     };
+
+    public static final Logger LOG = LogManager.getLogger(MOD_ID);
 
     @Mod.EventHandler
     public static void preInit(FMLPreInitializationEvent event) {

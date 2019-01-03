@@ -13,7 +13,6 @@ import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.player.ability.Abilities;
 import xieao.theora.api.player.ability.Ability;
 import xieao.theora.api.player.data.PlayerData;
-import xieao.theora.network.TheoraNetwork;
 import xieao.theora.network.packets.PacketAbilityStatus;
 
 import java.util.Map;
@@ -47,7 +46,7 @@ public class GuiAbilities extends GuiScreen {
                     if (mousePressed(this.x + 17 + j * 35, this.y + 17 + i * 35, mouseX, mouseY)) {
                         if (mouseButton == 0) {
                             this.status[index] = !this.status[index];
-                            TheoraNetwork.NET.sendToServer(new PacketAbilityStatus(Ability.getAbility(this.regNames[index]), this.status[index]));
+                            Theora.NET.sendToServer(new PacketAbilityStatus(Ability.getAbility(this.regNames[index]), this.status[index]));
                         }
                     }
                 }

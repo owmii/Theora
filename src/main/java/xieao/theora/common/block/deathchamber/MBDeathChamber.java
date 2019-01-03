@@ -1,7 +1,7 @@
 package xieao.theora.common.block.deathchamber;
 
 import xieao.theora.common.block.TheoraBlocks;
-import xieao.theora.common.lib.multiblock.IMultiBlock;
+import xieao.theora.common.multiblock.IMultiBlock;
 
 public class MBDeathChamber implements IMultiBlock<TileDeathChamber> {
 

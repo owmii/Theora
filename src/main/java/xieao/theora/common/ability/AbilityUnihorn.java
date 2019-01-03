@@ -14,11 +14,11 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import xieao.theora.Theora;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.player.ability.Abilities;
 import xieao.theora.api.player.ability.Ability;
 import xieao.theora.api.player.data.PlayerData;
-import xieao.theora.network.TheoraNetwork;
 import xieao.theora.network.packets.PacketSyncFlight;
 
 @Mod.EventBusSubscriber
@@ -43,7 +43,7 @@ public class AbilityUnihorn extends Ability {
                             player.capabilities.allowFlying = true;
                             if (!data.allowFlying) {
                                 data.allowFlying = true;
-                                TheoraNetwork.NET.sendTo(new PacketSyncFlight(true), (EntityPlayerMP) player);
+                                Theora.NET.sendTo(new PacketSyncFlight(true), (EntityPlayerMP) player);
                             }
                             flag = true;
                         }
@@ -54,7 +54,7 @@ public class AbilityUnihorn extends Ability {
                             if (!isSpecial) {
                                 player.capabilities.allowFlying = false;
                                 player.capabilities.isFlying = false;
-                                TheoraNetwork.NET.sendTo(new PacketSyncFlight(false), (EntityPlayerMP) player);
+                                Theora.NET.sendTo(new PacketSyncFlight(false), (EntityPlayerMP) player);
                             }
                             data.allowFlying = false;
                         }

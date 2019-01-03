@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import xieao.lib.item.ItemBase;
 import xieao.theora.api.recipe.liquidinteract.ILiquidInteractRecipe;
 import xieao.theora.common.entity.EntityInteractor;
-import xieao.theora.common.lib.recipe.RecipeHandler;
+import xieao.theora.common.item.recipe.RecipeHandler;
 import xieao.theora.common.liquid.TheoraLiquids;
 
 public class ItemGliophin extends ItemBase {

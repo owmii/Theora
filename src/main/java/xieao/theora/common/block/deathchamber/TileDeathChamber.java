@@ -25,9 +25,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.theora.api.item.slate.*;
 import xieao.theora.api.liquid.LiquidSlot;
 import xieao.theora.common.block.TileInvLiquidContainer;
-import xieao.theora.common.lib.multiblock.IMultiBlock;
-import xieao.theora.common.lib.multiblock.IMultiBlockBuilder;
 import xieao.theora.common.liquid.TheoraLiquids;
+import xieao.theora.common.multiblock.IMultiBlock;
+import xieao.theora.common.multiblock.IMultiBlockBuilder;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

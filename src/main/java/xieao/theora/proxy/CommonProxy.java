@@ -14,19 +14,19 @@ import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.liquid.LiquidContainerCapability;
 import xieao.theora.api.player.data.PlayerDataCapability;
 import xieao.theora.common.ability.TheoraAbilities;
+import xieao.theora.common.book.TheoraBook;
+import xieao.theora.common.config.Config;
 import xieao.theora.common.entity.TheoraEntities;
-import xieao.theora.common.lib.book.TheoraBook;
-import xieao.theora.common.lib.config.Config;
-import xieao.theora.common.lib.recipe.BindingRecipes;
-import xieao.theora.common.lib.recipe.CauldronRecipes;
-import xieao.theora.common.lib.recipe.LiquidInteractRecipes;
-import xieao.theora.common.lib.recipe.RecipeHandler;
-import xieao.theora.common.lib.recipe.crafting.CraftingRecipes;
-import xieao.theora.common.lib.trade.PigZomieTrades;
+import xieao.theora.common.item.recipe.BindingRecipes;
+import xieao.theora.common.item.recipe.CauldronRecipes;
+import xieao.theora.common.item.recipe.LiquidInteractRecipes;
+import xieao.theora.common.item.recipe.RecipeHandler;
+import xieao.theora.common.item.recipe.crafting.CraftingRecipes;
 import xieao.theora.common.liquid.TheoraLiquids;
+import xieao.theora.common.trade.PigZomieTrades;
 import xieao.theora.common.world.gen.WorldGenShrooms;
 import xieao.theora.network.GuiHandler;
-import xieao.theora.network.TheoraNetwork;
+import xieao.theora.network.TheoraPackets;
 
 import static xieao.theora.common.block.TheoraBlocks.BLOCKS;
 import static xieao.theora.common.item.TheoraItems.ITEMS;
@@ -36,7 +36,7 @@ public class CommonProxy implements IProxy {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         Config.preInit(event);
-        TheoraNetwork.register();
+        TheoraPackets.register();
         PlayerDataCapability.register();
         LiquidContainerCapability.register();
 

@@ -11,10 +11,8 @@ import xieao.lib.util.ColorUtil;
 import xieao.theora.Theora;
 import xieao.theora.api.trade.pigzombie.PigZombieTrade;
 import xieao.theora.common.item.TheoraItems;
-import xieao.theora.network.TheoraNetwork;
 import xieao.theora.network.packets.PacketPigZombieTradBuy;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -66,7 +64,7 @@ public class GuiPigZombieTrade extends GuiScreen {
                     this.currTrade--;
                 break;
             case 12:
-                TheoraNetwork.NET.sendToServer(new PacketPigZombieTradBuy(this.trades.get(this.currTrade).getRegistryName()));
+                Theora.NET.sendToServer(new PacketPigZombieTradBuy(this.trades.get(this.currTrade).getRegistryName()));
                 break;
         }
     }
@@ -76,7 +74,7 @@ public class GuiPigZombieTrade extends GuiScreen {
         drawDefaultBackground();
         if (!this.trades.isEmpty()) {
             GlStateManager.pushMatrix();
-            ColorUtil.glColorNormal();
+            ColorUtil.glNormal();
             GlStateManager.enableBlend();
             GlStateManager.translate(this.x, this.y, 0.0D);
             this.mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
@@ -85,7 +83,7 @@ public class GuiPigZombieTrade extends GuiScreen {
             drawTexturedModalRect(87, 11, this.w, 0, 24, 20);
             ColorUtil.glColor(0xffffff, this.currTrade > 0 ? 1.0F : 0.3F);
             drawTexturedModalRect(29, 11, this.w + 24, 0, 24, 20);
-            ColorUtil.glColorNormal();
+            ColorUtil.glNormal();
             PigZombieTrade trade = this.trades.get(this.currTrade);
             ItemStack stack = trade.itemToSell;
             RenderItem renderItem = this.mc.getRenderItem();
@@ -117,7 +115,7 @@ public class GuiPigZombieTrade extends GuiScreen {
     }
 
     @Override
-    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    protected void keyTyped(char typedChar, int keyCode) {
         if (keyCode == 1 || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode)) {
             this.mc.player.closeScreen();
         }

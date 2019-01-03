@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import xieao.lib.item.ItemBase;
 import xieao.lib.util.NBTUtil;
-import xieao.theora.common.lib.TheoraSounds;
+import xieao.theora.common.TheoraSounds;
 
 import javax.annotation.Nullable;
 import java.util.List;

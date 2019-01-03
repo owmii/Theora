@@ -16,7 +16,7 @@ import xieao.theora.api.liquid.LiquidSlot;
 import xieao.theora.api.player.ability.Ability;
 import xieao.theora.api.recipe.binding.IBindingRecipe;
 import xieao.theora.common.block.TileLiquidContainer;
-import xieao.theora.common.lib.recipe.RecipeHandler;
+import xieao.theora.common.item.recipe.RecipeHandler;
 import xieao.theora.common.liquid.TheoraLiquids;
 
 import javax.annotation.Nullable;

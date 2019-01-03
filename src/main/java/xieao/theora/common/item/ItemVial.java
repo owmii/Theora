@@ -18,7 +18,7 @@ import xieao.theora.api.liquid.*;
 import xieao.theora.api.liquid.LiquidSlot.TransferType;
 import xieao.theora.api.recipe.liquidinteract.ILiquidInteractRecipe;
 import xieao.theora.common.entity.EntityInteractor;
-import xieao.theora.common.lib.recipe.RecipeHandler;
+import xieao.theora.common.item.recipe.RecipeHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;

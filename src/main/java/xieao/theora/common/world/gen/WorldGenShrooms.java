@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import xieao.lib.util.WorldUtil;
 import xieao.theora.common.block.TheoraBlocks;
 import xieao.theora.common.block.misc.BlockShroom;
-import xieao.theora.common.lib.config.ConfigWorldGen;
+import xieao.theora.common.config.ConfigWorldGen;
 
 import java.util.ArrayList;
 import java.util.List;

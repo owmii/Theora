@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
-import xieao.theora.network.TheoraNetwork;
+import xieao.theora.Theora;
 import xieao.theora.network.packets.PacketRequestAbilitiesGui;
 
 @SideOnly(Side.CLIENT)
@@ -28,7 +28,7 @@ public class KeyHandler {
     public static void handleKeys(TickEvent.PlayerTickEvent event) {
         if (event.side == Side.CLIENT && event.phase == TickEvent.Phase.START) {
             if (KEY_ABILITIES.isPressed()) {
-                TheoraNetwork.NET.sendToServer(new PacketRequestAbilitiesGui());
+                Theora.NET.sendToServer(new PacketRequestAbilitiesGui());
             }
         }
     }

@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import xieao.theora.api.liquid.LiquidSlot;
 import xieao.theora.common.block.TileLiquidContainer;
 import xieao.theora.common.block.misc.BlockKnowledgeStone;
-import xieao.theora.common.lib.config.ConfigMain;
+import xieao.theora.common.config.ConfigMain;
 import xieao.theora.common.liquid.TheoraLiquids;
 
 public class TileRunicUrn extends TileLiquidContainer implements ITickable {

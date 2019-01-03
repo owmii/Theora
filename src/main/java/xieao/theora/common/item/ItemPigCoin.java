@@ -9,12 +9,12 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import xieao.lib.item.ItemBase;
 import xieao.lib.util.NBTUtil;
+import xieao.theora.Theora;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.player.ability.Abilities;
 import xieao.theora.api.player.data.PlayerData;
 import xieao.theora.api.trade.pigzombie.PigZombieTradeHandler;
 import xieao.theora.common.ability.TheoraAbilities;
-import xieao.theora.network.TheoraNetwork;
 import xieao.theora.network.packets.PacketOpenPigZombieTradeGui;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class ItemPigCoin extends ItemBase {
                 Abilities abilities = data.getAbilities();
                 if (abilities.hasAbility(TheoraAbilities.ME_PIG)) {
                     List<ResourceLocation> sortedTrades = PigZombieTradeHandler.getSortedTrades(pigZombie, pigZombie.world.rand, 2, 5);
-                    TheoraNetwork.NET.sendTo(new PacketOpenPigZombieTradeGui(pigZombie.getUniqueID(), sortedTrades), (EntityPlayerMP) playerIn);
+                    Theora.NET.sendTo(new PacketOpenPigZombieTradeGui(pigZombie.getUniqueID(), sortedTrades), (EntityPlayerMP) playerIn);
                     return true;
                 }
             }

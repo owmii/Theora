@@ -26,7 +26,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void attachCapability(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof EntityPlayer) {
-            event.addCapability(Theora.location("player.data"), new PlayerDataProvider());
+            event.addCapability(Theora.assets("player.data"), new PlayerDataProvider());
         }
     }
 

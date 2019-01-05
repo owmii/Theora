@@ -19,8 +19,8 @@ import java.awt.*;
 @SideOnly(Side.CLIENT)
 public class RenderBindingCenter extends TESRBase<TileBindingCenter> {
 
-    public static final ResourceLocation RUNS_TEXTURE = Theora.location("textures/misc/rune_circle_1.png");
-    public static final ResourceLocation AURA_TEXTURE = Theora.location("textures/tesr/ability_aura.png");
+    public static final ResourceLocation RUNS_TEXTURE = Theora.assets("textures/misc/rune_circle_1.png");
+    public static final ResourceLocation AURA_TEXTURE = Theora.assets("textures/tesr/ability_aura.png");
 
     @Override
     public void render(TileBindingCenter te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {

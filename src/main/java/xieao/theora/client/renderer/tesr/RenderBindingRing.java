@@ -14,7 +14,7 @@ import xieao.theora.common.block.binding.TileBindingRing;
 @SideOnly(Side.CLIENT)
 public class RenderBindingRing extends TESRBase<TileBindingRing> {
 
-    public static final ResourceLocation RING_TEXTURE = Theora.location("textures/tesr/binding_ring.png");
+    public static final ResourceLocation RING_TEXTURE = Theora.assets("textures/tesr/binding_ring.png");
 
     @Override
     public void render(TileBindingRing te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {

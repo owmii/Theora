@@ -15,7 +15,7 @@ public class RecipeEmptyLiquidUrn extends ShapelessOreRecipe {
 
 
     public RecipeEmptyLiquidUrn(String location, ItemStack stack) {
-        super(Theora.location(location), stack, stack);
+        super(Theora.assets(location), stack, stack);
         setRegistryName(location);
     }
 

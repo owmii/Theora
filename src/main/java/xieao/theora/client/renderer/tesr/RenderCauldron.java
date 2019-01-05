@@ -14,8 +14,8 @@ import xieao.theora.common.block.cauldron.TileCauldron;
 
 public class RenderCauldron extends TESRBase<TileCauldron> {
 
-    public static final ResourceLocation FILL_0 = Theora.location("textures/misc/fill/cauldron_fill_0.png");
-    public static final ResourceLocation FILL_1 = Theora.location("textures/misc/fill/cauldron_fill_1.png");
+    public static final ResourceLocation FILL_0 = Theora.assets("textures/misc/fill/cauldron_fill_0.png");
+    public static final ResourceLocation FILL_1 = Theora.assets("textures/misc/fill/cauldron_fill_1.png");
 
     @Override
     public void render(TileCauldron te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {

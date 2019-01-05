@@ -9,7 +9,7 @@ import xieao.theora.common.block.deathchamber.TileDeathChamberWall;
 
 public class RenderDeathChamberWall extends TESRBase<TileDeathChamberWall> {
 
-    protected static final ResourceLocation CUBE_TEXTURE = Theora.location("textures/tesr/death_chamber_wall.png");
+    protected static final ResourceLocation CUBE_TEXTURE = Theora.assets("textures/tesr/death_chamber_wall.png");
 
     @Override
     public void render(TileDeathChamberWall te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {

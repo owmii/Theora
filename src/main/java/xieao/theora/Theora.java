@@ -15,30 +15,27 @@ import xieao.lib.proxy.IProxy;
 import xieao.theora.common.block.TheoraBlocks;
 
 @SuppressWarnings("NullableProblems")
-@Mod(name = Theora.MOD_NAME, modid = Theora.MOD_ID, version = Theora.MOD_VERSION, dependencies = Theora.DEPENDENCIES)
+@Mod(name = Theora.MOD_NAME, modid = Theora.MOD_ID, version = Theora.MOD_VERSION, dependencies = "required-after:onelib")
 public class Theora {
 
     public static final String MOD_NAME = "Theora";
     public static final String MOD_ID = "theora";
     public static final String MOD_VERSION = "@VERSION@";
-    public static final String DEPENDENCIES = "required-after:onelib";
-
-    public static final String SIDE_SERVER = "xieao.theora.proxy.CommonProxy";
-    public static final String SIDE_CLIENT = "xieao.theora.proxy.ClientProxy";
-
-    @SidedProxy(serverSide = SIDE_SERVER, clientSide = SIDE_CLIENT)
-    public static IProxy proxy;
-
-    @Mod.Instance(MOD_ID)
-    public static Theora instance;
 
     public static final NetworkWrapper NET = new NetworkWrapper(MOD_ID);
+
     public static final CreativeTabs TAB = new CreativeTabs(MOD_ID) {
         @Override
         public ItemStack getTabIconItem() {
             return new ItemStack(TheoraBlocks.SHROOM);
         }
     };
+
+    @SidedProxy(serverSide = "xieao.theora.proxy.CommonProxy", clientSide = "xieao.theora.proxy.ClientProxy")
+    public static IProxy proxy;
+
+    @Mod.Instance(MOD_ID)
+    public static Theora instance;
 
     public static final Logger LOG = LogManager.getLogger(MOD_ID);
 
@@ -57,7 +54,7 @@ public class Theora {
         proxy.postInit(event);
     }
 
-    public static ResourceLocation location(String path) {
+    public static ResourceLocation assets(String path) {
         return new ResourceLocation(MOD_ID, path);
     }
 

@@ -20,7 +20,7 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public class GuiAbilities extends GuiScreen {
 
-    public static final ResourceLocation BACKGROUND_TEXTURE = Theora.location("textures/gui/ability/background.png");
+    public static final ResourceLocation BACKGROUND_TEXTURE = Theora.assets("textures/gui/ability/background.png");
 
     private final EntityPlayer player;
     private int x, y, w = 256, h = 234;

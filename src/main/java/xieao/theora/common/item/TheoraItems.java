@@ -1,13 +1,9 @@
 package xieao.theora.common.item;
 
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
-import xieao.lib.block.IGenericBlock;
 import xieao.lib.item.IGenericItem;
 import xieao.lib.item.ItemBase;
 import xieao.theora.Theora;
-import xieao.theora.common.block.TheoraBlocks;
 import xieao.theora.common.item.slates.*;
 
 import java.util.ArrayList;
@@ -17,58 +13,25 @@ public class TheoraItems {
 
     public static final List<Item> ITEMS = new ArrayList<>();
 
-    public static final ItemBook BOOK;
-    public static final ItemShroomBit SHROOM_BIT;
-    public static final ItemBase GLIOPHIN_STICK;
-    public static final ItemGliophin GLIOPHIN;
-    public static final ItemWand WAND;
-    public static final ItemLump LUMP;
-    public static final ItemVial VIAL;
-    public static final ItemPigCoin PIG_COIN;
-    public static final ItemPigCoinBag PIG_COIN_BAG;
-    public static final ItemWitherTear WITHER_TEAR;
-    public static final ItemSoulEgg SOUL_EGG;
-    public static final ItemBase EMPTY_SLATE;
-    public static final ItemSlateSummoning SUMMONING_SLATE;
-    public static final ItemSlateLooting LOOTING_SLATE;
-    public static final ItemSlateEfficiency EFFICIENCY_SLATE;
-    public static final ItemSlateEquipmentDrop EQUIPMENT_DROP_SLATE;
-    public static final ItemSlateXP XP_SLATE;
+    public static final Item BOOK = register(new ItemBook(), "book");
+    public static final Item SHROOM_BIT = register(new ItemShroomBit(), "shroombit");
+    public static final Item GLIOPHIN_STICK = register(new ItemBase(), "gliophinstick");
+    public static final Item GLIOPHIN = register(new ItemGliophin(), "gliophin");
+    public static final Item WAND = register(new ItemWand(), "wand");
+    public static final Item LUMP = register(new ItemLump(), "lump");
+    public static final Item VIAL = register(new ItemVial(), "vial");
+    public static final Item PIG_COIN = register(new ItemPigCoin(), "pigcoin");
+    public static final Item PIG_COIN_BAG = register(new ItemPigCoinBag(), "pigcoinbag");
+    public static final Item WITHER_TEAR = register(new ItemWitherTear(), "withertear");
+    public static final Item SOUL_EGG = register(new ItemSoulEgg(), "soulegg");
+    public static final Item EMPTY_SLATE = register(new ItemBase(), "emptyslate");
+    public static final Item SUMMONING_SLATE = register(new ItemSlateSummoning(), "summoningslate");
+    public static final Item LOOTING_SLATE = register(new ItemSlateLooting(), "lootingslate");
+    public static final Item EFFICIENCY_SLATE = register(new ItemSlateEfficiency(), "efficiencyslate");
+    public static final Item EQUIPMENT_DROP_SLATE = register(new ItemSlateEquipmentDrop(), "equipmentdropslate");
+    public static final Item XP_SLATE = register(new ItemSlateXP(), "xpslate");
 
-    static {
-        registerItemBlocks();
-        BOOK = register(new ItemBook(), "book");
-        SHROOM_BIT = register(new ItemShroomBit(), "shroombit");
-        GLIOPHIN_STICK = register(new ItemBase(), "gliophinstick");
-        GLIOPHIN = register(new ItemGliophin(), "gliophin");
-        WAND = register(new ItemWand(), "wand");
-        LUMP = register(new ItemLump(), "lump");
-        VIAL = register(new ItemVial(), "vial");
-        PIG_COIN = register(new ItemPigCoin(), "pigcoin");
-        PIG_COIN_BAG = register(new ItemPigCoinBag(), "pigcoinbag");
-        WITHER_TEAR = register(new ItemWitherTear(), "withertear");
-        SOUL_EGG = register(new ItemSoulEgg(), "soulegg");
-        EMPTY_SLATE = register(new ItemBase(), "emptyslate");
-        SUMMONING_SLATE = register(new ItemSlateSummoning(), "summoningslate");
-        LOOTING_SLATE = register(new ItemSlateLooting(), "lootingslate");
-        EFFICIENCY_SLATE = register(new ItemSlateEfficiency(), "efficiencyslate");
-        EQUIPMENT_DROP_SLATE = register(new ItemSlateEquipmentDrop(), "equipmentdropslate");
-        XP_SLATE = register(new ItemSlateXP(), "xpslate");
-    }
-
-    static void registerItemBlocks() {
-        for (Block block : TheoraBlocks.BLOCKS) {
-            if (block instanceof IGenericBlock) {
-                IGenericBlock block1 = (IGenericBlock) block;
-                ResourceLocation location = block.getRegistryName();
-                if (location != null) {
-                    register(block1.getItemBlock(), location.toString());
-                }
-            }
-        }
-    }
-
-    static <T extends Item & IGenericItem> T register(T item, String name) {
+    public static <T extends Item & IGenericItem> T register(T item, String name) {
         item.setRegistryName(name);
         item.setUnlocalizedName(name);
         item.setCreativeTab(Theora.TAB);

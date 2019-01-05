@@ -20,7 +20,7 @@ import java.util.List;
 
 public class Page {
 
-    public static final ResourceLocation LOGO = Theora.location("textures/gui/book/logo.png");
+    public static final ResourceLocation LOGO = Theora.assets("textures/gui/book/logo.png");
 
     public String title = "";
     public Entry parentEntry = new Entry();

@@ -161,7 +161,7 @@ public class ItemWand extends ItemBase implements IWand {
         }
     }
 
-    public static final ResourceLocation HILIGHT_TEXTURE = Theora.location("textures/misc/wand_hilight.png");
+    public static final ResourceLocation HILIGHT_TEXTURE = Theora.assets("textures/misc/wand_hilight.png");
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)

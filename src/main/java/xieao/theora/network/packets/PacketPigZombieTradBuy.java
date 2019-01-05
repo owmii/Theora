@@ -27,7 +27,7 @@ public class PacketPigZombieTradBuy implements IPacket<PacketPigZombieTradBuy> {
     }
 
     public PacketPigZombieTradBuy() {
-        this(Theora.location("empty"));
+        this(Theora.assets("empty"));
     }
 
     @Override

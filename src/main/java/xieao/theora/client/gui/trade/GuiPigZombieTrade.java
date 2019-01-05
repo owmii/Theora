@@ -19,7 +19,7 @@ import java.util.UUID;
 
 public class GuiPigZombieTrade extends GuiScreen {
 
-    private static final ResourceLocation BACKGROUND_TEXTURE = Theora.location("textures/instance/pig_zombie_trade.png");
+    private static final ResourceLocation BACKGROUND_TEXTURE = Theora.assets("textures/instance/pig_zombie_trade.png");
 
     private UUID pigZombieId;
     private final List<PigZombieTrade> trades;

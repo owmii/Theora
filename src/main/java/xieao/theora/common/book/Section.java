@@ -19,20 +19,20 @@ public class Section {
 
 
     public Section(ItemStack stack) {
-        this.texture = Theora.location("null");
+        this.texture = Theora.assets("null");
         this.stack = stack;
         this.name = "";
     }
 
     public Section(String name, ItemStack stack) {
-        this.texture = Theora.location("null");
+        this.texture = Theora.assets("null");
         setName(name);
         this.stack = stack;
     }
 
     public Section(String name) {
         setName(name);
-        this.texture = Theora.location("textures/gui/book/categories/" + name + ".png");
+        this.texture = Theora.assets("textures/gui/book/categories/" + name + ".png");
     }
 
     public Section addEntry(Page... pages) {

@@ -15,6 +15,6 @@ public class TheoraTextures {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void register(TextureStitchEvent.Pre event) {
-        LIQUID_INTERACT_OV = event.getMap().registerSprite(Theora.location("misc/liquid_interact_ov"));
+        LIQUID_INTERACT_OV = event.getMap().registerSprite(Theora.assets("misc/liquid_interact_ov"));
     }
 }

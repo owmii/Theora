@@ -31,7 +31,7 @@ public class GuiBook extends GuiBase {
 
     public GuiBook(Entry entry, int index) {
         super(196, 230);
-        this.bg = Theora.location(PATH + "book/background.png");
+        this.bg = Theora.assets(PATH + "book/background.png");
         this.entry = entry;
         this.page = entry.getPage(index);
         this.curPage = index;

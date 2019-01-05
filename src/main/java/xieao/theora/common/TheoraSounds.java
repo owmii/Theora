@@ -6,14 +6,14 @@ import xieao.theora.Theora;
 
 public class TheoraSounds {
 
-    public static final SoundEvent BLOCK_TRANSFORMED = new SoundEvent(Theora.location("block.transformed"));
-    public static final SoundEvent WHOOSH_FIRE = new SoundEvent(Theora.location("whoosh.fire"));
-    public static final SoundEvent WHOOSH_SMOKE = new SoundEvent(Theora.location("whoosh.smoke"));
-    public static final SoundEvent POK = new SoundEvent(Theora.location("pok"));
-    public static final SoundEvent LIQUID_DRIP = new SoundEvent(Theora.location("liquid.drip"));
-    public static final SoundEvent PEEL = new SoundEvent(Theora.location("peel"));
-    public static final SoundEvent COINS_COLLECT = new SoundEvent(Theora.location("coins.collect"));
-    public static final SoundEvent PAGE_FLIP = new SoundEvent(Theora.location("page.flip"));
+    public static final SoundEvent BLOCK_TRANSFORMED = new SoundEvent(Theora.assets("block.transformed"));
+    public static final SoundEvent WHOOSH_FIRE = new SoundEvent(Theora.assets("whoosh.fire"));
+    public static final SoundEvent WHOOSH_SMOKE = new SoundEvent(Theora.assets("whoosh.smoke"));
+    public static final SoundEvent POK = new SoundEvent(Theora.assets("pok"));
+    public static final SoundEvent LIQUID_DRIP = new SoundEvent(Theora.assets("liquid.drip"));
+    public static final SoundEvent PEEL = new SoundEvent(Theora.assets("peel"));
+    public static final SoundEvent COINS_COLLECT = new SoundEvent(Theora.assets("coins.collect"));
+    public static final SoundEvent PAGE_FLIP = new SoundEvent(Theora.assets("page.flip"));
 
 
     public String[] register() {

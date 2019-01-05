@@ -13,8 +13,8 @@ public class RenderDeathChamber extends TESRBase<TileDeathChamber> {
 
     protected static final ModelDeathChamber MODEL_DEATH_CHAMBER = new ModelDeathChamber();
 
-    protected static final ResourceLocation CUBE_TEXTURE = Theora.location("textures/tesr/death_chamber_cube.png");
-    protected static final ResourceLocation MAIN_TEXTURE = Theora.location("textures/tesr/death_chamber.png");
+    protected static final ResourceLocation CUBE_TEXTURE = Theora.assets("textures/tesr/death_chamber_cube.png");
+    protected static final ResourceLocation MAIN_TEXTURE = Theora.assets("textures/tesr/death_chamber.png");
 
     @Override
     public void render(TileDeathChamber te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {

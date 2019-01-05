@@ -12,7 +12,7 @@ import xieao.theora.common.block.liquidurn.TileLiquidUrn;
 
 public class RenderLiquidUrn extends TESRBase<TileLiquidUrn> {
 
-    public static final ResourceLocation OV = Theora.location("textures/misc/liquid_urn_ov.png");
+    public static final ResourceLocation OV = Theora.assets("textures/misc/liquid_urn_ov.png");
 
     @Override
     public void render(TileLiquidUrn te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {

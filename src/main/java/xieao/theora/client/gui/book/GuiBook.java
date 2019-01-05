@@ -55,9 +55,9 @@ public class GuiBook extends GuiBase {
     }
 
     public void refreshButtons() {
-        int i = this.entry.pages.length;
         this.buttons[0].visible = !TheoraBook.HOME.equals(this.entry);
         this.buttons[1].visible = !TheoraBook.HOME.equals(this.entry) && this.prevGui != null;
+        int i = this.entry.pages.length;
         this.buttons[2].visible = i > 1 && this.curPage < i - 1;
         this.buttons[3].visible = i > 1 && this.curPage > 0;
     }

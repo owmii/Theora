@@ -15,7 +15,7 @@ ext {
     onelib = project(":OneLib")
 }
 
-version = onelib.mc_version + "-" + mod_version
+version = "${onelib.mc_version}-${mod_version}"
 group = "xieao"
 archivesBaseName = "theora"
 
@@ -25,13 +25,13 @@ compileJava {
 }
 
 minecraft {
-    version = onelib.mc_version + "-" + onelib.forge_version
-    mappings = onelib.mcp_mappings
+    version = "${onelib.mc_version}-${onelib.forge_version}"
+    mappings = "${onelib.mcp_mappings}"
     runDir = "run"
     makeObfSourceJar = false
     replaceIn 'Theora.java'
-    replace "@VERSION@", project.version
-    replace 'required-after:onelib', "required-after:onelib@[${onelib.mc_version}-${onelib.mod_version},)"
+    replace "@VERSION@", "${mod_version}"
+    replace 'required-after:onelib', "required-after:onelib@[${onelib.mod_version},)"
 }
 
 repositories {

@@ -11,7 +11,6 @@ import net.minecraft.util.NonNullList;
 import xieao.lib.block.BlockBase;
 import xieao.lib.item.IGenericItem;
 import xieao.lib.item.ItemBlockBase;
-import xieao.theora.common.item.ItemKnowledgeStone;
 
 public class BlockKnowledgeStone extends BlockBase {
 
@@ -24,7 +23,7 @@ public class BlockKnowledgeStone extends BlockBase {
     @Override
     @SuppressWarnings("unchecked")
     public <T extends ItemBlockBase & IGenericItem> T getItemBlock() {
-        return (T) new ItemKnowledgeStone(this);
+        return (T) new ItemBlockBase(this, Type.values());
     }
 
     @Override

@@ -22,6 +22,7 @@ public class Theora {
     public static final String MOD_ID = "theora";
     public static final String MOD_VERSION = "@VERSION@";
 
+    public static final Logger LOG = LogManager.getLogger(MOD_ID);
     public static final NetworkWrapper NET = new NetworkWrapper(MOD_ID);
 
     public static final CreativeTabs TAB = new CreativeTabs(MOD_ID) {
@@ -37,7 +38,6 @@ public class Theora {
     @Mod.Instance(MOD_ID)
     public static Theora instance;
 
-    public static final Logger LOG = LogManager.getLogger(MOD_ID);
 
     @Mod.EventHandler
     public static void preInit(FMLPreInitializationEvent event) {

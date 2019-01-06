@@ -33,10 +33,8 @@ public class TheoraBlocks {
     public static final Block ORB = register(new BlockOrb(), "orb");
     public static final Block LIQUID_URN = register(new BlockLiquidUrn(), "liquidurn");
     public static final Block RUNIC_URN = register(new BlockRunicUrn(), "runicurn");
-
     public static final Block BINDING_CENTER = register(new BlockBindingCenter(), "binding");
     public static final Block BINDING_RING = register(new BlockBindingRing(), "bindingring");
-
     public static final Block DEATH_CHAMBER = register(new BlockDeathChamber(), "deathchamber");
     public static final Block DEATH_CHAMBER_WALL = register(new BlockDeathChamberWall(), "deathchamberwall");
 
@@ -55,5 +53,4 @@ public class TheoraBlocks {
         TheoraItems.register(block.getItemBlock(), name);
         return block;
     }
-
 }

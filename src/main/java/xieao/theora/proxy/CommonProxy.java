@@ -1,13 +1,11 @@
 package xieao.theora.proxy;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import xieao.lib.proxy.IProxy;
+import xieao.lib.util.RegistryUtil;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.liquid.LiquidContainerCapability;
 import xieao.theora.api.player.data.PlayerDataCapability;
@@ -36,8 +34,8 @@ public class CommonProxy implements IProxy {
         PlayerDataCapability.register();
         LiquidContainerCapability.register();
 
-        ForgeRegistries.BLOCKS.registerAll(TheoraBlocks.BLOCKS.toArray(new Block[0]));
-        ForgeRegistries.ITEMS.registerAll(TheoraItems.ITEMS.toArray(new Item[0]));
+        RegistryUtil.registerBlocks(TheoraBlocks.BLOCKS);
+        RegistryUtil.registerItems(TheoraItems.ITEMS);
 
         TheoraLiquids.register();
         TheoraAbilities.register();

@@ -17,7 +17,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import xieao.lib.block.BlockPlant;
 import xieao.lib.item.IGenericItem;
 import xieao.lib.item.ItemBlockBase;
-import xieao.theora.common.item.ItemShroom;
 import xieao.theora.common.item.TheoraItems;
 
 import java.util.List;
@@ -66,7 +65,7 @@ public class BlockShroom extends BlockPlant implements IShearable {
     @Override
     @SuppressWarnings("unchecked")
     public <T extends ItemBlockBase & IGenericItem> T getItemBlock() {
-        return (T) new ItemShroom(this);
+        return (T) new ItemBlockBase(this, Type.values());
     }
 
     @Override

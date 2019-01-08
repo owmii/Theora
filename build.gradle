@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.0.67', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: project(":OneLib").fgg_version, changing: true
     }
 }
 
@@ -37,6 +37,7 @@ minecraft {
 
 dependencies {
     minecraft "net.minecraftforge.test:userdev:${onelib.mc_version}-${onelib.fg_version}"
+    compile onelib
 }
 
 processResources {

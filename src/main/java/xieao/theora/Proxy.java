@@ -6,16 +6,17 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xieao.lib.proxy.IProxy;
-import xieao.lib.util.RegistryUtil;
 import xieao.theora.block.TheoraBlocks;
 import xieao.theora.item.TheoraItems;
+
+import static xieao.lib.util.RegistryUtil.registerAll;
 
 public class Proxy implements IProxy {
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
-        RegistryUtil.registerAll(TheoraBlocks.BLOCKS);
-        RegistryUtil.registerAll(TheoraItems.ITEMS);
+        registerAll(TheoraBlocks.BLOCKS);
+        registerAll(TheoraItems.ITEMS);
     }
 
     @Override

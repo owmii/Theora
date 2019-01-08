@@ -11,7 +11,7 @@ import java.util.List;
 public class TheoraItems {
 
     public static final List<Item> ITEMS = new ArrayList<>(TheoraBlocks.ITEM_BLOCKS);
-    public static final Item.Builder BUILDER = new Item.Builder().group(Theora.MAIN);
+    public static final Item.Builder MAIN = new Item.Builder().group(Theora.MAIN);
 
 
     static <T extends Item & IItem> T register(String name, T item) {

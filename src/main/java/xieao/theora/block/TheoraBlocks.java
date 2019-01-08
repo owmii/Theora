@@ -13,9 +13,8 @@ public class TheoraBlocks {
     public static final List<Block> BLOCKS = new ArrayList<>();
     public static final List<ItemBlock> ITEM_BLOCKS = new ArrayList<>();
 
-
     static <T extends Block & IBlock> T register(String name, T block) {
-        ItemBlock itemBlock = block.getItemBlock(TheoraItems.BUILDER);
+        ItemBlock itemBlock = block.getItemBlock(TheoraItems.MAIN);
         itemBlock.setRegistryName(name);
         block.setRegistryName(name);
         ITEM_BLOCKS.add(itemBlock);

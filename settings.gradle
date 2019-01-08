@@ -1,2 +1,2 @@
 include ":OneLib"
-project(":OneLib").projectDir = file("../OneLib")
+project(":OneLib").projectDir = file("../Lib")

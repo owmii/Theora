@@ -1,0 +1,11 @@
+modLoader="javafml" 
+loaderVersion="[24,)"
+credits="xieao"
+authors="xieao"
+[[mods]] 
+modId="theora" 
+version="1.0" 
+displayName="Theora" 
+description='''
+Theora mod.
+'''

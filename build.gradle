@@ -1,65 +1,52 @@
 buildscript {
     repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
-        maven { url = "http://files.minecraftforge.net/maven" }
+        mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.0.67', changing: true
     }
 }
 
-apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
 ext {
     onelib = project(":OneLib")
 }
 
-version = "${onelib.mc_version}-${mod_version}"
-group = "xieao"
-archivesBaseName = "theora"
+version = "${mod_version}"
+group = "${onelib.mod_group}"
+archivesBaseName = "${mod_name}"
 
-sourceCompatibility = targetCompatibility = '1.8'
-compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
-}
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    version = "${onelib.mc_version}-${onelib.forge_version}"
-    mappings = "${onelib.mcp_mappings}"
-    runDir = "run"
-    makeObfSourceJar = false
-    replaceIn 'Theora.java'
-    replace "@VERSION@", "${mod_version}"
-    replace 'required-after:onelib', "required-after:onelib@[${onelib.mod_version},)"
-}
-
-repositories {
-    maven {
-        url "http://dvs1.progwml6.com/files/maven"
-    }
+    mappings channel: onelib.mappings_channel, version: onelib.mappings_version
+//    runs {
+//        client = {
+//            workingDirectory project.file('run').canonicalPath
+//            source sourceSets.main
+//        }
+//        server = {
+//            workingDirectory project.file('run').canonicalPath
+//        }
+//    }
 }
 
 dependencies {
-    deobfCompile "mezz.jei:jei_1.12.2:4.9.2.196"
-    compile onelib
-}
-
-jar {
-    manifest {
-        attributes "FMLAT": "theora_at.cfg"
-    }
+    minecraft "net.minecraftforge.test:userdev:${onelib.mc_version}-${onelib.fg_version}"
 }
 
 processResources {
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+    inputs.property 'version', project.version
+    inputs.property 'mcversion', '1.13'
     from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-        expand 'version': project.version, 'mcversion': project.minecraft.version
+        include 'META_INF/mods.toml'
+        expand 'version': project.version, 'mcversion': '1.13'
     }
     from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+        exclude 'META_INF/mods.toml'
     }
-    rename '(.+_at.cfg)', 'META-INF/$1'
 }

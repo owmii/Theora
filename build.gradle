@@ -12,9 +12,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
-ext {
-    onelib = project(":OneLib")
-}
+Project onelib = project(":OneLib")
 
 version = "${mod_version}"
 group = "${onelib.mod_group}"
@@ -24,6 +22,7 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 
 minecraft {
     mappings channel: onelib.mappings_channel, version: onelib.mappings_version
+    // accessTransformer = file('src/main/resources/META-INF/theora_at.cfg')
 //    runs {
 //        client = {
 //            workingDirectory project.file('run').canonicalPath

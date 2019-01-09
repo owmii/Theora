@@ -23,19 +23,20 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 minecraft {
     mappings channel: onelib.mappings_channel, version: onelib.mappings_version
     // accessTransformer = file('src/main/resources/META-INF/theora_at.cfg')
-//    runs {
-//        client = {
-//            workingDirectory project.file('run').canonicalPath
-//            source sourceSets.main
-//        }
-//        server = {
-//            workingDirectory project.file('run').canonicalPath
-//        }
-//    }
+    runs {
+        client = {
+            workingDirectory project.file('run').canonicalPath
+            source sourceSets.main
+        }
+        server = {
+            workingDirectory project.file('run').canonicalPath
+        }
+    }
 }
 
 dependencies {
-    minecraft "net.minecraftforge.test:userdev:${onelib.mc_version}-${onelib.fg_version}"
+    minecraft "net.minecraftforge.test:forge:${onelib.mc_version}-${onelib.fg_version}"
+    compile "net.minecraftforge.test:forge:${onelib.mc_version}-${onelib.fg_version}:launcher"
     compile onelib
 }
 

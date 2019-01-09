@@ -9,6 +9,7 @@ import xieao.lib.proxy.IProxy;
 import xieao.theora.block.TheoraBlocks;
 import xieao.theora.item.TheoraItems;
 
+import static xieao.lib.render.item.TEItemRenderer.registerTEItems;
 import static xieao.lib.util.RegistryUtil.registerAll;
 
 public class Proxy implements IProxy {
@@ -35,6 +36,7 @@ public class Proxy implements IProxy {
         @Override
         public void preInit(FMLPreInitializationEvent event) {
             super.preInit(event);
+            registerTEItems(TheoraItems.ITEMS);
         }
 
         @Override

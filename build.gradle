@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: project(":OneLib").fgg_version, changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
 
@@ -35,17 +35,17 @@ minecraft {
 }
 
 dependencies {
-    minecraft "net.minecraftforge.test:forge:${onelib.mc_version}-${onelib.fg_version}"
-    compile "net.minecraftforge.test:forge:${onelib.mc_version}-${onelib.fg_version}:launcher"
+    minecraft "${onelib.forge_group}:${onelib.forge_name}:${onelib.minecraft_version}-${onelib.forge_version}"
+    compile "${onelib.forge_group}:${onelib.forge_name}:${onelib.minecraft_version}-${onelib.forge_version}:launcher"
     compile onelib
 }
 
 processResources {
     inputs.property 'version', project.version
-    inputs.property 'mcversion', '1.13'
+    inputs.property 'mcversion', onelib.minecraft_version
     from(sourceSets.main.resources.srcDirs) {
         include 'META_INF/mods.toml'
-        expand 'version': project.version, 'mcversion': '1.13'
+        expand 'version': project.version, 'mcversion': onelib.minecraft_version
     }
     from(sourceSets.main.resources.srcDirs) {
         exclude 'META_INF/mods.toml'

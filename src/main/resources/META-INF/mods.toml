@@ -1,11 +1,18 @@
 modLoader="javafml" 
 loaderVersion="[24,)"
-credits="xieao"
 authors="xieao"
+
 [[mods]] 
 modId="theora" 
-version="1.0" 
+version="${version}"
 displayName="Theora" 
 description='''
 Theora mod.
 '''
+
+[[dependencies.library]]
+    modId="onelib"
+    mandatory=true
+    versionRange="[0.0.0,)"
+    ordering="NONE"
+    side="BOTH"

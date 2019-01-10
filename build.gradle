@@ -18,7 +18,7 @@ version = "${mod_version}"
 group = "${onelib.mod_group}"
 archivesBaseName = "${mod_name}"
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
     mappings channel: onelib.mappings_channel, version: onelib.mappings_version
@@ -38,6 +38,14 @@ dependencies {
     minecraft "${onelib.forge_group}:${onelib.forge_name}:${onelib.minecraft_version}-${onelib.forge_version}"
     compile "${onelib.forge_group}:${onelib.forge_name}:${onelib.minecraft_version}-${onelib.forge_version}:launcher"
     compile onelib
+}
+
+tasks.withType(Jar) {
+    def jarsDir = file("$projectDir/../jars/${mod_name}")
+    if (!jarsDir.exists()) {
+        jarsDir.mkdirs()
+    }
+    destinationDir = jarsDir
 }
 
 processResources {

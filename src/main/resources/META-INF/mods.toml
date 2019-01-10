@@ -4,13 +4,13 @@ authors="xieao"
 
 [[mods]] 
 modId="theora" 
-version="${version}"
+version="${file.jarVersion}"
 displayName="Theora" 
 description='''
 Theora mod.
 '''
 
-[[dependencies.library]]
+[[dependencies.theora]]
     modId="onelib"
     mandatory=true
     versionRange="[0.0.0,)"

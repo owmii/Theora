@@ -35,7 +35,7 @@ public class Theora {
 
     private final IProxy proxy;
 
-    Theora() {
+    public Theora() {
         this.proxy = DistExecutor.runForDist(() -> Proxy.Client::new, () -> Proxy::new);
         FMLModLoadingContext.get().getModEventBus().addListener(this::preInit);
         FMLModLoadingContext.get().getModEventBus().addListener(this::init);

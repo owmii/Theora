@@ -9,10 +9,15 @@ import xieao.theora.Theora;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TheoraBlocks {
+public class IBlocks {
 
     public static final List<ItemBlock> ITEM_BLOCKS = new ArrayList<>();
     public static final List<Block> BLOCKS = new ArrayList<>();
+
+    public static final Block MUSH_GLIOPHORUS = register("mush_gliophorus", new BlockMush());
+    public static final Block MUSH_AMANITA_MUSCARIA = register("mush_amanita_muscaria", new BlockMush());
+    public static final Block MUSH_WHITE_BEECH = register("mush_white_beech", new BlockMush());
+    public static final Block MUSH_WITCH_HATE = register("mush_witch_hate", new BlockMush());
 
     static <T extends Block & IBlock> T register(String name, T block) {
         ItemBlock itemBlock = block.getItemBlock(new Item.Builder().group(Theora.MAIN));

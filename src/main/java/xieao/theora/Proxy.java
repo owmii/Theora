@@ -6,18 +6,19 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xieao.lib.proxy.IProxy;
-import xieao.theora.block.TheoraBlocks;
-import xieao.theora.item.TheoraItems;
-
-import static xieao.lib.render.item.TEItemRenderer.registerTEItems;
-import static xieao.lib.util.RegistryUtil.registerAll;
+import xieao.lib.render.item.TEItemRenderer;
+import xieao.lib.util.Registry;
+import xieao.theora.block.IBlocks;
+import xieao.theora.block.ITiles;
+import xieao.theora.item.IItems;
 
 public class Proxy implements IProxy {
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
-        registerAll(TheoraBlocks.BLOCKS);
-        registerAll(TheoraItems.ITEMS);
+        IBlocks.BLOCKS.forEach(Registry::register);
+        IItems.ITEMS.forEach(Registry::register);
+        ITiles.TYPES.forEach(Registry::register);
     }
 
     @Override
@@ -36,7 +37,7 @@ public class Proxy implements IProxy {
         @Override
         public void preInit(FMLPreInitializationEvent event) {
             super.preInit(event);
-            registerTEItems(TheoraItems.ITEMS);
+            IItems.ITEMS.forEach(TEItemRenderer::register);
         }
 
         @Override

@@ -88,15 +88,15 @@ public class Liquid extends RegistryEntry {
             return this.slots[index];
         }
 
-        public void setLiquidSlot(int index, Slot slot) {
+        public void setSlot(int index, Slot slot) {
             this.slots[index] = slot;
         }
 
         public void addSlot(float capacity, float transferRate, TransferType transferType) {
-            addSlots(new Slot(Liquid.EMPTY, false, capacity, 0, transferRate, transferType));
+            addSlot(new Slot(Liquid.EMPTY, false, capacity, 0, transferRate, transferType));
         }
 
-        public void addSlots(Slot slot) {
+        public void addSlot(Slot slot) {
             List<Slot> list = new ArrayList<>(Arrays.asList(this.slots));
             list.add(slot);
             this.slots = list.toArray(new Slot[0]);
@@ -141,8 +141,8 @@ public class Liquid extends RegistryEntry {
             }
 
             @Override
-            public void setLiquidSlot(int index, Slot slot) {
-                super.setLiquidSlot(index, slot);
+            public void setSlot(int index, Slot slot) {
+                super.setSlot(index, slot);
                 NBTTagCompound nbt = new NBTTagCompound();
                 this.stack.getOrCreateTag().setTag("liquidTag", write(nbt));
             }
@@ -257,7 +257,7 @@ public class Liquid extends RegistryEntry {
         }
 
         public boolean isEmpty() {
-            return this.stored <= 0;
+            return this.stored <= 0 || this.liquid.isEmpty();
         }
 
         public void setEmpty() {
@@ -270,6 +270,18 @@ public class Liquid extends RegistryEntry {
 
         public void setFull() {
             setStored(getCapacity());
+        }
+
+        public boolean canReceive(Liquid liquid) {
+            return (!isFull() && liquid.equals(this.liquid) || isEmpty())
+                    && (this.transferType.equals(TransferType.ALL)
+                    || this.transferType.equals(TransferType.RECEIVE));
+        }
+
+        public boolean canSend(Liquid liquid) {
+            return !isEmpty() && liquid.equals(this.liquid)
+                    && (this.transferType.equals(TransferType.ALL)
+                    || this.transferType.equals(TransferType.SEND));
         }
 
         public void to(Slot other, boolean override, boolean doDrain) {
@@ -293,6 +305,7 @@ public class Liquid extends RegistryEntry {
         }
 
         public float add(float amount) {
+            if (this.liquid.isEmpty()) return amount;
             float f = Math.min(amount, this.capacity - this.stored);
             this.stored += f;
             return amount - f;

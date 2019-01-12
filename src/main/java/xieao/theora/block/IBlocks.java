@@ -5,6 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import xieao.lib.block.IBlock;
 import xieao.theora.Theora;
+import xieao.theora.block.cauldron.BlockCauldron;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class IBlocks {
     public static final Block MUSH_AMANITA_MUSCARIA = register("mush_amanita_muscaria", new BlockMush());
     public static final Block MUSH_WHITE_BEECH = register("mush_white_beech", new BlockMush());
     public static final Block MUSH_WITCH_HATE = register("mush_witch_hate", new BlockMush());
+    public static final Block CAULDRON = register("cauldron", new BlockCauldron());
 
     static <T extends Block & IBlock> T register(String name, T block) {
         ItemBlock itemBlock = block.getItemBlock(new Item.Builder().group(Theora.MAIN));

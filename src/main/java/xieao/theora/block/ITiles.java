@@ -19,11 +19,11 @@ import java.util.function.Supplier;
 public class ITiles {
 
     public static final Map<ResourceLocation, TileEntityType<?>> TYPES = new HashMap<>();
-    public static final TileEntityType<?> CAULDRON = register("cauldron", TileCauldron::new);
+    public static final TileEntityType<TileCauldron> CAULDRON = register("cauldron", TileCauldron::new);
 
 
     @SuppressWarnings("unchecked")
-    public static <T extends TileEntity> TileEntityType<T> register(String id, Supplier<? extends T> factoryIn) {
+    static <T extends TileEntity> TileEntityType<T> register(String id, Supplier<? extends T> factoryIn) {
         Type<?> type = null;
         try {
             type = DataFixesManager.getDataFixer().getSchema(DataFixUtils.makeKey(1519))

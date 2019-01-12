@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLModLoadingContext;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -18,6 +19,7 @@ import net.minecraftforge.fml.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import xieao.lib.proxy.IProxy;
+import xieao.theora.command.TheoraCommand;
 
 @Mod(Theora.MOD_ID)
 public class Theora {
@@ -60,6 +62,10 @@ public class Theora {
 
     public void postInit(FMLPostInitializationEvent event) {
         this.proxy.postInit(event);
+    }
+
+    public void serverStarting(FMLServerStartingEvent event) {
+        new TheoraCommand(event.getCommandDispatcher());
     }
 
     public static ResourceLocation loc(String path) {

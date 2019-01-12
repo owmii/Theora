@@ -1,8 +1,10 @@
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
         mavenCentral()
+        maven {
+            url = 'https://files.minecraftforge.net/maven'
+        }
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
@@ -14,7 +16,7 @@ apply plugin: 'idea'
 
 Project onelib = project(":OneLib")
 
-version = "${mod_version}"
+version = "${onelib.minecraft_version}-${mod_version}.${build_num}"
 group = "${onelib.mod_group}"
 archivesBaseName = "${mod_name}"
 

@@ -8,7 +8,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import xieao.theora.block.cauldron.TileCauldron;
 
 @OnlyIn(Dist.CLIENT)
-public class TERegistry {
+public class TERRegistry {
 
     public static void registerAll() {
         bind(TileCauldron.class, new CauldronRenderer());

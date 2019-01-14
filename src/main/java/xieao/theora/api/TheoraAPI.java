@@ -6,17 +6,30 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.OptionalCapabilityInstance;
 import net.minecraftforge.fml.ModList;
 import xieao.theora.api.liquid.Liquid;
+import xieao.theora.api.recipe.IRecipeRegistry;
 
 import javax.annotation.Nullable;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TheoraAPI {
-
     public static final TheoraAPI API = new TheoraAPI();
     public static final String MOD_ID = "theora";
     public static final String EMPTY = MOD_ID + ":empty";
 
-    public boolean isLoaded() {
+    private final Set<IRecipeRegistry> recipeRegistries = new HashSet<>();
+
+    public static boolean isLoaded() {
         return ModList.get().isLoaded(MOD_ID);
+    }
+
+    public void register(IRecipeRegistry registry) {
+        registry.initRecipes();
+        this.recipeRegistries.add(registry);
+    }
+
+    public Set<IRecipeRegistry> getRecipeRegistries() {
+        return recipeRegistries;
     }
 
     public static OptionalCapabilityInstance<Liquid.Handler> getLiquidHandler(TileEntity tileEntity, @Nullable EnumFacing side) {

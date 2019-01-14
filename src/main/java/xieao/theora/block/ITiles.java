@@ -17,7 +17,6 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 public class ITiles {
-
     public static final Map<ResourceLocation, TileEntityType<?>> TYPES = new HashMap<>();
     public static final TileEntityType<TileCauldron> CAULDRON = register("cauldron", TileCauldron::new);
 
@@ -27,12 +26,12 @@ public class ITiles {
         Type<?> type = null;
         try {
             type = DataFixesManager.getDataFixer().getSchema(DataFixUtils.makeKey(1519))
-                    .getChoiceType(TypeReferences.BLOCK_ENTITY, id);
+                    .getChoiceType(TypeReferences.BLOCK_ENTITY, Theora.loc(id).toString());
         } catch (IllegalArgumentException illegalstateexception) {
             if (SharedConstants.developmentMode) {
                 throw illegalstateexception;
             }
-            Theora.LOG.warn("No data fixer registered for block entity {}", id);
+            Theora.LOG.warn("No data fixer registered for block entity {}", Theora.loc(id).toString());
         }
         TileEntityType<T> tileentitytype = (TileEntityType<T>) TileEntityType.Builder.create(factoryIn).build(Objects.requireNonNull(type));
         TYPES.put(Theora.loc(id), tileentitytype);

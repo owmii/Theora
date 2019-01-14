@@ -92,6 +92,10 @@ public class Liquid extends RegistryEntry {
             this.slots[index] = slot;
         }
 
+        public int slotCount() {
+            return this.slots.length;
+        }
+
         public void addSlot(float capacity, float transferRate, TransferType transferType) {
             addSlot(new Slot(Liquid.EMPTY, false, capacity, 0, transferRate, transferType));
         }
@@ -331,7 +335,8 @@ public class Liquid extends RegistryEntry {
 
         public static void register() {
             CapabilityManager.INSTANCE.register(Handler.class, new Storage<>(), Handler::new);
-            CapabilityManager.INSTANCE.register(Handler.Item.class, new Storage<>(), () -> new Handler.Item(ItemStack.EMPTY));
+            CapabilityManager.INSTANCE.register(Handler.Item.class, new Storage<>(),
+                    () -> new Handler.Item(ItemStack.EMPTY));
         }
 
         private static class Storage<T extends Handler> implements Capability.IStorage<T> {

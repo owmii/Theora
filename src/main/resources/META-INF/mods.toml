@@ -4,7 +4,7 @@ authors="xieao"
 
 [[mods]] 
 modId="theora" 
-version="${file.jarVersion}"
+version="0.0.0.0"
 displayName="Theora" 
 description='''
 Theora mod.
@@ -13,6 +13,6 @@ Theora mod.
 [[dependencies.theora]]
     modId="onelib"
     mandatory=true
-    versionRange="[0.0.0,)"
+    versionRange="[0.0.0.0,)"
     ordering="NONE"
     side="BOTH"

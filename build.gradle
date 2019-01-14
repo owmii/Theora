@@ -38,8 +38,46 @@ minecraft {
 
 dependencies {
     minecraft "${onelib.forge_group}:${onelib.forge_name}:${onelib.minecraft_version}-${onelib.forge_version}"
-    compile "${onelib.forge_group}:${onelib.forge_name}:${onelib.minecraft_version}-${onelib.forge_version}:launcher"
     compile onelib
+}
+
+task increment_major {
+    doLast {
+        ant.propertyfile(file: "gradle.properties") {
+            String version = "${mod_version}"
+            String bld_num = "${build_num}".toInteger() + 1
+            def slice = version.split(/\./).toList()
+            def major = slice[0].toInteger() + 1
+            ant.entry(key: "mod_version", value: major + ".0.0")
+            ant.entry(key: "build_num", value: bld_num)
+        }
+    }
+}
+
+task increment_minor {
+    doLast {
+        ant.propertyfile(file: "gradle.properties") {
+            String version = "${mod_version}"
+            String bld_num = "${build_num}".toInteger() + 1
+            def slice = version.split(/\./).toList()
+            def minor = slice[1].toInteger() + 1
+            ant.entry(key: "mod_version", value: slice[0] + "." + minor + ".0")
+            ant.entry(key: "build_num", value: bld_num)
+        }
+    }
+}
+
+task increment_revision {
+    doLast {
+        ant.propertyfile(file: "gradle.properties") {
+            String version = "${mod_version}"
+            String bld_num = "${build_num}".toInteger() + 1
+            def slice = version.split(/\./).toList()
+            def revision = slice[2].toInteger() + 1
+            ant.entry(key: "mod_version", value: slice[0] + "." + slice[1] + "." + revision)
+            ant.entry(key: "build_num", value: bld_num)
+        }
+    }
 }
 
 tasks.withType(Jar) {
@@ -61,3 +99,7 @@ processResources {
         exclude 'META_INF/mods.toml'
     }
 }
+
+configure(increment_major) { group = "increment" }
+configure(increment_minor) { group = "increment" }
+configure(increment_revision) { group = "increment" }

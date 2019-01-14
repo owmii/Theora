@@ -23,7 +23,6 @@ import xieao.theora.command.TheoraCommand;
 
 @Mod(Theora.MOD_ID)
 public class Theora {
-
     public static final String MOD_ID = "theora";
     public static final Logger LOG = LogManager.getLogger(MOD_ID.toUpperCase());
     public static final SimpleChannel NET;

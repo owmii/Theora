@@ -15,7 +15,6 @@ import xieao.lib.block.IBlock;
 import javax.annotation.Nullable;
 
 public class BlockCauldron extends IBlock.Base implements ITileEntityProvider {
-
     public BlockCauldron() {
         super(Builder.create(Material.IRON, MapColor.BLACK)
                 .hardnessAndResistance(1.5F, 20.0F));

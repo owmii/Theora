@@ -1,7 +1,6 @@
 package xieao.theora.item;
 
 import net.minecraft.item.Item;
-import xieao.lib.item.IItem;
 import xieao.theora.Theora;
 import xieao.theora.block.IBlocks;
 

@@ -1,4 +1,4 @@
 @NonnullByDefault
-package xieao.theora.command;
+package xieao.theora.block.heat;
 
 import xieao.theora.api.annotation.NonnullByDefault;

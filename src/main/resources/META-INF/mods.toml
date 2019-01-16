@@ -9,10 +9,3 @@ displayName="Theora"
 description='''
 Theora mod.
 '''
-
-[[dependencies.theora]]
-    modId="onelib"
-    mandatory=true
-    versionRange="[0.0.0.0,)"
-    ordering="NONE"
-    side="BOTH"

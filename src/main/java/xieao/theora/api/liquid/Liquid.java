@@ -37,16 +37,16 @@ public class Liquid extends RegistryEntry {
 
     public static Liquid read(String key, NBTTagCompound compound) {
         NBTTagCompound nbt = compound.getCompound(key);
-        return getLiquid(nbt.getString("regName"));
+        return getLiquid(nbt.getString("LiquidId"));
     }
 
     public static Liquid read(NBTTagCompound compound) {
-        return getLiquid(compound.getString("regName"));
+        return getLiquid(compound.getString("LiquidId"));
     }
 
     public static void write(String key, Liquid liquid, NBTTagCompound compound) {
         NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setString("regName", liquid.getRegistryString());
+        nbt.setString("LiquidId", liquid.getRegistryString());
         compound.setTag(key, nbt);
     }
 
@@ -56,7 +56,7 @@ public class Liquid extends RegistryEntry {
     }
 
     public static void write(Liquid liquid, NBTTagCompound compound) {
-        compound.setString("regName", liquid.getRegistryString());
+        compound.setString("LiquidId", liquid.getRegistryString());
     }
 
     public boolean isEmpty() {
@@ -100,6 +100,10 @@ public class Liquid extends RegistryEntry {
             addSlot(new Slot(Liquid.EMPTY, false, capacity, 0, transferRate, transferType));
         }
 
+        public void addSlot(Liquid liquid, float capacity, float transferRate, TransferType transferType) {
+            addSlot(new Slot(liquid, true, capacity, 0, transferRate, transferType));
+        }
+
         public void addSlot(Slot slot) {
             List<Slot> list = new ArrayList<>(Arrays.asList(this.slots));
             list.add(slot);
@@ -107,7 +111,7 @@ public class Liquid extends RegistryEntry {
         }
 
         public void read(NBTTagCompound compound) {
-            NBTTagList tagList = compound.getList("liquidSlots", Constants.NBT.TAG_COMPOUND);
+            NBTTagList tagList = compound.getList("LiquidSlots", Constants.NBT.TAG_COMPOUND);
             this.slots = new Slot[tagList.size()];
             for (int i = 0; i < tagList.size(); i++) {
                 NBTTagCompound nbt = tagList.getCompound(i);
@@ -123,7 +127,7 @@ public class Liquid extends RegistryEntry {
                 slot.write(nbt);
                 tagList.add(nbt);
             }
-            compound.setTag("liquidSlots", tagList);
+            compound.setTag("LiquidSlots", tagList);
             return compound;
         }
 
@@ -138,8 +142,8 @@ public class Liquid extends RegistryEntry {
             @Override
             public Slot getSlot(int index) {
                 NBTTagCompound nbt = this.stack.getTag();
-                if (nbt != null && nbt.hasKey("liquidTag")) {
-                    read(nbt.getCompound("liquidTag"));
+                if (nbt != null && nbt.hasKey("LiquidTag")) {
+                    read(nbt.getCompound("LiquidTag"));
                 }
                 return super.getSlot(index);
             }
@@ -147,8 +151,7 @@ public class Liquid extends RegistryEntry {
             @Override
             public void setSlot(int index, Slot slot) {
                 super.setSlot(index, slot);
-                NBTTagCompound nbt = new NBTTagCompound();
-                this.stack.getOrCreateTag().setTag("liquidTag", write(nbt));
+                this.stack.getOrCreateTag().setTag("LiquidTag", write(new NBTTagCompound()));
             }
 
             @Override
@@ -164,7 +167,7 @@ public class Liquid extends RegistryEntry {
 
     public static class Slot {
         private Liquid liquid;
-        private boolean finalLiquid;
+        private boolean finalLiquid, changable;
         private float capacity;
         private float stored;
         private float transferRate;
@@ -173,6 +176,7 @@ public class Liquid extends RegistryEntry {
         public Slot(Liquid liquid, boolean finalLiquid, float capacity, float stored, float transferRate, TransferType transferType) {
             this.liquid = liquid;
             this.finalLiquid = finalLiquid;
+            this.changable = !finalLiquid;
             this.capacity = capacity;
             this.stored = stored;
             this.transferRate = transferRate;
@@ -180,21 +184,22 @@ public class Liquid extends RegistryEntry {
         }
 
         public void read(NBTTagCompound compound) {
-            this.liquid = Liquid.getLiquid(compound.getString("liquidName"));
-            this.finalLiquid = compound.getBoolean("finalLiquid");
-            this.capacity = compound.getFloat("capacity");
-            this.stored = compound.getFloat("stored");
-            this.transferRate = compound.getFloat("transferType");
-            this.transferType = TransferType.values()[compound.getInt("transferType")];
+            this.liquid = Liquid.getLiquid(compound.getString("LiquidName"));
+            this.finalLiquid = compound.getBoolean("FinalLiquid");
+            this.changable = !this.finalLiquid;
+            this.capacity = compound.getFloat("Capacity");
+            this.stored = compound.getFloat("Stored");
+            this.transferRate = compound.getFloat("TransferRate");
+            this.transferType = TransferType.values()[compound.getInt("TransferType")];
         }
 
         public NBTTagCompound write(NBTTagCompound compound) {
-            compound.setString("liquidName", this.liquid.getRegistryString());
-            compound.setBoolean("finalLiquid", this.finalLiquid);
-            compound.setFloat("capacity", this.capacity);
-            compound.setFloat("stored", this.stored);
-            compound.setFloat("transferType", this.transferRate);
-            compound.setInt("transferType", this.transferType.ordinal());
+            compound.setString("LiquidName", this.liquid.getRegistryString());
+            compound.setBoolean("FinalLiquid", this.finalLiquid);
+            compound.setFloat("Capacity", this.capacity);
+            compound.setFloat("Stored", this.stored);
+            compound.setFloat("TransferRate", this.transferRate);
+            compound.setInt("TransferType", this.transferType.ordinal());
             return compound;
         }
 
@@ -223,6 +228,10 @@ public class Liquid extends RegistryEntry {
                 return true;
             }
             return false;
+        }
+
+        public boolean isChangable() {
+            return changable;
         }
 
         public float getCapacity() {
@@ -340,7 +349,6 @@ public class Liquid extends RegistryEntry {
         }
 
         private static class Storage<T extends Handler> implements Capability.IStorage<T> {
-
             @Nullable
             @Override
             public INBTBase writeNBT(Capability<T> capability, T instance, EnumFacing side) {
@@ -348,9 +356,7 @@ public class Liquid extends RegistryEntry {
             }
 
             @Override
-            public void readNBT(Capability<T> capability, T instance, EnumFacing side, INBTBase nbt) {
-
-            }
+            public void readNBT(Capability<T> capability, T instance, EnumFacing side, INBTBase nbt) {}
         }
     }
 }

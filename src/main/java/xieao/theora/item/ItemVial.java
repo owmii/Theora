@@ -15,12 +15,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.capabilities.OptionalCapabilityInstance;
-import xieao.lib.item.IItem;
-import xieao.lib.renderer.item.IItemColorHolder;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.liquid.TransferType;
 import xieao.theora.api.recipe.interact.IInteractRecipe;
+import xieao.theora.client.renderer.item.IItemColorHolder;
 import xieao.theora.core.handler.RecipeSorter;
 import xieao.theora.entity.EntityInteractor;
 
@@ -96,13 +95,16 @@ public class ItemVial extends IItem.Base implements IItemColorHolder {
         if (this.isInGroup(group)) {
             Liquid.REGISTRY.values().forEach(liquid -> {
                 ItemStack stack = new ItemStack(this);
-                Liquid.Handler.Item handler = new Liquid.Handler.Item(stack);
-                Liquid.Slot slot = handler.getSlot(0);
-                slot.setLiquid(liquid);
-                if (!liquid.isEmpty()) {
-                    slot.setFull();
-                }
-                handler.setSlot(0, slot);
+                OptionalCapabilityInstance<Liquid.Handler.Item> holder = TheoraAPI.getLiquidHandlerItem(stack);
+                holder.map(handler -> {
+                    Liquid.Slot slot = handler.getSlot(0);
+                    slot.setLiquid(liquid);
+                    if (!liquid.isEmpty()) {
+                        slot.setFull();
+                    }
+                    handler.setSlot(0, slot);
+                    return this;
+                });
                 items.add(stack);
             });
         }

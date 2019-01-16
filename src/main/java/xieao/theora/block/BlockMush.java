@@ -8,7 +8,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
-import xieao.lib.block.IBlock;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,5 +1,0 @@
-include ":OneLib"
-project(":OneLib").projectDir = file("../Lib")
-
-// excluded sub project Tasks
-startParameter.excludedTaskNames += ':OneLib:genIntellijRuns'

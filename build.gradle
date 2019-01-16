@@ -23,7 +23,7 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 
 minecraft {
     mappings channel: mappings_channel, version: mappings_version
-    // accessTransformer = file('src/main/resources/META-INF/theora_at.cfg')
+    //accessTransformer = file('src/main/resources/META-INF/theora_at.cfg')
     runs {
         client = {
             workingDirectory project.file('run').canonicalPath
@@ -40,7 +40,7 @@ dependencies {
     minecraft "${forge_group}:${forge_name}:${minecraft_version}-${forge_version}"
 }
 
-task increment_major {
+task major {
     doLast {
         ant.propertyfile(file: "gradle.properties") {
             String version = "${mod_version}"
@@ -53,7 +53,7 @@ task increment_major {
     }
 }
 
-task increment_minor {
+task minor {
     doLast {
         ant.propertyfile(file: "gradle.properties") {
             String version = "${mod_version}"
@@ -66,7 +66,7 @@ task increment_minor {
     }
 }
 
-task increment_revision {
+task revision {
     doLast {
         ant.propertyfile(file: "gradle.properties") {
             String version = "${mod_version}"
@@ -99,6 +99,6 @@ processResources {
     }
 }
 
-configure(increment_major) { group = "increment" }
-configure(increment_minor) { group = "increment" }
-configure(increment_revision) { group = "increment" }
+configure(major) { group = "increment" }
+configure(minor) { group = "increment" }
+configure(revision) { group = "increment" }

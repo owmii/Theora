@@ -9,3 +9,10 @@ displayName="Theora"
 description='''
 Theora mod.
 '''
+
+#[[dependencies.theora]]
+#    modId="forge"
+#    mandatory=false
+#    versionRange="[24.0.81,)"
+#    ordering="NONE"
+#    side="BOTH"

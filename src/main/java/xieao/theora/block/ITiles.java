@@ -32,7 +32,7 @@ public class ITiles {
             if (SharedConstants.developmentMode) {
                 throw illegalstateexception;
             }
-            Theora.LOG.warn("No data fixer registered for block entity {}", Theora.loc(id).toString());
+            Theora.LOGGER.warn("No data fixer registered for block entity {}", Theora.loc(id).toString());
         }
         TileEntityType<T> tileentitytype = (TileEntityType<T>) TileEntityType.Builder.create(factoryIn).build(type);
         TYPES.put(Theora.loc(id), tileentitytype);

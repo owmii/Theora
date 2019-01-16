@@ -17,6 +17,7 @@ import xieao.theora.block.ITiles;
 import xieao.theora.block.Tile;
 import xieao.theora.block.heat.BlockHeat;
 import xieao.theora.core.handler.RecipeSorter;
+import xieao.theora.core.lib.util.Ticker;
 import xieao.theora.item.ItemHeat;
 
 import javax.annotation.Nullable;
@@ -28,14 +29,13 @@ public class TileCauldron extends Tile.Tickable implements IInv {
     protected FluidTank fluidTank = new FluidTank(Fluid.BUCKET_VOLUME);
 
     private ItemStack heatStack = ItemStack.EMPTY;
-    private final int heatCap = 100;
-    private int heat;
+    private Ticker heat = new Ticker(100);
 
     @Nullable
     public ICauldronRecipe recipe;
+    public Ticker boiling = new Ticker(240);
+    public Ticker startDelay = new Ticker(80);
     public final int maxRecipeTime = 240;
-    public int startDelay;
-    public int coolDown;
 
     public int[] liquidColors = new int[2];
     public int blend;
@@ -53,9 +53,10 @@ public class TileCauldron extends Tile.Tickable implements IInv {
         this.fluidTank.readFromNBT(compound);
         this.liquidHandler.read(compound);
         this.heatStack = ItemStack.read(compound.getCompound("HeatStack"));
-        this.startDelay = compound.getInt("StartDelay");
-        this.coolDown = compound.getInt("CoolDown");
-        this.blend = this.coolDown;
+        this.heat.read(compound, "Heat");
+        this.boiling.read(compound, "Boiling");
+        this.startDelay.read(compound, "StartDelay");
+        this.blend = this.boiling.getTicks();
     }
 
     @Override
@@ -63,8 +64,9 @@ public class TileCauldron extends Tile.Tickable implements IInv {
         this.fluidTank.writeToNBT(compound);
         this.liquidHandler.write(compound);
         compound.setTag("HeatStack", this.heatStack.write(new NBTTagCompound()));
-        compound.setInt("StartDelay", this.startDelay);
-        compound.setInt("CoolDown", this.coolDown);
+        this.heat.read(compound, "Heat");
+        this.boiling.write(compound, "Boiling");
+        this.startDelay.write(compound, "StartDelay");
         return super.writeSync(compound);
     }
 
@@ -76,15 +78,13 @@ public class TileCauldron extends Tile.Tickable implements IInv {
             if (!this.world.isRemote) {
                 if (slot.isEmpty()) {
                     if (heated()) {
-                        if (this.startDelay < 80) {
-                            this.startDelay++;
-                        } else {
-                            if (this.coolDown++ >= this.maxRecipeTime) {
+                        if (this.startDelay.done()) {
+                            if (this.boiling.done()) {
                                 slot.setLiquid(liquid);
                                 slot.setFull();
                                 clear();
-                                this.startDelay = 0;
-                                this.coolDown = 0;
+                                this.startDelay.reset();
+                                this.boiling.reset();
                                 markDirtyAndSync();
                             }
                         }
@@ -112,16 +112,14 @@ public class TileCauldron extends Tile.Tickable implements IInv {
                 itemHeat.setAge(this.heatStack, age + 1);
             }
             if (hasEnoughWater()) {
-                if (this.heat < this.heatCap) {
-                    this.heat++;
-                }
+                return this.heat.done();
             } else {
-                this.heat = 0;
+                this.heat.reset();
             }
-        } else if (this.heat > 0) {
-            this.heat--;
+        } else {
+            this.heat.back();
         }
-        return this.heat >= this.heatCap;
+        return false;
     }
 
     protected boolean hasEnoughWater() {
@@ -131,7 +129,8 @@ public class TileCauldron extends Tile.Tickable implements IInv {
     @Override
     public void onInventoryChanged(int index) {
         this.recipe = RecipeSorter.getCauldronRecipe(this);
-        this.startDelay = 0;
+        this.boiling.reset();
+        this.startDelay.reset();
         markDirtyAndSync();
     }
 

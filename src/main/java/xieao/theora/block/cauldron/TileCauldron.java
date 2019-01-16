@@ -35,7 +35,6 @@ public class TileCauldron extends Tile.Tickable implements IInv {
     public ICauldronRecipe recipe;
     public Ticker boiling = new Ticker(240);
     public Ticker startDelay = new Ticker(80);
-    public final int maxRecipeTime = 240;
 
     public int[] liquidColors = new int[2];
     public int blend;

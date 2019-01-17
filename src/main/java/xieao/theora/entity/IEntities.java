@@ -15,7 +15,7 @@ public class IEntities {
     public static final EntityType<EntityInteractor> INTERACTOR = register("interactor", EntityInteractor.class, EntityInteractor::new);
 
     public static <T extends Entity> EntityType<T> register(String id, Class<? extends T> clazz, Function<? super World, ? extends T> factory) {
-        EntityType<T> entitytype = EntityType.Builder.create(clazz, factory).build(id);
+        EntityType<T> entitytype = EntityType.Builder.create(clazz, factory).build(Theora.loc(id).toString());
         TYPES.put(Theora.loc(id), entitytype);
         return entitytype;
     }

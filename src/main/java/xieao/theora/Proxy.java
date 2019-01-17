@@ -12,6 +12,7 @@ import xieao.theora.block.ITiles;
 import xieao.theora.client.renderer.item.IItemColorHolder;
 import xieao.theora.client.renderer.item.TEItemRenderer;
 import xieao.theora.client.renderer.tile.TERRegistry;
+import xieao.theora.core.ISounds;
 import xieao.theora.core.handler.RecipeSorter;
 import xieao.theora.core.lib.util.Registry;
 import xieao.theora.core.recipe.CauldronRecipes;
@@ -27,6 +28,7 @@ public class Proxy {
         IItems.ITEMS.forEach(Registry::register);
         ITiles.TYPES.forEach(Registry::register);
         IEntities.TYPES.forEach(Registry::register);
+        ISounds.SOUNDS.forEach(Registry::register);
         Liquid.Cap.register();
 
         API.register(new InteractRecipes());

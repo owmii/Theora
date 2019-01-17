@@ -1,4 +1,4 @@
 @NonnullByDefault
-package xieao.theora.net.packet;
+package xieao.theora.core.network;
 
 import xieao.theora.api.annotation.NonnullByDefault;

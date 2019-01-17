@@ -1,12 +1,10 @@
-package xieao.theora.net;
+package xieao.theora.core.network;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import xieao.theora.Theora;
-import xieao.theora.net.packet.IPacket;
 
 public class Network {
     private static final SimpleChannel CHANNEL;
@@ -14,10 +12,6 @@ public class Network {
 
     private static void registerAll() {
 
-    }
-
-    private static <T extends IPacket> void register(T packet) {
-        CHANNEL.registerMessage(id++, packet.getClass(), packet::encode, packet::decode, packet::handle);
     }
 
     public static <PKT> void toServer(PKT pkt) {
@@ -34,9 +28,9 @@ public class Network {
 
     static {
         CHANNEL = NetworkRegistry.ChannelBuilder.named(Theora.loc("main"))
-                .clientAcceptedVersions(a -> true)
-                .serverAcceptedVersions(a -> true)
-                .networkProtocolVersion(() -> NetworkHooks.NETVERSION)
+                .clientAcceptedVersions("1"::equals)
+                .serverAcceptedVersions("1"::equals)
+                .networkProtocolVersion(() -> "1")
                 .simpleChannel();
         registerAll();
     }

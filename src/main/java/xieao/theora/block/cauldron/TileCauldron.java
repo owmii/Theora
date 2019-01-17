@@ -63,7 +63,7 @@ public class TileCauldron extends Tile.Tickable implements IInv {
         this.fluidTank.writeToNBT(compound);
         this.liquidHandler.write(compound);
         compound.setTag("HeatStack", this.heatStack.write(new NBTTagCompound()));
-        this.heat.read(compound, "Heat");
+        this.heat.write(compound, "Heat");
         this.boiling.write(compound, "Boiling");
         this.startDelay.write(compound, "StartDelay");
         return super.writeSync(compound);

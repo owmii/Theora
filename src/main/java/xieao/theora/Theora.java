@@ -12,7 +12,8 @@ import net.minecraftforge.fml.javafmlmod.FMLModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import xieao.theora.core.command.TheoraCommand;
-import xieao.theora.net.Network;
+import xieao.theora.core.config.Config;
+import xieao.theora.core.network.Network;
 
 @Mod(Theora.MOD_ID)
 public class Theora {
@@ -27,6 +28,7 @@ public class Theora {
         FMLModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
         FMLModLoadingContext.get().getModEventBus().addListener(this::processIMC);
         MinecraftForge.EVENT_BUS.addListener(this::starting);
+        Config.load();
     }
 
     public void setup(FMLCommonSetupEvent event) {

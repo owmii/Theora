@@ -1,8 +1,8 @@
 package xieao.theora.block.heat;
 
 import net.minecraft.block.state.IBlockState;
-import xieao.theora.block.ITiles;
-import xieao.theora.block.Tile;
+import xieao.theora.block.base.Tile;
+import xieao.theora.core.ITiles;
 
 public class TileHeat extends Tile.Tickable {
     private int age;

@@ -1,10 +1,11 @@
-package xieao.theora.entity;
+package xieao.theora.core;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import xieao.theora.Theora;
+import xieao.theora.entity.EntityInteractor;
 
 import java.util.HashMap;
 import java.util.Map;

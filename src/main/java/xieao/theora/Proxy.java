@@ -7,18 +7,14 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import xieao.theora.api.liquid.Liquid;
-import xieao.theora.block.IBlocks;
-import xieao.theora.block.ITiles;
 import xieao.theora.client.renderer.item.IItemColorHolder;
 import xieao.theora.client.renderer.item.TEItemRenderer;
 import xieao.theora.client.renderer.tile.TERRegistry;
-import xieao.theora.core.ISounds;
+import xieao.theora.core.*;
 import xieao.theora.core.handler.RecipeSorter;
 import xieao.theora.core.lib.util.Registry;
 import xieao.theora.core.recipe.CauldronRecipes;
 import xieao.theora.core.recipe.InteractRecipes;
-import xieao.theora.entity.IEntities;
-import xieao.theora.item.IItems;
 
 import static xieao.theora.api.TheoraAPI.API;
 

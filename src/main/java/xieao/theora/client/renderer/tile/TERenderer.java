@@ -3,7 +3,7 @@ package xieao.theora.client.renderer.tile;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import xieao.theora.block.Tile;
+import xieao.theora.block.base.Tile;
 
 
 @OnlyIn(Dist.CLIENT)

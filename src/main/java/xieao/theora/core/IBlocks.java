@@ -1,8 +1,10 @@
-package xieao.theora.block;
+package xieao.theora.core;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import xieao.theora.block.BlockMush;
+import xieao.theora.block.base.IBlock;
 import xieao.theora.block.cauldron.BlockCauldron;
 import xieao.theora.block.heat.BlockHeat;
 import xieao.theora.item.IItem;

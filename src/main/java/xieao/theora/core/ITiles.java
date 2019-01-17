@@ -1,4 +1,4 @@
-package xieao.theora.block;
+package xieao.theora.core;
 
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;

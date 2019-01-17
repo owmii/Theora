@@ -1,4 +1,4 @@
-package xieao.theora.block;
+package xieao.theora.block.base;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;

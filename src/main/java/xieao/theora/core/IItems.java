@@ -1,7 +1,8 @@
-package xieao.theora.item;
+package xieao.theora.core;
 
 import net.minecraft.item.Item;
-import xieao.theora.block.IBlocks;
+import xieao.theora.item.IItem;
+import xieao.theora.item.ItemVial;
 
 import java.util.ArrayList;
 import java.util.List;

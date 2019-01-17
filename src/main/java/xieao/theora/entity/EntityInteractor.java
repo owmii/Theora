@@ -15,6 +15,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import xieao.theora.core.IEntities;
 
 import javax.annotation.Nullable;
 import java.util.List;

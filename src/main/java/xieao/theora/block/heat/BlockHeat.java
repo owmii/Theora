@@ -11,7 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import xieao.theora.block.IBlock;
+import xieao.theora.block.base.IBlock;
 import xieao.theora.item.IItem;
 import xieao.theora.item.ItemHeat;
 

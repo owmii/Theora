@@ -19,6 +19,7 @@ import xieao.theora.core.network.Network;
 public class Theora {
     public static final String MOD_ID = "theora";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID.toUpperCase());
+
     public static final Network NET = Network.creat();
     private final Proxy proxy;
 

@@ -1,7 +1,9 @@
 package xieao.theora.core;
 
 import xieao.theora.api.liquid.Liquid;
+import xieao.theora.core.lib.annotation.PreLoaded;
 
+@PreLoaded
 public class ILiquids {
     public static final Liquid WATER = Liquid.register("water", 0x3165E8, 0x3165E8);
     public static final Liquid LAVA = Liquid.register("lava", 0xE8700A, 0xE8700A);

@@ -10,9 +10,8 @@ import xieao.theora.api.liquid.Liquid;
 import xieao.theora.client.renderer.item.IItemColorHolder;
 import xieao.theora.client.renderer.item.TEItemRenderer;
 import xieao.theora.client.renderer.tile.TERRegistry;
-import xieao.theora.core.*;
-import xieao.theora.core.handler.RecipeSorter;
-import xieao.theora.core.lib.util.Registry;
+import xieao.theora.core.IItems;
+import xieao.theora.core.handler.ModInitializer;
 import xieao.theora.core.recipe.CauldronRecipes;
 import xieao.theora.core.recipe.InteractRecipes;
 
@@ -20,11 +19,7 @@ import static xieao.theora.api.TheoraAPI.API;
 
 public class Proxy {
     public void setup(FMLCommonSetupEvent event) {
-        IBlocks.BLOCKS.forEach(Registry::register);
-        IItems.ITEMS.forEach(Registry::register);
-        ITiles.TYPES.forEach(Registry::register);
-        IEntities.TYPES.forEach(Registry::register);
-        ISounds.SOUNDS.forEach(Registry::register);
+        ModInitializer.setup();
         Liquid.Cap.register();
 
         API.register(new InteractRecipes());
@@ -32,11 +27,11 @@ public class Proxy {
     }
 
     public void enqueueIMC(InterModEnqueueEvent event) {
-
+        ModInitializer.enqueueIMC();
     }
 
     public void processIMC(InterModProcessEvent event) {
-        RecipeSorter.post();
+        ModInitializer.processIMC();
     }
 
     @OnlyIn(Dist.CLIENT)

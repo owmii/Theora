@@ -40,7 +40,8 @@ public class ItemVial extends IItem.Base implements IItemColorHolder {
         Liquid.Handler.Item handlerItem = new Liquid.Handler.Item(stack);
         Liquid.Slot slotItem = handlerItem.getSlot(0);
         EntityPlayer player = context.getPlayer();
-        if (tryInteract(handlerItem, context)) {
+        if (tryInteract(slotItem, context)) {
+            handlerItem.setSlot(0, slotItem);
             return EnumActionResult.SUCCESS;
         }
         TileEntity tileEntity = context.getWorld().getTileEntity(context.getPos());
@@ -65,10 +66,9 @@ public class ItemVial extends IItem.Base implements IItemColorHolder {
         return super.onItemUseFirst(stack, context);
     }
 
-    public static boolean tryInteract(Liquid.Handler.Item handlerItem, ItemUseContext context) {
+    public static boolean tryInteract(Liquid.Slot slot, ItemUseContext context) {
         EntityPlayer player = context.getPlayer();
-        Liquid.Slot slotItem = handlerItem.getSlot(0);
-        IInteractRecipe recipe = RecipeSorter.getInteractRecipe(slotItem.getLiquid(), slotItem.getStored(), context.getWorld(), context.getPos());
+        IInteractRecipe recipe = RecipeSorter.getInteractRecipe(slot.getLiquid(), slot.getStored(), context.getWorld(), context.getPos());
         if (recipe != null) {
             Object result = recipe.getResult();
             boolean flag1 = false;
@@ -82,8 +82,7 @@ public class ItemVial extends IItem.Base implements IItemColorHolder {
                         player != null ? player.getUniqueID() : null);
             }
             if (flag1) {
-                slotItem.use(player != null && !player.isCreative() ? 0.0F : recipe.getAmount());
-                handlerItem.setSlot(0, slotItem);
+                slot.use(player != null && !player.isCreative() ? 0.0F : recipe.getAmount());
                 return true;
             }
         }

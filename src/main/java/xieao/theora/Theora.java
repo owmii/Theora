@@ -32,19 +32,19 @@ public class Theora {
         Config.load();
     }
 
-    public void setup(FMLCommonSetupEvent event) {
+    void setup(FMLCommonSetupEvent event) {
         this.proxy.setup(event);
     }
 
-    public void enqueueIMC(InterModEnqueueEvent event) {
+    void enqueueIMC(InterModEnqueueEvent event) {
         this.proxy.enqueueIMC(event);
     }
 
-    public void processIMC(InterModProcessEvent event) {
+    void processIMC(InterModProcessEvent event) {
         this.proxy.processIMC(event);
     }
 
-    public void starting(FMLServerStartingEvent event) {
+    void starting(FMLServerStartingEvent event) {
         new TheoraCommand(event.getCommandDispatcher());
     }
 

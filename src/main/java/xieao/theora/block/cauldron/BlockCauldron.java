@@ -34,8 +34,13 @@ public class BlockCauldron extends IBlock.Base implements ITileEntityProvider {
     }
 
     @Override
+    public boolean isSolid(IBlockState state) {
+        return false;
+    }
+
+    @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
+        return EnumBlockRenderType.MODEL;
     }
 
     @Override

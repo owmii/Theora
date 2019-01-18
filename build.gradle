@@ -51,6 +51,7 @@ task major {
             ant.entry(key: "build_num", value: bld_num)
         }
     }
+    group = "incr"
 }
 
 task minor {
@@ -64,6 +65,7 @@ task minor {
             ant.entry(key: "build_num", value: bld_num)
         }
     }
+    group = "incr"
 }
 
 task revision {
@@ -77,6 +79,7 @@ task revision {
             ant.entry(key: "build_num", value: bld_num)
         }
     }
+    group = "incr"
 }
 
 tasks.withType(Jar) {
@@ -98,7 +101,3 @@ processResources {
         exclude 'META_INF/mods.toml'
     }
 }
-
-configure(major) { group = "increment" }
-configure(minor) { group = "increment" }
-configure(revision) { group = "increment" }

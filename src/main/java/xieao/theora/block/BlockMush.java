@@ -32,7 +32,6 @@ public class BlockMush extends IBlock.Plant implements IShearable {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public int quantityDropped(IBlockState state, Random random) {
         return 1 + random.nextInt(3);
     }

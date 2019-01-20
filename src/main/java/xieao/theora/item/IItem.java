@@ -28,11 +28,6 @@ public interface IItem extends IForgeItem {
     }
 
     @OnlyIn(Dist.CLIENT)
-    default void initRenderer() {
-
-    }
-
-    @OnlyIn(Dist.CLIENT)
     default boolean renderByItem(ItemStack stack) {
         return false;
     }

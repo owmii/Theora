@@ -12,20 +12,20 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ModInitializer {
+public class InitHandler {
     private static final Type LOADER_PRE = Type.getType(PreLoad.class);
     private static final Type LOADER_INIT = Type.getType(InitLoad.class);
     private static final Type LOADER_POST = Type.getType(PostLoad.class);
 
-    public static void setup() {
+    public static void pre() {
         load(LOADER_PRE);
     }
 
-    public static void enqueueIMC() {
+    public static void init() {
         load(LOADER_INIT);
     }
 
-    public static void processIMC() {
+    public static void post() {
         load(LOADER_POST);
     }
 

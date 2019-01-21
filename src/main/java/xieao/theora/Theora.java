@@ -45,14 +45,15 @@ public class Theora {
     }
 
     void setup(FMLCommonSetupEvent event) {
-        InitHandler.pre();
         Liquid.Cap.register();
+        InitHandler.pre(event);
+
         API.register(new InteractRecipes());
         API.register(new CauldronRecipes());
     }
 
     void enqueueIMC(InterModEnqueueEvent event) {
-        InitHandler.init();
+        InitHandler.init(event);
 
         runWhenOnClient(() -> {
             Minecraft mc = Minecraft.getInstance();
@@ -68,7 +69,13 @@ public class Theora {
     }
 
     void processIMC(InterModProcessEvent event) {
-        InitHandler.post();
+        InitHandler.post(event);
+    }
+
+    void runWhenOnClient(Runnable toRun) {
+        if (Dist.CLIENT == FMLEnvironment.dist) {
+            toRun.run();
+        }
     }
 
     void starting(FMLServerStartingEvent event) {
@@ -77,11 +84,5 @@ public class Theora {
 
     public static ResourceLocation loc(String path) {
         return new ResourceLocation(ID, path);
-    }
-
-    public static void runWhenOnClient(Runnable toRun) {
-        if (Dist.CLIENT == FMLEnvironment.dist) {
-            toRun.run();
-        }
     }
 }

@@ -10,15 +10,15 @@ public class Network {
     private static final SimpleChannel CHANNEL;
     private static int id;
 
-    private static void registerAll() {
+    static void registerAll() {
 
     }
 
-    public static <PKT> void toServer(PKT pkt) {
+    public static <T> void toServer(T pkt) {
         CHANNEL.sendToServer(pkt);
     }
 
-    public static <PKT> void toClient(PKT pkt, EntityPlayerMP player) {
+    public static <T> void toClient(T pkt, EntityPlayerMP player) {
         CHANNEL.sendTo(pkt, player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
     }
 

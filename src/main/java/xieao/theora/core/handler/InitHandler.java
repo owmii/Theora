@@ -1,6 +1,9 @@
 package xieao.theora.core.handler;
 
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.forgespi.language.ModFileScanData;
 import org.objectweb.asm.Type;
 import xieao.theora.Theora;
@@ -17,15 +20,15 @@ public class InitHandler {
     private static final Type LOADER_INIT = Type.getType(InitLoad.class);
     private static final Type LOADER_POST = Type.getType(PostLoad.class);
 
-    public static void pre() {
+    public static void pre(FMLCommonSetupEvent event) {
         load(LOADER_PRE);
     }
 
-    public static void init() {
+    public static void init(InterModEnqueueEvent event) {
         load(LOADER_INIT);
     }
 
-    public static void post() {
+    public static void post(InterModProcessEvent event) {
         load(LOADER_POST);
     }
 

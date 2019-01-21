@@ -156,7 +156,7 @@ public class Liquid extends RegistryEntry {
 
             @Override
             public <T> OptionalCapabilityInstance<T> getCapability(Capability<T> cap, @Nullable EnumFacing side) {
-                return OptionalCapabilityInstance.orEmpty(cap, CAP.LIQUID_HANDLER_ITEM, holder);
+                return OptionalCapabilityInstance.orEmpty(cap, Cap.LIQUID_HANDLER_ITEM, holder);
             }
 
             public ItemStack getStack() {
@@ -334,7 +334,7 @@ public class Liquid extends RegistryEntry {
 
     }
 
-    public static final class CAP {
+    public static final class Cap {
         @CapabilityInject(Handler.class)
         @SuppressWarnings("ConstantConditions")
         public static Capability<Handler> LIQUID_HANDLER = null;

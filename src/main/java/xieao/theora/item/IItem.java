@@ -12,7 +12,7 @@ import xieao.theora.Theora;
 import xieao.theora.client.renderer.item.TEItemRenderer;
 
 public interface IItem extends IForgeItem {
-    ItemGroup MAIN = new ItemGroup(Theora.MOD_ID) {
+    ItemGroup MAIN = new ItemGroup(Theora.ID) {
         @OnlyIn(Dist.CLIENT)
         public ItemStack createIcon() {
             return new ItemStack(Items.APPLE);

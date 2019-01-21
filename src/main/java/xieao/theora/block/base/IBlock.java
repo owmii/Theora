@@ -66,7 +66,7 @@ public interface IBlock extends IForgeBlock {
                 player.addStat(StatList.BLOCK_MINED.get(this));
                 player.addExhaustion(0.005F);
                 if (world.isRemote) {
-                    Theora.LOGGER.debug("Never going to hit this!");
+                    Theora.LOG.debug("Never going to hit this!");
                     return;
                 }
                 int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack);

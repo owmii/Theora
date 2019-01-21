@@ -39,7 +39,7 @@ public class InitHandler {
             try {
                 Class.forName(annotationData.getMemberName()).newInstance();
             } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-                Theora.LOGGER.error("Failed to load {} instance with annotation {}.", annotationData.getMemberName(), type.getClassName());
+                Theora.LOG.error("Failed to load {} instance with annotation {}.", annotationData.getMemberName(), type.getClassName());
                 e.printStackTrace();
             }
         });

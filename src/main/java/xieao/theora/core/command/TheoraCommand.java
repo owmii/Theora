@@ -7,7 +7,7 @@ public class TheoraCommand {
 
     public TheoraCommand(CommandDispatcher<CommandSource> dispatcher) {
 //        dispatcher.register(
-//                LiteralArgumentBuilder.literal(Theora.MOD_ID)
+//                LiteralArgumentBuilder.literal(Theora.ID)
 //        );
     }
 }

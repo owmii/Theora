@@ -23,7 +23,7 @@ public class Config {
     }
 
     public static void load() {
-        loadFrom(FMLPaths.CONFIGDIR.get().resolve(Theora.MOD_ID + "/"));
+        loadFrom(FMLPaths.CONFIGDIR.get().resolve(Theora.ID + "/"));
     }
 
     private static final ForgeConfigSpec spec = BUILDER_MAIN.build();

@@ -148,7 +148,7 @@ public class TileCauldron extends Tile.Tickable implements IInv {
     public <T> OptionalCapabilityInstance<T> getCapability(Capability<T> cap, @Nullable EnumFacing side) {
         if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return this.fluidHolder.cast();
-        } else if (cap == Liquid.Cap.LIQUID_HANDLER) {
+        } else if (cap == Liquid.CAP.LIQUID_HANDLER) {
             return this.liquidHolder.cast();
         }
         return super.getCapability(cap, side);

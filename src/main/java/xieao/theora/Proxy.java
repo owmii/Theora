@@ -11,7 +11,6 @@ import xieao.theora.client.renderer.item.IItemColorHolder;
 import xieao.theora.client.renderer.item.TEItemRenderer;
 import xieao.theora.client.renderer.tile.TERRegistry;
 import xieao.theora.core.IItems;
-import xieao.theora.core.handler.InitHandler;
 import xieao.theora.core.recipe.CauldronRecipes;
 import xieao.theora.core.recipe.InteractRecipes;
 
@@ -19,20 +18,15 @@ import static xieao.theora.api.TheoraAPI.API;
 
 public class Proxy {
     public void setup(FMLCommonSetupEvent event) {
-        InitHandler.pre();
-        Liquid.Cap.register();
+        Liquid.CAP.register();
 
         API.register(new InteractRecipes());
         API.register(new CauldronRecipes());
     }
 
-    public void enqueueIMC(InterModEnqueueEvent event) {
-        InitHandler.init();
-    }
+    public void enqueueIMC(InterModEnqueueEvent event) {}
 
-    public void processIMC(InterModProcessEvent event) {
-        InitHandler.post();
-    }
+    public void processIMC(InterModProcessEvent event) {}
 
     @OnlyIn(Dist.CLIENT)
     public static class Client extends Proxy {

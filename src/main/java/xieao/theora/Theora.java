@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import xieao.theora.core.command.TheoraCommand;
 import xieao.theora.core.config.Config;
+import xieao.theora.core.handler.InitHandler;
 import xieao.theora.core.network.Network;
 
 @Mod(Theora.MOD_ID)
@@ -33,14 +34,17 @@ public class Theora {
     }
 
     void setup(FMLCommonSetupEvent event) {
+        InitHandler.pre();
         this.proxy.setup(event);
     }
 
     void enqueueIMC(InterModEnqueueEvent event) {
+        InitHandler.init();
         this.proxy.enqueueIMC(event);
     }
 
     void processIMC(InterModProcessEvent event) {
+        InitHandler.post();
         this.proxy.processIMC(event);
     }
 

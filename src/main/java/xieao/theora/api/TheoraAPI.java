@@ -33,10 +33,10 @@ public class TheoraAPI {
     }
 
     public static OptionalCapabilityInstance<Liquid.Handler> getLiquidHandler(TileEntity tileEntity, @Nullable EnumFacing side) {
-        return tileEntity.getCapability(Liquid.Cap.LIQUID_HANDLER, side);
+        return tileEntity.getCapability(Liquid.CAP.LIQUID_HANDLER, side);
     }
 
     public static OptionalCapabilityInstance<Liquid.Handler.Item> getLiquidHandlerItem(ItemStack stack) {
-        return stack.getCapability(Liquid.Cap.LIQUID_HANDLER_ITEM, null);
+        return stack.getCapability(Liquid.CAP.LIQUID_HANDLER_ITEM, null);
     }
 }

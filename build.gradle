@@ -22,7 +22,7 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 
 minecraft {
     mappings channel: mappings_channel, version: mappings_version
-    //accessTransformer = file('src/main/resources/META-INF/theora_at.cfg')
+    accessTransformer = file('src/main/resources/META-INF/theora_at.cfg')
     runs {
         client = {
             workingDirectory project.file('run').canonicalPath

@@ -37,11 +37,11 @@ public class ItemVial extends IItem.Base implements IItemColorHolder {
 
     @Override
     public EnumActionResult onItemUseFirst(ItemStack stack, ItemUseContext context) {
-        Liquid.Handler.Item handlerItem = new Liquid.Handler.Item(stack);
-        Liquid.Slot slotItem = handlerItem.getSlot(0);
+        Liquid.Handler.Item handlerVial = new Liquid.Handler.Item(stack);
+        Liquid.Slot slotVial = handlerVial.getSlot(0);
         EntityPlayer player = context.getPlayer();
-        if (tryInteract(slotItem, context)) {
-            handlerItem.setSlot(0, slotItem);
+        if (tryInteract(slotVial, context)) {
+            handlerVial.setSlot(0, slotVial);
             return EnumActionResult.SUCCESS;
         }
         TileEntity tileEntity = context.getWorld().getTileEntity(context.getPos());
@@ -49,14 +49,14 @@ public class ItemVial extends IItem.Base implements IItemColorHolder {
             OptionalCapabilityInstance<Liquid.Handler> holder = TheoraAPI.getLiquidHandler(tileEntity, context.getFace());
             holder.map(handler -> {
                 for (Liquid.Slot slot : handler.getSlots()) {
-                    if (!slotItem.isEmpty() && slot.canReceive(slotItem.getLiquid())) {
-                        slotItem.to(slot, true, player != null && !player.isCreative());
-                        handlerItem.setSlot(0, slotItem);
+                    if (!slotVial.isEmpty() && slot.canReceive(slotVial.getLiquid())) {
+                        slotVial.to(slot, true, player != null && !player.isCreative());
+                        handlerVial.setSlot(0, slotVial);
                         return EnumActionResult.SUCCESS;
                     }
-                    if (!slotItem.isFull() && slot.canSend(slotItem.getLiquid())) {
-                        slot.to(slotItem, true, true);
-                        handlerItem.setSlot(0, slotItem);
+                    if (!slotVial.isFull() && slot.canSend(slotVial.getLiquid())) {
+                        slot.to(slotVial, true, true);
+                        handlerVial.setSlot(0, slotVial);
                         return EnumActionResult.SUCCESS;
                     }
                 }

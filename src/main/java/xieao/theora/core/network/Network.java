@@ -22,7 +22,7 @@ public class Network {
         CHANNEL.sendTo(pkt, player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
     }
 
-    public static Network creat() {
+    public static Network create() {
         return new Network();
     }
 

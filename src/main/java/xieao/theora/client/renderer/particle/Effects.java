@@ -33,14 +33,7 @@ public final class Effects {
     private final List<Base> effects = new ArrayList<>();
     private final Minecraft mc = Minecraft.getInstance();
 
-    public static final Texture GLOW_SMALL = new Texture("glow_small", 0, false);
-    public static final Texture GLOW_MID = new Texture("glow_mid", 0, false);
-    public static final Texture GLOW_DENS = new Texture("glow_dens", 0, false);
-    public static final Texture SQUARE = new Texture("square", 0, false);
-    public static final Texture STAR = new Texture("star", 0, false);
-    public static final Texture RUNES = new Texture("runes/", 25, true);
-
-    public static Base creat(Texture texture, World world, V3d origin) {
+    public static Base create(Texture texture, World world, V3d origin) {
         return new Base(texture, world, origin);
     }
 
@@ -296,6 +289,13 @@ public final class Effects {
             }
         }
     }
+
+    public static final Texture GLOW_SMALL = new Texture("glow_small", 0, false);
+    public static final Texture GLOW_MID = new Texture("glow_mid", 0, false);
+    public static final Texture GLOW_DENS = new Texture("glow_dens", 0, false);
+    public static final Texture SQUARE = new Texture("square", 0, false);
+    public static final Texture STAR = new Texture("star", 0, false);
+    public static final Texture RUNES = new Texture("runes/", 25, true);
 
     public static class Texture {
         public final String name;

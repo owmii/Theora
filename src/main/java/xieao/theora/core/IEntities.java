@@ -22,10 +22,10 @@ public class IEntities {
     }
 
     static <T extends Entity> EntityType<T> register(String id, Class<? extends T> clazz, Function<? super World, ? extends T> factory) {
-        EntityType<T> entitytype = new EntityType<>(clazz, factory, true, true, null);
-        entitytype.setRegistryName(id);
-        ForgeRegistries.ENTITIES.register(entitytype);
-        TYPES.put(entitytype.getRegistryName(), entitytype);
-        return entitytype;
+        EntityType<T> entityType = new EntityType<>(clazz, factory, true, true, null);
+        entityType.setRegistryName(id);
+        ForgeRegistries.ENTITIES.register(entityType);
+        TYPES.put(entityType.getRegistryName(), entityType);
+        return entityType;
     }
 }

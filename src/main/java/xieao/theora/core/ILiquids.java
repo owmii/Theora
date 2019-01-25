@@ -1,9 +1,9 @@
 package xieao.theora.core;
 
 import xieao.theora.api.liquid.Liquid;
-import xieao.theora.core.lib.annotation.PreLoad;
+import xieao.theora.core.lib.annotation.AutoLoad;
 
-@PreLoad
+@AutoLoad
 public class ILiquids {
     public static final Liquid WATER;
     public static final Liquid LAVA;

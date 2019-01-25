@@ -16,17 +16,16 @@ import java.util.List;
 import java.util.Random;
 
 public class BlockMush extends IBlock.Plant implements IShearable {
-
     @Override
     public IItemProvider getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune) {
         if (this == IBlocks.MUSH_GLIOPHORUS) {
             return Items.COAL;
         } else if (this == IBlocks.MUSH_WHITE_BEECH) {
-            return Items.COAL;
+            return Items.APPLE;
         } else if (this == IBlocks.MUSH_WITCH_HATE) {
-            return Items.COAL;
+            return Items.ARROW;
         } else if (this == IBlocks.MUSH_AMANITA_MUSCARIA) {
-            return Items.COAL;
+            return Items.BEETROOT_SEEDS;
         }
         return this;
     }

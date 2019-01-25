@@ -11,18 +11,16 @@ import xieao.theora.api.recipe.cauldron.ICauldronRecipe;
 import xieao.theora.api.recipe.cauldron.ICauldronRegistry;
 import xieao.theora.api.recipe.interact.IInteractRecipe;
 import xieao.theora.api.recipe.interact.IInteractRegistry;
-import xieao.theora.core.lib.annotation.PostLoad;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.Set;
 
-@PostLoad
 public class RecipeSorter {
     public static final Set<IInteractRecipe> INTERACT_RECIPES = new HashSet<>();
     public static final Set<ICauldronRecipe> CAULDRON_RECIPES = new HashSet<>();
 
-    static {
+    public static void post() {
         for (IRecipeRegistry registry : TheoraAPI.API.getRecipeRegistries()) {
             if (registry instanceof IInteractRegistry) {
                 IInteractRegistry reg = (IInteractRegistry) registry;

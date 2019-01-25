@@ -18,7 +18,6 @@ import net.minecraft.util.INameable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.extensions.IForgeBlock;
-import xieao.theora.Theora;
 import xieao.theora.item.IItem;
 
 import javax.annotation.Nullable;
@@ -66,7 +65,6 @@ public interface IBlock extends IForgeBlock {
                 player.addStat(StatList.BLOCK_MINED.get(this));
                 player.addExhaustion(0.005F);
                 if (world.isRemote) {
-                    Theora.LOG.debug("Never going to hit this!");
                     return;
                 }
                 int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack);

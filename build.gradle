@@ -82,7 +82,7 @@ task revision {
 }
 
 tasks.withType(Jar) {
-    def jarsDir = file("$projectDir/../jars/${mod_name}")
+    def jarsDir = file("$projectDir/jars/${mod_name}")
     if (!jarsDir.exists()) {
         jarsDir.mkdirs()
     }

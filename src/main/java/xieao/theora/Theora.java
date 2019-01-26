@@ -40,19 +40,17 @@ public class Theora {
             API.register(new InteractRecipes());
             API.register(new CauldronRecipes());
         });
-        eventBus.addListener((InterModEnqueueEvent event) -> {
-            runWhenOnClient(() -> {
-                Minecraft mc = Minecraft.getInstance();
-                IItems.ITEMS.forEach(item -> {
-                    TEItemRenderer.register(item);
-                    if (item instanceof IItemColorHolder) {
-                        IItemColorHolder holder = (IItemColorHolder) item;
-                        mc.getItemColors().register(holder.getItemColor(), item);
-                    }
-                });
-                TERRegistry.registerAll();
+        eventBus.addListener((InterModEnqueueEvent event) -> runWhenOnClient(() -> {
+            Minecraft mc = Minecraft.getInstance();
+            IItems.ITEMS.forEach(item -> {
+                TEItemRenderer.register(item);
+                if (item instanceof IItemColorHolder) {
+                    IItemColorHolder holder = (IItemColorHolder) item;
+                    mc.getItemColors().register(holder.getItemColor(), item);
+                }
             });
-        });
+            TERRegistry.registerAll();
+        }));
         eventBus.addListener((InterModProcessEvent event) -> RecipeSorter.post());
         EVENT_BUS.addListener(TheoraCommand::register);
         Config.load();

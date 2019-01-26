@@ -1,6 +1,5 @@
 package xieao.theora.block.cauldron;
 
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -15,7 +14,7 @@ import xieao.theora.block.base.IBlock;
 
 import javax.annotation.Nullable;
 
-public class BlockCauldron extends IBlock.Base implements ITileEntityProvider {
+public class BlockCauldron extends IBlock.Base {
     public BlockCauldron() {
         super(Builder.create(Material.IRON, MapColor.BLACK)
                 .hardnessAndResistance(1.5F, 20.0F)
@@ -24,7 +23,7 @@ public class BlockCauldron extends IBlock.Base implements ITileEntityProvider {
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
         return new TileCauldron();
     }
 

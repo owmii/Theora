@@ -1,7 +1,6 @@
 package xieao.theora.block.heat;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,7 +16,7 @@ import xieao.theora.item.ItemHeat;
 
 import javax.annotation.Nullable;
 
-public class BlockHeat extends IBlock.Base implements ITileEntityProvider {
+public class BlockHeat extends IBlock.Base {
     private final int maxAge;
 
     public BlockHeat(int maxAge) {
@@ -64,7 +63,7 @@ public class BlockHeat extends IBlock.Base implements ITileEntityProvider {
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
         return new TileHeat();
     }
 

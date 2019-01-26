@@ -27,6 +27,11 @@ public interface IBlock extends IForgeBlock {
         return new IItem.Block(getBlock(), builder);
     }
 
+    @Override
+    default boolean hasTileEntity(IBlockState state) {
+        return createTileEntity(state, null) != null;
+    }
+
     class Plant extends BlockBush implements IBlock {
         public Plant() {
             this(Block.Builder.create(Material.PLANTS)

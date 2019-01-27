@@ -14,7 +14,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.OptionalCapabilityInstance;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -139,13 +139,13 @@ public abstract class Tile extends TileEntity {
     }
 
     @Nullable
-    protected OptionalCapabilityInstance<IItemHandlerModifiable> invHandler;
+    protected LazyOptional<IItemHandlerModifiable> invHandler;
 
     @Override
-    public <T> OptionalCapabilityInstance<T> getCapability(Capability<T> cap, @Nullable EnumFacing side) {
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable EnumFacing side) {
         if (this instanceof IInv && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             if (this.invHandler == null) {
-                this.invHandler = OptionalCapabilityInstance.of(() -> createHandler((IInv) this, side));
+                this.invHandler = LazyOptional.of(() -> createHandler((IInv) this, side));
             }
             return this.invHandler.cast();
         }

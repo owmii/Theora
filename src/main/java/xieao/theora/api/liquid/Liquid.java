@@ -6,8 +6,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.capabilities.*;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.util.LazyOptional;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.registry.RegistryEntry;
 
@@ -132,7 +136,7 @@ public class Liquid extends RegistryEntry {
         }
 
         public static class Item extends Handler implements ICapabilityProvider {
-            private final OptionalCapabilityInstance<Item> holder = OptionalCapabilityInstance.of(() -> this);
+            private final LazyOptional<Item> holder = LazyOptional.of(() -> this);
             private final ItemStack stack;
 
             public Item(ItemStack stack) {
@@ -155,8 +159,8 @@ public class Liquid extends RegistryEntry {
             }
 
             @Override
-            public <T> OptionalCapabilityInstance<T> getCapability(Capability<T> cap, @Nullable EnumFacing side) {
-                return OptionalCapabilityInstance.orEmpty(cap, Cap.LIQUID_HANDLER_ITEM, holder);
+            public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable EnumFacing side) {
+                return Cap.LIQUID_HANDLER_ITEM.orEmpty(cap, holder);
             }
 
             public ItemStack getStack() {

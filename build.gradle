@@ -1,7 +1,9 @@
 buildscript {
     repositories {
         mavenCentral()
-        jcenter()
+        maven {
+            url 'http://repo1.maven.org/maven2'
+        }
         maven {
             url = 'https://files.minecraftforge.net/maven'
         }
@@ -23,13 +25,18 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 minecraft {
     mappings channel: mappings_channel, version: mappings_version
     accessTransformer = file('src/main/resources/META-INF/theora_at.cfg')
+    //noinspection GroovyAssignabilityCheck
     runs {
         client = {
+            //noinspection GrUnresolvedAccess
             workingDirectory project.file('run').canonicalPath
+            //noinspection GrUnresolvedAccess
             source sourceSets.main
         }
         server = {
+            //noinspection GrUnresolvedAccess
             workingDirectory project.file('run').canonicalPath
+            //noinspection GrUnresolvedAccess
             source sourceSets.main
         }
     }
@@ -37,6 +44,18 @@ minecraft {
 
 dependencies {
     minecraft "${forge_group}:${forge_name}:${minecraft_version}-${forge_version}"
+}
+
+jar {
+    manifest {
+        attributes(["Specification-Title"     : mod_name,
+                    "Specification-Vendor"    : mod_group,
+                    "Specification-Version"   : "24.0",
+                    "Implementation-Title"    : project.name,
+                    "Implementation-Version"  : mod_version + "." + build_num,
+                    "Implementation-Vendor"   : mod_group,
+                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
+    }
 }
 
 task major {
@@ -82,21 +101,9 @@ task revision {
 }
 
 tasks.withType(Jar) {
-    def jarsDir = file("$projectDir/jars/${mod_name}")
+    def jarsDir = file("$projectDir/jars")
     if (!jarsDir.exists()) {
         jarsDir.mkdirs()
     }
     destinationDir = jarsDir
-}
-
-processResources {
-    inputs.property 'version', project.version
-    inputs.property 'mcversion', minecraft_version
-    from(sourceSets.main.resources.srcDirs) {
-        include 'META_INF/mods.toml'
-        expand 'version': project.version, 'mcversion': minecraft_version
-    }
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'META_INF/mods.toml'
-    }
 }

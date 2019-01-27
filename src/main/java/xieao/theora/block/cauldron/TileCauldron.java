@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.OptionalCapabilityInstance;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -23,8 +23,8 @@ import xieao.theora.item.ItemHeat;
 import javax.annotation.Nullable;
 
 public class TileCauldron extends Tile.Tickable implements IInv {
-    private final OptionalCapabilityInstance<IFluidHandler> fluidHolder;
-    private final OptionalCapabilityInstance<Liquid.Handler> liquidHolder;
+    private final LazyOptional<IFluidHandler> fluidHolder;
+    private final LazyOptional<Liquid.Handler> liquidHolder;
     protected Liquid.Handler liquidHandler = new Liquid.Handler();
     protected FluidTank fluidTank = new FluidTank(Fluid.BUCKET_VOLUME);
 
@@ -41,8 +41,8 @@ public class TileCauldron extends Tile.Tickable implements IInv {
 
     public TileCauldron() {
         super(ITiles.CAULDRON, 12);
-        this.fluidHolder = OptionalCapabilityInstance.of(() -> this.fluidTank);
-        this.liquidHolder = OptionalCapabilityInstance.of(() -> this.liquidHandler);
+        this.fluidHolder = LazyOptional.of(() -> this.fluidTank);
+        this.liquidHolder = LazyOptional.of(() -> this.liquidHandler);
         this.liquidHandler.addSlot(1000.0F, 100.0F, TransferType.SEND);
     }
 
@@ -145,7 +145,7 @@ public class TileCauldron extends Tile.Tickable implements IInv {
     }
 
     @Override
-    public <T> OptionalCapabilityInstance<T> getCapability(Capability<T> cap, @Nullable EnumFacing side) {
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable EnumFacing side) {
         if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return this.fluidHolder.cast();
         } else if (cap == Liquid.Cap.LIQUID_HANDLER) {

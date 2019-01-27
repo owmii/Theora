@@ -14,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.capabilities.OptionalCapabilityInstance;
+import net.minecraftforge.common.util.LazyOptional;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.liquid.TransferType;
@@ -46,7 +46,7 @@ public class ItemVial extends IItem.Base implements IItemColorHolder {
         }
         TileEntity tileEntity = context.getWorld().getTileEntity(context.getPos());
         if (tileEntity != null) {
-            OptionalCapabilityInstance<Liquid.Handler> holder = TheoraAPI.getLiquidHandler(tileEntity, context.getFace());
+            LazyOptional<Liquid.Handler> holder = TheoraAPI.getLiquidHandler(tileEntity, context.getFace());
             holder.map(handler -> {
                 for (Liquid.Slot slot : handler.getSlots()) {
                     if (!slotVial.isEmpty() && slot.canReceive(slotVial.getLiquid())) {
@@ -94,7 +94,7 @@ public class ItemVial extends IItem.Base implements IItemColorHolder {
         if (this.isInGroup(group)) {
             Liquid.REGISTRY.values().forEach(liquid -> {
                 ItemStack stack = new ItemStack(this);
-                OptionalCapabilityInstance<Liquid.Handler.Item> holder = TheoraAPI.getLiquidHandlerItem(stack);
+                LazyOptional<Liquid.Handler.Item> holder = TheoraAPI.getLiquidHandlerItem(stack);
                 holder.map(handler -> {
                     Liquid.Slot slot = handler.getSlot(0);
                     slot.setLiquid(liquid);

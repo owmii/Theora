@@ -1,18 +1,12 @@
 modLoader="javafml" 
 loaderVersion="[24,)"
 authors="xieao"
+issueTrackerURL="http://www.minecraftforge.net/"
 
-[[mods]] 
+[[mods]]
 modId="theora" 
-version="0.0.0.0"
+version="${file.jarVersion}"
 displayName="Theora" 
 description='''
 Theora mod.
 '''
-
-#[[dependencies.theora]]
-#    modId="forge"
-#    mandatory=false
-#    versionRange="[24.0.81,)"
-#    ordering="NONE"
-#    side="BOTH"

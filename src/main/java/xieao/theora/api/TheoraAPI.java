@@ -3,7 +3,7 @@ package xieao.theora.api;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.capabilities.OptionalCapabilityInstance;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.ModList;
 import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.recipe.IRecipeRegistry;
@@ -32,11 +32,11 @@ public class TheoraAPI {
         return recipeRegistries;
     }
 
-    public static OptionalCapabilityInstance<Liquid.Handler> getLiquidHandler(TileEntity tileEntity, @Nullable EnumFacing side) {
+    public static LazyOptional<Liquid.Handler> getLiquidHandler(TileEntity tileEntity, @Nullable EnumFacing side) {
         return tileEntity.getCapability(Liquid.Cap.LIQUID_HANDLER, side);
     }
 
-    public static OptionalCapabilityInstance<Liquid.Handler.Item> getLiquidHandlerItem(ItemStack stack) {
+    public static LazyOptional<Liquid.Handler.Item> getLiquidHandlerItem(ItemStack stack) {
         return stack.getCapability(Liquid.Cap.LIQUID_HANDLER_ITEM, null);
     }
 }

@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
-import xieao.theora.Theora;
+import xieao.theora.core.lib.util.Location;
 
 public class Network {
     private static final SimpleChannel CHANNEL;
@@ -27,7 +27,7 @@ public class Network {
     }
 
     static {
-        CHANNEL = NetworkRegistry.ChannelBuilder.named(Theora.loc("main"))
+        CHANNEL = NetworkRegistry.ChannelBuilder.named(Location.ROOT.get("main"))
                 .clientAcceptedVersions("1"::equals)
                 .serverAcceptedVersions("1"::equals)
                 .networkProtocolVersion(() -> "1")

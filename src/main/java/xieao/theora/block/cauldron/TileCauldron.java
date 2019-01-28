@@ -98,7 +98,7 @@ public class TileCauldron extends Tile.Tickable implements IInv {
         }
     }
 
-    private boolean heated() {
+    protected boolean heated() {
         if (this.heatStack.getItem() instanceof ItemHeat) {
             ItemHeat itemHeat = (ItemHeat) this.heatStack.getItem();
             int maxAge = ((BlockHeat) itemHeat.getBlock()).getMaxAge();
@@ -137,11 +137,13 @@ public class TileCauldron extends Tile.Tickable implements IInv {
         return heatStack;
     }
 
-    public void setHeatStack(ItemStack stack) {
+    public boolean setHeatStack(ItemStack stack) {
         if (stack.getItem() instanceof ItemHeat) {
             this.heatStack = stack;
             markDirtyAndSync();
+            return true;
         }
+        return false;
     }
 
     @Override

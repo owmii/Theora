@@ -78,7 +78,7 @@ public class Location extends ResourceLocation {
         return getNamespace() + ':' + getPath();
     }
 
-    static Location create() {
+    private static Location create() {
         return new Location();
     }
 }

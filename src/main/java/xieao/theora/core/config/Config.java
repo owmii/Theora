@@ -26,13 +26,13 @@ public class Config {
         loadFrom(FMLPaths.CONFIGDIR.get().resolve(Theora.ID + "/"));
     }
 
-    private static final ForgeConfigSpec spec = BUILDER_MAIN.build();
+    public static final ForgeConfigSpec spec = BUILDER_MAIN.build();
 
     private static void loadFrom(Path root) {
         if (!root.toFile().exists()) {
             root.toFile().mkdir();
         }
         Path configPath = root.resolve("main.toml");
-        spec.setConfigFile(configPath);
+        //spec.setConfigFile(configPath);
     }
 }

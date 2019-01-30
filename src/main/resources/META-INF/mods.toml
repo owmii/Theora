@@ -1,7 +1,7 @@
 modLoader="javafml" 
 loaderVersion="[24,)"
 authors="xieao"
-issueTrackerURL="http://www.minecraftforge.net/"
+issueTrackerURL="https://github.com/xieaoDev/Theora/issues"
 
 [[mods]]
 modId="theora" 

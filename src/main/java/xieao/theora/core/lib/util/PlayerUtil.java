@@ -1,6 +1,8 @@
 package xieao.theora.core.lib.util;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraftforge.common.util.FakePlayer;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -20,5 +22,9 @@ public class PlayerUtil {
 
     public static List<EntityPlayerMP> getAll() {
         return Collections.unmodifiableList(ServerUtil.getServer().getPlayerList().getPlayers());
+    }
+
+    public static boolean isFake(EntityPlayer player) {
+        return player instanceof FakePlayer;
     }
 }

@@ -3,7 +3,6 @@ package xieao.theora.block.heat;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -31,19 +30,6 @@ public class BlockHeat extends IBlock.Base {
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, @Nullable EntityLivingBase placer, ItemStack stack) {
-        super.onBlockPlacedBy(world, pos, state, placer, stack);
-        TileEntity tileentity = world.getTileEntity(pos);
-        if (tileentity instanceof TileHeat) {
-            TileHeat tileHeat = (TileHeat) tileentity;
-            if (stack.getItem() instanceof ItemHeat) {
-                ItemHeat heat = (ItemHeat) stack.getItem();
-                tileHeat.setAge(heat.getAge(stack));
-            }
-        }
-    }
-
-    @Override
     public void onReplaced(IBlockState state, World world, BlockPos pos, IBlockState newState, boolean isMoving) {
         TileEntity tileentity = world.getTileEntity(pos);
         if (tileentity instanceof TileHeat) {
@@ -59,7 +45,8 @@ public class BlockHeat extends IBlock.Base {
     }
 
     @Override
-    public void dropBlockAsItemWithChance(IBlockState state, World worldIn, BlockPos pos, float chancePerItem, int fortune) {}
+    public void dropBlockAsItemWithChance(IBlockState state, World worldIn, BlockPos pos, float chancePerItem, int fortune) {
+    }
 
     @Nullable
     @Override

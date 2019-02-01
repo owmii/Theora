@@ -12,23 +12,17 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
-import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.registry.RegistryEntry;
 
 import javax.annotation.Nullable;
 import java.util.*;
 
 public class Liquid extends RegistryEntry {
-    public static final Map<ResourceLocation, Liquid> REGISTRY;
-    public static final Liquid EMPTY;
+    public static final Map<ResourceLocation, Liquid> REGISTRY = new HashMap<>();
+    public static final Liquid EMPTY = register("theora:empty", 0, 0);
 
     private int darkColor;
     private int brightColor;
-
-    static {
-        REGISTRY = new HashMap<>();
-        EMPTY = register(TheoraAPI.EMPTY, 0, 0);
-    }
 
     public static Liquid register(String name, int darkColor, int brightColor) {
         Liquid liquid = new Liquid();
@@ -77,7 +71,7 @@ public class Liquid extends RegistryEntry {
 
 
     public static class Handler {
-        public static final Slot SLOT_EMPTY = new Slot(Liquid.EMPTY, true, 0.0F, 0.0F, 0.0F, TransferType.ALL);
+        public static final Slot SLOT_EMPTY = new Slot(Liquid.EMPTY, true, 0.0F, 0.0F, 0.0F, Transfer.ALL);
         protected Slot[] slots = new Slot[0];
 
         public Slot[] getSlots() {
@@ -100,12 +94,12 @@ public class Liquid extends RegistryEntry {
             return this.slots.length;
         }
 
-        public void addSlot(float capacity, float transferRate, TransferType transferType) {
-            addSlot(new Slot(Liquid.EMPTY, false, capacity, 0, transferRate, transferType));
+        public void addSlot(float capacity, float transferRate, Transfer transfer) {
+            addSlot(new Slot(Liquid.EMPTY, false, capacity, 0, transferRate, transfer));
         }
 
-        public void addSlot(Liquid liquid, float capacity, float transferRate, TransferType transferType) {
-            addSlot(new Slot(liquid, true, capacity, 0, transferRate, transferType));
+        public void addSlot(Liquid liquid, float capacity, float transferRate, Transfer transfer) {
+            addSlot(new Slot(liquid, true, capacity, 0, transferRate, transfer));
         }
 
         public void addSlot(Slot slot) {
@@ -119,7 +113,7 @@ public class Liquid extends RegistryEntry {
             this.slots = new Slot[tagList.size()];
             for (int i = 0; i < tagList.size(); i++) {
                 NBTTagCompound nbt = tagList.getCompound(i);
-                this.slots[i] = new Slot(Liquid.EMPTY, false, 0.0F, 0.0F, 0.0F, TransferType.ALL);
+                this.slots[i] = new Slot(Liquid.EMPTY, false, 0.0F, 0.0F, 0.0F, Transfer.ALL);
                 this.slots[i].read(nbt);
             }
         }
@@ -175,16 +169,16 @@ public class Liquid extends RegistryEntry {
         private float capacity;
         private float stored;
         private float transferRate;
-        private TransferType transferType;
+        private Transfer transfer;
 
-        public Slot(Liquid liquid, boolean finalLiquid, float capacity, float stored, float transferRate, TransferType transferType) {
+        public Slot(Liquid liquid, boolean finalLiquid, float capacity, float stored, float transferRate, Transfer transfer) {
             this.liquid = liquid;
             this.finalLiquid = finalLiquid;
             this.changable = !finalLiquid;
             this.capacity = capacity;
             this.stored = stored;
             this.transferRate = transferRate;
-            this.transferType = transferType;
+            this.transfer = transfer;
         }
 
         public void read(NBTTagCompound compound) {
@@ -194,7 +188,7 @@ public class Liquid extends RegistryEntry {
             this.capacity = compound.getFloat("Capacity");
             this.stored = compound.getFloat("Stored");
             this.transferRate = compound.getFloat("TransferRate");
-            this.transferType = TransferType.values()[compound.getInt("TransferType")];
+            this.transfer = Transfer.values()[compound.getInt("Transfer")];
         }
 
         public NBTTagCompound write(NBTTagCompound compound) {
@@ -203,7 +197,7 @@ public class Liquid extends RegistryEntry {
             compound.setFloat("Capacity", this.capacity);
             compound.setFloat("Stored", this.stored);
             compound.setFloat("TransferRate", this.transferRate);
-            compound.setInt("TransferType", this.transferType.ordinal());
+            compound.setInt("Transfer", this.transfer.ordinal());
             return compound;
         }
 
@@ -265,12 +259,12 @@ public class Liquid extends RegistryEntry {
             this.transferRate = transferRate;
         }
 
-        public TransferType getTransferType() {
-            return transferType;
+        public Transfer getTransfer() {
+            return transfer;
         }
 
-        public void setTransferType(TransferType transferType) {
-            this.transferType = transferType;
+        public void setTransfer(Transfer transfer) {
+            this.transfer = transfer;
         }
 
         public boolean isEmpty() {
@@ -291,14 +285,14 @@ public class Liquid extends RegistryEntry {
 
         public boolean canReceive(Liquid liquid) {
             return (!isFull() && liquid.equals(this.liquid) || isEmpty())
-                    && (this.transferType.equals(TransferType.ALL)
-                    || this.transferType.equals(TransferType.RECEIVE));
+                    && (this.transfer.equals(Transfer.ALL)
+                    || this.transfer.equals(Transfer.RECEIVE));
         }
 
         public boolean canSend(Liquid liquid) {
             return !isEmpty() && liquid.equals(this.liquid)
-                    && (this.transferType.equals(TransferType.ALL)
-                    || this.transferType.equals(TransferType.SEND));
+                    && (this.transfer.equals(Transfer.ALL)
+                    || this.transfer.equals(Transfer.SEND));
         }
 
         public void to(Slot other, boolean override, boolean doDrain) {
@@ -360,7 +354,8 @@ public class Liquid extends RegistryEntry {
             }
 
             @Override
-            public void readNBT(Capability<T> capability, T instance, EnumFacing side, INBTBase nbt) {}
+            public void readNBT(Capability<T> capability, T instance, EnumFacing side, INBTBase nbt) {
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.liquid.Liquid;
-import xieao.theora.api.liquid.TransferType;
+import xieao.theora.api.liquid.Transfer;
 import xieao.theora.api.recipe.interact.IInteractRecipe;
 import xieao.theora.client.renderer.item.IItemColorHolder;
 import xieao.theora.core.handler.RecipeSorter;
@@ -113,7 +113,7 @@ public class ItemVial extends IItem.Base implements IItemColorHolder {
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
         Liquid.Handler.Item handler = new Liquid.Handler.Item(stack);
-        handler.addSlot(200.0F, 200.0F, TransferType.ALL);
+        handler.addSlot(200.0F, 200.0F, Transfer.ALL);
         return handler;
     }
 

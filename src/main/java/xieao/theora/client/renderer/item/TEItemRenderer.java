@@ -12,13 +12,12 @@ import java.util.Set;
 
 @OnlyIn(Dist.CLIENT)
 public class TEItemRenderer extends TileEntityItemStackRenderer {
-
-    static final Set<Item> TE_ITEMS = new HashSet<>();
+    static final Set<Item> ITEMS = new HashSet<>();
 
     @Override
     public void renderByItem(ItemStack stack) {
         Item item = stack.getItem();
-        if (item instanceof IItem && TE_ITEMS.contains(item)) {
+        if (item instanceof IItem && ITEMS.contains(item)) {
             ((IItem) item).renderByItem(stack);
         }
     }
@@ -27,7 +26,7 @@ public class TEItemRenderer extends TileEntityItemStackRenderer {
         if (item instanceof IItem) {
             IItem iItem = (IItem) item;
             if (iItem.renderByItem(new ItemStack(item))) {
-                TE_ITEMS.add(item);
+                ITEMS.add(item);
             }
         }
     }

@@ -4,11 +4,10 @@ import java.awt.*;
 import java.util.Random;
 
 public class ColorUtil {
-
     public static int blend(int color1, int color2, float ratio) {
-        if (ratio > 1f) ratio = 1f;
-        else if (ratio < 0f) ratio = 0f;
-        float iRatio = 1.0f - ratio;
+        if (ratio > 1.0F) ratio = 1.0F;
+        else if (ratio < 0.0F) ratio = 0.0F;
+        float iRatio = 1.0F - ratio;
         int a1 = color1 >> 24 & 0xff;
         int r1 = (color1 & 0xff0000) >> 16;
         int g1 = (color1 & 0xff00) >> 8;

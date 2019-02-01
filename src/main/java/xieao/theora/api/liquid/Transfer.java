@@ -1,5 +1,5 @@
 package xieao.theora.api.liquid;
 
-public enum TransferType {
+public enum Transfer {
     ALL, SEND, RECEIVE
 }

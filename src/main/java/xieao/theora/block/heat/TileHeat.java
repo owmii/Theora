@@ -1,8 +1,13 @@
 package xieao.theora.block.heat;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 import xieao.theora.block.base.Tile;
 import xieao.theora.core.ITiles;
+import xieao.theora.item.ItemHeat;
+
+import javax.annotation.Nullable;
 
 public class TileHeat extends Tile.Tickable {
     private int age;
@@ -23,6 +28,13 @@ public class TileHeat extends Tile.Tickable {
                 this.world.removeTileEntity(this.pos);
                 //TODO particles, sound
             }
+        }
+    }
+
+    @Override
+    public void onAdded(@Nullable EntityLivingBase placer, ItemStack stack) {
+        if (stack.getItem() instanceof ItemHeat) {
+            setAge(((ItemHeat) stack.getItem()).getAge(stack));
         }
     }
 

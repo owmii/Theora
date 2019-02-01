@@ -14,13 +14,10 @@ import java.util.Set;
 
 public class TheoraAPI {
     public static final TheoraAPI API = new TheoraAPI();
-    public static final String MOD_ID = "theora";
-    public static final String EMPTY = MOD_ID + ":empty";
-
     private final Set<IRecipeRegistry> recipeRegistries = new HashSet<>();
 
     public static boolean isLoaded() {
-        return ModList.get().isLoaded(MOD_ID);
+        return ModList.get().isLoaded("theora");
     }
 
     public void register(IRecipeRegistry registry) {

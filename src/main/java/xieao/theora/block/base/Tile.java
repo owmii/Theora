@@ -1,6 +1,9 @@
 package xieao.theora.block.base;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -8,6 +11,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
@@ -93,6 +97,7 @@ public abstract class Tile extends TileEntity {
         if (compound.hasUniqueId("PlacerID")) {
             this.placerID = compound.getUniqueId("PlacerID");
         }
+        readStorable(compound);
     }
 
     public NBTTagCompound writeSync(NBTTagCompound compound) {
@@ -106,7 +111,16 @@ public abstract class Tile extends TileEntity {
         if (this.placerID != null) {
             compound.setUniqueId("PlacerID", this.placerID);
         }
+        writeStorable(compound);
         return compound;
+    }
+
+    public void readStorable(NBTTagCompound compound) {
+    }
+
+    @Nullable
+    public NBTTagCompound writeStorable(NBTTagCompound compound) {
+        return null;
     }
 
     public int getSizeInventory() {
@@ -154,6 +168,21 @@ public abstract class Tile extends TileEntity {
 
     protected IItemHandlerModifiable createHandler(IInv inv, @Nullable EnumFacing side) {
         return new InvWrapper(inv);
+    }
+
+    public boolean interact(EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        return interact(player, hand, side);
+    }
+
+    public boolean interact(EntityPlayer player, EnumHand hand, EnumFacing side) {
+        return false;
+    }
+
+    public void onAdded(@Nullable EntityLivingBase placer, ItemStack stack) {
+    }
+
+    public boolean onCollision(Entity entity) {
+        return false;
     }
 
     public static abstract class Tickable extends Tile implements ITickable {

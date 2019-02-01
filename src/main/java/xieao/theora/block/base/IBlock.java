@@ -1,23 +1,21 @@
 package xieao.theora.block.base;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.INameable;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.extensions.IForgeBlock;
+import xieao.theora.core.lib.util.PlayerUtil;
 import xieao.theora.item.IItem;
 
 import javax.annotation.Nullable;
@@ -30,18 +28,6 @@ public interface IBlock extends IForgeBlock {
     @Override
     default boolean hasTileEntity(IBlockState state) {
         return createTileEntity(state, null) != null;
-    }
-
-    class Plant extends BlockBush implements IBlock {
-        public Plant() {
-            this(Block.Builder.create(Material.PLANTS)
-                    .doesNotBlockMovement()
-                    .sound(SoundType.PLANT));
-        }
-
-        public Plant(Builder builder) {
-            super(builder);
-        }
     }
 
     class Base extends Block implements IBlock {
@@ -57,29 +43,45 @@ public interface IBlock extends IForgeBlock {
                 if (stack.hasDisplayName()) {
                     tile.setCustomName(stack.getDisplayName());
                 }
-                if (placer instanceof EntityPlayer) {
+                if (placer instanceof EntityPlayer && !PlayerUtil.isFake((EntityPlayer) placer)) {
                     tile.setPlacerID(placer.getUniqueID());
                     tile.setFacing(placer.getHorizontalFacing().getOpposite());
                 }
+                tile.readStorable(stack.getTag() != null ? stack.getTag() : new NBTTagCompound());
+                tile.onAdded(placer, stack);
             }
         }
 
         @Override
+        public void onEntityCollision(IBlockState state, World worldIn, BlockPos pos, Entity entity) {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+            if (tileentity instanceof Tile) {
+                ((Tile) tileentity).onCollision(entity);
+            }
+        }
+
+        @Override
+        public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+            if (tileentity instanceof Tile) {
+                return ((Tile) tileentity).interact(player, hand, side, hitX, hitY, hitZ);
+            }
+            return super.onBlockActivated(state, worldIn, pos, player, hand, side, hitX, hitY, hitZ);
+        }
+
+        @Override
         public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity tileEntity, ItemStack stack) {
-            if (tileEntity instanceof INameable && ((INameable) tileEntity).hasCustomName()) {
+            if (tileEntity instanceof Tile) {
                 player.addStat(StatList.BLOCK_MINED.get(this));
                 player.addExhaustion(0.005F);
-                if (world.isRemote) {
-                    return;
+                Tile tile = (Tile) tileEntity;
+                NBTTagCompound stackNBT = stack.getTag() != null ? stack.getTag() : new NBTTagCompound();
+                NBTTagCompound storableNBT = tile.writeStorable(stackNBT);
+                if (storableNBT != null) {
+                    stack.setTag(storableNBT);
                 }
-                int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack);
-                Item item = getItemDropped(state, world, pos, enchantmentLevel).asItem();
-                if (item == Items.AIR) {
-                    return;
-                }
-                ItemStack itemStack = new ItemStack(item, quantityDropped(state, world.rand));
-                itemStack.setDisplayName(((INameable) tileEntity).getCustomName());
-                spawnAsEntity(world, pos, itemStack);
+                stack.setDisplayName(tile.customName);
+                spawnAsEntity(world, pos, stack);
             } else {
                 super.harvestBlock(world, player, pos, state, null, stack);
             }
@@ -87,7 +89,6 @@ public interface IBlock extends IForgeBlock {
 
         @Override
         public boolean eventReceived(IBlockState state, World world, BlockPos pos, int id, int param) {
-            super.eventReceived(state, world, pos, id, param);
             TileEntity tileEntity = world.getTileEntity(pos);
             return tileEntity != null && tileEntity.receiveClientEvent(id, param);
         }

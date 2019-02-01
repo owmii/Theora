@@ -10,7 +10,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import xieao.theora.api.liquid.Liquid;
-import xieao.theora.api.liquid.TransferType;
+import xieao.theora.api.liquid.Transfer;
 import xieao.theora.api.recipe.cauldron.ICauldronRecipe;
 import xieao.theora.block.base.IInv;
 import xieao.theora.block.base.Tile;
@@ -43,7 +43,7 @@ public class TileCauldron extends Tile.Tickable implements IInv {
         super(ITiles.CAULDRON, 12);
         this.fluidHolder = LazyOptional.of(() -> this.fluidTank);
         this.liquidHolder = LazyOptional.of(() -> this.liquidHandler);
-        this.liquidHandler.addSlot(1000.0F, 100.0F, TransferType.SEND);
+        this.liquidHandler.addSlot(1000.0F, 100.0F, Transfer.SEND);
     }
 
     @Override

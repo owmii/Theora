@@ -1,11 +1,9 @@
 package xieao.theora.block.heat;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import xieao.theora.block.base.Tile;
 import xieao.theora.core.ITiles;
-import xieao.theora.item.ItemHeat;
 
 import javax.annotation.Nullable;
 
@@ -14,6 +12,18 @@ public class TileHeat extends Tile.Tickable {
 
     public TileHeat() {
         super(ITiles.HEAT);
+    }
+
+    @Override
+    public void readStorable(NBTTagCompound compound) {
+        this.age = compound.getInt("Age");
+    }
+
+    @Nullable
+    @Override
+    public NBTTagCompound writeStorable(NBTTagCompound compound) {
+        compound.setInt("Age", this.age);
+        return compound;
     }
 
     @Override
@@ -28,13 +38,6 @@ public class TileHeat extends Tile.Tickable {
                 this.world.removeTileEntity(this.pos);
                 //TODO particles, sound
             }
-        }
-    }
-
-    @Override
-    public void onAdded(@Nullable EntityLivingBase placer, ItemStack stack) {
-        if (stack.getItem() instanceof ItemHeat) {
-            setAge(((ItemHeat) stack.getItem()).getAge(stack));
         }
     }
 

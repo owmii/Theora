@@ -72,9 +72,9 @@ public interface IBlock extends IForgeBlock {
         @Override
         public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity tileEntity, ItemStack stack) {
             if (tileEntity instanceof Tile) {
+                Tile tile = (Tile) tileEntity;
                 player.addStat(StatList.BLOCK_MINED.get(this));
                 player.addExhaustion(0.005F);
-                Tile tile = (Tile) tileEntity;
                 NBTTagCompound stackNBT = stack.getTag() != null ? stack.getTag() : new NBTTagCompound();
                 NBTTagCompound storableNBT = tile.writeStorable(stackNBT);
                 if (storableNBT != null) {

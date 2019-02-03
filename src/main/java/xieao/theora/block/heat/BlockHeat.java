@@ -4,18 +4,15 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
 import xieao.theora.block.base.IBlock;
 import xieao.theora.item.IItem;
 import xieao.theora.item.ItemHeat;
 
 import javax.annotation.Nullable;
 
-public class BlockHeat extends IBlock.Base {
+public class BlockHeat extends IBlock.Generic {
     private final int maxAge;
 
     public BlockHeat(int maxAge) {
@@ -27,25 +24,6 @@ public class BlockHeat extends IBlock.Base {
     @Override
     public IItem.Block getItemBlock(Item.Builder builder) {
         return new ItemHeat(this, builder);
-    }
-
-    @Override
-    public void onReplaced(IBlockState state, World world, BlockPos pos, IBlockState newState, boolean isMoving) {
-        TileEntity tileentity = world.getTileEntity(pos);
-        if (tileentity instanceof TileHeat) {
-            TileHeat tileHeat = (TileHeat) tileentity;
-            ItemStack stack = new ItemStack(this);
-            if (stack.getItem() instanceof ItemHeat) {
-                ItemHeat heat = (ItemHeat) stack.getItem();
-                heat.setAge(stack, tileHeat.getAge());
-            }
-            spawnAsEntity(world, pos, stack);
-        }
-        super.onReplaced(state, world, pos, newState, isMoving);
-    }
-
-    @Override
-    public void dropBlockAsItemWithChance(IBlockState state, World worldIn, BlockPos pos, float chancePerItem, int fortune) {
     }
 
     @Nullable

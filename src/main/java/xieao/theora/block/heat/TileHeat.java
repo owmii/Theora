@@ -1,11 +1,8 @@
 package xieao.theora.block.heat;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import xieao.theora.block.base.Tile;
 import xieao.theora.core.ITiles;
-
-import javax.annotation.Nullable;
 
 public class TileHeat extends Tile.Tickable {
     private int age;
@@ -19,7 +16,6 @@ public class TileHeat extends Tile.Tickable {
         this.age = compound.getInt("Age");
     }
 
-    @Nullable
     @Override
     public NBTTagCompound writeStorable(NBTTagCompound compound) {
         compound.setInt("Age", this.age);
@@ -28,17 +24,17 @@ public class TileHeat extends Tile.Tickable {
 
     @Override
     public void tick() {
-        super.tick();
-        IBlockState state = getBlockState();
-        if (state.getBlock() instanceof BlockHeat) {
-            BlockHeat blockHeat = (BlockHeat) state.getBlock();
-            int maxAge = blockHeat.getMaxAge();
-            if (maxAge > 0 && this.age++ >= maxAge) {
-                this.world.removeBlock(this.pos);
-                this.world.removeTileEntity(this.pos);
-                //TODO particles, sound
+        if (!this.world.isRemote) {
+            if (getBlockState().getBlock() instanceof BlockHeat) {
+                BlockHeat blockHeat = (BlockHeat) getBlockState().getBlock();
+                int maxAge = blockHeat.getMaxAge();
+                if (maxAge > 0 && this.age++ >= maxAge) {
+                    this.world.removeBlock(this.pos);
+                    this.world.removeTileEntity(this.pos);
+                }
             }
         }
+        super.tick();
     }
 
     public int getAge() {

@@ -118,9 +118,8 @@ public abstract class Tile extends TileEntity {
     public void readStorable(NBTTagCompound compound) {
     }
 
-    @Nullable
     public NBTTagCompound writeStorable(NBTTagCompound compound) {
-        return null;
+        return compound;
     }
 
     public int getSizeInventory() {

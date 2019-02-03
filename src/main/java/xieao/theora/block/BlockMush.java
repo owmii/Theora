@@ -8,14 +8,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
-import xieao.theora.block.base.BlockPlant;
+import xieao.theora.block.base.IBlock;
 import xieao.theora.core.IBlocks;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class BlockMush extends BlockPlant implements IShearable {
+public class BlockMush extends IBlock.Plant implements IShearable {
     @Override
     public IItemProvider getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune) {
         if (this == IBlocks.MUSH_GLIOPHORUS) {

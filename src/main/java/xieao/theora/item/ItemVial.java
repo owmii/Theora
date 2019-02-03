@@ -60,7 +60,7 @@ public class ItemVial extends IItem.Base implements IItemColorHolder {
                         return EnumActionResult.SUCCESS;
                     }
                 }
-                return this;
+                return handler;
             });
         }
         return super.onItemUseFirst(stack, context);
@@ -94,16 +94,13 @@ public class ItemVial extends IItem.Base implements IItemColorHolder {
         if (this.isInGroup(group)) {
             Liquid.REGISTRY.values().forEach(liquid -> {
                 ItemStack stack = new ItemStack(this);
-                LazyOptional<Liquid.Handler.Item> holder = TheoraAPI.getLiquidHandlerItem(stack);
-                holder.map(handler -> {
-                    Liquid.Slot slot = handler.getSlot(0);
+                Liquid.Handler.Item handler = new Liquid.Handler.Item(stack);
+                Liquid.Slot slot = handler.getSlot(0);
+                if (!liquid.isEmpty()) {
                     slot.setLiquid(liquid);
-                    if (!liquid.isEmpty()) {
-                        slot.setFull();
-                    }
+                    slot.setFull();
                     handler.setSlot(0, slot);
-                    return this;
-                });
+                }
                 items.add(stack);
             });
         }

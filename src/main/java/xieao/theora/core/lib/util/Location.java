@@ -1,7 +1,7 @@
 package xieao.theora.core.lib.util;
 
 import net.minecraft.util.ResourceLocation;
-import xieao.theora.Theora;
+import xieao.theora.api.Consts;
 
 public class Location extends ResourceLocation {
     public static final Location ROOT = create();
@@ -23,7 +23,7 @@ public class Location extends ResourceLocation {
     private String target = "";
 
     public Location() {
-        super(new String[]{Theora.ID, "location.empty"});
+        super(new String[]{Consts.MOD_ID, "location.empty"});
     }
 
     @Override

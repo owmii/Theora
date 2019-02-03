@@ -8,11 +8,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.extensions.IForgeItem;
-import xieao.theora.Theora;
+import xieao.theora.api.Consts;
 import xieao.theora.client.renderer.item.TEItemRenderer;
 
 public interface IItem extends IForgeItem {
-    ItemGroup MAIN = new ItemGroup(Theora.ID) {
+    ItemGroup MAIN = new ItemGroup(Consts.MOD_ID) {
         @OnlyIn(Dist.CLIENT)
         public ItemStack createIcon() {
             return new ItemStack(Items.APPLE);

@@ -14,7 +14,7 @@ import xieao.theora.block.base.IBlock;
 
 import javax.annotation.Nullable;
 
-public class BlockCauldron extends IBlock.Base {
+public class BlockCauldron extends IBlock.Generic {
     public BlockCauldron() {
         super(Builder.create(Material.IRON, MapColor.BLACK)
                 .hardnessAndResistance(1.5F, 20.0F)

@@ -1,6 +1,9 @@
 package xieao.theora.block.base;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBush;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -30,9 +33,26 @@ public interface IBlock extends IForgeBlock {
         return createTileEntity(state, null) != null;
     }
 
-    class Base extends Block implements IBlock {
-        public Base(Builder builder) {
+    class Generic extends Block implements IBlock {
+        public Generic(Builder builder) {
             super(builder);
+        }
+
+        @Override
+        public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+            if (tileentity instanceof Tile) {
+                return ((Tile) tileentity).interact(player, hand, side, hitX, hitY, hitZ);
+            }
+            return super.onBlockActivated(state, worldIn, pos, player, hand, side, hitX, hitY, hitZ);
+        }
+
+        @Override
+        public void onEntityCollision(IBlockState state, World worldIn, BlockPos pos, Entity entity) {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+            if (tileentity instanceof Tile) {
+                ((Tile) tileentity).onCollision(entity);
+            }
         }
 
         @Override
@@ -47,41 +67,29 @@ public interface IBlock extends IForgeBlock {
                     tile.setPlacerID(placer.getUniqueID());
                     tile.setFacing(placer.getHorizontalFacing().getOpposite());
                 }
-                tile.readStorable(stack.getTag() != null ? stack.getTag() : new NBTTagCompound());
+                NBTTagCompound tag = stack.getTag() != null ? stack.getTag() : new NBTTagCompound();
+                tile.readStorable(tag.getCompound("TileStorableNBT"));
                 tile.onAdded(placer, stack);
             }
-        }
-
-        @Override
-        public void onEntityCollision(IBlockState state, World worldIn, BlockPos pos, Entity entity) {
-            TileEntity tileentity = worldIn.getTileEntity(pos);
-            if (tileentity instanceof Tile) {
-                ((Tile) tileentity).onCollision(entity);
-            }
-        }
-
-        @Override
-        public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-            TileEntity tileentity = worldIn.getTileEntity(pos);
-            if (tileentity instanceof Tile) {
-                return ((Tile) tileentity).interact(player, hand, side, hitX, hitY, hitZ);
-            }
-            return super.onBlockActivated(state, worldIn, pos, player, hand, side, hitX, hitY, hitZ);
         }
 
         @Override
         public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity tileEntity, ItemStack stack) {
             if (tileEntity instanceof Tile) {
                 Tile tile = (Tile) tileEntity;
+                ItemStack stack1 = new ItemStack(this);
+                NBTTagCompound tag = stack1.getTag() != null ? stack1.getTag() : new NBTTagCompound();
+                NBTTagCompound storable = tile.writeStorable(new NBTTagCompound());
+                if (!storable.isEmpty()) {
+                    tag.setTag("TileStorableNBT", storable);
+                    stack1.setTag(tag);
+                }
+                if (tile.customName != null) {
+                    stack1.setDisplayName(tile.customName);
+                }
+                spawnAsEntity(world, pos, stack1);
                 player.addStat(StatList.BLOCK_MINED.get(this));
                 player.addExhaustion(0.005F);
-                NBTTagCompound stackNBT = stack.getTag() != null ? stack.getTag() : new NBTTagCompound();
-                NBTTagCompound storableNBT = tile.writeStorable(stackNBT);
-                if (storableNBT != null) {
-                    stack.setTag(storableNBT);
-                }
-                stack.setDisplayName(tile.customName);
-                spawnAsEntity(world, pos, stack);
             } else {
                 super.harvestBlock(world, player, pos, state, null, stack);
             }
@@ -91,6 +99,18 @@ public interface IBlock extends IForgeBlock {
         public boolean eventReceived(IBlockState state, World world, BlockPos pos, int id, int param) {
             TileEntity tileEntity = world.getTileEntity(pos);
             return tileEntity != null && tileEntity.receiveClientEvent(id, param);
+        }
+    }
+
+    class Plant extends BlockBush implements IBlock {
+        public Plant(Builder builder) {
+            super(builder);
+        }
+
+        public Plant() {
+            this(Builder.create(Material.PLANTS)
+                    .doesNotBlockMovement()
+                    .sound(SoundType.PLANT));
         }
     }
 }

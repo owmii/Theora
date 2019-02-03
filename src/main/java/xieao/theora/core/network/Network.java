@@ -1,22 +1,34 @@
 package xieao.theora.core.network;
 
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import xieao.theora.core.lib.util.Location;
 import xieao.theora.core.lib.util.PlayerUtil;
+import xieao.theora.core.network.packet.PacketSyncAbility;
+
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import static net.minecraftforge.fml.network.NetworkDirection.PLAY_TO_CLIENT;
 
 public class Network {
     private static final ResourceLocation ID = Location.ROOT.get("main");
     private static final SimpleChannel CHANNEL;
-    private int id;
+    private static int id;
 
     public static void registerAll() {
+        register(PacketSyncAbility.class, PacketSyncAbility::encode, PacketSyncAbility::decode, PacketSyncAbility::handle);
+    }
+
+    public static <T> void register(Class<T> clazz, BiConsumer<T, PacketBuffer> encoder, Function<PacketBuffer, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> messageConsumer) {
+        CHANNEL.registerMessage(id++, clazz, encoder, decoder, messageConsumer);
     }
 
     @OnlyIn(Dist.CLIENT)

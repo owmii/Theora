@@ -8,7 +8,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLModLoadingContext;
+import xieao.theora.api.Consts;
 import xieao.theora.api.liquid.Liquid;
+import xieao.theora.api.player.PlayerData;
 import xieao.theora.client.renderer.item.IBlockColorHolder;
 import xieao.theora.client.renderer.item.IItemColorHolder;
 import xieao.theora.client.renderer.item.TEItemRenderer;
@@ -26,23 +28,22 @@ import static xieao.theora.api.TheoraAPI.API;
 import static xieao.theora.core.IBlocks.BLOCKS;
 import static xieao.theora.core.IItems.ITEMS;
 
-@Mod(Theora.ID)
+@Mod(Consts.MOD_ID)
 public class Theora {
-    public static final String ID = "theora";
-
     public Theora() {
         IEventBus eventBus = FMLModLoadingContext.get().getModEventBus();
         eventBus.addListener((FMLCommonSetupEvent event) -> {
+            PlayerData.Cap.register();
             Liquid.Cap.register();
             AutoLoadHandler.load();
             Network.registerAll();
             API.register(new InteractRecipes());
             API.register(new CauldronRecipes());
         });
-        //noinspection CodeBlock2Expr TODO remove
         eventBus.addListener((InterModEnqueueEvent event) -> {
+            // Client
             runWhenOn(Dist.CLIENT, () -> () -> {
-                Minecraft mc = Minecraft.getInstance();
+                final Minecraft mc = Minecraft.getInstance();
                 ITEMS.forEach(item -> {
                     TEItemRenderer.register(item);
                     if (item instanceof IItemColorHolder) {
@@ -61,6 +62,5 @@ public class Theora {
         });
         eventBus.addListener((InterModProcessEvent event) -> RecipeSorter.post());
         EVENT_BUS.addListener(TheoraCommand::register);
-        //get().registerConfig(ModConfig.Type.SERVER, Config.spec);
     }
 }

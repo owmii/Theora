@@ -35,11 +35,11 @@ public class Liquid extends RegistryEntry {
 
     public static Liquid read(String key, NBTTagCompound compound) {
         NBTTagCompound nbt = compound.getCompound(key);
-        return getLiquid(nbt.getString("LiquidId"));
+        return get(nbt.getString("LiquidId"));
     }
 
     public static Liquid read(NBTTagCompound compound) {
-        return getLiquid(compound.getString("LiquidId"));
+        return get(compound.getString("LiquidId"));
     }
 
     public static void write(String key, Liquid liquid, NBTTagCompound compound) {
@@ -48,7 +48,7 @@ public class Liquid extends RegistryEntry {
         compound.setTag(key, nbt);
     }
 
-    public static Liquid getLiquid(String name) {
+    public static Liquid get(String name) {
         Liquid liquid = REGISTRY.get(new ResourceLocation(name));
         return liquid == null ? EMPTY : liquid;
     }
@@ -138,6 +138,12 @@ public class Liquid extends RegistryEntry {
             }
 
             @Override
+            public void addSlot(Slot slot) {
+                super.addSlot(slot);
+                setSlot(this.slots.length - 1, slot);
+            }
+
+            @Override
             public Slot getSlot(int index) {
                 NBTTagCompound nbt = this.stack.getTag();
                 if (nbt != null && nbt.hasKey("LiquidTag")) {
@@ -154,7 +160,7 @@ public class Liquid extends RegistryEntry {
 
             @Override
             public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable EnumFacing side) {
-                return Cap.LIQUID_HANDLER_ITEM.orEmpty(cap, holder);
+                return Cap.HANDLER_ITEM.orEmpty(cap, holder);
             }
 
             public ItemStack getStack() {
@@ -182,7 +188,7 @@ public class Liquid extends RegistryEntry {
         }
 
         public void read(NBTTagCompound compound) {
-            this.liquid = Liquid.getLiquid(compound.getString("LiquidName"));
+            this.liquid = Liquid.get(compound.getString("LiquidName"));
             this.finalLiquid = compound.getBoolean("FinalLiquid");
             this.changable = !this.finalLiquid;
             this.capacity = compound.getFloat("Capacity");
@@ -208,9 +214,6 @@ public class Liquid extends RegistryEntry {
         public boolean setLiquid(Liquid liquid) {
             if (!this.finalLiquid) {
                 this.liquid = liquid;
-                if (liquid.isEmpty()) {
-                    setEmpty();
-                }
                 return true;
             }
             return false;
@@ -312,7 +315,6 @@ public class Liquid extends RegistryEntry {
                     other.stored += toDrain;
                 }
             }
-
         }
 
         public float add(float amount) {
@@ -332,13 +334,12 @@ public class Liquid extends RegistryEntry {
 
     }
 
+    @SuppressWarnings("ConstantConditions")
     public static final class Cap {
         @CapabilityInject(Handler.class)
-        @SuppressWarnings("ConstantConditions")
-        public static Capability<Handler> LIQUID_HANDLER = null;
+        public static Capability<Handler> HANDLER = null;
         @CapabilityInject(Handler.Item.class)
-        @SuppressWarnings("ConstantConditions")
-        public static Capability<Handler.Item> LIQUID_HANDLER_ITEM = null;
+        public static Capability<Handler.Item> HANDLER_ITEM = null;
 
         public static void register() {
             CapabilityManager.INSTANCE.register(Handler.class, new Storage<>(), Handler::new);

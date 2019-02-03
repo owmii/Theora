@@ -2,7 +2,7 @@ package xieao.theora.core.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.loading.FMLPaths;
-import xieao.theora.Theora;
+import xieao.theora.api.Consts;
 
 import java.nio.file.Path;
 
@@ -23,7 +23,7 @@ public class Config {
     }
 
     public static void load() {
-        loadFrom(FMLPaths.CONFIGDIR.get().resolve(Theora.ID + "/"));
+        loadFrom(FMLPaths.CONFIGDIR.get().resolve(Consts.MOD_ID + "/"));
     }
 
     public static final ForgeConfigSpec spec = BUILDER_MAIN.build();

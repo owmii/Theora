@@ -34,7 +34,7 @@ public interface IInv extends ISidedInventory, IForgeTileEntity {
 
     @Override
     default int getSizeInventory() {
-        return 0;
+        return getTile().inv.size();
     }
 
     @Override

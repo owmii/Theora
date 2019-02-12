@@ -11,12 +11,12 @@ import java.util.UUID;
 
 public class PlayerUtil {
     @Nullable
-    public static EntityPlayerMP get(UUID uuid) {
+    public static EntityPlayer get(UUID uuid) {
         return ServerUtil.getServer().getPlayerList().getPlayerByUUID(uuid);
     }
 
     @Nullable
-    public static EntityPlayerMP get(String name) {
+    public static EntityPlayer get(String name) {
         return ServerUtil.getServer().getPlayerList().getPlayerByUsername(name);
     }
 

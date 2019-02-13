@@ -11,6 +11,7 @@ import net.minecraftforge.fml.javafmlmod.FMLModLoadingContext;
 import xieao.theora.api.Consts;
 import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.player.PlayerData;
+import xieao.theora.client.core.ITextures;
 import xieao.theora.client.renderer.item.IBlockColorHolder;
 import xieao.theora.client.renderer.item.IItemColorHolder;
 import xieao.theora.client.renderer.item.TEItemRenderer;
@@ -39,6 +40,9 @@ public class Theora {
             Network.registerAll();
             API.register(new InteractRecipes());
             API.register(new CauldronRecipes());
+            // Client
+            runWhenOn(Dist.CLIENT, () -> () -> 
+                    EVENT_BUS.register(ITextures.class));
         });
         eventBus.addListener((InterModEnqueueEvent event) -> {
             // Client

@@ -40,8 +40,9 @@ public class Theora {
             Network.registerAll();
             API.register(new InteractRecipes());
             API.register(new CauldronRecipes());
+
             // Client
-            runWhenOn(Dist.CLIENT, () -> () -> 
+            runWhenOn(Dist.CLIENT, () -> () ->
                     EVENT_BUS.register(ITextures.class));
         });
         eventBus.addListener((InterModEnqueueEvent event) -> {

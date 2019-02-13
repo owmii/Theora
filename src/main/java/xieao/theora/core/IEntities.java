@@ -18,11 +18,20 @@ public class IEntities {
     public static final EntityType<?> INTERACTOR;
 
     static {
-        INTERACTOR = register("interactor", EntityInteractor.class, EntityInteractor::new);
+        INTERACTOR = register("interactor", EntityInteractor.class, EntityInteractor::new, 10, 64, false);
+    }
+
+    static <T extends Entity> EntityType<T> register(String id, Class<? extends T> clazz, Function<? super World, ? extends T> factory, int range, int freq, boolean sendVelocity) {
+        return register(id, EntityType.Builder.create(clazz, factory)
+                .tracker(range, freq, sendVelocity));
     }
 
     static <T extends Entity> EntityType<T> register(String id, Class<? extends T> clazz, Function<? super World, ? extends T> factory) {
-        EntityType<T> entityType = new EntityType<>(clazz, factory, true, true, null);
+        return register(id, EntityType.Builder.create(clazz, factory));
+    }
+
+    static <T extends Entity> EntityType<T> register(String id, EntityType.Builder<T> builder) {
+        EntityType<T> entityType = builder.disableSerialization().build(id);
         entityType.setRegistryName(id);
         ENTITY_TYPES.add(entityType);
         return entityType;

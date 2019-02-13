@@ -10,7 +10,9 @@ import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import xieao.theora.core.lib.util.Location;
 import xieao.theora.core.lib.util.PlayerUtil;
-import xieao.theora.core.network.packet.PacketSyncAbility;
+import xieao.theora.core.network.packet.OpenAbilityGui;
+import xieao.theora.core.network.packet.ReqAbilityGui;
+import xieao.theora.core.network.packet.SyncAbility;
 
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -24,7 +26,9 @@ public class Network {
     private static int id;
 
     public static void registerAll() {
-        register(PacketSyncAbility.class, PacketSyncAbility::encode, PacketSyncAbility::decode, PacketSyncAbility::handle);
+        register(SyncAbility.class, SyncAbility::encode, SyncAbility::decode, SyncAbility::handle);
+        register(ReqAbilityGui.class, (msg, pb) -> {}, pb -> new ReqAbilityGui(), ReqAbilityGui::handle);
+        register(OpenAbilityGui.class, OpenAbilityGui::encode, OpenAbilityGui::decode, OpenAbilityGui::handle);
     }
 
     public static <T> void register(Class<T> clazz, BiConsumer<T, PacketBuffer> encoder, Function<PacketBuffer, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> messageConsumer) {

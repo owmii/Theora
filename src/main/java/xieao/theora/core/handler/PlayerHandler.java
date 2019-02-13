@@ -11,7 +11,7 @@ import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.player.Ability;
 import xieao.theora.api.player.PlayerData;
 import xieao.theora.core.network.Network;
-import xieao.theora.core.network.packet.PacketSyncAbility;
+import xieao.theora.core.network.packet.SyncAbility;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class PlayerHandler {
@@ -28,7 +28,7 @@ public class PlayerHandler {
                 });
                 if (event.side == LogicalSide.SERVER) {
                     if (abilityData.sync && event.player instanceof EntityPlayerMP) {
-                        Network.toClient(new PacketSyncAbility(abilityData.write(new NBTTagCompound())),
+                        Network.toClient(new SyncAbility(abilityData.write(new NBTTagCompound())),
                                 (EntityPlayerMP) event.player);
                         abilityData.sync(false);
                     }

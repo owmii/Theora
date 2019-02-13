@@ -1,6 +1,6 @@
 package xieao.theora.core.network.packet;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -14,10 +14,11 @@ import java.util.function.Supplier;
 public class ReqAbilityGui {
     public static <T> void handle(ReqAbilityGui msg, Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
-            LazyOptional<PlayerData> holder = TheoraAPI.getPlayerData(Minecraft.getInstance().player);
+            EntityPlayerMP playerMP = contextSupplier.get().getSender();
+            Objects.requireNonNull(playerMP);
+            LazyOptional<PlayerData> holder = TheoraAPI.getPlayerData(playerMP);
             holder.map(playerData -> {
-                Network.toClient(new OpenAbilityGui(playerData.write(new NBTTagCompound())),
-                        Objects.requireNonNull(contextSupplier.get().getSender()));
+                Network.toClient(new OpenAbilityGui(playerData.write(new NBTTagCompound())), playerMP);
                 return playerData;
             });
         });

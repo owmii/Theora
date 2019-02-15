@@ -3,8 +3,8 @@ package xieao.theora.item;
 import net.minecraft.item.ItemStack;
 
 public class ItemHeat extends IItem.Block {
-    public ItemHeat(net.minecraft.block.Block block, Builder builder) {
-        super(block, builder);
+    public ItemHeat(net.minecraft.block.Block block, Properties properties) {
+        super(block, properties);
     }
 
     public int getAge(ItemStack stack) {

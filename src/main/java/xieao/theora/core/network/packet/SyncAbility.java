@@ -28,13 +28,14 @@ public class SyncAbility {
         return new SyncAbility(compound);
     }
 
-    public static void handle(SyncAbility msg, Supplier<NetworkEvent.Context> contextSupplier) {
-        contextSupplier.get().enqueueWork(() -> {
+    public static void handle(SyncAbility msg, Supplier<NetworkEvent.Context> ctx) {
+        ctx.get().enqueueWork(() -> {
             LazyOptional<PlayerData> holder = TheoraAPI.getPlayerData(Minecraft.getInstance().player);
             holder.map(playerData -> {
                 playerData.getAbilityData().read(msg.compound);
                 return playerData;
             });
         });
+        ctx.get().setPacketHandled(true);
     }
 }

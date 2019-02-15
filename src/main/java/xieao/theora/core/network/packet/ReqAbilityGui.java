@@ -12,9 +12,9 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 public class ReqAbilityGui {
-    public static <T> void handle(ReqAbilityGui msg, Supplier<NetworkEvent.Context> contextSupplier) {
-        contextSupplier.get().enqueueWork(() -> {
-            EntityPlayerMP playerMP = contextSupplier.get().getSender();
+    public static <T> void handle(ReqAbilityGui msg, Supplier<NetworkEvent.Context> ctx) {
+        ctx.get().enqueueWork(() -> {
+            EntityPlayerMP playerMP = ctx.get().getSender();
             Objects.requireNonNull(playerMP);
             LazyOptional<PlayerData> holder = TheoraAPI.getPlayerData(playerMP);
             holder.map(playerData -> {
@@ -22,5 +22,6 @@ public class ReqAbilityGui {
                 return playerData;
             });
         });
+        ctx.get().setPacketHandled(true);
     }
 }

@@ -16,14 +16,14 @@ public class BlockHeat extends IBlock.Generic {
     private final int maxAge;
 
     public BlockHeat(int maxAge) {
-        super(Block.Builder.create(Material.ROCK)
+        super(Block.Properties.create(Material.ROCK)
                 .hardnessAndResistance(2.0F, 5.0F));
         this.maxAge = maxAge;
     }
 
     @Override
-    public IItem.Block getItemBlock(Item.Builder builder) {
-        return new ItemHeat(this, builder);
+    public IItem.Block getItemBlock(Item.Properties properties) {
+        return new ItemHeat(this, properties);
     }
 
     @Nullable

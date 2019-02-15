@@ -26,8 +26,8 @@ import xieao.theora.entity.EntityInteractor;
 import javax.annotation.Nullable;
 
 public class ItemVial extends IItem.Base implements IItemColorHolder {
-    public ItemVial(Builder builder) {
-        super(builder);
+    public ItemVial(Properties properties) {
+        super(properties);
         addPropertyOverride(new ResourceLocation("fill"), (stack, world, entity) -> {
             Liquid.Handler.Item handler = new Liquid.Handler.Item(stack);
             Liquid.Slot slot = handler.getSlot(0);

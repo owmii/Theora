@@ -8,6 +8,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,16 +17,18 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
 import net.minecraftforge.common.extensions.IForgeBlock;
+import net.minecraftforge.fml.network.NetworkHooks;
 import xieao.theora.core.lib.util.PlayerUtil;
 import xieao.theora.item.IItem;
 
 import javax.annotation.Nullable;
 
 public interface IBlock extends IForgeBlock {
-    default IItem.Block getItemBlock(Item.Builder builder) {
-        return new IItem.Block(getBlock(), builder);
+    default IItem.Block getItemBlock(Item.Properties properties) {
+        return new IItem.Block(getBlock(), properties);
     }
 
     @Override
@@ -34,15 +37,23 @@ public interface IBlock extends IForgeBlock {
     }
 
     class Generic extends Block implements IBlock {
-        public Generic(Builder builder) {
-            super(builder);
+        public Generic(Properties properties) {
+            super(properties);
         }
 
         @Override
         public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
             if (tileentity instanceof Tile) {
-                return ((Tile) tileentity).interact(player, hand, side, hitX, hitY, hitZ);
+                Tile tile = (Tile) tileentity;
+                if (tile instanceof IInteractionObject) {
+                    IInteractionObject io = (IInteractionObject) tile;
+                    if (player instanceof EntityPlayerMP) {
+                        NetworkHooks.openGui((EntityPlayerMP) player, io, null);
+                    }
+                    return true;
+                }
+                return tile.interact(player, hand, side, hitX, hitY, hitZ);
             }
             return super.onBlockActivated(state, worldIn, pos, player, hand, side, hitX, hitY, hitZ);
         }
@@ -103,12 +114,12 @@ public interface IBlock extends IForgeBlock {
     }
 
     class Plant extends BlockBush implements IBlock {
-        public Plant(Builder builder) {
-            super(builder);
+        public Plant(Properties properties) {
+            super(properties);
         }
 
         public Plant() {
-            this(Builder.create(Material.PLANTS)
+            this(Properties.create(Material.PLANTS)
                     .doesNotBlockMovement()
                     .sound(SoundType.PLANT));
         }

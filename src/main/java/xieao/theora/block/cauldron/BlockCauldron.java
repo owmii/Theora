@@ -1,8 +1,7 @@
 package xieao.theora.block.cauldron;
 
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -16,9 +15,8 @@ import javax.annotation.Nullable;
 
 public class BlockCauldron extends IBlock.Generic {
     public BlockCauldron() {
-        super(Builder.create(Material.IRON, MapColor.BLACK)
-                .hardnessAndResistance(1.5F, 20.0F)
-                .sound(SoundType.METAL));
+        super(Properties.create(Material.IRON, MaterialColor.BLACK)
+                .hardnessAndResistance(1.5F, 20.0F));
     }
 
     @Nullable

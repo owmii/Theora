@@ -1,12 +1,11 @@
 modLoader="javafml" 
 loaderVersion="[24,)"
-authors="xieao"
-issueTrackerURL="https://github.com/xieaoDev/Theora/issues"
 
 [[mods]]
 modId="theora" 
 version="${file.jarVersion}"
 displayName="Theora" 
+authors="xieao"
 description='''
 Theora mod.
 '''

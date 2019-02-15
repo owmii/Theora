@@ -36,7 +36,7 @@ public class IBlocks {
     }
 
     static <T extends Block & IBlock> T register(String name, T block) {
-        ItemBlock itemBlock = block.getItemBlock(new Item.Builder().group(IItem.MAIN));
+        ItemBlock itemBlock = block.getItemBlock(new Item.Properties().group(IItem.MAIN));
         itemBlock.setRegistryName(name);
         block.setRegistryName(name);
         ITEM_BLOCKS.add(itemBlock);

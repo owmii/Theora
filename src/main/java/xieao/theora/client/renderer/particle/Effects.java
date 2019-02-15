@@ -290,17 +290,25 @@ public final class Effects {
         }
     }
 
-    public static final Texture GLOW_SMALL = new Texture("glow_small", 0, false);
-    public static final Texture GLOW_MID = new Texture("glow_mid", 0, false);
-    public static final Texture GLOW_DENS = new Texture("glow_dens", 0, false);
-    public static final Texture SQUARE = new Texture("square", 0, false);
-    public static final Texture STAR = new Texture("star", 0, false);
+    public static final Texture GLOW_SMALL = new Texture("glow_small");
+    public static final Texture GLOW_MID = new Texture("glow_mid");
+    public static final Texture GLOW_DENS = new Texture("glow_dens");
+    public static final Texture SQUARE = new Texture("square");
+    public static final Texture STAR = new Texture("star");
     public static final Texture RUNES = new Texture("runes/", 25, true);
 
     public static class Texture {
         public final String name;
         public final int frames;
         public final boolean randomize;
+
+        public Texture(String name) {
+            this(name, 0, false);
+        }
+
+        public Texture(String name, int frames) {
+            this(name, frames, false);
+        }
 
         public Texture(String name, int frames, boolean randomize) {
             this.name = name;

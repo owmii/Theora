@@ -7,7 +7,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class AbilityGui extends GuiScreen {
 
-    public Ability ability;
+    public final Ability ability;
 
     public AbilityGui(Ability ability) {
         this.ability = ability;

@@ -16,7 +16,7 @@ public class IItems {
     public static final Item VIAL;
 
     static {
-        VIAL = register("vial", new ItemVial(new Item.Builder().group(IItem.MAIN)));
+        VIAL = register("vial", new ItemVial(new Item.Properties().group(IItem.MAIN)));
     }
 
     static <T extends Item & IItem> T register(String name, T item) {

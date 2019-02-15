@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
-import net.minecraftforge.fml.javafmlmod.FMLModLoadingContext;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import xieao.theora.api.Consts;
 import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.player.PlayerData;
@@ -32,7 +32,7 @@ import static xieao.theora.core.IItems.ITEMS;
 @Mod(Consts.MOD_ID)
 public class Theora {
     public Theora() {
-        IEventBus eventBus = FMLModLoadingContext.get().getModEventBus();
+        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         eventBus.addListener((FMLCommonSetupEvent event) -> {
             PlayerData.Cap.register();
             Liquid.Cap.register();

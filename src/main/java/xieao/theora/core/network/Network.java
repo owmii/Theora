@@ -27,7 +27,8 @@ public class Network {
 
     public static void registerAll() {
         register(SyncAbility.class, SyncAbility::encode, SyncAbility::decode, SyncAbility::handle);
-        register(ReqAbilityGui.class, (msg, pb) -> {}, pb -> new ReqAbilityGui(), ReqAbilityGui::handle);
+        register(ReqAbilityGui.class, (msg, pb) -> {
+        }, pb -> new ReqAbilityGui(), ReqAbilityGui::handle);
         register(OpenAbilityGui.class, OpenAbilityGui::encode, OpenAbilityGui::decode, OpenAbilityGui::handle);
     }
 

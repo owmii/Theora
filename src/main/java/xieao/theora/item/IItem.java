@@ -33,14 +33,14 @@ public interface IItem extends IForgeItem {
     }
 
     class Base extends Item implements IItem {
-        public Base(Builder builder) {
+        public Base(Properties builder) {
             super(builder.setTEISR(() -> TEItemRenderer::new));
         }
     }
 
     class Block extends ItemBlock implements IItem {
-        public Block(net.minecraft.block.Block block, Builder builder) {
-            super(block, builder.setTEISR(() -> TEItemRenderer::new));
+        public Block(net.minecraft.block.Block block, Properties properties) {
+            super(block, properties.setTEISR(() -> TEItemRenderer::new));
         }
     }
 }

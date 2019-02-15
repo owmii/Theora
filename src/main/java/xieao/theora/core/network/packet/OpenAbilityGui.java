@@ -29,8 +29,8 @@ public class OpenAbilityGui {
         return new OpenAbilityGui(compound);
     }
 
-    public static void handle(OpenAbilityGui msg, Supplier<NetworkEvent.Context> contextSupplier) {
-        contextSupplier.get().enqueueWork(() -> {
+    public static void handle(OpenAbilityGui msg, Supplier<NetworkEvent.Context> ctx) {
+        ctx.get().enqueueWork(() -> {
             LazyOptional<PlayerData> holder = TheoraAPI.getPlayerData(Minecraft.getInstance().player);
             holder.map(playerData -> {
                 playerData.getAbilityData().read(msg.compound);
@@ -38,5 +38,6 @@ public class OpenAbilityGui {
             });
             Minecraft.getInstance().displayGuiScreen(new GuiAbilities());
         });
+        ctx.get().setPacketHandled(true);
     }
 }

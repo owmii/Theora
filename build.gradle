@@ -46,12 +46,20 @@ jar {
     manifest {
         attributes(["Specification-Title"     : mod_name,
                     "Specification-Vendor"    : mod_group,
-                    "Specification-Version"   : "24.0",
+                    "Specification-Version"   : mod_version + "." + build_num,
                     "Implementation-Title"    : project.name,
                     "Implementation-Version"  : mod_version + "." + build_num,
                     "Implementation-Vendor"   : mod_group,
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
     }
+}
+
+tasks.withType(Jar) {
+    def jarsDir = file("$projectDir/jars")
+    if (!jarsDir.exists()) {
+        jarsDir.mkdirs()
+    }
+    destinationDir = jarsDir
 }
 
 task major {
@@ -94,12 +102,4 @@ task revision {
         }
     }
     group = "incr"
-}
-
-tasks.withType(Jar) {
-    def jarsDir = file("$projectDir/jars")
-    if (!jarsDir.exists()) {
-        jarsDir.mkdirs()
-    }
-    destinationDir = jarsDir
 }

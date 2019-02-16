@@ -1,5 +1,5 @@
 modLoader="javafml" 
-loaderVersion="[24,)"
+loaderVersion="[25,)"
 
 [[mods]]
 modId="theora" 

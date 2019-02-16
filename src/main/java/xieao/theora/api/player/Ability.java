@@ -57,10 +57,10 @@ public class Ability extends RegistryEntry<Ability> {
     public void tick(EntityPlayer player, Data data) {
     }
 
-    public void onAdded(EntityPlayer player, NBTTagCompound abilityNBT) {
+    public void onAdded(EntityPlayer player, NBTTagCompound nbt) {
     }
 
-    public void onRemoved(EntityPlayer player) {
+    public void onRemoved(EntityPlayer player, NBTTagCompound nbt) {
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -92,7 +92,7 @@ public class Ability extends RegistryEntry<Ability> {
         public boolean remove(Ability ability, EntityPlayer player) {
             if (!has(ability)) return false;
             this.abilityMap.remove(ability);
-            ability.onRemoved(player);
+            ability.onRemoved(player, storable(ability));
             sync(true);
             return true;
         }
@@ -101,34 +101,34 @@ public class Ability extends RegistryEntry<Ability> {
             return this.abilityMap.containsKey(ability);
         }
 
-        private NBTTagCompound getNBT(Ability ability) {
+        private NBTTagCompound getMainNBT(Ability ability) {
             return this.abilityMap.get(ability);
         }
 
-        public NBTTagCompound getAbilityNBT(Ability ability) {
-            return getNBT(ability).getCompound("Data");
+        public NBTTagCompound storable(Ability ability) {
+            return getMainNBT(ability).getCompound("Data");
         }
 
         public boolean enabled(Ability ability) {
-            return getNBT(ability).getBoolean("Enabled");
+            return getMainNBT(ability).getBoolean("Enabled");
         }
 
         public void onOrOff(Ability ability) {
-            NBTTagCompound compound = getNBT(ability);
+            NBTTagCompound compound = getMainNBT(ability);
             compound.setBoolean("Enabled", !compound.getBoolean("Enabled"));
         }
 
         public int level(Ability ability) {
-            return getNBT(ability).getInt("Level");
+            return getMainNBT(ability).getInt("Level");
         }
 
         public void levelUp(Ability ability) {
-            getNBT(ability).setInt("Level", Math.min(ability.maxLevel, level(ability) + 1));
+            getMainNBT(ability).setInt("Level", Math.min(ability.maxLevel, level(ability) + 1));
             sync(true);
         }
 
         public void levelDown(Ability ability) {
-            getNBT(ability).setInt("Level", Math.max(0, level(ability) - 1));
+            getMainNBT(ability).setInt("Level", Math.max(0, level(ability) - 1));
             sync(true);
         }
 

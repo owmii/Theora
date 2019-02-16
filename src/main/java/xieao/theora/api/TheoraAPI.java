@@ -19,7 +19,7 @@ public final class TheoraAPI {
     private final Set<IRecipeRegistry> recipeRegistries = new HashSet<>();
 
     public static boolean isLoaded() {
-        return ModList.get().isLoaded("theora");
+        return ModList.get().isLoaded(Consts.MOD_ID);
     }
 
     public void register(IRecipeRegistry registry) {

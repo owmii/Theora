@@ -1,14 +1,12 @@
 package xieao.theora.core.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.loading.FMLPaths;
-import xieao.theora.api.Consts;
-
-import java.nio.file.Path;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class Config {
     private static final ForgeConfigSpec.Builder BUILDER_MAIN = new ForgeConfigSpec.Builder();
-    public static final General GENERAL = new General(BUILDER_MAIN);
+    public static final ForgeConfigSpec GENERAL_SPEC;
+    public static final General GENERAL;
 
     public static class General {
         public final ForgeConfigSpec.BooleanValue testBoolean;
@@ -22,17 +20,9 @@ public class Config {
         }
     }
 
-    public static void load() {
-        loadFrom(FMLPaths.CONFIGDIR.get().resolve(Consts.MOD_ID + "/"));
-    }
-
-    public static final ForgeConfigSpec spec = BUILDER_MAIN.build();
-
-    private static void loadFrom(Path root) {
-        if (!root.toFile().exists()) {
-            root.toFile().mkdir();
-        }
-        Path configPath = root.resolve("main.toml");
-        //spec.setConfigFile(configPath);
+    static {
+        final Pair<General, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(General::new);
+        GENERAL_SPEC = specPair.getRight();
+        GENERAL = specPair.getLeft();
     }
 }

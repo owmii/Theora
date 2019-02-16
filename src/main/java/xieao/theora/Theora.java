@@ -3,7 +3,9 @@ package xieao.theora;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
@@ -17,7 +19,9 @@ import xieao.theora.client.renderer.item.IItemColorHolder;
 import xieao.theora.client.renderer.item.TEItemRenderer;
 import xieao.theora.client.renderer.tile.TERRegistry;
 import xieao.theora.core.command.TheoraCommand;
+import xieao.theora.core.config.Config;
 import xieao.theora.core.handler.AutoLoadHandler;
+import xieao.theora.core.handler.PlayerHandler;
 import xieao.theora.core.handler.RecipeSorter;
 import xieao.theora.core.network.Network;
 import xieao.theora.core.recipe.CauldronRecipes;
@@ -67,5 +71,7 @@ public class Theora {
         });
         eventBus.addListener((InterModProcessEvent event) -> RecipeSorter.post());
         EVENT_BUS.addListener(TheoraCommand::register);
+        EVENT_BUS.addListener(PlayerHandler::syncCap);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.GENERAL_SPEC);
     }
 }

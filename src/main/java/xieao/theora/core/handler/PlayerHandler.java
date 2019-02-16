@@ -6,6 +6,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.player.Ability;
@@ -36,5 +37,16 @@ public class PlayerHandler {
                 return playerData;
             });
         }
+    }
+
+    public static void syncCap(PlayerEvent.PlayerLoggedInEvent event) {
+        LazyOptional<PlayerData> holder = TheoraAPI.getPlayerData(event.getPlayer());
+        holder.map(playerData -> {
+            Ability.Data abilityData = playerData.getAbilityData();
+            if (event.getPlayer() instanceof EntityPlayerMP) {
+                Network.toClient(new SyncAbility(abilityData.write(new NBTTagCompound())), (EntityPlayerMP) event.getPlayer());
+            }
+            return playerData;
+        });
     }
 }

@@ -27,7 +27,7 @@ public class BlockMush extends IBlock.Plant implements IShearable {
         } else if (this == IBlocks.MUSH_AMANITA_MUSCARIA) {
             return Items.BEETROOT_SEEDS;
         }
-        return this;
+        return Items.AIR;
     }
 
     @Override

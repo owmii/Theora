@@ -1,4 +1,4 @@
-package xieao.theora.client.util;
+package xieao.theora.client.core.lib.util;
 
 import java.awt.*;
 import java.util.Random;

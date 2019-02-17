@@ -18,7 +18,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.opengl.GL11;
-import xieao.theora.client.util.ColorUtil;
+import xieao.theora.client.core.lib.util.ColorUtil;
 import xieao.theora.core.lib.util.Location;
 import xieao.theora.core.lib.util.math.V3d;
 

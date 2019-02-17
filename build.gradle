@@ -73,7 +73,7 @@ task major {
             ant.entry(key: "build_num", value: bld_num)
         }
     }
-    group = "incr"
+    group = "a"
 }
 
 task minor {
@@ -87,7 +87,7 @@ task minor {
             ant.entry(key: "build_num", value: bld_num)
         }
     }
-    group = "incr"
+    group = "a"
 }
 
 task revision {
@@ -101,5 +101,5 @@ task revision {
             ant.entry(key: "build_num", value: bld_num)
         }
     }
-    group = "incr"
+    group = "a"
 }

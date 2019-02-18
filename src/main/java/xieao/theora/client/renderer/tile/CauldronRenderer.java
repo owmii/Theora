@@ -18,10 +18,18 @@ public class CauldronRenderer extends TERenderer<TileCauldron> {
     public void render(TileCauldron tile, double x, double y, double z, float partialTicks, int destroyStage) {
         GlStateManager.pushMatrix();
         GlStateManager.translated(x + 0.5D, y, z + 0.5D);
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        GlStateManager.disableLighting();
+        GlStateManager.enableRescaleNormal();
         bindTexture(FILL);
+        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         Tessellator tessellator = Tessellator.getInstance();
         Draw3d.quad(tessellator.getBuffer(), EnumFacing.UP, 1.0D, 1.0D);
         tessellator.draw();
+        GlStateManager.disableRescaleNormal();
+        GlStateManager.enableLighting();
+        GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
 }

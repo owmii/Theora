@@ -15,16 +15,16 @@ public class Draw3d {
         }
     }
 
-    public static void quad(BufferBuilder bb, EnumFacing facing, double deep, double offset) {
+    public static void quad(BufferBuilder bb, EnumFacing facing, double deep, double scale) {
         double[][] pos = new double[4][3];
         double[][] uv = new double[4][2];
         switch (facing) { // TODO finish all facing quads
             case DOWN:
                 break;
             case UP:
-                pos[0][0] = pos[3][0] = pos[2][2] = pos[3][2] = -offset * 0.5D;
+                pos[0][0] = pos[3][0] = pos[2][2] = pos[3][2] = -scale * 0.5D;
                 pos[0][1] = pos[1][1] = pos[2][1] = pos[3][1] = deep;
-                pos[1][0] = pos[2][0] = pos[0][2] = pos[1][2] = offset * 0.5D;
+                pos[1][0] = pos[2][0] = pos[0][2] = pos[1][2] = scale * 0.5D;
                 uv[0][0] = uv[0][1] = uv[1][0] = uv[3][1];
                 uv[1][1] = uv[2][0] = uv[2][1] = uv[3][0] = 1.0D;
                 break;

@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench",
+	"ambientocclusion": false,
 	"textures": {
 		"0": "theora:block/cauldron_top",
 		"1": "theora:block/cauldron_side",

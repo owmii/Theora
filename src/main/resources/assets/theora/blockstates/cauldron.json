@@ -1,7 +1,7 @@
 {
-  "variants": {
-    "": {
-      "model": "theora:block/cauldron"
-    }
-  }
+	"variants": {
+		"": {
+			"model": "theora:block/cauldron"
+		}
+	}
 }

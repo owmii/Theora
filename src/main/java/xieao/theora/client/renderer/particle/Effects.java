@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -18,8 +19,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.opengl.GL11;
+import xieao.theora.api.Consts;
 import xieao.theora.client.core.lib.util.ColorUtil;
-import xieao.theora.core.lib.util.Location;
 import xieao.theora.core.lib.util.math.V3d;
 
 import java.util.ArrayList;
@@ -147,7 +148,7 @@ public final class Effects {
                 }
             }
             String textureSuffix = this.texture.frames > 1 ? "" + this.textureID : "";
-            Minecraft.getInstance().getTextureManager().bindTexture(Location.TEXTURES_PARTICLES.get(this.texture.name + textureSuffix + ".png"));
+            Minecraft.getInstance().getTextureManager().bindTexture(new ResourceLocation(Consts.MOD_ID, "textures/particles" + this.texture.name + textureSuffix + ".png"));
             if (this.blendFunc) {
                 GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
             }

@@ -4,6 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -11,9 +12,9 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import xieao.theora.api.Consts;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.player.PlayerData;
-import xieao.theora.core.lib.util.Location;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -23,7 +24,7 @@ public class CapabilityHandler {
     @SubscribeEvent
     public static void attachCapability(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof EntityPlayer) {
-            event.addCapability(Location.ROOT.get("player/data"), new ICapabilitySerializable<NBTTagCompound>() {
+            event.addCapability(new ResourceLocation(Consts.MOD_ID, "player/data"), new ICapabilitySerializable<NBTTagCompound>() {
                 private final PlayerData data = new PlayerData();
 
                 @Override

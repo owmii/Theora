@@ -1,6 +1,5 @@
 package xieao.theora.item;
 
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemGroup;
@@ -10,12 +9,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.extensions.IForgeItem;
 import xieao.theora.api.Consts;
 import xieao.theora.client.renderer.item.TEItemRenderer;
+import xieao.theora.core.IBlocks;
 
 public interface IItem extends IForgeItem {
     ItemGroup MAIN = new ItemGroup(Consts.MOD_ID) {
         @OnlyIn(Dist.CLIENT)
         public ItemStack createIcon() {
-            return new ItemStack(Items.APPLE);
+            return new ItemStack(IBlocks.CAULDRON);
         }
     };
 
@@ -33,8 +33,8 @@ public interface IItem extends IForgeItem {
     }
 
     class Base extends Item implements IItem {
-        public Base(Properties builder) {
-            super(builder.setTEISR(() -> TEItemRenderer::new));
+        public Base(Properties properties) {
+            super(properties.setTEISR(() -> TEItemRenderer::new));
         }
     }
 

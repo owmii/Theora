@@ -1,8 +1,12 @@
 package xieao.theora.client.core.lib.util;
 
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
 import java.awt.*;
 import java.util.Random;
 
+@OnlyIn(Dist.CLIENT)
 public class ColorUtil {
     public static int blend(int color1, int color2, float ratio) {
         if (ratio > 1.0F) ratio = 1.0F;

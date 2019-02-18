@@ -17,12 +17,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
 import net.minecraftforge.common.extensions.IForgeBlock;
 import net.minecraftforge.fml.network.NetworkHooks;
 import xieao.theora.core.lib.util.PlayerUtil;
 import xieao.theora.item.IItem;
+import xieao.theora.world.IInteractObj;
 
 import javax.annotation.Nullable;
 
@@ -46,10 +46,10 @@ public interface IBlock extends IForgeBlock {
             TileEntity tileentity = worldIn.getTileEntity(pos);
             if (tileentity instanceof Tile) {
                 Tile tile = (Tile) tileentity;
-                if (tile instanceof IInteractionObject) {
-                    IInteractionObject io = (IInteractionObject) tile;
-                    if (player instanceof EntityPlayerMP) {
-                        NetworkHooks.openGui((EntityPlayerMP) player, io, null);
+                if (tile instanceof IInteractObj) {
+                    IInteractObj io = (IInteractObj) tile;
+                    if (!PlayerUtil.isFake(player) && player instanceof EntityPlayerMP) {
+                        NetworkHooks.openGui((EntityPlayerMP) player, io, packetBuffer -> packetBuffer.writeBlockPos(pos));
                     }
                     return true;
                 }

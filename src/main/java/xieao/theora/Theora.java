@@ -3,6 +3,7 @@ package xieao.theora;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -14,6 +15,7 @@ import xieao.theora.api.Consts;
 import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.player.PlayerData;
 import xieao.theora.client.core.ITextures;
+import xieao.theora.client.gui.GuiFactory;
 import xieao.theora.client.renderer.item.IBlockColorHolder;
 import xieao.theora.client.renderer.item.IItemColorHolder;
 import xieao.theora.client.renderer.item.TEItemRenderer;
@@ -71,6 +73,7 @@ public class Theora {
         eventBus.addListener((InterModProcessEvent event) -> RecipeSorter.post());
         EVENT_BUS.addListener(TheoraCommand::register);
         EVENT_BUS.addListener(PlayerHandler::syncCap);
+        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, () -> GuiFactory::get);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.GENERAL_SPEC);
     }
 }

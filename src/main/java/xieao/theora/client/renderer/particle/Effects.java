@@ -148,7 +148,7 @@ public final class Effects {
                 }
             }
             String textureSuffix = this.texture.frames > 1 ? "" + this.textureID : "";
-            Minecraft.getInstance().getTextureManager().bindTexture(new ResourceLocation(Consts.MOD_ID, "textures/particles" + this.texture.name + textureSuffix + ".png"));
+            Minecraft.getInstance().getTextureManager().bindTexture(new ResourceLocation(Consts.MOD_ID, "textures/particles/" + this.texture.name + textureSuffix + ".png"));
             if (this.blendFunc) {
                 GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
             }

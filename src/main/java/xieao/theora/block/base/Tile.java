@@ -10,10 +10,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.NonNullList;
+import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -26,6 +23,7 @@ import xieao.theora.core.lib.util.InvUtil;
 import xieao.theora.core.lib.util.math.V3d;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 
@@ -45,6 +43,12 @@ public abstract class Tile extends TileEntity {
     public Tile(TileEntityType<?> type, int invSize) {
         super(type);
         this.inv = NonNullList.withSize(invSize, ItemStack.EMPTY);
+    }
+
+    public final ResourceLocation getRegistryName() {
+        ResourceLocation registryName = getType().getRegistryName();
+        Objects.requireNonNull(registryName);
+        return registryName;
     }
 
     @Override

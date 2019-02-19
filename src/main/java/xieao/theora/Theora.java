@@ -74,6 +74,6 @@ public class Theora {
         EVENT_BUS.addListener(TheoraCommand::register);
         EVENT_BUS.addListener(PlayerHandler::syncCap);
         ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, () -> GuiFactory::get);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.GENERAL_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_SPEC);
     }
 }

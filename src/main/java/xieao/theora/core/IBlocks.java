@@ -1,12 +1,13 @@
 package xieao.theora.core;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import xieao.theora.block.BlockMush;
+import xieao.theora.block.BlockPlant;
 import xieao.theora.block.base.IBlock;
 import xieao.theora.block.cauldron.BlockCauldron;
 import xieao.theora.block.heat.BlockHeat;
@@ -29,10 +30,10 @@ public class IBlocks {
     static {
         CAULDRON = register("cauldron", new BlockCauldron());
         HEAT = register("heat", new BlockHeat(24000));
-        MUSH_GLIOPHORUS = register("mush_gliophorus", new BlockMush());
-        MUSH_AMANITA_MUSCARIA = register("mush_amanita_muscaria", new BlockMush());
-        MUSH_WHITE_BEECH = register("mush_white_beech", new BlockMush());
-        MUSH_WITCH_HATE = register("mush_witch_hate", new BlockMush());
+        MUSH_GLIOPHORUS = register("mush_gliophorus", new BlockPlant(Items.CACTUS_GREEN, 3).setShearable());
+        MUSH_AMANITA_MUSCARIA = register("mush_amanita_muscaria", new BlockPlant(Items.APPLE, 3).setShearable());
+        MUSH_WHITE_BEECH = register("mush_white_beech", new BlockPlant(Items.BONE_MEAL, 3).setShearable());
+        MUSH_WITCH_HATE = register("mush_witch_hate", new BlockPlant(Items.BRICK, 3).setShearable());
     }
 
     static <T extends Block & IBlock> T register(String name, T block) {

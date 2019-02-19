@@ -1,9 +1,6 @@
 package xieao.theora.block.base;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -110,18 +107,6 @@ public interface IBlock extends IForgeBlock {
         public boolean eventReceived(IBlockState state, World world, BlockPos pos, int id, int param) {
             TileEntity tileEntity = world.getTileEntity(pos);
             return tileEntity != null && tileEntity.receiveClientEvent(id, param);
-        }
-    }
-
-    class Plant extends BlockBush implements IBlock {
-        public Plant(Properties properties) {
-            super(properties);
-        }
-
-        public Plant() {
-            this(Properties.create(Material.PLANTS)
-                    .doesNotBlockMovement()
-                    .sound(SoundType.PLANT));
         }
     }
 }

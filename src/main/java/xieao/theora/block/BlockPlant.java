@@ -74,10 +74,6 @@ public class BlockPlant extends BlockBush implements IBlock, IShearable {
         return Collections.singletonList(new ItemStack(this, 1));
     }
 
-    public boolean isShearable() {
-        return isShearable;
-    }
-
     public BlockPlant setShearable() {
         isShearable = true;
         return this;

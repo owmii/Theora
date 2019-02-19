@@ -12,7 +12,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
-version = "${minecraft_version}-${mod_version}.${build_num}"
+version = "${minecraft_version}-${mod_version}"
 group = "${mod_group}"
 archivesBaseName = "${mod_name}"
 
@@ -21,19 +21,22 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 minecraft {
     mappings channel: mappings_channel, version: mappings_version
     accessTransformer = file('src/main/resources/META-INF/theora_at.cfg')
-    //noinspection GroovyAssignabilityCheck
     runs {
         client = {
-            //noinspection GrUnresolvedAccess
             workingDirectory project.file('run').canonicalPath
-            //noinspection GrUnresolvedAccess
-            source sourceSets.main
+            mods {
+                theora {
+                    source sourceSets.main
+                }
+            }
         }
         server = {
-            //noinspection GrUnresolvedAccess
             workingDirectory project.file('run').canonicalPath
-            //noinspection GrUnresolvedAccess
-            source sourceSets.main
+            mods {
+                theora {
+                    source sourceSets.main
+                }
+            }
         }
     }
 }
@@ -46,9 +49,9 @@ jar {
     manifest {
         attributes(["Specification-Title"     : mod_name,
                     "Specification-Vendor"    : mod_group,
-                    "Specification-Version"   : mod_version + "." + build_num,
+                    "Specification-Version"   : mod_version,
                     "Implementation-Title"    : project.name,
-                    "Implementation-Version"  : mod_version + "." + build_num,
+                    "Implementation-Version"  : mod_version,
                     "Implementation-Vendor"   : mod_group,
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
     }
@@ -66,11 +69,9 @@ task major {
     doLast {
         ant.propertyfile(file: "gradle.properties") {
             String version = "${mod_version}"
-            String bld_num = "${build_num}".toInteger() + 1
-            def slice = version.split(/\./).toList()
-            def major = slice[0].toInteger() + 1
+            def slices = version.split(/\./).toList()
+            def major = slices[0].toInteger() + 1
             ant.entry(key: "mod_version", value: major + ".0.0")
-            ant.entry(key: "build_num", value: bld_num)
         }
     }
     group = "a"
@@ -80,11 +81,9 @@ task minor {
     doLast {
         ant.propertyfile(file: "gradle.properties") {
             String version = "${mod_version}"
-            String bld_num = "${build_num}".toInteger() + 1
-            def slice = version.split(/\./).toList()
-            def minor = slice[1].toInteger() + 1
-            ant.entry(key: "mod_version", value: slice[0] + "." + minor + ".0")
-            ant.entry(key: "build_num", value: bld_num)
+            def slices = version.split(/\./).toList()
+            def minor = slices[1].toInteger() + 1
+            ant.entry(key: "mod_version", value: slices[0] + "." + minor + ".0")
         }
     }
     group = "a"
@@ -94,11 +93,9 @@ task revision {
     doLast {
         ant.propertyfile(file: "gradle.properties") {
             String version = "${mod_version}"
-            String bld_num = "${build_num}".toInteger() + 1
-            def slice = version.split(/\./).toList()
-            def revision = slice[2].toInteger() + 1
-            ant.entry(key: "mod_version", value: slice[0] + "." + slice[1] + "." + revision)
-            ant.entry(key: "build_num", value: bld_num)
+            def slices = version.split(/\./).toList()
+            def revision = slices[2].toInteger() + 1
+            ant.entry(key: "mod_version", value: slices[0] + "." + slices[1] + "." + revision)
         }
     }
     group = "a"

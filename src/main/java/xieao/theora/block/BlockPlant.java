@@ -22,28 +22,36 @@ public class BlockPlant extends BlockBush implements IBlock, IShearable {
     private boolean isShearable;
     @Nullable
     private final IItemProvider drop;
-    private final int quantity;
+    private final int minQuantity;
+    private final int maxQuantity;
 
     public BlockPlant() {
-        this(Properties.create(Material.PLANTS)
-                .doesNotBlockMovement()
-                .sound(SoundType.PLANT), null, 1);
+        this(null, 1, 1);
     }
 
     public BlockPlant(@Nullable IItemProvider drop, int quantity) {
+        this(drop, quantity, quantity);
+    }
+
+    public BlockPlant(@Nullable IItemProvider drop, int minQuantity, int maxQuantity) {
         this(Properties.create(Material.PLANTS)
                 .doesNotBlockMovement()
-                .sound(SoundType.PLANT), drop, quantity);
+                .sound(SoundType.PLANT), drop, minQuantity, maxQuantity);
     }
 
     public BlockPlant(Properties properties) {
-        this(properties, null, 1);
+        this(properties, null, 1, 1);
     }
 
     public BlockPlant(Properties properties, @Nullable IItemProvider drop, int quantity) {
+        this(properties, drop, quantity, quantity);
+    }
+
+    public BlockPlant(Properties properties, @Nullable IItemProvider drop, int minQuantity, int maxQuantity) {
         super(properties);
         this.drop = drop;
-        this.quantity = quantity;
+        this.minQuantity = minQuantity;
+        this.maxQuantity = maxQuantity;
     }
 
     @Override
@@ -53,7 +61,7 @@ public class BlockPlant extends BlockBush implements IBlock, IShearable {
 
     @Override
     public int quantityDropped(IBlockState state, Random random) {
-        return this.drop == null ? 1 + random.nextInt(this.quantity) : super.quantityDropped(state, random);
+        return this.drop == null ? Math.max(this.minQuantity, random.nextInt(this.maxQuantity) + 1) : super.quantityDropped(state, random);
     }
 
     @Override

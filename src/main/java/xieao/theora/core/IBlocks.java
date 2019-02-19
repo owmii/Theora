@@ -30,10 +30,10 @@ public class IBlocks {
     static {
         CAULDRON = register("cauldron", new BlockCauldron());
         HEAT = register("heat", new BlockHeat(24000));
-        MUSH_GLIOPHORUS = register("mush_gliophorus", new BlockPlant(Items.CACTUS_GREEN, 3).setShearable());
-        MUSH_AMANITA_MUSCARIA = register("mush_amanita_muscaria", new BlockPlant(Items.APPLE, 3).setShearable());
-        MUSH_WHITE_BEECH = register("mush_white_beech", new BlockPlant(Items.BONE_MEAL, 3).setShearable());
-        MUSH_WITCH_HATE = register("mush_witch_hate", new BlockPlant(Items.BRICK, 3).setShearable());
+        MUSH_GLIOPHORUS = register("mush_gliophorus", new BlockPlant(Items.CACTUS_GREEN, 1, 3).setShearable());
+        MUSH_AMANITA_MUSCARIA = register("mush_amanita_muscaria", new BlockPlant(Items.APPLE, 1, 3).setShearable());
+        MUSH_WHITE_BEECH = register("mush_white_beech", new BlockPlant(Items.BONE_MEAL, 1, 3).setShearable());
+        MUSH_WITCH_HATE = register("mush_witch_hate", new BlockPlant(Items.BRICK, 1, 3).setShearable());
     }
 
     static <T extends Block & IBlock> T register(String name, T block) {

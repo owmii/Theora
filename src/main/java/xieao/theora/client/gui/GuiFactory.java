@@ -23,7 +23,7 @@ public class GuiFactory {
                 IInteractObj object = (IInteractObj) tileEntity;
                 String guiId = object.getGuiID();
                 if (guiId.equals(openContainer.getId().toString())) {
-                    return object.getGui(mc.player);
+                    return object.getGui();
                 }
             }
         }

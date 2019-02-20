@@ -1,6 +1,7 @@
 package xieao.theora.client.gui.inventory;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -10,10 +11,12 @@ import xieao.theora.inventory.ContainerBase;
 @OnlyIn(Dist.CLIENT)
 public abstract class GuiContainerBase<I extends IInventory, C extends ContainerBase<I>> extends GuiContainer {
     protected final I inv;
+    protected final EntityPlayer player;
 
-    public GuiContainerBase(C container, I inv) {
+    public GuiContainerBase(C container, EntityPlayer player, I inv) {
         super(container);
         this.inv = inv;
+        this.player = player;
     }
 
     @Override

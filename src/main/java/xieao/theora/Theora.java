@@ -15,7 +15,7 @@ import xieao.theora.api.Consts;
 import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.player.PlayerData;
 import xieao.theora.client.core.ITextures;
-import xieao.theora.client.gui.GuiFactory;
+import xieao.theora.client.gui.inventory.GuiFactory;
 import xieao.theora.client.renderer.item.IBlockColorHolder;
 import xieao.theora.client.renderer.item.IItemColorHolder;
 import xieao.theora.client.renderer.item.TEItemRenderer;

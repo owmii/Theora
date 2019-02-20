@@ -46,7 +46,10 @@ public interface IBlock extends IForgeBlock {
                 if (tile instanceof IInteractObj) {
                     IInteractObj io = (IInteractObj) tile;
                     if (!PlayerUtil.isFake(player) && player instanceof EntityPlayerMP) {
-                        NetworkHooks.openGui((EntityPlayerMP) player, io, packetBuffer -> packetBuffer.writeBlockPos(pos));
+                        NetworkHooks.openGui((EntityPlayerMP) player, io, packetBuffer -> {
+                            packetBuffer.writeString("tile.gui");
+                            packetBuffer.writeBlockPos(pos);
+                        });
                     }
                     return true;
                 }

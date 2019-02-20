@@ -28,6 +28,7 @@ import xieao.theora.core.handler.RecipeSorter;
 import xieao.theora.core.network.Network;
 import xieao.theora.core.recipe.CauldronRecipes;
 import xieao.theora.core.recipe.InteractRecipes;
+import xieao.theora.world.gen.WorldGen;
 
 import static net.minecraftforge.common.MinecraftForge.EVENT_BUS;
 import static net.minecraftforge.fml.DistExecutor.runWhenOn;
@@ -44,6 +45,7 @@ public class Theora {
             Liquid.Cap.register();
             AutoLoadHandler.load();
             Network.registerAll();
+            WorldGen.register();
             API.register(new InteractRecipes());
             API.register(new CauldronRecipes());
             // Client

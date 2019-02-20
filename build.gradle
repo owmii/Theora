@@ -41,8 +41,14 @@ minecraft {
     }
 }
 
+repositories {
+//    maven { url "https://tehnut.info/maven" }
+}
+
 dependencies {
     minecraft "${forge_group}:${forge_name}:${minecraft_version}-${forge_version}"
+//    compileOnly "mcp.mobius.waila:Hwyla:1.10.0-B52_1.13.2:api"
+//    runtime "mcp.mobius.waila:Hwyla:1.10.0-B52_1.13.2"
 }
 
 jar {

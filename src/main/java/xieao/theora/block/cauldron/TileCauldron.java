@@ -23,10 +23,11 @@ import xieao.theora.item.ItemHeat;
 import javax.annotation.Nullable;
 
 public class TileCauldron extends Tile.Tickable implements IInv {
-    private final LazyOptional<IFluidHandler> fluidHolder;
-    private final LazyOptional<Liquid.Handler> liquidHolder;
     protected Liquid.Handler liquidHandler = new Liquid.Handler();
     protected FluidTank fluidTank = new FluidTank(Fluid.BUCKET_VOLUME);
+
+    private final LazyOptional<IFluidHandler> fluidHolder = LazyOptional.of(() -> this.fluidTank);
+    private final LazyOptional<Liquid.Handler> liquidHolder = LazyOptional.of(() -> this.liquidHandler);
 
     private ItemStack heatStack = ItemStack.EMPTY;
     private Ticker heat = new Ticker(100);
@@ -40,9 +41,7 @@ public class TileCauldron extends Tile.Tickable implements IInv {
     public int blend;
 
     public TileCauldron() {
-        super(ITiles.CAULDRON, 12);
-        this.fluidHolder = LazyOptional.of(() -> this.fluidTank);
-        this.liquidHolder = LazyOptional.of(() -> this.liquidHandler);
+        super(ITiles.CAULDRON, 16);
         this.liquidHandler.addSlot(1000.0F, 100.0F, Transfer.SEND);
     }
 

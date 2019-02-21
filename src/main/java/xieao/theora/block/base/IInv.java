@@ -6,7 +6,6 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.extensions.IForgeTileEntity;
 
 import javax.annotation.Nullable;
@@ -75,7 +74,6 @@ public interface IInv extends ISidedInventory, IForgeTileEntity {
     }
 
     default void onInventoryChanged(int index) {
-
     }
 
     @Override
@@ -133,11 +131,6 @@ public interface IInv extends ISidedInventory, IForgeTileEntity {
     @Override
     default int getWidth() {
         return 0;
-    }
-
-    @Override
-    default ITextComponent getName() {
-        return new TextComponentString("");
     }
 
     @Override

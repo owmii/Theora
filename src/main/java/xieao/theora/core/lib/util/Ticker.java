@@ -36,7 +36,7 @@ public class Ticker {
     }
 
     public static boolean delayed(int delay) {
-        return System.currentTimeMillis() % (delay * 50) == 0;
+        return System.currentTimeMillis() % (delay * 5) == 0;
     }
 
     public void read(NBTTagCompound compound, String key) {

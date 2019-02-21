@@ -20,6 +20,8 @@ import xieao.theora.client.renderer.item.IBlockColorHolder;
 import xieao.theora.client.renderer.item.IItemColorHolder;
 import xieao.theora.client.renderer.item.TEItemRenderer;
 import xieao.theora.client.renderer.tile.TERRegistry;
+import xieao.theora.core.IBlocks;
+import xieao.theora.core.IItems;
 import xieao.theora.core.command.TheoraCommand;
 import xieao.theora.core.config.Config;
 import xieao.theora.core.handler.AutoLoadHandler;
@@ -33,8 +35,6 @@ import xieao.theora.world.gen.WorldGen;
 import static net.minecraftforge.common.MinecraftForge.EVENT_BUS;
 import static net.minecraftforge.fml.DistExecutor.runWhenOn;
 import static xieao.theora.api.TheoraAPI.API;
-import static xieao.theora.core.IBlocks.BLOCKS;
-import static xieao.theora.core.IItems.ITEMS;
 
 @Mod(Consts.MOD_ID)
 public class Theora {
@@ -45,27 +45,26 @@ public class Theora {
             Liquid.Cap.register();
             AutoLoadHandler.load();
             Network.registerAll();
-            WorldGen.register();
             API.register(new InteractRecipes());
             API.register(new CauldronRecipes());
-            // Client
             runWhenOn(Dist.CLIENT, () -> () ->
                     EVENT_BUS.register(ITextures.class));
         });
         eventBus.addListener((InterModEnqueueEvent event) -> {
-            // Client
+            WorldGen.register();
             runWhenOn(Dist.CLIENT, () -> () -> {
-                final Minecraft mc = Minecraft.getInstance();
-                ITEMS.forEach(item -> {
+                IItems.ITEMS.forEach(item -> {
                     TEItemRenderer.register(item);
                     if (item instanceof IItemColorHolder) {
                         IItemColorHolder holder = (IItemColorHolder) item;
+                        final Minecraft mc = Minecraft.getInstance();
                         mc.getItemColors().register(holder.getItemColor(), item);
                     }
                 });
-                BLOCKS.forEach(block -> {
+                IBlocks.BLOCKS.forEach(block -> {
                     if (block instanceof IBlockColorHolder) {
                         IBlockColorHolder holder = (IBlockColorHolder) block;
+                        final Minecraft mc = Minecraft.getInstance();
                         mc.getBlockColors().register(holder.getBlockColor(), block);
                     }
                 });
@@ -76,6 +75,6 @@ public class Theora {
         EVENT_BUS.addListener(TheoraCommand::register);
         EVENT_BUS.addListener(PlayerHandler::syncCap);
         ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, () -> GuiFactory::get);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.GENERAL_SPEC);
     }
 }

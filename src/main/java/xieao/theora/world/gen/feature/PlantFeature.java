@@ -15,19 +15,17 @@ public class PlantFeature extends Feature<PlantConfig> {
     public static final PlantFeature INSTANCE = new PlantFeature();
     private static final Block[] PLANTS = new Block[]{
             IBlocks.MUSH_GLIOPHORUS,
-            IBlocks.MUSH_AMANITA_MUSCARIA,
-            IBlocks.MUSH_WHITE_BEECH,
             IBlocks.MUSH_WITCH_HATE,
     };
 
     @Override
     public boolean func_212245_a(IWorld world, IChunkGenerator<? extends IChunkGenSettings> chunkGenerator, Random random, BlockPos pos, PlantConfig config) {
-        IBlockState iblockstate = PLANTS[random.nextInt(PLANTS.length)].getDefaultState();
+        IBlockState state = PLANTS[random.nextInt(PLANTS.length)].getDefaultState();
         int i = 0;
         for (int j = 0; j < 64; ++j) {
-            BlockPos blockpos = pos.add(random.nextInt(8) - random.nextInt(8), random.nextInt(4) - random.nextInt(4), random.nextInt(8) - random.nextInt(8));
-            if (world.isAirBlock(blockpos) && blockpos.getY() < 255 && iblockstate.isValidPosition(world, blockpos)) {
-                world.setBlockState(blockpos, iblockstate, 2);
+            BlockPos pos1 = pos.add(random.nextInt(8) - random.nextInt(8), random.nextInt(4) - random.nextInt(4), random.nextInt(8) - random.nextInt(8));
+            if (world.isAirBlock(pos1) && pos1.getY() < 255 && state.isValidPosition(world, pos1)) {
+                world.setBlockState(pos1, state, 2);
                 ++i;
             }
         }

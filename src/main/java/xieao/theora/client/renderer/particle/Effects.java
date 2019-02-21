@@ -68,8 +68,7 @@ public final class Effects {
         float f2 = ActiveRenderInfo.getRotationYZ();
         float f3 = ActiveRenderInfo.getRotationXY();
         float f4 = ActiveRenderInfo.getRotationXZ();
-        Minecraft mc = Minecraft.getInstance();
-        EntityPlayerSP player = mc.player;
+        EntityPlayerSP player = Minecraft.getInstance().player;
         float partialTicks = event.getPartialTicks();
         Particle.interpPosX = player.lastTickPosX + (player.posX - player.lastTickPosX) * (double) partialTicks;
         Particle.interpPosY = player.lastTickPosY + (player.posY - player.lastTickPosY) * (double) partialTicks;
@@ -112,15 +111,12 @@ public final class Effects {
             this.to = origin;
             this.noDepth = true;
             this.speed = 0.2D;
-
-
             this.particleScale = 1.0F;
             this.particleAlpha = 0.0F;
             this.canCollide = false;
             this.motionX = 0.0D;
             this.motionY = 0.0D;
             this.motionZ = 0.0D;
-
             color(0xffffff);
             if (texture.frames > 1 && texture.randomize) {
                 this.textureID = this.rand.nextInt(texture.frames);

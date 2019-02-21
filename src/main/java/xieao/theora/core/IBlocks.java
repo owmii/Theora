@@ -23,16 +23,12 @@ public class IBlocks {
     public static final Block CAULDRON;
     public static final Block HEAT;
     public static final Block MUSH_GLIOPHORUS;
-    public static final Block MUSH_AMANITA_MUSCARIA;
-    public static final Block MUSH_WHITE_BEECH;
     public static final Block MUSH_WITCH_HATE;
 
     static {
         CAULDRON = register("cauldron", new BlockCauldron());
         HEAT = register("heat", new BlockHeat(24000));
         MUSH_GLIOPHORUS = register("mush_gliophorus", new BlockPlant(Items.CACTUS_GREEN, 1, 2).setShearable());
-        MUSH_AMANITA_MUSCARIA = register("mush_amanita_muscaria", new BlockPlant(Items.APPLE, 1, 3).setShearable());
-        MUSH_WHITE_BEECH = register("mush_white_beech", new BlockPlant(Items.BONE_MEAL, 2, 5).setShearable());
         MUSH_WITCH_HATE = register("mush_witch_hate", new BlockPlant(Items.BRICK, 1, 2).setShearable());
     }
 

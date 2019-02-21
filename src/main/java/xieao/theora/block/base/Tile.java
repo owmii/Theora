@@ -12,6 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
@@ -49,6 +50,10 @@ public abstract class Tile extends TileEntity {
         ResourceLocation registryName = getType().getRegistryName();
         Objects.requireNonNull(registryName);
         return registryName;
+    }
+
+    public ITextComponent getName() {
+        return new TextComponentTranslation("block." + getRegistryName().toString().replace(':', '.'));
     }
 
     @Override

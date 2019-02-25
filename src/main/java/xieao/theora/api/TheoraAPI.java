@@ -32,14 +32,14 @@ public final class TheoraAPI {
     }
 
     public static LazyOptional<PlayerData> getPlayerData(EntityPlayer player) {
-        return player.getCapability(PlayerData.Cap.DATA);
+        return player.getCapability(PlayerData.Capability.DATA);
     }
 
     public static LazyOptional<Liquid.Handler> getLiquidHandler(TileEntity tileEntity, @Nullable EnumFacing side) {
-        return tileEntity.getCapability(Liquid.Cap.HANDLER, side);
+        return tileEntity.getCapability(Liquid.Capability.HANDLER, side);
     }
 
     public static LazyOptional<Liquid.Handler.Item> getLiquidHandlerItem(ItemStack stack) {
-        return stack.getCapability(Liquid.Cap.HANDLER_ITEM, null);
+        return stack.getCapability(Liquid.Capability.HANDLER_ITEM, null);
     }
 }

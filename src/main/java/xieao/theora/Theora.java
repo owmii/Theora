@@ -40,8 +40,8 @@ public class Theora {
     public Theora() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         eventBus.addListener((FMLCommonSetupEvent event) -> {
-            PlayerData.Cap.register();
-            Liquid.Cap.register();
+            PlayerData.Capability.register();
+            Liquid.Capability.register();
             AutoLoadHandler.load();
             Network.registerAll();
             API.register(new InteractRecipes());

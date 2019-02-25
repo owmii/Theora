@@ -3,7 +3,6 @@ package xieao.theora.api.player;
 import net.minecraft.nbt.INBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 
@@ -29,20 +28,20 @@ public final class PlayerData {
     }
 
     @SuppressWarnings("ConstantConditions")
-    public static class Cap {
+    public static class Capability {
         @CapabilityInject(PlayerData.class)
-        public static Capability<PlayerData> DATA = null;
+        public static net.minecraftforge.common.capabilities.Capability<PlayerData> DATA = null;
 
         public static void register() {
-            CapabilityManager.INSTANCE.register(PlayerData.class, new Capability.IStorage<PlayerData>() {
+            CapabilityManager.INSTANCE.register(PlayerData.class, new net.minecraftforge.common.capabilities.Capability.IStorage<PlayerData>() {
                 @Nullable
                 @Override
-                public INBTBase writeNBT(Capability<PlayerData> capability, PlayerData instance, EnumFacing side) {
+                public INBTBase writeNBT(net.minecraftforge.common.capabilities.Capability<PlayerData> capability, PlayerData instance, EnumFacing side) {
                     return null;
                 }
 
                 @Override
-                public void readNBT(Capability<PlayerData> capability, PlayerData instance, EnumFacing side, INBTBase nbt) {
+                public void readNBT(net.minecraftforge.common.capabilities.Capability<PlayerData> capability, PlayerData instance, EnumFacing side, INBTBase nbt) {
                 }
             }, PlayerData::new);
         }

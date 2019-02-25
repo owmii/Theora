@@ -6,7 +6,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -159,8 +158,8 @@ public class Liquid extends RegistryEntry {
             }
 
             @Override
-            public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable EnumFacing side) {
-                return Cap.HANDLER_ITEM.orEmpty(cap, holder);
+            public <T> LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> cap, @Nullable EnumFacing side) {
+                return Capability.HANDLER_ITEM.orEmpty(cap, holder);
             }
 
             public ItemStack getStack() {
@@ -335,11 +334,11 @@ public class Liquid extends RegistryEntry {
     }
 
     @SuppressWarnings("ConstantConditions")
-    public static final class Cap {
+    public static final class Capability {
         @CapabilityInject(Handler.class)
-        public static Capability<Handler> HANDLER = null;
+        public static net.minecraftforge.common.capabilities.Capability<Handler> HANDLER = null;
         @CapabilityInject(Handler.Item.class)
-        public static Capability<Handler.Item> HANDLER_ITEM = null;
+        public static net.minecraftforge.common.capabilities.Capability<Handler.Item> HANDLER_ITEM = null;
 
         public static void register() {
             CapabilityManager.INSTANCE.register(Handler.class, new Storage<>(), Handler::new);
@@ -347,15 +346,15 @@ public class Liquid extends RegistryEntry {
                     () -> new Handler.Item(ItemStack.EMPTY));
         }
 
-        private static class Storage<T extends Handler> implements Capability.IStorage<T> {
+        private static class Storage<T extends Handler> implements net.minecraftforge.common.capabilities.Capability.IStorage<T> {
             @Nullable
             @Override
-            public INBTBase writeNBT(Capability<T> capability, T instance, EnumFacing side) {
+            public INBTBase writeNBT(net.minecraftforge.common.capabilities.Capability<T> capability, T instance, EnumFacing side) {
                 return null;
             }
 
             @Override
-            public void readNBT(Capability<T> capability, T instance, EnumFacing side, INBTBase nbt) {
+            public void readNBT(net.minecraftforge.common.capabilities.Capability<T> capability, T instance, EnumFacing side, INBTBase nbt) {
             }
         }
     }

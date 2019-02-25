@@ -3,7 +3,6 @@ package xieao.theora.block.cauldron;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidTank;
@@ -146,10 +145,10 @@ public class TileCauldron extends Tile.Tickable implements IInv {
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable EnumFacing side) {
+    public <T> LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> cap, @Nullable EnumFacing side) {
         if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return this.fluidHolder.cast();
-        } else if (cap == Liquid.Cap.HANDLER) {
+        } else if (cap == Liquid.Capability.HANDLER) {
             return this.liquidHolder.cast();
         }
         return super.getCapability(cap, side);

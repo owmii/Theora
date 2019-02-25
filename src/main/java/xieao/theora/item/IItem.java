@@ -33,12 +33,7 @@ public interface IItem extends IForgeItem {
     }
 
     default void setCreativeItem(ItemStack stack, boolean creative) {
-        stack.getOrCreateTag().setBoolean("theora:IsCreative", creative);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    default boolean renderByItem(ItemStack stack) {
-        return false;
+        stack.getOrCreateTag().putBoolean("theora:IsCreative", creative);
     }
 
     class Base extends Item implements IItem {
@@ -74,7 +69,7 @@ public interface IItem extends IForgeItem {
                 if (!PlayerUtil.isFake(player) && player instanceof EntityPlayerMP) {
                     NetworkHooks.openGui((EntityPlayerMP) player, io, packetBuffer -> {
                         packetBuffer.writeString("item.gui");
-                        packetBuffer.writeInt(hand.ordinal());
+                        packetBuffer.writeEnumValue(hand);
                     });
                 }
                 return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));

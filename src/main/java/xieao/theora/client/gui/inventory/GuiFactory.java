@@ -34,7 +34,7 @@ public class GuiFactory {
                 }
             }
         } else if (str.equals("item.gui")) {
-            EnumHand hand = EnumHand.values()[packetBuffer.readInt()];
+            EnumHand hand = packetBuffer.readEnumValue(EnumHand.class);
             ItemStack held = player.getHeldItem(hand);
             if (held.getItem() instanceof IInteractObj) {
                 IInteractObj obj = (IInteractObj) held.getItem();

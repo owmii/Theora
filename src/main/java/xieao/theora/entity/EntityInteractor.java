@@ -73,13 +73,13 @@ public class EntityInteractor extends Entity {
     @Override
     protected void readAdditional(NBTTagCompound compound) {
         this.state = NBTUtil.readBlockState(compound.getCompound("state"));
-        if (compound.hasKey("resultState")) {
+        if (compound.contains("resultState")) {
             this.resultState = NBTUtil.readBlockState(compound.getCompound("resultState"));
         }
-        if (compound.hasKey("resultStack")) {
+        if (compound.contains("resultStack")) {
             this.resultStack = ItemStack.read(compound.getCompound("resultStack"));
         }
-        if (compound.hasKey("playerId")) {
+        if (compound.contains("playerId")) {
             this.playerId = compound.getUniqueId("playerId");
         }
         setColor(compound.getInt("color"));
@@ -88,18 +88,18 @@ public class EntityInteractor extends Entity {
 
     @Override
     protected void writeAdditional(NBTTagCompound compound) {
-        compound.setTag("state", NBTUtil.writeBlockState(this.state));
+        compound.put("state", NBTUtil.writeBlockState(this.state));
         if (this.resultState != null) {
-            compound.setTag("resultState", NBTUtil.writeBlockState(this.resultState));
+            compound.put("resultState", NBTUtil.writeBlockState(this.resultState));
         }
         if (!this.resultStack.isEmpty()) {
-            compound.setTag("resultStack", this.resultStack.write(new NBTTagCompound()));
+            compound.put("resultStack", this.resultStack.write(new NBTTagCompound()));
         }
         if (this.playerId != null) {
-            compound.setUniqueId("playerId", this.playerId);
+            compound.putUniqueId("playerId", this.playerId);
         }
-        compound.setInt("color", getColor());
-        compound.setInt("coolDown", this.coolDown);
+        compound.putInt("color", getColor());
+        compound.putInt("coolDown", this.coolDown);
     }
 
     public static boolean tryInteract(World world, BlockPos pos, IBlockState resultState, int coolDown, int color, @Nullable UUID playerId) {

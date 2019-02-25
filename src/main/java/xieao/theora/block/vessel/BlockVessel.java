@@ -1,4 +1,4 @@
-package xieao.theora.block.cauldron;
+package xieao.theora.block.vessel;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
@@ -13,16 +13,16 @@ import xieao.theora.block.base.IBlock;
 
 import javax.annotation.Nullable;
 
-public class BlockCauldron extends IBlock.Generic {
-    public BlockCauldron() {
-        super(Properties.create(Material.ROCK, MaterialColor.BLACK)
-                .hardnessAndResistance(1.5F, 20.0F));
+public class BlockVessel extends IBlock.Generic {
+    public BlockVessel() {
+        super(Properties.create(Material.WOOD, MaterialColor.GRAY)
+                .hardnessAndResistance(1.0F, 10.0F));
     }
 
     @Nullable
     @Override
     public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
-        return new TileCauldron();
+        return new TileVessel();
     }
 
     @Override
@@ -37,7 +37,7 @@ public class BlockCauldron extends IBlock.Generic {
 
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.MODEL;
+        return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
     @Override

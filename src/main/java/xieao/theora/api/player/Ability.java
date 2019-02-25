@@ -80,9 +80,9 @@ public class Ability extends RegistryEntry<Ability> {
         public boolean add(Ability ability, EntityPlayer player) {
             if (!exist(ability) || has(ability)) return false;
             NBTTagCompound compound = new NBTTagCompound();
-            compound.setBoolean("Enabled", true);
-            compound.setInt("Level", 0);
-            compound.setTag("Data", new NBTTagCompound());
+            compound.putBoolean("Enabled", true);
+            compound.putInt("Level", 0);
+            compound.put("Data", new NBTTagCompound());
             this.abilityMap.put(ability, compound);
             ability.onAdded(player, compound.getCompound("Data"));
             sync(true);
@@ -115,7 +115,7 @@ public class Ability extends RegistryEntry<Ability> {
 
         public void onOrOff(Ability ability) {
             NBTTagCompound compound = getMainNBT(ability);
-            compound.setBoolean("Enabled", !compound.getBoolean("Enabled"));
+            compound.putBoolean("Enabled", !compound.getBoolean("Enabled"));
         }
 
         public int level(Ability ability) {
@@ -123,12 +123,12 @@ public class Ability extends RegistryEntry<Ability> {
         }
 
         public void levelUp(Ability ability) {
-            getMainNBT(ability).setInt("Level", Math.min(ability.maxLevel, level(ability) + 1));
+            getMainNBT(ability).putInt("Level", Math.min(ability.maxLevel, level(ability) + 1));
             sync(true);
         }
 
         public void levelDown(Ability ability) {
-            getMainNBT(ability).setInt("Level", Math.max(0, level(ability) - 1));
+            getMainNBT(ability).putInt("Level", Math.max(0, level(ability) - 1));
             sync(true);
         }
 
@@ -137,12 +137,12 @@ public class Ability extends RegistryEntry<Ability> {
             this.abilityMap.forEach((ability, compound1) -> {
                 if (exist(ability)) {
                     NBTTagCompound compound2 = new NBTTagCompound();
-                    compound2.setString("AbilityId", ability.getRegistryString());
-                    compound2.setTag("AbilityNBT", compound1);
+                    compound2.putString("AbilityId", ability.getRegistryString());
+                    compound2.put("AbilityNBT", compound1);
                     list.add(compound2);
                 }
             });
-            compound.setTag("AbilityList", list);
+            compound.put("AbilityList", list);
             return compound;
         }
 

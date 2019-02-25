@@ -92,7 +92,7 @@ public interface IBlock extends IForgeBlock {
                 NBTTagCompound tag = stack1.getTag() != null ? stack1.getTag() : new NBTTagCompound();
                 NBTTagCompound storable = tile.writeStorable(new NBTTagCompound());
                 if (!storable.isEmpty()) {
-                    tag.setTag("TileStorableNBT", storable);
+                    tag.put("TileStorableNBT", storable);
                     stack1.setTag(tag);
                 }
                 if (tile.customName != null) {

@@ -44,8 +44,8 @@ public class Liquid extends RegistryEntry {
 
     public static void write(String key, Liquid liquid, NBTTagCompound compound) {
         NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setString("LiquidId", liquid.getRegistryString());
-        compound.setTag(key, nbt);
+        nbt.putString("LiquidId", liquid.getRegistryString());
+        compound.put(key, nbt);
     }
 
     public static Liquid get(String name) {
@@ -54,7 +54,7 @@ public class Liquid extends RegistryEntry {
     }
 
     public static void write(Liquid liquid, NBTTagCompound compound) {
-        compound.setString("LiquidId", liquid.getRegistryString());
+        compound.putString("LiquidId", liquid.getRegistryString());
     }
 
     public boolean isEmpty() {
@@ -125,7 +125,7 @@ public class Liquid extends RegistryEntry {
                 slot.write(nbt);
                 tagList.add(nbt);
             }
-            compound.setTag("LiquidSlots", tagList);
+            compound.put("LiquidSlots", tagList);
             return compound;
         }
 
@@ -146,7 +146,7 @@ public class Liquid extends RegistryEntry {
             @Override
             public Slot getSlot(int index) {
                 NBTTagCompound nbt = this.stack.getTag();
-                if (nbt != null && nbt.hasKey("LiquidTag")) {
+                if (nbt != null && nbt.contains("LiquidTag")) {
                     read(nbt.getCompound("LiquidTag"));
                 }
                 return super.getSlot(index);
@@ -155,7 +155,7 @@ public class Liquid extends RegistryEntry {
             @Override
             public void setSlot(int index, Slot slot) {
                 super.setSlot(index, slot);
-                this.stack.getOrCreateTag().setTag("LiquidTag", write(new NBTTagCompound()));
+                this.stack.getOrCreateTag().put("LiquidTag", write(new NBTTagCompound()));
             }
 
             @Override
@@ -198,12 +198,12 @@ public class Liquid extends RegistryEntry {
         }
 
         public NBTTagCompound write(NBTTagCompound compound) {
-            compound.setString("LiquidName", this.liquid.getRegistryString());
-            compound.setBoolean("FinalLiquid", this.finalLiquid);
-            compound.setFloat("Capacity", this.capacity);
-            compound.setFloat("Stored", this.stored);
-            compound.setFloat("TransferRate", this.transferRate);
-            compound.setInt("Transfer", this.transfer.ordinal());
+            compound.putString("LiquidName", this.liquid.getRegistryString());
+            compound.putBoolean("FinalLiquid", this.finalLiquid);
+            compound.putFloat("Capacity", this.capacity);
+            compound.putFloat("Stored", this.stored);
+            compound.putFloat("TransferRate", this.transferRate);
+            compound.putInt("Transfer", this.transfer.ordinal());
             return compound;
         }
 

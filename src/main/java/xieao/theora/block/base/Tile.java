@@ -111,14 +111,14 @@ public abstract class Tile extends TileEntity {
 
     public NBTTagCompound writeSync(NBTTagCompound compound) {
         if (this.customName != null) {
-            compound.setString("CustomName", ITextComponent.Serializer.toJson(this.customName));
+            compound.putString("CustomName", ITextComponent.Serializer.toJson(this.customName));
         }
         if (this instanceof IInv) {
             InvUtil.writeItems(compound, (IInv) this);
         }
-        compound.setInt("Facing", this.facing.getIndex());
+        compound.putInt("Facing", this.facing.getIndex());
         if (this.placerID != null) {
-            compound.setUniqueId("PlacerID", this.placerID);
+            compound.putUniqueId("PlacerID", this.placerID);
         }
         writeStorable(compound);
         return compound;

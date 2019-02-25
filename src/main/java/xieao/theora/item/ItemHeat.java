@@ -12,6 +12,6 @@ public class ItemHeat extends IItem.Block {
     }
 
     public void setAge(ItemStack stack, int age) {
-        stack.getOrCreateTag().setInt("HeatAge", age);
+        stack.getOrCreateTag().putInt("HeatAge", age);
     }
 }

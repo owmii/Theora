@@ -15,11 +15,11 @@ public class PlantFeature extends Feature<PlantConfig> {
     public static final PlantFeature INSTANCE = new PlantFeature();
     private static final Block[] PLANTS = new Block[]{
             IBlocks.MUSH_GLIOPHORUS,
-            IBlocks.MUSH_WITCH_HATE,
+            IBlocks.MUSH_WITCH_HAT,
     };
 
     @Override
-    public boolean func_212245_a(IWorld world, IChunkGenerator<? extends IChunkGenSettings> chunkGenerator, Random random, BlockPos pos, PlantConfig config) {
+    public boolean place(IWorld world, IChunkGenerator<? extends IChunkGenSettings> chunkGenerator, Random random, BlockPos pos, PlantConfig config) {
         IBlockState state = PLANTS[random.nextInt(PLANTS.length)].getDefaultState();
         int i = 0;
         for (int j = 0; j < 64; ++j) {

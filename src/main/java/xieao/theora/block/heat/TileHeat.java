@@ -18,7 +18,7 @@ public class TileHeat extends Tile.Tickable {
 
     @Override
     public NBTTagCompound writeStorable(NBTTagCompound compound) {
-        compound.setInt("Age", this.age);
+        compound.putInt("Age", this.age);
         return compound;
     }
 

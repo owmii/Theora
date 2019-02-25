@@ -16,13 +16,13 @@ public class InvUtil {
             ItemStack itemstack = inv.getStackInSlot(i);
             if (!itemstack.isEmpty()) {
                 NBTTagCompound nbttagcompound = new NBTTagCompound();
-                nbttagcompound.setByte("Slot", (byte) i);
+                nbttagcompound.putByte("Slot", (byte) i);
                 itemstack.write(nbttagcompound);
                 nbttaglist.add(nbttagcompound);
             }
         }
         if (!nbttaglist.isEmpty() || saveEmpty) {
-            tag.setTag("Items", nbttaglist);
+            tag.put("Items", nbttaglist);
         }
         return tag;
     }

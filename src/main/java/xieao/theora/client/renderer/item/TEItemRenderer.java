@@ -5,29 +5,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import xieao.theora.item.IItem;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @OnlyIn(Dist.CLIENT)
 public class TEItemRenderer extends TileEntityItemStackRenderer {
-    static final Set<Item> ITEMS = new HashSet<>();
 
     @Override
     public void renderByItem(ItemStack stack) {
-        Item item = stack.getItem();
-        if (item instanceof IItem && ITEMS.contains(item)) {
-            ((IItem) item).renderByItem(stack);
-        }
-    }
+        final Item item = stack.getItem();
 
-    public static void register(Item item) {
-        if (item instanceof IItem) {
-            IItem iItem = (IItem) item;
-            if (iItem.renderByItem(new ItemStack(item))) {
-                ITEMS.add(item);
-            }
-        }
     }
 }

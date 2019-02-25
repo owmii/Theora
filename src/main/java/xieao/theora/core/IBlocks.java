@@ -11,6 +11,7 @@ import xieao.theora.block.BlockPlant;
 import xieao.theora.block.base.IBlock;
 import xieao.theora.block.cauldron.BlockCauldron;
 import xieao.theora.block.heat.BlockHeat;
+import xieao.theora.block.vessel.BlockVessel;
 import xieao.theora.item.IItem;
 
 import java.util.ArrayList;
@@ -21,15 +22,17 @@ public class IBlocks {
     public static final List<ItemBlock> ITEM_BLOCKS = new ArrayList<>();
     public static final List<Block> BLOCKS = new ArrayList<>();
     public static final Block CAULDRON;
+    public static final Block VESSEL;
     public static final Block HEAT;
     public static final Block MUSH_GLIOPHORUS;
-    public static final Block MUSH_WITCH_HATE;
+    public static final Block MUSH_WITCH_HAT;
 
     static {
         CAULDRON = register("cauldron", new BlockCauldron());
+        VESSEL = register("vessel", new BlockVessel());
         HEAT = register("heat", new BlockHeat(24000));
         MUSH_GLIOPHORUS = register("mush_gliophorus", new BlockPlant(Items.CACTUS_GREEN, 1, 2).setShearable());
-        MUSH_WITCH_HATE = register("mush_witch_hate", new BlockPlant(Items.BRICK, 1, 2).setShearable());
+        MUSH_WITCH_HAT = register("mush_witch_hat", new BlockPlant(Items.BRICK, 1, 2).setShearable());
     }
 
     static <T extends Block & IBlock> T register(String name, T block) {

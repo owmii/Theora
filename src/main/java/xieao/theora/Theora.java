@@ -18,7 +18,6 @@ import xieao.theora.client.core.ITextures;
 import xieao.theora.client.gui.inventory.GuiFactory;
 import xieao.theora.client.renderer.item.IBlockColorHolder;
 import xieao.theora.client.renderer.item.IItemColorHolder;
-import xieao.theora.client.renderer.item.TEItemRenderer;
 import xieao.theora.client.renderer.tile.TERRegistry;
 import xieao.theora.core.IBlocks;
 import xieao.theora.core.IItems;
@@ -30,7 +29,7 @@ import xieao.theora.core.handler.RecipeSorter;
 import xieao.theora.core.network.Network;
 import xieao.theora.core.recipe.CauldronRecipes;
 import xieao.theora.core.recipe.InteractRecipes;
-import xieao.theora.world.gen.WorldGen;
+import xieao.theora.world.gen.WorldGenerator;
 
 import static net.minecraftforge.common.MinecraftForge.EVENT_BUS;
 import static net.minecraftforge.fml.DistExecutor.runWhenOn;
@@ -51,10 +50,9 @@ public class Theora {
                     EVENT_BUS.register(ITextures.class));
         });
         eventBus.addListener((InterModEnqueueEvent event) -> {
-            WorldGen.register();
+            WorldGenerator.initialize();
             runWhenOn(Dist.CLIENT, () -> () -> {
                 IItems.ITEMS.forEach(item -> {
-                    TEItemRenderer.register(item);
                     if (item instanceof IItemColorHolder) {
                         IItemColorHolder holder = (IItemColorHolder) item;
                         final Minecraft mc = Minecraft.getInstance();

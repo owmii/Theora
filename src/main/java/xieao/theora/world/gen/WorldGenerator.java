@@ -9,8 +9,8 @@ import xieao.theora.core.config.Config;
 import xieao.theora.world.gen.feature.PlantConfig;
 import xieao.theora.world.gen.feature.PlantFeature;
 
-public class WorldGen {
-    public static void register() {
+public class WorldGenerator {
+    public static void initialize() {
         if (!Config.GENERAL.worldGen.get()) return;
         if (Config.GENERAL.worldGenPlants.get()) {
             BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST).forEach(biome -> {

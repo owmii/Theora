@@ -44,7 +44,7 @@ public class Ticker {
     }
 
     public void write(NBTTagCompound compound, String key) {
-        compound.setInt(key, this.ticks);
+        compound.putInt(key, this.ticks);
     }
 
     public int getMax() {

@@ -6,12 +6,14 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import xieao.theora.block.cauldron.TileCauldron;
+import xieao.theora.block.vessel.TileVessel;
 
 @OnlyIn(Dist.CLIENT)
 public class TERRegistry {
 
     public static void registerAll() {
         bind(TileCauldron.class, new CauldronRenderer());
+        bind(TileVessel.class, new VesselRenderer());
     }
 
     public static <T extends TileEntity> void bind(Class<T> clazz, TileEntityRenderer<? super T> renderer) {

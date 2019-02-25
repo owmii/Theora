@@ -15,7 +15,7 @@ public final class PlayerData {
 
     public NBTTagCompound write(NBTTagCompound compound) {
         this.abilityData.write(compound);
-        compound.setBoolean("CanFly", this.canFly);
+        compound.putBoolean("CanFly", this.canFly);
         return compound;
     }
 

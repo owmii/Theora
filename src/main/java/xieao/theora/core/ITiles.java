@@ -7,6 +7,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import xieao.theora.block.cauldron.TileCauldron;
 import xieao.theora.block.heat.TileHeat;
+import xieao.theora.block.vessel.TileVessel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ public class ITiles {
     public static final List<TileEntityType<?>> TILE_ENTITY_TYPES = new ArrayList<>();
     public static final TileEntityType<?> CAULDRON = register("cauldron", TileCauldron::new);
     public static final TileEntityType<?> HEAT = register("heat", TileHeat::new);
+    public static final TileEntityType<?> VESSEL = register("vessel", TileVessel::new);
 
     @SuppressWarnings({"unchecked", "ConstantConditions"})
     static <T extends TileEntity> TileEntityType<T> register(String id, Supplier<? extends T> factoryIn) {

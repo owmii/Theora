@@ -1,11 +1,14 @@
 package xieao.theora;
 
+import net.minecraftforge.fml.ExtensionPoint;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import xieao.theora.client.gui.inventory.GuiFactory;
 import xieao.theora.network.NetworkHandler;
 
 @Mod("theora")
@@ -17,6 +20,7 @@ public class Theora {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::client);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueue);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::process);
+        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, () -> GuiFactory::get);
     }
 
     void common(FMLCommonSetupEvent event) {

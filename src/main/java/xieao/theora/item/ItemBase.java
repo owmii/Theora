@@ -1,9 +1,8 @@
 package xieao.theora.item;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -13,9 +12,9 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.network.NetworkHooks;
 import xieao.theora.world.IInteractObj;
 
-public class ItemBlockBase extends ItemBlock implements IItemBase {
-    public ItemBlockBase(Block block, Properties properties) {
-        super(block, properties);
+public class ItemBase extends Item implements IItemBase {
+    public ItemBase(Properties properties) {
+        super(properties);
     }
 
     @Override

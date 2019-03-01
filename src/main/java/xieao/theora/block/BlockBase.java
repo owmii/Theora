@@ -4,18 +4,42 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.fml.network.NetworkHooks;
+import xieao.theora.world.IInteractObj;
 
 import javax.annotation.Nullable;
 
 public class BlockBase extends Block implements IBlockBase {
     public BlockBase(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        TileEntity tileentity = worldIn.getTileEntity(pos);
+        if (tileentity instanceof TileBase) {
+            TileBase tile = (TileBase) tileentity;
+            if (tile instanceof IInteractObj) {
+                if (player instanceof EntityPlayerMP && !(player instanceof FakePlayer)) {
+                    NetworkHooks.openGui((EntityPlayerMP) player, (IInteractObj) tile, packetBuffer -> {
+                        packetBuffer.writeString("tile.gui");
+                        packetBuffer.writeBlockPos(pos);
+                    });
+                }
+                return true;
+            }
+        }
+        return super.onBlockActivated(state, worldIn, pos, player, hand, side, hitX, hitY, hitZ);
     }
 
     @Override

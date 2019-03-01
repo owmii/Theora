@@ -6,10 +6,13 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ITickable;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
-public class TileBase extends TileEntity {
+public abstract class TileBase extends TileEntity {
     public TileBase(TileEntityType<?> tileEntityType) {
         super(tileEntityType);
     }
@@ -64,6 +67,22 @@ public class TileBase extends TileEntity {
             if (!this.world.isRemote) {
                 IBlockState state = getBlockState();
                 this.world.notifyBlockUpdate(getPos(), state, state, 3);
+            }
+        }
+    }
+
+    public static abstract class Tickable extends TileBase implements ITickable {
+        @OnlyIn(Dist.CLIENT)
+        public int ticks;
+
+        public Tickable(TileEntityType<?> type) {
+            super(type);
+        }
+
+        @Override
+        public void tick() {
+            if (this.world.isRemote) {
+                this.ticks++;
             }
         }
     }

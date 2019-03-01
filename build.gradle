@@ -12,7 +12,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
-version = minecraft_version + "-" + mod_version
+version = minecraft_version + '-' + mod_version
 group = mod_group
 archivesBaseName = mod_name
 
@@ -45,7 +45,52 @@ repositories {
 }
 
 dependencies {
-    minecraft forge_group + ":" + forge_name + ":" + minecraft_version + "-" + forge_version
+    minecraft forge_group + ':' + forge_name + ':' + minecraft_version + '-' + forge_version
+}
+
+
+tasks.withType(Jar) {
+    def jarsDir = file("$projectDir/jars")
+    if (!jarsDir.exists()) {
+        jarsDir.mkdirs()
+    }
+    destinationDir = jarsDir
+}
+
+task major {
+    doLast {
+        ant.propertyfile(file: 'gradle.properties') {
+            String version = mod_version
+            def slices = version.split(/\./).toList()
+            def major = slices[0].toInteger() + 1
+            ant.entry(key: 'mod_version', value: major + '.0.0')
+        }
+    }
+    group = 'a'
+}
+
+task minor {
+    doLast {
+        ant.propertyfile(file: 'gradle.properties') {
+            String version = mod_version
+            def slices = version.split(/\./).toList()
+            def minor = slices[1].toInteger() + 1
+            ant.entry(key: 'mod_version', value: slices[0] + '.' + minor + '.0')
+        }
+    }
+    group = 'a'
+}
+
+task revision {
+    doLast {
+        ant.propertyfile(file: 'gradle.properties') {
+            String version = mod_version
+            def slices = version.split(/\./).toList()
+            def revision = slices[2].toInteger() + 1
+            ant.entry(key: 'mod_version', value: slices[0] + '.' + slices[1] + '.' + revision)
+        }
+    }
+    group = 'a'
 }
 
 jar {
@@ -58,48 +103,4 @@ jar {
                     "Implementation-Vendor"   : mod_group,
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
     }
-}
-
-tasks.withType(Jar) {
-    def jarsDir = file("$projectDir/jars")
-    if (!jarsDir.exists()) {
-        jarsDir.mkdirs()
-    }
-    destinationDir = jarsDir
-}
-
-task major {
-    doLast {
-        ant.propertyfile(file: "gradle.properties") {
-            String version = mod_version
-            def slices = version.split(/\./).toList()
-            def major = slices[0].toInteger() + 1
-            ant.entry(key: "mod_version", value: major + ".0.0")
-        }
-    }
-    group = "a"
-}
-
-task minor {
-    doLast {
-        ant.propertyfile(file: "gradle.properties") {
-            String version = mod_version
-            def slices = version.split(/\./).toList()
-            def minor = slices[1].toInteger() + 1
-            ant.entry(key: "mod_version", value: slices[0] + "." + minor + ".0")
-        }
-    }
-    group = "a"
-}
-
-task revision {
-    doLast {
-        ant.propertyfile(file: "gradle.properties") {
-            String version = mod_version
-            def slices = version.split(/\./).toList()
-            def revision = slices[2].toInteger() + 1
-            ant.entry(key: "mod_version", value: slices[0] + "." + slices[1] + "." + revision)
-        }
-    }
-    group = "a"
 }

@@ -19,7 +19,7 @@ public class TileGate extends TileBase.Tickable implements IInvBase {
 
     public TileGate() {
         super(ITiles.GATE);
-        setInvSize(8);
+        setInvSize(5);
     }
 
     @Override

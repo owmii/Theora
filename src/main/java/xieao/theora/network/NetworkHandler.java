@@ -9,6 +9,8 @@ import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import xieao.theora.api.Consts;
+import xieao.theora.network.packet.playerdata.SyncGatePos;
+import xieao.theora.network.packet.playerdata.SyncPlayerData;
 
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -22,11 +24,12 @@ public class NetworkHandler {
     private static int id;
 
     public void registerAll() {
-
+        register(SyncGatePos.class, SyncGatePos::encode, SyncGatePos::decode, SyncGatePos::handle);
+        register(SyncPlayerData.class, SyncPlayerData::encode, SyncPlayerData::decode, SyncPlayerData::handle);
     }
 
-    public <T> void register(Class<T> clazz, BiConsumer<T, PacketBuffer> encoder, Function<PacketBuffer, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> messageConsumer) {
-        CHANNEL.registerMessage(id++, clazz, encoder, decoder, messageConsumer);
+    public <T> void register(Class<T> clazz, BiConsumer<T, PacketBuffer> encoder, Function<PacketBuffer, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> handle) {
+        CHANNEL.registerMessage(id++, clazz, encoder, decoder, handle);
     }
 
     @OnlyIn(Dist.CLIENT)

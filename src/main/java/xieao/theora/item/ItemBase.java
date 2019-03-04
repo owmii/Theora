@@ -8,8 +8,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.network.NetworkHooks;
+import xieao.theora.lib.util.PlayerUtil;
 import xieao.theora.world.IInteractObj;
 
 public class ItemBase extends Item implements IItemBase {
@@ -21,7 +21,7 @@ public class ItemBase extends Item implements IItemBase {
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         if (this instanceof IInteractObj) {
             IInteractObj io = (IInteractObj) this;
-            if (player instanceof EntityPlayerMP && !(player instanceof FakePlayer)) {
+            if (player instanceof EntityPlayerMP && !PlayerUtil.isFake(player)) {
                 NetworkHooks.openGui((EntityPlayerMP) player, io, packetBuffer -> {
                     packetBuffer.writeString("item.gui");
                     packetBuffer.writeEnumValue(hand);

@@ -9,6 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import xieao.theora.block.IBlockBase;
 import xieao.theora.block.gate.BlockGate;
+import xieao.theora.item.IItemBase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +21,11 @@ public class IBlocks {
     public static final Block GATE;
 
     static {
-        GATE = register("gate", new BlockGate(Block.Properties.create(Material.ROCK).hardnessAndResistance(Float.MAX_VALUE)));
+        GATE = register("gate", new BlockGate(Block.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, Float.MAX_VALUE)));
     }
 
     static <T extends Block & IBlockBase> T register(String name, T block) {
-        ItemBlock itemBlock = block.getItemBlock(new Item.Properties());
+        ItemBlock itemBlock = block.getItemBlock(new Item.Properties().group(IItemBase.MAIN));
         itemBlock.setRegistryName(name);
         block.setRegistryName(name);
         ITEM_BLOCKS.add(itemBlock);

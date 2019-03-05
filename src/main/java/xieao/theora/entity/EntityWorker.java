@@ -1,5 +1,6 @@
 package xieao.theora.entity;
 
+import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,11 +15,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.common.util.LazyOptional;
-import org.apache.commons.lang3.tuple.Pair;
 import xieao.theora.Theora;
 import xieao.theora.api.TheoraAPI;
-import xieao.theora.api.player.PlayerData;
 import xieao.theora.block.gate.TileGate;
 import xieao.theora.core.IBlocks;
 import xieao.theora.core.IEntities;
@@ -33,7 +31,7 @@ public class EntityWorker extends Entity {
     private Ticker working;
 
     @Nullable
-    protected Pair<UUID, String> owner;
+    protected GameProfile owner;
 
     @Nullable
     protected EntityPlayer player;
@@ -41,7 +39,7 @@ public class EntityWorker extends Entity {
     public EntityWorker(Job job, EntityPlayer player, World world) {
         this(world);
         setJob(job);
-        this.owner = Pair.of(player.getUniqueID(), player.getName().getString());
+        this.owner = player.getGameProfile();
         this.player = player;
         this.working = new Ticker(job.jobTime);
     }
@@ -63,7 +61,7 @@ public class EntityWorker extends Entity {
         if (compound.contains("OwnerId", Constants.NBT.TAG_STRING)) {
             String ownerId = compound.getString("OwnerId");
             String ownerName = compound.getString("OwnerName");
-            setOwner(UUID.fromString(ownerId), ownerName);
+            setOwner(new GameProfile(UUID.fromString(ownerId), ownerName));
         }
     }
 
@@ -71,8 +69,8 @@ public class EntityWorker extends Entity {
     protected void writeAdditional(NBTTagCompound compound) {
         compound.putInt("Job", getJob().ordinal());
         if (this.owner != null) {
-            compound.putString("OwnerId", this.owner.getLeft().toString());
-            compound.putString("OwnerName", this.owner.getRight());
+            compound.putString("OwnerId", this.owner.getId().toString());
+            compound.putString("OwnerName", this.owner.getName());
         }
     }
 
@@ -100,14 +98,15 @@ public class EntityWorker extends Entity {
                             if (tileEntity instanceof TileGate) {
                                 TileGate gate = (TileGate) tileEntity;
                                 gate.setGateBase(true);
-                                gate.setOwner(this.owner.getLeft(), this.owner.getRight());
+                                gate.setOwner(this.owner);
                                 gate.markDirtyAndSync();
-
-                                LazyOptional<PlayerData> holder = TheoraAPI.getPlayerData(this.player);
-                                holder.orElse(new PlayerData()).setGatePos(getPosition());
-                                if (player instanceof EntityPlayerMP) {
-                                    Theora.NET.toClient(new SyncGatePos(getPosition()), (EntityPlayerMP) player);
-                                }
+                                TheoraAPI.getPlayerData(this.player).ifPresent(playerData -> {
+                                    playerData.gate.setPos(getPosition());
+                                    playerData.gate.setDim(this.world.getDimension().getType().getId());
+                                    if (player instanceof EntityPlayerMP) {
+                                        Theora.NET.toClient(new SyncGatePos(getPosition()), (EntityPlayerMP) player);
+                                    }
+                                });
                             }
                             remove();
                         }
@@ -153,12 +152,12 @@ public class EntityWorker extends Entity {
     }
 
     @Nullable
-    public Pair<UUID, String> getOwner() {
+    public GameProfile getOwner() {
         return owner;
     }
 
-    public void setOwner(UUID id, String name) {
-        this.owner = Pair.of(id, name);
+    public void setOwner(GameProfile owner) {
+        this.owner = owner;
     }
 
     public enum Job {

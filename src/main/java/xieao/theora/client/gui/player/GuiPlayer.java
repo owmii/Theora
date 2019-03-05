@@ -2,13 +2,15 @@ package xieao.theora.client.gui.player;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.LazyOptional;
 import xieao.theora.api.Consts;
 import xieao.theora.api.TheoraAPI;
-import xieao.theora.api.player.PlayerData;
+import xieao.theora.block.gate.TileGate;
 import xieao.theora.client.gui.GuiBase;
 
 @OnlyIn(Dist.CLIENT)
@@ -29,12 +31,21 @@ public class GuiPlayer extends GuiBase {
         GlStateManager.pushMatrix();
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.translated(this.x, this.y, 0.0D);
-        this.mc.getTextureManager().bindTexture(BACKGROUND);
+        bindTexture(BACKGROUND);
         drawTexturedModalRect(0, 0, 0, 0, this.w, this.h);
         EntityPlayer player = this.mc.player;
-        LazyOptional<PlayerData> holder = TheoraAPI.getPlayerData(player);
-
-        drawString(fontRenderer, "test " + holder.orElse(new PlayerData()).getGatePos(), 20, 20, 0xffffff);
+        TheoraAPI.getPlayerData(player).ifPresent(playerData -> {
+            BlockPos gatePos = playerData.gate.pos;
+            World world = this.mc.world;
+            if (gatePos != null) {
+                TileEntity tileEntity = world.getTileEntity(gatePos);
+                if (tileEntity instanceof TileGate) {
+                    TileGate gate = (TileGate) tileEntity;
+                    drawString(fontRenderer, "test " + gate.getOwner(), 20, 20, 0xffffff);
+                }
+                drawString(fontRenderer, "test " + tileEntity, 20, 40, 0xffffff);
+            }
+        });
         GlStateManager.popMatrix();
         super.render(mouseX, mouseY, partialTicks);
     }

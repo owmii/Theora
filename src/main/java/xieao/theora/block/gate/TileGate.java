@@ -1,12 +1,16 @@
 package xieao.theora.block.gate;
 
+import com.mojang.authlib.GameProfile;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.Constants;
-import org.apache.commons.lang3.tuple.Pair;
+import xieao.theora.api.TheoraAPI;
+import xieao.theora.api.player.GateData;
 import xieao.theora.block.IInvBase;
 import xieao.theora.block.TileBase;
 import xieao.theora.core.ITiles;
+import xieao.theora.lib.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -15,7 +19,7 @@ public class TileGate extends TileBase.Tickable implements IInvBase {
     private boolean gateBase;
 
     @Nullable
-    protected Pair<UUID, String> owner;
+    protected GameProfile owner;
 
     public TileGate() {
         super(ITiles.GATE);
@@ -29,7 +33,7 @@ public class TileGate extends TileBase.Tickable implements IInvBase {
         if (compound.contains("OwnerId", Constants.NBT.TAG_STRING)) {
             String ownerId = compound.getString("OwnerId");
             String ownerName = compound.getString("OwnerName");
-            setOwner(UUID.fromString(ownerId), ownerName);
+            setOwner(new GameProfile(UUID.fromString(ownerId), ownerName));
         }
     }
 
@@ -37,8 +41,8 @@ public class TileGate extends TileBase.Tickable implements IInvBase {
     public NBTTagCompound writeSync(NBTTagCompound compound) {
         compound.putBoolean("GateBase", this.gateBase);
         if (this.owner != null) {
-            compound.putString("OwnerId", this.owner.getLeft().toString());
-            compound.putString("OwnerName", this.owner.getRight());
+            compound.putString("OwnerId", this.owner.getId().toString());
+            compound.putString("OwnerName", this.owner.getName());
         }
         return super.writeSync(compound);
     }
@@ -47,6 +51,17 @@ public class TileGate extends TileBase.Tickable implements IInvBase {
     public void tick() {
         if (this.gateBase) {
             super.tick();
+            if (!this.world.isRemote) {
+                if (this.owner != null) {
+                    EntityPlayer player = PlayerUtil.get(this.world, this.owner.getId());
+                    if (player != null) {
+                        TheoraAPI.getPlayerData(player).ifPresent(playerData -> {
+                            GateData gateData = playerData.gate;
+                            gateData.setLastCheck(System.currentTimeMillis());
+                        });
+                    }
+                }
+            }
         }
     }
 
@@ -61,12 +76,12 @@ public class TileGate extends TileBase.Tickable implements IInvBase {
     }
 
     @Nullable
-    public Pair<UUID, String> getOwner() {
+    public GameProfile getOwner() {
         return owner;
     }
 
-    public void setOwner(UUID id, String name) {
-        this.owner = Pair.of(id, name);
+    public void setOwner(GameProfile owner) {
+        this.owner = owner;
     }
 
     public boolean isGateBase() {

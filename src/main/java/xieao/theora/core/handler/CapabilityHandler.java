@@ -13,7 +13,7 @@ public class CapabilityHandler {
     @SubscribeEvent
     public static void attachCapability(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof EntityPlayer) {
-            event.addCapability(new ResourceLocation(Consts.MOD_ID, "player/data"), new CapabilityDispatcher.PlayerData());
+            event.addCapability(new ResourceLocation(Consts.MOD_ID, "player/data"), new CapabilityDispatcher.Player());
         }
     }
 }

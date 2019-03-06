@@ -22,7 +22,7 @@ public class CapabilityDispatcher {
 
         @Override
         public NBTTagCompound serializeNBT() {
-            return this.data.write(new NBTTagCompound());
+            return this.data.serialize();
         }
 
         @Override

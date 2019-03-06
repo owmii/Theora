@@ -9,6 +9,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.player.PlayerData;
 import xieao.theora.block.gate.TileGate;
 import xieao.theora.client.gui.inventory.GuiFactory;
@@ -29,6 +30,7 @@ public class Theora {
 
     void common(FMLCommonSetupEvent event) {
         PlayerData.Cap.register();
+        Liquid.Cap.register();
         NET.registerAll();
     }
 

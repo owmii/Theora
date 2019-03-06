@@ -88,11 +88,15 @@ public abstract class TileBase extends TileEntity {
     public void markDirtyAndSync() {
         if (this.world != null) {
             markDirty();
-            if (!this.world.isRemote) {
+            if (!isServerWorld()) {
                 IBlockState state = getBlockState();
                 this.world.notifyBlockUpdate(getPos(), state, state, 3);
             }
         }
+    }
+
+    public boolean isServerWorld() {
+        return !this.world.isRemote;
     }
 
     public ITextComponent getName() {
@@ -110,7 +114,7 @@ public abstract class TileBase extends TileEntity {
 
         @Override
         public void tick() {
-            if (this.world.isRemote) {
+            if (isServerWorld()) {
                 this.ticks++;
             }
         }

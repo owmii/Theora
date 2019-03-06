@@ -4,8 +4,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.LazyOptional;
 
-import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class PlayerUtil {
@@ -13,21 +13,15 @@ public class PlayerUtil {
         return player instanceof FakePlayer;
     }
 
-    @Nullable
-    public static EntityPlayer get(World world, UUID uuid) {
+    public static LazyOptional<EntityPlayer> get(World world, UUID uuid) {
         MinecraftServer server = world.getServer();
-        if (server != null) {
-            return server.getPlayerList().getPlayerByUUID(uuid);
-        }
-        return null;
+        EntityPlayer player = server.getPlayerList().getPlayerByUUID(uuid);
+        return player != null ? LazyOptional.of(() -> player) : LazyOptional.empty();
     }
 
-    @Nullable
-    public static EntityPlayer get(World world, String name) {
+    public static LazyOptional<EntityPlayer> get(World world, String name) {
         MinecraftServer server = world.getServer();
-        if (server != null) {
-            return server.getPlayerList().getPlayerByUsername(name);
-        }
-        return null;
+        EntityPlayer player = server.getPlayerList().getPlayerByUsername(name);
+        return player != null ? LazyOptional.of(() -> player) : LazyOptional.empty();
     }
 }

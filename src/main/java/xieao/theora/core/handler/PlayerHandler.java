@@ -2,7 +2,6 @@ package xieao.theora.core.handler;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -31,7 +30,7 @@ public class PlayerHandler {
         if (event.phase == TickEvent.Phase.END) {
             if (!DATA_SYNC.contains(player.getUniqueID()) && player instanceof EntityPlayerMP) {
                 TheoraAPI.getPlayerData(player).ifPresent(playerData -> {
-                    Theora.NET.toClient(new SyncPlayerData(playerData.write(new NBTTagCompound())), (EntityPlayerMP) player);
+                    Theora.NET.toClient(new SyncPlayerData(playerData.serialize()), (EntityPlayerMP) player);
                     DATA_SYNC.add(player.getUniqueID());
                 });
             }
@@ -42,6 +41,6 @@ public class PlayerHandler {
     public static void clone(PlayerEvent.Clone event) {
         TheoraAPI.getPlayerData(event.getEntityPlayer()).ifPresent(playerData ->
                 TheoraAPI.getPlayerData(event.getOriginal()).ifPresent(playerData1 ->
-                        playerData.read(playerData1.write(new NBTTagCompound()))));
+                        playerData.read(playerData1.serialize())));
     }
 }

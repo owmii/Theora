@@ -7,6 +7,8 @@ import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+
 public class GateData {
     @Nullable
     public BlockPos pos;
@@ -30,6 +32,10 @@ public class GateData {
         this.lastCheck = compound.getLong("LastCheck");
     }
 
+    public NBTTagCompound serialize() {
+        return write(new NBTTagCompound());
+    }
+
     public void setPos(@Nullable BlockPos pos) {
         this.pos = pos;
     }
@@ -40,5 +46,11 @@ public class GateData {
 
     public void setLastCheck(long lastCheck) {
         this.lastCheck = lastCheck;
+    }
+
+    public boolean loaded() {
+        long current = MILLISECONDS.toSeconds(System.currentTimeMillis());
+        long last = MILLISECONDS.toSeconds(this.lastCheck);
+        return current - last == 0;
     }
 }

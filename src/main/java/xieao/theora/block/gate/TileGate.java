@@ -1,6 +1,7 @@
 package xieao.theora.block.gate;
 
 import com.mojang.authlib.GameProfile;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.Constants;
@@ -15,6 +16,7 @@ import xieao.theora.core.ILiquids;
 import xieao.theora.core.ITiles;
 import xieao.theora.lib.util.PlayerUtil;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class TileGate extends TileBase.Tickable implements IInvBase {
@@ -23,10 +25,13 @@ public class TileGate extends TileBase.Tickable implements IInvBase {
     private GameProfile owner = new GameProfile(new UUID(0L, 0L), "null");
     private boolean gateBase;
 
+    @Nullable
+    private EntityPlayer player;
+
     public TileGate() {
         super(ITiles.GATE);
         setInvSize(5);
-        this.liquidHandler.addSlot("slot.main", ILiquids.LAVA, 1000.0F, 1000.0F, Transfer.ALL);
+        this.liquidHandler.addSlot("slot.essence", ILiquids.ESSENCE, 1000.0F, 1000.0F, Transfer.ALL);
     }
 
     @Override
@@ -55,20 +60,24 @@ public class TileGate extends TileBase.Tickable implements IInvBase {
     @Override
     public void tick() {
         if (!this.gateBase) return;
-        boolean sync = this.world.getGameTime() % 100L == 0;
         if (isServerWorld()) {
-            PlayerUtil.get(this.world, this.owner.getId()).ifPresent(player -> {
-                TheoraAPI.getPlayerData(player).ifPresent(playerData -> {
+            boolean sync = this.world.getGameTime() % 100L == 0;
+            if (this.player == null) {
+                this.player = PlayerUtil.get(this.world, this.owner.getId());
+            }
+            if (this.player != null) {
+                TheoraAPI.getPlayerData(this.player).ifPresent(playerData -> {
                     GateData gateData = playerData.gate;
                     gateData.setLastCheck(System.currentTimeMillis());
+                    gateData.setTile(this);
                 });
-            });
-            LiquidHandler.Slot slot = this.liquidHandler.getSlot("slot.main");
-            slot.add(0.0008F);
+            }
+            if (sync) {
+                markDirtyAndSync();
+            }
         }
-        if (sync) {
-            markDirtyAndSync();
-        }
+        LiquidHandler.Slot slot = this.liquidHandler.getSlot("slot.essence");
+        slot.add(0.0008F);
         super.tick();
     }
 
@@ -100,5 +109,14 @@ public class TileGate extends TileBase.Tickable implements IInvBase {
 
     public void setGateBase(boolean gateBase) {
         this.gateBase = gateBase;
+    }
+
+    @Nullable
+    public EntityPlayer getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(@Nullable EntityPlayer player) {
+        this.player = player;
     }
 }

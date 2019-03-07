@@ -1,7 +1,7 @@
 package xieao.theora.item;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -11,9 +11,12 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import xieao.theora.client.gui.player.GuiPlayer;
+import xieao.theora.Theora;
+import xieao.theora.api.TheoraAPI;
+import xieao.theora.api.player.GateData;
 import xieao.theora.entity.EntityWorker;
 import xieao.theora.lib.util.PlayerUtil;
+import xieao.theora.network.packet.gui.OpenPlayerGui;
 
 import java.util.List;
 
@@ -24,7 +27,12 @@ public class ItemPowder extends ItemBase {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-        if (world.isRemote) Minecraft.getInstance().displayGuiScreen(new GuiPlayer());
+        if (!world.isRemote && player instanceof EntityPlayerMP) {
+            TheoraAPI.getPlayerData(player).ifPresent(playerData -> {
+                GateData gateData = playerData.gate;
+                Theora.NET.toClient(new OpenPlayerGui(gateData.serialize()), (EntityPlayerMP) player);
+            });
+        }
         return super.onItemRightClick(world, player, hand);
     }
 

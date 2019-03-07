@@ -4,7 +4,6 @@ import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -15,13 +14,10 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-import xieao.theora.Theora;
-import xieao.theora.api.TheoraAPI;
 import xieao.theora.block.gate.TileGate;
 import xieao.theora.core.IBlocks;
 import xieao.theora.core.IEntities;
 import xieao.theora.lib.util.Ticker;
-import xieao.theora.network.packet.playerdata.SyncGatePos;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -100,13 +96,6 @@ public class EntityWorker extends Entity {
                                 gate.setGateBase(true);
                                 gate.setOwner(this.owner);
                                 gate.markDirtyAndSync();
-                                TheoraAPI.getPlayerData(this.player).ifPresent(playerData -> {
-                                    playerData.gate.setPos(getPosition());
-                                    playerData.gate.setDim(this.world.getDimension().getType().getId());
-                                    if (player instanceof EntityPlayerMP) {
-                                        Theora.NET.toClient(new SyncGatePos(getPosition()), (EntityPlayerMP) player);
-                                    }
-                                });
                             }
                             remove();
                         }

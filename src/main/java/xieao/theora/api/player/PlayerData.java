@@ -11,17 +11,14 @@ import javax.annotation.Nullable;
 
 public final class PlayerData {
     public final GateData gate = new GateData();
-    public final LiquidData liquid = new LiquidData();
 
     public NBTTagCompound write(NBTTagCompound compound) {
         this.gate.write(compound);
-        this.liquid.write(compound);
         return compound;
     }
 
     public void read(NBTTagCompound compound) {
         this.gate.read(compound);
-        this.liquid.read(compound);
     }
 
     public NBTTagCompound serialize() {

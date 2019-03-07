@@ -2,6 +2,7 @@ package xieao.theora.core.handler;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -9,6 +10,8 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import xieao.theora.Theora;
 import xieao.theora.api.TheoraAPI;
+import xieao.theora.api.player.GateData;
+import xieao.theora.block.gate.TileGate;
 import xieao.theora.network.packet.playerdata.SyncPlayerData;
 
 import java.util.HashSet;
@@ -22,6 +25,13 @@ public class PlayerHandler {
     @SubscribeEvent
     public static void playerLoggedOut(PlayerLoggedOutEvent event) {
         DATA_SYNC.remove(event.getPlayer().getUniqueID());
+        TheoraAPI.getPlayerData(event.getPlayer()).ifPresent(playerData -> {
+            GateData gateData = playerData.gate;
+            TileEntity tileEntity = gateData.getTile();
+            if (tileEntity instanceof TileGate) {
+                ((TileGate) tileEntity).setPlayer(null);
+            }
+        });
     }
 
     @SubscribeEvent

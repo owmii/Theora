@@ -3,6 +3,7 @@ package xieao.theora.api.player;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import xieao.theora.api.liquid.LiquidHandler;
+import xieao.theora.core.handler.ServerHandler;
 
 import javax.annotation.Nullable;
 
@@ -11,16 +12,19 @@ public class GateData {
     @Nullable
     private TileEntity tile;
     private LiquidHandler liquidHandler = new LiquidHandler();
+    public boolean playerGuiOpen;
 
     public NBTTagCompound write(NBTTagCompound compound) {
         compound.putLong("LastCheck", this.lastCheck);
         this.liquidHandler.write(compound);
+        compound.putBoolean("PlayerGuiOpen", this.playerGuiOpen);
         return compound;
     }
 
     public void read(NBTTagCompound compound) {
         this.lastCheck = compound.getLong("LastCheck");
         this.liquidHandler.read(compound);
+        this.playerGuiOpen = compound.getBoolean("PlayerGuiOpen");
     }
 
     public NBTTagCompound serialize() {
@@ -43,9 +47,15 @@ public class GateData {
         this.tile = tile;
     }
 
+    public LiquidHandler getLiquidHandler() {
+        return liquidHandler;
+    }
+
+    public void setPlayerGuiOpen(boolean playerGuiOpen) {
+        this.playerGuiOpen = playerGuiOpen;
+    }
+
     public boolean loaded() {
-        long current = System.currentTimeMillis();
-        long last = this.lastCheck;
-        return current - last == 0;
+        return ServerHandler.ticks - this.lastCheck == 0;
     }
 }

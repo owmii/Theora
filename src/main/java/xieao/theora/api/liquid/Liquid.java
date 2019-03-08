@@ -8,6 +8,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import xieao.theora.api.Consts;
@@ -73,12 +74,11 @@ public class Liquid extends RegistryEntry<Liquid> {
         return color1;
     }
 
-    @SuppressWarnings("ConstantConditions")
     public static final class Cap {
         @CapabilityInject(LiquidHandler.class)
-        public static net.minecraftforge.common.capabilities.Capability<LiquidHandler> HANDLER = null;
+        public static Capability<LiquidHandler> HANDLER = null;
         @CapabilityInject(LiquidHandler.Item.class)
-        public static net.minecraftforge.common.capabilities.Capability<LiquidHandler.Item> HANDLER_ITEM = null;
+        public static Capability<LiquidHandler.Item> HANDLER_ITEM = null;
 
         public static void register() {
             CapabilityManager.INSTANCE.register(LiquidHandler.class, new Storage<>(), LiquidHandler::new);
@@ -86,15 +86,15 @@ public class Liquid extends RegistryEntry<Liquid> {
                     () -> new LiquidHandler.Item(ItemStack.EMPTY));
         }
 
-        private static class Storage<T extends LiquidHandler> implements net.minecraftforge.common.capabilities.Capability.IStorage<T> {
+        private static class Storage<T extends LiquidHandler> implements Capability.IStorage<T> {
             @Nullable
             @Override
-            public INBTBase writeNBT(net.minecraftforge.common.capabilities.Capability<T> capability, T instance, EnumFacing side) {
+            public INBTBase writeNBT(Capability<T> capability, T instance, EnumFacing side) {
                 return null;
             }
 
             @Override
-            public void readNBT(net.minecraftforge.common.capabilities.Capability<T> capability, T instance, EnumFacing side, INBTBase nbt) {
+            public void readNBT(Capability<T> capability, T instance, EnumFacing side, INBTBase nbt) {
             }
         }
     }

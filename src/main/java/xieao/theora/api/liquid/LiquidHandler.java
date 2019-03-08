@@ -57,6 +57,10 @@ public class LiquidHandler {
         return compound;
     }
 
+    public NBTTagCompound serialize() {
+        return write(new NBTTagCompound());
+    }
+
     public static class Item extends LiquidHandler implements ICapabilityProvider {
         private final LazyOptional<Item> holder = LazyOptional.of(() -> this);
         private final ItemStack stack;

@@ -25,7 +25,6 @@ public final class PlayerData {
         return write(new NBTTagCompound());
     }
 
-    @SuppressWarnings("ConstantConditions")
     public static class Cap {
         @CapabilityInject(PlayerData.class)
         public static Capability<PlayerData> DATA = null;
@@ -35,11 +34,12 @@ public final class PlayerData {
                 @Nullable
                 @Override
                 public INBTBase writeNBT(Capability<PlayerData> capability, PlayerData instance, EnumFacing side) {
-                    return null;
+                    return instance.serialize();
                 }
 
                 @Override
                 public void readNBT(Capability<PlayerData> capability, PlayerData instance, EnumFacing side, INBTBase nbt) {
+                    instance.read((NBTTagCompound) nbt);
                 }
             }, PlayerData::new);
         }

@@ -30,6 +30,7 @@ public class ItemPowder extends ItemBase {
         if (!world.isRemote && player instanceof EntityPlayerMP) {
             TheoraAPI.getPlayerData(player).ifPresent(playerData -> {
                 GateData gateData = playerData.gate;
+                gateData.setPlayerGuiOpen(true);
                 Theora.NET.toClient(new OpenPlayerGui(gateData.serialize()), (EntityPlayerMP) player);
             });
         }

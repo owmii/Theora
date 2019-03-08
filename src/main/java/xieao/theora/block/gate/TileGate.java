@@ -2,24 +2,26 @@ package xieao.theora.block.gate;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
+import xieao.theora.Theora;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.liquid.LiquidHandler;
 import xieao.theora.api.liquid.Transfer;
 import xieao.theora.api.player.GateData;
-import xieao.theora.block.IInvBase;
 import xieao.theora.block.TileBase;
 import xieao.theora.core.ILiquids;
 import xieao.theora.core.ITiles;
+import xieao.theora.core.handler.ServerHandler;
 import xieao.theora.lib.util.PlayerUtil;
+import xieao.theora.network.packet.playerdata.SyncGateData;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class TileGate extends TileBase.Tickable implements IInvBase {
+public class TileGate extends TileBase.Tickable {
     private final LiquidHandler liquidHandler = new LiquidHandler();
     private final LazyOptional<LiquidHandler> holder = LazyOptional.of(() -> this.liquidHandler);
     private GameProfile owner = new GameProfile(new UUID(0L, 0L), "null");
@@ -30,7 +32,6 @@ public class TileGate extends TileBase.Tickable implements IInvBase {
 
     public TileGate() {
         super(ITiles.GATE);
-        setInvSize(5);
         this.liquidHandler.addSlot("slot.essence", ILiquids.ESSENCE, 1000.0F, 1000.0F, Transfer.ALL);
     }
 
@@ -60,35 +61,35 @@ public class TileGate extends TileBase.Tickable implements IInvBase {
     @Override
     public void tick() {
         if (!this.gateBase) return;
-        if (isServerWorld()) {
-            boolean sync = this.world.getGameTime() % 100L == 0;
-            if (this.player == null) {
-                this.player = PlayerUtil.get(this.world, this.owner.getId());
-            }
-            if (this.player != null) {
-                TheoraAPI.getPlayerData(this.player).ifPresent(playerData -> {
-                    GateData gateData = playerData.gate;
-                    gateData.setLastCheck(System.currentTimeMillis());
-                    gateData.setTile(this);
-                });
-            }
-            if (sync) {
-                markDirtyAndSync();
-            }
-        }
         LiquidHandler.Slot slot = this.liquidHandler.getSlot("slot.essence");
         slot.add(0.0008F);
+        if (isServerWorld()) {
+            setupOwner();
+        }
         super.tick();
     }
 
-    @Override
-    public boolean isItemValidForSlot(int index, ItemStack itemStack) {
-        return isGateBase();
+    private void setupOwner() {
+        if (this.player == null) {
+            this.player = PlayerUtil.get(this.world, this.owner.getId());
+        }
+        if (this.player instanceof EntityPlayerMP) {
+            TheoraAPI.getPlayerData(this.player).ifPresent(playerData -> {
+                GateData gateData = playerData.gate;
+                gateData.setLastCheck(ServerHandler.ticks);
+                gateData.setTile(this);
+                syncPlayer(gateData);
+            });
+        }
     }
 
-    @Override
-    public int getSizeInventory() {
-        return isGateBase() ? this.stacks.size() : 0;
+    public void syncPlayer(GateData gateData) {
+        LiquidHandler handler = gateData.getLiquidHandler();
+        handler.read(this.liquidHandler.serialize());
+        boolean guiOpen = gateData.playerGuiOpen;
+        if (guiOpen && this.world.getGameTime() % 10 == 0) {
+            Theora.NET.toClient(new SyncGateData(gateData.serialize()), (EntityPlayerMP) this.player);
+        }
     }
 
     public LiquidHandler getLiquidHandler() {

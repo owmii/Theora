@@ -2,14 +2,12 @@ package xieao.theora.client.gui.player;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import xieao.theora.api.Consts;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.player.GateData;
-import xieao.theora.block.gate.TileGate;
 import xieao.theora.client.gui.GuiBase;
 
 @OnlyIn(Dist.CLIENT)
@@ -35,12 +33,7 @@ public class GuiPlayer extends GuiBase {
         EntityPlayer player = this.mc.player;
         TheoraAPI.getPlayerData(player).ifPresent(playerData -> {
             GateData gateData = playerData.gate;
-            TileEntity tileEntity = gateData.getTile();
-            if (tileEntity instanceof TileGate) {
-                TileGate gate = (TileGate) tileEntity;
-                drawString(fontRenderer, "test " + gate.getLiquidHandler().getSlots().size(), 20, 20, 0xffffff);
-            }
-            drawString(fontRenderer, "test " + tileEntity, 20, 40, 0xffffff);
+            drawString(fontRenderer, "test " + gateData.getLiquidHandler().getSlot("slot.essence").getStored(), 20, 20, 0xffffff);
         });
         GlStateManager.popMatrix();
         super.render(mouseX, mouseY, partialTicks);

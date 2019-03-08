@@ -14,6 +14,7 @@ import xieao.theora.api.player.PlayerData;
 import xieao.theora.block.gate.TileGate;
 import xieao.theora.client.gui.inventory.GuiFactory;
 import xieao.theora.client.render.tile.RenderGate;
+import xieao.theora.core.handler.Initializer;
 import xieao.theora.network.NetworkHandler;
 
 @Mod("theora")
@@ -31,6 +32,7 @@ public class Theora {
     void common(FMLCommonSetupEvent event) {
         PlayerData.Cap.register();
         Liquid.Cap.register();
+        Initializer.load();
         NET.registerAll();
     }
 

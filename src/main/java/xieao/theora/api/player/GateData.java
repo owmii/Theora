@@ -8,11 +8,12 @@ import xieao.theora.core.handler.ServerHandler;
 import javax.annotation.Nullable;
 
 public class GateData {
+    private final LiquidHandler liquidHandler = new LiquidHandler();
     public long lastCheck;
+    public boolean playerGuiOpen;
+
     @Nullable
     private TileEntity tile;
-    private LiquidHandler liquidHandler = new LiquidHandler();
-    public boolean playerGuiOpen;
 
     public NBTTagCompound write(NBTTagCompound compound) {
         compound.putLong("LastCheck", this.lastCheck);

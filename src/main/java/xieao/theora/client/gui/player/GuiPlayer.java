@@ -34,8 +34,8 @@ public class GuiPlayer extends GuiBase {
         TheoraAPI.getPlayerData(player).ifPresent(playerData -> {
             GateData gateData = playerData.gate;
             if (gateData.loaded) {
-                float stored = gateData.getLiquidHandler().getSlot("slot.essence").getStored();
-                float cap = gateData.getLiquidHandler().getSlot("slot.essence").getCapacity();
+                float stored = gateData.getLiquidHandler().get("slot.essence").getStored();
+                float cap = gateData.getLiquidHandler().get("slot.essence").getCapacity();
                 drawString(this.fontRenderer, "test: " + String.format("%.2f", stored) + "/" + String.format("%.2f", cap), 20, 20, 0xffffff);
             } else {
                 drawString(this.fontRenderer, "Not loaded", 20, 20, 0xffffff);

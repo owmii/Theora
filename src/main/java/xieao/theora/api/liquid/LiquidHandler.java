@@ -19,19 +19,23 @@ public class LiquidHandler {
         return slots;
     }
 
-    public Slot getSlot(String key) {
+    public Slot get(String key) {
         return this.slots.get(key);
     }
 
-    public void setSlot(String key, Slot slot) {
+    public void set(String key, Slot slot) {
         this.slots.put(key, slot);
     }
 
-    public void addSlot(String key, Liquid liquid, float capacity, float transferRate, Transfer transfer) {
-        setSlot(key, new Slot(liquid, !liquid.isEmpty(), capacity, 0, transferRate, transfer));
+    public void add(String key, Liquid liquid, float capacity, float transferRate) {
+        set(key, new Slot(liquid, !liquid.isEmpty(), capacity, 0, transferRate, Transfer.ALL));
     }
 
-    public int slotCount() {
+    public void add(String key, Liquid liquid, float capacity, float transferRate, Transfer transfer) {
+        set(key, new Slot(liquid, !liquid.isEmpty(), capacity, 0, transferRate, transfer));
+    }
+
+    public int count() {
         return this.slots.size();
     }
 
@@ -70,18 +74,18 @@ public class LiquidHandler {
         }
 
         @Override
-        public void setSlot(String key, Slot slot) {
-            super.setSlot(key, slot);
+        public void set(String key, Slot slot) {
+            super.set(key, slot);
             this.stack.getOrCreateTag().put("LiquidTag", write(new NBTTagCompound()));
         }
 
         @Override
-        public Slot getSlot(String key) {
+        public Slot get(String key) {
             NBTTagCompound nbt = this.stack.getTag();
             if (nbt != null && nbt.contains("LiquidTag")) {
                 read(nbt.getCompound("LiquidTag"));
             }
-            return super.getSlot(key);
+            return super.get(key);
         }
 
         @Override

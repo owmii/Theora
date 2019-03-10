@@ -11,7 +11,6 @@ import net.minecraftforge.common.util.Constants;
 import xieao.theora.Theora;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.liquid.LiquidHandler;
-import xieao.theora.api.liquid.Transfer;
 import xieao.theora.api.player.GateData;
 import xieao.theora.block.TileBase;
 import xieao.theora.core.ILiquids;
@@ -27,7 +26,7 @@ public class TileGate extends TileBase.Tickable {
     public static final String SLOT_LIMY = "slot.limy";
     public static final String SLOT_VEA = "slot.vea";
 
-    private final LiquidHandler liquidHandler = new LiquidHandler();
+    private final LiquidHandler handler = new LiquidHandler();
     private GameProfile owner = new GameProfile(new UUID(0L, 0L), "null");
     private boolean gateBase;
 
@@ -36,15 +35,15 @@ public class TileGate extends TileBase.Tickable {
 
     public TileGate() {
         super(ITiles.GATE);
-        this.liquidHandler.addSlot(SLOT_ESSENCE, ILiquids.ESSENCE, 1000.0F, 100.0F, Transfer.ALL);
-        this.liquidHandler.addSlot(SLOT_LIMY, ILiquids.LIMY, 200.0F, 0.0F, Transfer.ALL);
-        this.liquidHandler.addSlot(SLOT_VEA, ILiquids.VEA, 200.0F, 0.0F, Transfer.ALL);
+        this.handler.add(SLOT_ESSENCE, ILiquids.ESSENCE, 1000.0F, 100.0F);
+        this.handler.add(SLOT_LIMY, ILiquids.LIMY, 200.0F, 0.0F);
+        this.handler.add(SLOT_VEA, ILiquids.VEA, 200.0F, 0.0F);
     }
 
     @Override
     public void readSync(NBTTagCompound compound) {
         super.readSync(compound);
-        this.liquidHandler.read(compound);
+        this.handler.read(compound);
         this.gateBase = compound.getBoolean("GateBase");
         if (compound.contains("OwnerId", Constants.NBT.TAG_STRING)) {
             String ownerId = compound.getString("OwnerId");
@@ -55,7 +54,7 @@ public class TileGate extends TileBase.Tickable {
 
     @Override
     public NBTTagCompound writeSync(NBTTagCompound compound) {
-        this.liquidHandler.write(compound);
+        this.handler.write(compound);
         compound.putBoolean("GateBase", this.gateBase);
         if (!"null".equals(this.owner.getName())) {
             compound.putString("OwnerId", this.owner.getId().toString());
@@ -67,7 +66,7 @@ public class TileGate extends TileBase.Tickable {
     @Override
     public void tick() {
         if (!this.gateBase) return;
-        LiquidHandler.Slot slot = this.liquidHandler.getSlot(SLOT_ESSENCE);
+        LiquidHandler.Slot slot = this.handler.get(SLOT_ESSENCE);
         slot.add(0.0008F);
         if (isServerWorld()) {
             if (this.player == null) {
@@ -87,15 +86,15 @@ public class TileGate extends TileBase.Tickable {
 
     public void syncPlayer(GateData gateData) {
         LiquidHandler handler = gateData.getLiquidHandler();
-        handler.read(this.liquidHandler.serialize());
+        handler.read(this.handler.serialize());
         boolean guiOpen = gateData.playerGuiOpen;
         if (guiOpen && this.world.getGameTime() % 10 == 0) {
             Theora.NET.toClient(new SyncGateData(gateData.serialize()), (EntityPlayerMP) this.player);
         }
     }
 
-    public LiquidHandler getLiquidHandler() {
-        return liquidHandler;
+    public LiquidHandler getHandler() {
+        return handler;
     }
 
     public GameProfile getOwner() {
@@ -134,8 +133,7 @@ public class TileGate extends TileBase.Tickable {
     @Override
     @OnlyIn(Dist.CLIENT)
     public AxisAlignedBB getRenderBoundingBox() {
-        int factor = 2;
-        return new AxisAlignedBB(this.pos.add(-factor, -factor, -factor),
-                this.pos.add(factor, factor, factor));
+        return new AxisAlignedBB(this.pos.add(-2, -2, -2),
+                this.pos.add(2, 2, 2));
     }
 }

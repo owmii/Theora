@@ -2,8 +2,6 @@ package xieao.theora.lib.util;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 
 import javax.annotation.Nullable;
@@ -15,14 +13,12 @@ public class PlayerUtil {
     }
 
     @Nullable
-    public static EntityPlayerMP get(World world, UUID uuid) {
-        MinecraftServer server = world.getServer();
-        return server.getPlayerList().getPlayerByUUID(uuid);
+    public static EntityPlayerMP get(UUID uuid) {
+        return ServerUtil.SERVER.getPlayerList().getPlayerByUUID(uuid);
     }
 
     @Nullable
-    public static EntityPlayerMP get(World world, String name) {
-        MinecraftServer server = world.getServer();
-        return server.getPlayerList().getPlayerByUsername(name);
+    public static EntityPlayerMP get(String name) {
+        return ServerUtil.SERVER.getPlayerList().getPlayerByUsername(name);
     }
 }

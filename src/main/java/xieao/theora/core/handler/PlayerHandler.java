@@ -32,7 +32,7 @@ public class PlayerHandler {
         DATA_SYNC.remove(event.getPlayer().getUniqueID());
         TheoraAPI.getPlayerData(event.getPlayer()).ifPresent(playerData -> {
             GateData gateData = playerData.gate;
-            TileEntity tileEntity = gateData.getTile();
+            TileEntity tileEntity = gateData.getTile(event.getPlayer().world);
             if (tileEntity instanceof TileGate) {
                 ((TileGate) tileEntity).setPlayer(null);
             }

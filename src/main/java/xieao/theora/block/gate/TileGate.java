@@ -4,8 +4,10 @@ import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.common.util.LazyOptional;
 import xieao.theora.Theora;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.liquid.LiquidHandler;
@@ -14,7 +16,6 @@ import xieao.theora.api.player.GateData;
 import xieao.theora.block.TileBase;
 import xieao.theora.core.ILiquids;
 import xieao.theora.core.ITiles;
-import xieao.theora.core.handler.ServerHandler;
 import xieao.theora.lib.util.PlayerUtil;
 import xieao.theora.network.packet.playerdata.SyncGateData;
 
@@ -22,8 +23,11 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class TileGate extends TileBase.Tickable {
+    public static final String SLOT_ESSENCE = "slot.essence";
+    public static final String SLOT_LIMY = "slot.limy";
+    public static final String SLOT_VEA = "slot.vea";
+
     private final LiquidHandler liquidHandler = new LiquidHandler();
-    private final LazyOptional<LiquidHandler> holder = LazyOptional.of(() -> this.liquidHandler);
     private GameProfile owner = new GameProfile(new UUID(0L, 0L), "null");
     private boolean gateBase;
 
@@ -32,7 +36,9 @@ public class TileGate extends TileBase.Tickable {
 
     public TileGate() {
         super(ITiles.GATE);
-        this.liquidHandler.addSlot("slot.essence", ILiquids.ESSENCE, 1000.0F, 1000.0F, Transfer.ALL);
+        this.liquidHandler.addSlot(SLOT_ESSENCE, ILiquids.ESSENCE, 1000.0F, 100.0F, Transfer.ALL);
+        this.liquidHandler.addSlot(SLOT_LIMY, ILiquids.LIMY, 200.0F, 0.0F, Transfer.ALL);
+        this.liquidHandler.addSlot(SLOT_VEA, ILiquids.VEA, 200.0F, 0.0F, Transfer.ALL);
     }
 
     @Override
@@ -61,26 +67,22 @@ public class TileGate extends TileBase.Tickable {
     @Override
     public void tick() {
         if (!this.gateBase) return;
-        LiquidHandler.Slot slot = this.liquidHandler.getSlot("slot.essence");
+        LiquidHandler.Slot slot = this.liquidHandler.getSlot(SLOT_ESSENCE);
         slot.add(0.0008F);
         if (isServerWorld()) {
-            setupOwner();
+            if (this.player == null) {
+                this.player = PlayerUtil.get(getOwnerID());
+            }
+            if (this.player != null) {
+                TheoraAPI.getPlayerData(this.player).ifPresent(playerData -> {
+                    GateData gateData = playerData.gate;
+                    gateData.setLastCheck(this.world.getGameTime());
+                    gateData.setTile(this);
+                    syncPlayer(gateData);
+                });
+            }
         }
         super.tick();
-    }
-
-    private void setupOwner() {
-        if (this.player == null) {
-            this.player = PlayerUtil.get(this.world, this.owner.getId());
-        }
-        if (this.player instanceof EntityPlayerMP) {
-            TheoraAPI.getPlayerData(this.player).ifPresent(playerData -> {
-                GateData gateData = playerData.gate;
-                gateData.setLastCheck(ServerHandler.ticks);
-                gateData.setTile(this);
-                syncPlayer(gateData);
-            });
-        }
     }
 
     public void syncPlayer(GateData gateData) {
@@ -104,6 +106,14 @@ public class TileGate extends TileBase.Tickable {
         this.owner = owner;
     }
 
+    public UUID getOwnerID() {
+        return getOwner().getId();
+    }
+
+    public String getOwnerName() {
+        return getOwner().getName();
+    }
+
     public boolean isGateBase() {
         return gateBase;
     }
@@ -119,5 +129,13 @@ public class TileGate extends TileBase.Tickable {
 
     public void setPlayer(@Nullable EntityPlayer player) {
         this.player = player;
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public AxisAlignedBB getRenderBoundingBox() {
+        int factor = 2;
+        return new AxisAlignedBB(this.pos.add(-factor, -factor, -factor),
+                this.pos.add(factor, factor, factor));
     }
 }

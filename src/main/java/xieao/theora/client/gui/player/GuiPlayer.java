@@ -13,7 +13,7 @@ import xieao.theora.client.gui.GuiBase;
 @OnlyIn(Dist.CLIENT)
 public class GuiPlayer extends GuiBase {
     public static final ResourceLocation BACKGROUND = new ResourceLocation(Consts.MOD_ID, "textures/gui/background.png");
-    private int x, y, w = 256, h = 234;
+    private int x, y, w = 176, h = 139;
 
     @Override
     protected void initGui() {
@@ -33,7 +33,13 @@ public class GuiPlayer extends GuiBase {
         EntityPlayer player = this.mc.player;
         TheoraAPI.getPlayerData(player).ifPresent(playerData -> {
             GateData gateData = playerData.gate;
-            drawString(fontRenderer, "test " + gateData.getLiquidHandler().getSlot("slot.essence").getStored(), 20, 20, 0xffffff);
+            if (gateData.loaded) {
+                float stored = gateData.getLiquidHandler().getSlot("slot.essence").getStored();
+                float cap = gateData.getLiquidHandler().getSlot("slot.essence").getCapacity();
+                drawString(this.fontRenderer, "test: " + String.format("%.2f", stored) + "/" + String.format("%.2f", cap), 20, 20, 0xffffff);
+            } else {
+                drawString(this.fontRenderer, "Not loaded", 20, 20, 0xffffff);
+            }
         });
         GlStateManager.popMatrix();
         super.render(mouseX, mouseY, partialTicks);

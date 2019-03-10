@@ -6,6 +6,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import xieao.theora.item.IItemBase;
 import xieao.theora.item.ItemPowder;
+import xieao.theora.item.ItemStone;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,11 @@ import java.util.List;
 public class IItems {
     public static final List<Item> ITEMS = new ArrayList<>(IBlocks.ITEM_BLOCKS);
     public static final Item POWDER;
+    public static final Item STONE;
 
     static {
         POWDER = register("powder", new ItemPowder(new Item.Properties().group(IItemBase.MAIN).maxStackSize(1)));
+        STONE = register("stone", new ItemStone(new Item.Properties().group(IItemBase.MAIN).maxStackSize(1)));
     }
 
     static <T extends Item & IItemBase> T register(String name, T item) {

@@ -34,12 +34,11 @@ public final class PlayerData {
                 @Nullable
                 @Override
                 public INBTBase writeNBT(Capability<PlayerData> capability, PlayerData instance, EnumFacing side) {
-                    return instance.serialize();
+                    return null;
                 }
 
                 @Override
                 public void readNBT(Capability<PlayerData> capability, PlayerData instance, EnumFacing side, INBTBase nbt) {
-                    instance.read((NBTTagCompound) nbt);
                 }
             }, PlayerData::new);
         }

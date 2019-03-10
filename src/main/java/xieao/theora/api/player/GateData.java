@@ -2,14 +2,15 @@ package xieao.theora.api.player;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import xieao.theora.api.liquid.LiquidHandler;
-import xieao.theora.core.handler.ServerHandler;
 
 import javax.annotation.Nullable;
 
 public class GateData {
     private final LiquidHandler liquidHandler = new LiquidHandler();
     public long lastCheck;
+    public boolean loaded;
     public boolean playerGuiOpen;
 
     @Nullable
@@ -18,6 +19,7 @@ public class GateData {
     public NBTTagCompound write(NBTTagCompound compound) {
         compound.putLong("LastCheck", this.lastCheck);
         this.liquidHandler.write(compound);
+        compound.putBoolean("Loaded", this.loaded);
         compound.putBoolean("PlayerGuiOpen", this.playerGuiOpen);
         return compound;
     }
@@ -25,6 +27,7 @@ public class GateData {
     public void read(NBTTagCompound compound) {
         this.lastCheck = compound.getLong("LastCheck");
         this.liquidHandler.read(compound);
+        this.loaded = compound.getBoolean("Loaded");
         this.playerGuiOpen = compound.getBoolean("PlayerGuiOpen");
     }
 
@@ -37,8 +40,8 @@ public class GateData {
     }
 
     @Nullable
-    public TileEntity getTile() {
-        if (!loaded()) {
+    public TileEntity getTile(World world) {
+        if (!loaded(world)) {
             setTile(null);
         }
         return tile;
@@ -56,7 +59,8 @@ public class GateData {
         this.playerGuiOpen = playerGuiOpen;
     }
 
-    public boolean loaded() {
-        return ServerHandler.ticks - this.lastCheck == 0;
+    public boolean loaded(World world) {
+        this.loaded = world.getGameTime() - this.lastCheck == 0;
+        return loaded;
     }
 }

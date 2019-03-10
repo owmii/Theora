@@ -31,6 +31,7 @@ public class ItemPowder extends ItemBase {
             TheoraAPI.getPlayerData(player).ifPresent(playerData -> {
                 GateData gateData = playerData.gate;
                 gateData.setPlayerGuiOpen(true);
+                gateData.loaded(world);
                 Theora.NET.toClient(new OpenPlayerGui(gateData.serialize()), (EntityPlayerMP) player);
             });
         }

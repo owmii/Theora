@@ -1,11 +1,11 @@
-package xieao.theora.client.render.tile;
+package xieao.theora.client.renderer.tile;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.util.ResourceLocation;
 import xieao.theora.api.Consts;
 import xieao.theora.block.gate.TileGate;
-import xieao.theora.client.render.model.ModelGate;
+import xieao.theora.client.model.ModelGate;
 
 public class RenderGate extends TileEntityRenderer<TileGate> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Consts.MOD_ID, "textures/ter/gate.png");
@@ -23,5 +23,10 @@ public class RenderGate extends TileEntityRenderer<TileGate> {
         MODEL_GATE.render();
         GlStateManager.disableRescaleNormal();
         GlStateManager.popMatrix();
+    }
+
+    @Override
+    public boolean isGlobalRenderer(TileGate te) {
+        return true;
     }
 }

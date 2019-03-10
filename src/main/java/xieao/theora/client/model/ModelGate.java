@@ -1,4 +1,4 @@
-package xieao.theora.client.render.model;
+package xieao.theora.client.model;
 
 import net.minecraft.client.renderer.entity.model.ModelBase;
 import net.minecraft.client.renderer.entity.model.ModelRenderer;

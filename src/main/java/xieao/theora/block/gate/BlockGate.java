@@ -12,6 +12,7 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import xieao.theora.block.BlockBase;
@@ -22,6 +23,9 @@ import xieao.theora.item.ItemGate;
 import javax.annotation.Nullable;
 
 public class BlockGate extends BlockBase {
+    protected static final VoxelShape TOP_SHAPE = Block.makeCuboidShape(1.0D, -5.0D, 1.0D, 15.0D, 16.0D, 15.0D);
+    protected static final VoxelShape BASE_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 11.0D, 16.0D);
+
     public BlockGate(Properties properties) {
         super(properties);
     }
@@ -29,6 +33,18 @@ public class BlockGate extends BlockBase {
     @Override
     public ItemBlockBase getItemBlock(Item.Properties properties) {
         return new ItemGate(this, properties);
+    }
+
+    @Override
+    public VoxelShape getShape(IBlockState state, IBlockReader world, BlockPos pos) {
+        TileEntity tileEntity = world.getTileEntity(pos);
+        if (tileEntity instanceof TileGate) {
+            TileGate gate = (TileGate) tileEntity;
+            if (gate.isGateBase()) {
+                return BASE_SHAPE;
+            }
+        }
+        return TOP_SHAPE;
     }
 
     @Nullable

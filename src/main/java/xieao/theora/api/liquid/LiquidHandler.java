@@ -27,12 +27,12 @@ public class LiquidHandler {
         this.slots.put(key, slot);
     }
 
-    public int slotCount() {
-        return this.slots.size();
-    }
-
     public void addSlot(String key, Liquid liquid, float capacity, float transferRate, Transfer transfer) {
         setSlot(key, new Slot(liquid, !liquid.isEmpty(), capacity, 0, transferRate, transfer));
+    }
+
+    public int slotCount() {
+        return this.slots.size();
     }
 
     public void read(NBTTagCompound compound) {

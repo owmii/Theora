@@ -9,12 +9,13 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import xieao.theora.client.renderer.item.TEItemRenderer;
 import xieao.theora.lib.util.PlayerUtil;
 import xieao.theora.world.IInteractObj;
 
 public class ItemBase extends Item implements IItemBase {
     public ItemBase(Properties properties) {
-        super(properties);
+        super(properties.setTEISR(() -> TEItemRenderer::new));
     }
 
     @Override

@@ -1,4 +1,4 @@
 @NonnullByDefault
-package xieao.theora.client.render.tile;
+package xieao.theora.client.particle;
 
 import xieao.theora.api.annotation.NonnullByDefault;

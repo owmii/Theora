@@ -32,7 +32,7 @@ public class ItemPowder extends ItemBase {
                 GateData gateData = playerData.gate;
                 gateData.setPlayerGuiOpen(true);
                 gateData.loaded(world);
-                Theora.NET.toClient(new OpenPlayerGui(gateData.serialize()), (EntityPlayerMP) player);
+                Theora.NET.toClient(new OpenPlayerGui(gateData.serialize()), player);
             });
         }
         return super.onItemRightClick(world, player, hand);

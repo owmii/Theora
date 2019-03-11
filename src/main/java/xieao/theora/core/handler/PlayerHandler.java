@@ -32,7 +32,7 @@ public class PlayerHandler {
         DATA_SYNC.remove(event.getPlayer().getUniqueID());
         TheoraAPI.getPlayerData(event.getPlayer()).ifPresent(playerData -> {
             GateData gateData = playerData.gate;
-            TileEntity tileEntity = gateData.getTile(event.getPlayer().world);
+            TileEntity tileEntity = gateData.getTileEntity(event.getPlayer().world);
             if (tileEntity instanceof TileGate) {
                 ((TileGate) tileEntity).setPlayer(null);
             }
@@ -47,7 +47,7 @@ public class PlayerHandler {
             if (event.side == LogicalSide.SERVER) {
                 if (!DATA_SYNC.contains(player.getUniqueID()) && player instanceof EntityPlayerMP) {
                     TheoraAPI.getPlayerData(player).ifPresent(data -> {
-                        Theora.NET.toClient(new SyncPlayerData(data.serialize()), (EntityPlayerMP) player);
+                        Theora.NET.toClient(new SyncPlayerData(data.serialize()), player);
                         DATA_SYNC.add(player.getUniqueID());
                     });
                 }

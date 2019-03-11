@@ -1,9 +1,11 @@
 package xieao.theora.block.gate;
 
 import com.mojang.authlib.GameProfile;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -12,32 +14,32 @@ import xieao.theora.Theora;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.liquid.LiquidHandler;
 import xieao.theora.api.player.GateData;
+import xieao.theora.block.IInvBase;
 import xieao.theora.block.TileBase;
+import xieao.theora.client.gui.GuiGate;
 import xieao.theora.core.ILiquids;
 import xieao.theora.core.ITiles;
+import xieao.theora.inventory.ContainerGate;
 import xieao.theora.lib.util.PlayerUtil;
 import xieao.theora.network.packet.playerdata.SyncGateData;
+import xieao.theora.world.IInteractObj;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class TileGate extends TileBase.Tickable {
-    public static final String SLOT_ESSENCE = "slot.essence";
-    public static final String SLOT_LIMY = "slot.limy";
-    public static final String SLOT_VEA = "slot.vea";
-
+public class TileGate extends TileBase.Tickable implements IInvBase, IInteractObj {
     private final LiquidHandler handler = new LiquidHandler();
     private GameProfile owner = new GameProfile(new UUID(0L, 0L), "null");
     private boolean gateBase;
 
     @Nullable
     private EntityPlayer player;
+    public int openTab;
 
     public TileGate() {
         super(ITiles.GATE);
-        this.handler.add(SLOT_ESSENCE, ILiquids.ESSENCE, 1000.0F, 100.0F);
-        this.handler.add(SLOT_LIMY, ILiquids.LIMY, 200.0F, 0.0F);
-        this.handler.add(SLOT_VEA, ILiquids.VEA, 200.0F, 0.0F);
+        this.handler.add("slot.essence", ILiquids.ESSENCE, 1000.0F, 100.0F);
+        setInvSize(4);
     }
 
     @Override
@@ -66,8 +68,6 @@ public class TileGate extends TileBase.Tickable {
     @Override
     public void tick() {
         if (!this.gateBase) return;
-        LiquidHandler.Slot slot = this.handler.get(SLOT_ESSENCE);
-        slot.add(0.0008F);
         if (isServerWorld()) {
             if (this.player == null) {
                 this.player = PlayerUtil.get(getOwnerID());
@@ -76,7 +76,7 @@ public class TileGate extends TileBase.Tickable {
                 TheoraAPI.getPlayerData(this.player).ifPresent(playerData -> {
                     GateData gateData = playerData.gate;
                     gateData.setLastCheck(this.world.getGameTime());
-                    gateData.setTile(this);
+                    gateData.setTileEntity(this);
                     syncPlayer(gateData);
                 });
             }
@@ -89,7 +89,7 @@ public class TileGate extends TileBase.Tickable {
         handler.read(this.handler.serialize());
         boolean guiOpen = gateData.playerGuiOpen;
         if (guiOpen && this.world.getGameTime() % 10 == 0) {
-            Theora.NET.toClient(new SyncGateData(gateData.serialize()), (EntityPlayerMP) this.player);
+            Theora.NET.toClient(new SyncGateData(gateData.serialize()), this.player);
         }
     }
 
@@ -135,5 +135,16 @@ public class TileGate extends TileBase.Tickable {
     public AxisAlignedBB getRenderBoundingBox() {
         return new AxisAlignedBB(this.pos.add(-2, -2, -2),
                 this.pos.add(2, 2, 2));
+    }
+
+    @Override
+    public Container getContainer(EntityPlayer player) {
+        return new ContainerGate(player, this);
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public GuiScreen getGui(EntityPlayer player, EnumHand hand) {
+        return new GuiGate(player, this);
     }
 }

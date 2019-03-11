@@ -40,14 +40,14 @@ public class GateData {
     }
 
     @Nullable
-    public TileEntity getTile(World world) {
+    public TileEntity getTileEntity(World world) {
         if (!loaded(world)) {
-            setTile(null);
+            setTileEntity(null);
         }
         return tile;
     }
 
-    public void setTile(@Nullable TileEntity tile) {
+    public void setTileEntity(@Nullable TileEntity tile) {
         this.tile = tile;
     }
 

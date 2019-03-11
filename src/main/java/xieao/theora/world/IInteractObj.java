@@ -2,6 +2,8 @@ package xieao.theora.world;
 
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.IInteractionObject;
@@ -21,6 +23,12 @@ public interface IInteractObj extends IInteractionObject {
         }
         return "";
     }
+
+    default Container createContainer(InventoryPlayer playerInventory, EntityPlayer player) {
+        return getContainer(player);
+    }
+
+    Container getContainer(EntityPlayer player);
 
     @OnlyIn(Dist.CLIENT)
     GuiScreen getGui(EntityPlayer player, EnumHand hand);

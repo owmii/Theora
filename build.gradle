@@ -42,10 +42,14 @@ minecraft {
 }
 
 repositories {
+    maven { url "http://dvs1.progwml6.com/files/maven" }
+    maven { url "https://tehnut.info/maven" }
 }
 
 dependencies {
     minecraft forge_group + ':' + forge_name + ':' + minecraft_version + '-' + forge_version
+    //compile jei_group + ':' + jei_name + '-' + minecraft_version + ':' + jei_version
+    //compile waila_group + ':' + waila_name + ':' + waila_version + '_' + minecraft_version
 }
 
 

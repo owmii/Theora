@@ -27,7 +27,7 @@ public abstract class ContainerBase<I extends IInventory> extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return true;
+        return this.inv.isUsableByPlayer(player);
     }
 
     @Override

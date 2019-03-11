@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -45,6 +46,18 @@ public class BlockGate extends BlockBase {
             }
         }
         return TOP_SHAPE;
+    }
+
+    @Override
+    public boolean onBlockActivated(IBlockState state, World world, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        TileEntity tileEntity = world.getTileEntity(pos.down());
+        if (tileEntity instanceof TileGate) {
+            TileGate gate = (TileGate) tileEntity;
+            if (gate.isGateBase()) {
+                return gate.getBlockState().onBlockActivated(world, pos.down(), player, hand, side, hitX, hitY, hitZ);
+            }
+        }
+        return super.onBlockActivated(state, world, pos, player, hand, side, hitX, hitY, hitZ);
     }
 
     @Nullable

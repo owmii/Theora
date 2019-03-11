@@ -12,11 +12,19 @@ import xieao.theora.inventory.ContainerBase;
 public abstract class GuiContainerBase<I extends IInventory, C extends ContainerBase<I>> extends GuiContainer {
     protected final I inv;
     protected final EntityPlayer player;
+    protected int x, y;
 
     public GuiContainerBase(C container, EntityPlayer player, I inv) {
         super(container);
         this.inv = inv;
         this.player = player;
+    }
+
+    @Override
+    protected void initGui() {
+        super.initGui();
+        this.x = (this.width - this.xSize) / 2;
+        this.y = (this.height - this.ySize) / 2;
     }
 
     @Override

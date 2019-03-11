@@ -9,7 +9,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.player.PlayerData;
@@ -29,7 +28,7 @@ public class Theora {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::client);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueue);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::process);
-        MinecraftForge.EVENT_BUS.addListener(this::serverStarted);
+        MinecraftForge.EVENT_BUS.addListener(ServerUtil::serverStarted);
         ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, () -> GuiFactory::get);
     }
 
@@ -50,9 +49,5 @@ public class Theora {
 
     void process(InterModProcessEvent event) {
 
-    }
-
-    void serverStarted(FMLServerStartedEvent event) {
-        ServerUtil.SERVER = event.getServer();
     }
 }

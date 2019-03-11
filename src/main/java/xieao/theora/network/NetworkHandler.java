@@ -1,5 +1,6 @@
 package xieao.theora.network;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
@@ -41,8 +42,10 @@ public class NetworkHandler {
         CHANNEL.sendToServer(msg);
     }
 
-    public <T> void toClient(T msg, EntityPlayerMP player) {
-        CHANNEL.sendTo(msg, player.connection.getNetworkManager(), PLAY_TO_CLIENT);
+    public <T> void toClient(T msg, EntityPlayer player) {
+        if (player instanceof EntityPlayerMP) {
+            CHANNEL.sendTo(msg, ((EntityPlayerMP) player).connection.getNetworkManager(), PLAY_TO_CLIENT);
+        }
     }
 
     static {

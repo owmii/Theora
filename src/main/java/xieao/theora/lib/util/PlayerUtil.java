@@ -14,11 +14,11 @@ public class PlayerUtil {
 
     @Nullable
     public static EntityPlayerMP get(UUID uuid) {
-        return ServerUtil.SERVER.getPlayerList().getPlayerByUUID(uuid);
+        return ServerUtil.getServer().getPlayerList().getPlayerByUUID(uuid);
     }
 
     @Nullable
     public static EntityPlayerMP get(String name) {
-        return ServerUtil.SERVER.getPlayerList().getPlayerByUsername(name);
+        return ServerUtil.getServer().getPlayerList().getPlayerByUsername(name);
     }
 }

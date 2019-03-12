@@ -7,6 +7,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
@@ -25,12 +26,14 @@ import xieao.theora.network.packet.playerdata.SyncGateData;
 import xieao.theora.world.IInteractObj;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class TileGate extends TileBase.Tickable implements IInvBase, IInteractObj {
     private final LiquidHandler handler = new LiquidHandler();
     private GameProfile owner = new GameProfile(new UUID(0L, 0L), "null");
-    private boolean gateBase;
+    private final List<BlockPos> partsPos = new ArrayList<>();
 
     @Nullable
     private EntityPlayer player;
@@ -46,7 +49,6 @@ public class TileGate extends TileBase.Tickable implements IInvBase, IInteractOb
     public void readSync(NBTTagCompound compound) {
         super.readSync(compound);
         this.handler.read(compound);
-        this.gateBase = compound.getBoolean("GateBase");
         if (compound.contains("OwnerId", Constants.NBT.TAG_STRING)) {
             String ownerId = compound.getString("OwnerId");
             String ownerName = compound.getString("OwnerName");
@@ -57,7 +59,6 @@ public class TileGate extends TileBase.Tickable implements IInvBase, IInteractOb
     @Override
     public NBTTagCompound writeSync(NBTTagCompound compound) {
         this.handler.write(compound);
-        compound.putBoolean("GateBase", this.gateBase);
         if (!"null".equals(this.owner.getName())) {
             compound.putString("OwnerId", this.owner.getId().toString());
             compound.putString("OwnerName", this.owner.getName());
@@ -67,7 +68,6 @@ public class TileGate extends TileBase.Tickable implements IInvBase, IInteractOb
 
     @Override
     public void tick() {
-        if (!this.gateBase) return;
         if (isServerWorld()) {
             if (this.player == null) {
                 this.player = PlayerUtil.get(getOwnerID());
@@ -113,12 +113,8 @@ public class TileGate extends TileBase.Tickable implements IInvBase, IInteractOb
         return getOwner().getName();
     }
 
-    public boolean isGateBase() {
-        return gateBase;
-    }
-
-    public void setGateBase(boolean gateBase) {
-        this.gateBase = gateBase;
+    public List<BlockPos> getPartsPos() {
+        return partsPos;
     }
 
     @Nullable
@@ -133,8 +129,8 @@ public class TileGate extends TileBase.Tickable implements IInvBase, IInteractOb
     @Override
     @OnlyIn(Dist.CLIENT)
     public AxisAlignedBB getRenderBoundingBox() {
-        return new AxisAlignedBB(this.pos.add(-2, -2, -2),
-                this.pos.add(2, 2, 2));
+        return new AxisAlignedBB(this.pos.add(-5, -5, -5),
+                this.pos.add(5, 5, 5));
     }
 
     @Override

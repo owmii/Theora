@@ -8,7 +8,6 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import xieao.theora.Theora;
@@ -17,8 +16,6 @@ import xieao.theora.api.player.GateData;
 import xieao.theora.entity.EntityWorker;
 import xieao.theora.lib.util.PlayerUtil;
 import xieao.theora.network.packet.gui.OpenPlayerGui;
-
-import java.util.List;
 
 public class ItemPowder extends ItemBase {
     public ItemPowder(Properties properties) {
@@ -38,6 +35,12 @@ public class ItemPowder extends ItemBase {
         return super.onItemRightClick(world, player, hand);
     }
 
+    public static final int[][] OFFSETS_0 = new int[][]{{0, 0}, {0, 1}, {1, 0}, {1, 1}};
+    public static final int[][] OFFSETS_1 = new int[][]{{0, 0}, {0, -1}, {1, 0}, {1, -1}};
+    public static final int[][] OFFSETS_2 = new int[][]{{0, 0}, {0, -1}, {-1, 0}, {-1, -1}};
+    public static final int[][] OFFSETS_3 = new int[][]{{0, 0}, {0, 1}, {-1, 0}, {-1, 1}};
+    public static final int[][][] ALL = new int[][][]{OFFSETS_0, OFFSETS_1, OFFSETS_2, OFFSETS_3};
+
     @Override
     public EnumActionResult onItemUse(ItemUseContext context) {
         World world = context.getWorld();
@@ -45,31 +48,47 @@ public class ItemPowder extends ItemBase {
         if (player != null && !PlayerUtil.isFake(player)) {
             BlockPos pos = context.getPos();
             if (isObsidian(world, pos)) {
-                BlockPos up = pos.up();
-                BlockPos down = pos.down();
-                if (isObsidian(world, up) && world.isAirBlock(up.up())) {
-                    if (checkWorkers(world, pos)) {
-                        if (!world.isRemote) {
-                            EntityWorker worker = new EntityWorker(EntityWorker.Job.BUILD_GATE, player, world);
-                            worker.setPosition(pos.getX(), pos.getY(), pos.getZ());
-                            world.spawnEntity(worker);
-                            if (!player.isCreative()) {
-                                context.getItem().shrink(1);
+                for (int i = 0; i < 4; i++) {
+                    BlockPos pos1 = pos.add(0, i, 0);
+                    if (!isObsidian(world, pos1)) {
+                        return EnumActionResult.FAIL;
+                    } else {
+                        if (world.isAirBlock(pos1.up())) {
+                            for (int[][] offs : ALL) {
+                                BlockPos pos2 = null;
+                                int count = 0;
+                                for (int[] off : offs) {
+                                    BlockPos pos3 = pos1.add(off[0], 0, off[1]);
+                                    if (isObsidian(world, pos3)
+                                            && isObsidian(world, pos3.add(1, 0, 0))
+                                            && isObsidian(world, pos3.add(0, 0, 1))
+                                            && isObsidian(world, pos3.add(1, 0, 1))) {
+                                        pos2 = pos3;
+                                    }
+                                }
+                                if (pos2 != null) {
+                                    for (int[] off : OFFSETS_0) {
+                                        for (int j = 0; j >= -3; j--) {
+                                            BlockPos pos3 = pos2.add(off[0], j, off[1]);
+                                            if (isObsidian(world, pos3)) {
+                                                count++;
+                                            }
+                                        }
+                                    }
+                                    if (count == 16) {
+                                        if (!world.isRemote) {
+                                            EntityWorker worker = new EntityWorker(EntityWorker.Job.BUILD_GATE, player, world);
+                                            worker.setPosition(pos2.getX(), pos2.getY(), pos2.getZ());
+                                            world.spawnEntity(worker);
+                                            if (!player.isCreative()) {
+                                                context.getItem().shrink(1);
+                                            }
+                                        }
+                                        return EnumActionResult.SUCCESS;
+                                    }
+                                }
                             }
                         }
-                        return EnumActionResult.SUCCESS;
-                    }
-                } else if (isObsidian(world, down) && world.isAirBlock(up)) {
-                    if (checkWorkers(world, down)) {
-                        if (!world.isRemote) {
-                            EntityWorker worker = new EntityWorker(EntityWorker.Job.BUILD_GATE, player, world);
-                            worker.setPosition(down.getX(), down.getY(), down.getZ());
-                            world.spawnEntity(worker);
-                            if (!player.isCreative()) {
-                                context.getItem().shrink(1);
-                            }
-                        }
-                        return EnumActionResult.SUCCESS;
                     }
                 }
             }
@@ -79,11 +98,5 @@ public class ItemPowder extends ItemBase {
 
     private boolean isObsidian(World world, BlockPos pos) {
         return world.getBlockState(pos).getBlock() == Blocks.OBSIDIAN;
-    }
-
-    private static boolean checkWorkers(World world, BlockPos pos) {
-        AxisAlignedBB alignedBB = new AxisAlignedBB(0.0D, -1.0D, 0.0D, 0.2D, 2.0D, 0.2D).offset(pos);
-        List<EntityWorker> entities = world.getEntitiesWithinAABB(EntityWorker.class, alignedBB);
-        return entities.size() == 0;
     }
 }

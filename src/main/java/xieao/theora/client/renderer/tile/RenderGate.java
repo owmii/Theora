@@ -13,12 +13,11 @@ public class RenderGate extends TileEntityRenderer<TileGate> {
 
     @Override
     public void render(TileGate gate, double x, double y, double z, float partialTicks, int destroyStage) {
-        if (!gate.isGateBase()) return;
         GlStateManager.pushMatrix();
         GlStateManager.enableRescaleNormal();
         GlStateManager.translated(x, y, z);
         GlStateManager.scalef(1.0F, -1.0F, -1.0F);
-        GlStateManager.translated(0.5D, -1.5D, -0.5D);
+        GlStateManager.translated(0.5D, -2.5D, -1.5D);
         bindTexture(TEXTURE);
         MODEL_GATE.render();
         GlStateManager.disableRescaleNormal();

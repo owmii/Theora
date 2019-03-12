@@ -10,23 +10,18 @@ import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import xieao.theora.block.BlockBase;
-import xieao.theora.core.IBlocks;
 import xieao.theora.item.ItemBlockBase;
 import xieao.theora.item.ItemGate;
+import xieao.theora.item.ItemPowder;
 
 import javax.annotation.Nullable;
 
 public class BlockGate extends BlockBase {
-    protected static final VoxelShape TOP_SHAPE = Block.makeCuboidShape(1.0D, -5.0D, 1.0D, 15.0D, 16.0D, 15.0D);
-    protected static final VoxelShape BASE_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 11.0D, 16.0D);
-
     public BlockGate(Properties properties) {
         super(properties);
     }
@@ -34,30 +29,6 @@ public class BlockGate extends BlockBase {
     @Override
     public ItemBlockBase getItemBlock(Item.Properties properties) {
         return new ItemGate(this, properties);
-    }
-
-    @Override
-    public VoxelShape getShape(IBlockState state, IBlockReader world, BlockPos pos) {
-        TileEntity tileEntity = world.getTileEntity(pos);
-        if (tileEntity instanceof TileGate) {
-            TileGate gate = (TileGate) tileEntity;
-            if (gate.isGateBase()) {
-                return BASE_SHAPE;
-            }
-        }
-        return TOP_SHAPE;
-    }
-
-    @Override
-    public boolean onBlockActivated(IBlockState state, World world, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-        TileEntity tileEntity = world.getTileEntity(pos.down());
-        if (tileEntity instanceof TileGate) {
-            TileGate gate = (TileGate) tileEntity;
-            if (gate.isGateBase()) {
-                return gate.getBlockState().onBlockActivated(world, pos.down(), player, hand, side, hitX, hitY, hitZ);
-            }
-        }
-        return super.onBlockActivated(state, world, pos, player, hand, side, hitX, hitY, hitZ);
     }
 
     @Nullable
@@ -83,21 +54,11 @@ public class BlockGate extends BlockBase {
 
     @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
-        TileEntity tileEntity = worldIn.getTileEntity(pos);
-        if (tileEntity instanceof TileGate) {
-            TileGate gate = (TileGate) tileEntity;
-            if (gate.isGateBase() && worldIn.getBlockState(pos.up()).getBlock() == IBlocks.GATE) {
-                worldIn.setBlockState(pos.up(), Blocks.AIR.getDefaultState(), 35);
-                worldIn.playEvent(player, 2001, pos.up(), Block.getStateId(state));
-            } else if (worldIn.getBlockState(pos).getBlock() == IBlocks.GATE) {
-                TileEntity tileEntity1 = worldIn.getTileEntity(pos.down());
-                if (tileEntity1 instanceof TileGate) {
-                    TileGate gate1 = (TileGate) tileEntity1;
-                    if (gate1.isGateBase()) {
-                        worldIn.setBlockState(pos.down(), Blocks.AIR.getDefaultState(), 35);
-                        worldIn.playEvent(player, 2001, pos.down(), Block.getStateId(state));
-                    }
-                }
+        for (int[] off : ItemPowder.OFFSETS_0) {
+            for (int j = 0; j >= -3; j--) {
+                BlockPos pos1 = pos.add(off[0], j, off[1]);
+                worldIn.setBlockState(pos1, Blocks.AIR.getDefaultState(), 35);
+                worldIn.playEvent(player, 2001, pos1, Block.getStateId(state));
             }
         }
         super.onBlockHarvested(worldIn, pos, state, player);

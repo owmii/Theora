@@ -15,8 +15,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import xieao.theora.block.gate.TileGate;
+import xieao.theora.block.gate.TileGatePart;
 import xieao.theora.core.IBlocks;
 import xieao.theora.core.IEntities;
+import xieao.theora.item.ItemPowder;
 import xieao.theora.lib.util.Ticker;
 
 import javax.annotation.Nullable;
@@ -82,27 +84,51 @@ public class EntityWorker extends Entity {
                     if (this.player == null) remove();
                     BlockPos pos = getPosition();
                     BlockPos up = pos.up();
-                    if (this.world.getBlockState(pos).getBlock() != Blocks.OBSIDIAN ||
-                            this.world.getBlockState(up).getBlock() != Blocks.OBSIDIAN ||
-                            this.owner == null) {
+                    if (this.world.getBlockState(pos).getBlock() != Blocks.OBSIDIAN) {
                         remove();
                     } else {
-                        if (this.working.done()) {
-                            this.world.setBlockState(pos, IBlocks.GATE.getDefaultState(), 2);
-                            this.world.setBlockState(up, IBlocks.GATE.getDefaultState(), 2);
-                            TileEntity tileEntity = this.world.getTileEntity(pos);
-                            if (tileEntity instanceof TileGate) {
-                                TileGate gate = (TileGate) tileEntity;
-                                gate.setGateBase(true);
-                                gate.setOwner(this.owner);
-                                gate.markDirtyAndSync();
+                        int count = 0;
+                        for (int[] off : ItemPowder.OFFSETS_0) {
+                            for (int j = 0; j >= -3; j--) {
+                                BlockPos pos2 = pos.add(off[0], j, off[1]);
+                                if (isObsidian(world, pos2)) {
+                                    count++;
+                                }
                             }
-                            remove();
                         }
+                        if (count == 16) {
+                            if (this.working.done()) {
+                                for (int[] off : ItemPowder.OFFSETS_0) {
+                                    for (int j = 0; j >= -3; j--) {
+                                        BlockPos pos2 = pos.add(off[0], j, off[1]);
+                                        if (!pos.equals(pos2)) {
+                                            this.world.setBlockState(pos2, IBlocks.GATE_PART.getDefaultState(), 2);
+                                            TileEntity tileEntity = this.world.getTileEntity(pos2);
+                                            if (tileEntity instanceof TileGatePart) {
+                                                TileGatePart gatePart = (TileGatePart) tileEntity;
+                                                gatePart.setGatePos(pos);
+                                            }
+                                        }
+                                    }
+                                }
+                                this.world.setBlockState(pos, IBlocks.GATE.getDefaultState(), 2);
+                                TileEntity tileEntity = this.world.getTileEntity(pos);
+                                if (tileEntity instanceof TileGate) {
+                                    TileGate gate = (TileGate) tileEntity;
+                                    gate.setOwner(this.owner);
+                                    gate.markDirtyAndSync();
+                                }
+                                remove();
+                            }
+                        } else remove();
                     }
                     break;
             }
         }
+    }
+
+    private boolean isObsidian(World world, BlockPos pos) {
+        return world.getBlockState(pos).getBlock() == Blocks.OBSIDIAN;
     }
 
     public Job getJob() {

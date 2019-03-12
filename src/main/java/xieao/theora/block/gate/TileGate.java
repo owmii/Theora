@@ -7,7 +7,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
@@ -26,14 +25,11 @@ import xieao.theora.network.packet.playerdata.SyncGateData;
 import xieao.theora.world.IInteractObj;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class TileGate extends TileBase.Tickable implements IInvBase, IInteractObj {
     private final LiquidHandler handler = new LiquidHandler();
     private GameProfile owner = new GameProfile(new UUID(0L, 0L), "null");
-    private final List<BlockPos> partsPos = new ArrayList<>();
 
     @Nullable
     private EntityPlayer player;
@@ -111,10 +107,6 @@ public class TileGate extends TileBase.Tickable implements IInvBase, IInteractOb
 
     public String getOwnerName() {
         return getOwner().getName();
-    }
-
-    public List<BlockPos> getPartsPos() {
-        return partsPos;
     }
 
     @Nullable

@@ -64,6 +64,7 @@ public class ItemPowder extends ItemBase {
                                             && isObsidian(world, pos3.add(0, 0, 1))
                                             && isObsidian(world, pos3.add(1, 0, 1))) {
                                         pos2 = pos3;
+                                        break;
                                     }
                                 }
                                 if (pos2 != null) {

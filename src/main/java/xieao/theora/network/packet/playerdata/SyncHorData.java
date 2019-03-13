@@ -9,24 +9,24 @@ import xieao.theora.api.TheoraAPI;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public class SyncGateData {
+public class SyncHorData {
     private NBTTagCompound compound;
 
-    public SyncGateData(NBTTagCompound compound) {
+    public SyncHorData(NBTTagCompound compound) {
         this.compound = compound;
     }
 
-    public static void encode(SyncGateData msg, PacketBuffer buffer) {
+    public static void encode(SyncHorData msg, PacketBuffer buffer) {
         buffer.writeCompoundTag(msg.compound);
     }
 
-    public static SyncGateData decode(PacketBuffer buffer) {
-        return new SyncGateData(Objects.requireNonNull(buffer.readCompoundTag()));
+    public static SyncHorData decode(PacketBuffer buffer) {
+        return new SyncHorData(Objects.requireNonNull(buffer.readCompoundTag()));
     }
 
-    public static void handle(SyncGateData msg, Supplier<NetworkEvent.Context> ctx) {
+    public static void handle(SyncHorData msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> TheoraAPI.getPlayerData(Minecraft.getInstance().player).ifPresent(playerData ->
-                playerData.gate.read(msg.compound)));
+                playerData.hor.read(msg.compound)));
         ctx.get().setPacketHandled(true);
     }
 }

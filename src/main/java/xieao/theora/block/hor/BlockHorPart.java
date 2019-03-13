@@ -1,4 +1,4 @@
-package xieao.theora.block.gate;
+package xieao.theora.block.hor;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -15,17 +15,17 @@ import xieao.theora.block.BlockBase;
 
 import javax.annotation.Nullable;
 
-public class BlockGatePart extends BlockBase {
-    public BlockGatePart(Properties properties) {
+public class BlockHorPart extends BlockBase {
+    public BlockHorPart(Properties properties) {
         super(properties);
     }
 
     @Override
     public boolean onBlockActivated(IBlockState state, World world, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         TileEntity tileEntity = world.getTileEntity(pos);
-        if (tileEntity instanceof TileGatePart) {
-            TileGatePart gatePart = (TileGatePart) tileEntity;
-            BlockPos pos1 = gatePart.getGatePos();
+        if (tileEntity instanceof TileHorPart) {
+            TileHorPart horPart = (TileHorPart) tileEntity;
+            BlockPos pos1 = horPart.getHorPos();
             if (pos1 != null) {
                 IBlockState state1 = world.getBlockState(pos1);
                 return state1.getBlock().onBlockActivated(state1, world, pos1, player, hand, side, hitX, hitY, hitZ);
@@ -37,15 +37,15 @@ public class BlockGatePart extends BlockBase {
     @Nullable
     @Override
     public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
-        return new TileGatePart();
+        return new TileHorPart();
     }
 
     @Override
     public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
         TileEntity tileEntity = world.getTileEntity(pos);
-        if (tileEntity instanceof TileGatePart) {
-            TileGatePart gatePart = (TileGatePart) tileEntity;
-            BlockPos pos1 = gatePart.getGatePos();
+        if (tileEntity instanceof TileHorPart) {
+            TileHorPart horPart = (TileHorPart) tileEntity;
+            BlockPos pos1 = horPart.getHorPos();
             if (pos1 != null) {
                 IBlockState state1 = world.getBlockState(pos1);
                 world.setBlockState(pos1, Blocks.AIR.getDefaultState(), 35);

@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import xieao.theora.Theora;
 import xieao.theora.api.TheoraAPI;
-import xieao.theora.api.player.GateData;
+import xieao.theora.api.player.HorData;
 import xieao.theora.entity.EntityWorker;
 import xieao.theora.lib.util.PlayerUtil;
 import xieao.theora.network.packet.gui.OpenPlayerGui;
@@ -26,10 +26,10 @@ public class ItemPowder extends ItemBase {
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         if (!world.isRemote && player instanceof EntityPlayerMP) {
             TheoraAPI.getPlayerData(player).ifPresent(playerData -> {
-                GateData gateData = playerData.gate;
-                gateData.setPlayerGuiOpen(true);
-                gateData.loaded(world);
-                Theora.NET.toClient(new OpenPlayerGui(gateData.serialize()), player);
+                HorData horData = playerData.hor;
+                horData.setPlayerGuiOpen(true);
+                horData.loaded(world);
+                Theora.NET.toClient(new OpenPlayerGui(horData.serialize()), player);
             });
         }
         return super.onItemRightClick(world, player, hand);
@@ -78,7 +78,7 @@ public class ItemPowder extends ItemBase {
                                     }
                                     if (count == 16) {
                                         if (!world.isRemote) {
-                                            EntityWorker worker = new EntityWorker(EntityWorker.Job.BUILD_GATE, player, world);
+                                            EntityWorker worker = new EntityWorker(EntityWorker.Job.BUILD_HOR, player, world);
                                             worker.setPosition(pos2.getX(), pos2.getY(), pos2.getZ());
                                             world.spawnEntity(worker);
                                             if (!player.isCreative()) {

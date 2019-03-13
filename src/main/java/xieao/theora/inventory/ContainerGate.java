@@ -1,10 +1,10 @@
 package xieao.theora.inventory;
 
 import net.minecraft.entity.player.EntityPlayer;
-import xieao.theora.block.gate.TileGate;
+import xieao.theora.block.hor.TileHor;
 
-public class ContainerGate extends ContainerBase<TileGate> {
-    public ContainerGate(EntityPlayer player, TileGate inv) {
+public class ContainerGate extends ContainerBase<TileHor> {
+    public ContainerGate(EntityPlayer player, TileHor inv) {
         super(player, inv);
 
         addPlayerInv(player.inventory, 8, 142, 84);

@@ -29,7 +29,7 @@ public class OpenPlayerGui {
         ctx.get().enqueueWork(() -> {
             Minecraft mc = Minecraft.getInstance();
             TheoraAPI.getPlayerData(mc.player).ifPresent(playerData -> {
-                playerData.gate.read(msg.compound);
+                playerData.hor.read(msg.compound);
                 mc.displayGuiScreen(new GuiPlayer());
             });
         });

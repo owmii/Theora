@@ -88,7 +88,7 @@ public abstract class TileBase extends TileEntity {
     public void markDirtyAndSync() {
         if (this.world != null) {
             markDirty();
-            if (!isServerWorld()) {
+            if (isServerWorld()) {
                 IBlockState state = getBlockState();
                 this.world.notifyBlockUpdate(getPos(), state, state, 3);
             }

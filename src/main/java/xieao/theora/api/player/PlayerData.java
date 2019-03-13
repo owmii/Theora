@@ -10,15 +10,15 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import javax.annotation.Nullable;
 
 public final class PlayerData {
-    public final GateData gate = new GateData();
+    public final HorData hor = new HorData();
 
     public NBTTagCompound write(NBTTagCompound compound) {
-        this.gate.write(compound);
+        this.hor.write(compound);
         return compound;
     }
 
     public void read(NBTTagCompound compound) {
-        this.gate.read(compound);
+        this.hor.read(compound);
     }
 
     public NBTTagCompound serialize() {

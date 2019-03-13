@@ -14,8 +14,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-import xieao.theora.block.gate.TileGate;
-import xieao.theora.block.gate.TileGatePart;
+import xieao.theora.block.hor.TileHor;
+import xieao.theora.block.hor.TileHorPart;
 import xieao.theora.core.IBlocks;
 import xieao.theora.core.IEntities;
 import xieao.theora.item.ItemPowder;
@@ -80,7 +80,7 @@ public class EntityWorker extends Entity {
                 case NO_JOB:
                     remove();
                     break;
-                case BUILD_GATE:
+                case BUILD_HOR:
                     if (this.player == null) remove();
                     BlockPos pos = getPosition();
                     BlockPos up = pos.up();
@@ -102,21 +102,21 @@ public class EntityWorker extends Entity {
                                     for (int j = 0; j >= -3; j--) {
                                         BlockPos pos2 = pos.add(off[0], j, off[1]);
                                         if (!pos.equals(pos2)) {
-                                            this.world.setBlockState(pos2, IBlocks.GATE_PART.getDefaultState(), 2);
+                                            this.world.setBlockState(pos2, IBlocks.HOR_PART.getDefaultState(), 2);
                                             TileEntity tileEntity = this.world.getTileEntity(pos2);
-                                            if (tileEntity instanceof TileGatePart) {
-                                                TileGatePart gatePart = (TileGatePart) tileEntity;
-                                                gatePart.setGatePos(pos);
+                                            if (tileEntity instanceof TileHorPart) {
+                                                TileHorPart horPart = (TileHorPart) tileEntity;
+                                                horPart.setHorPos(pos);
                                             }
                                         }
                                     }
                                 }
-                                this.world.setBlockState(pos, IBlocks.GATE.getDefaultState(), 2);
+                                this.world.setBlockState(pos, IBlocks.HOR.getDefaultState(), 2);
                                 TileEntity tileEntity = this.world.getTileEntity(pos);
-                                if (tileEntity instanceof TileGate) {
-                                    TileGate gate = (TileGate) tileEntity;
-                                    gate.setOwner(this.owner);
-                                    gate.markDirtyAndSync();
+                                if (tileEntity instanceof TileHor) {
+                                    TileHor hor = (TileHor) tileEntity;
+                                    hor.setOwner(this.owner);
+                                    hor.markDirtyAndSync();
                                 }
                                 remove();
                             }
@@ -177,7 +177,7 @@ public class EntityWorker extends Entity {
 
     public enum Job {
         NO_JOB(0),
-        BUILD_GATE(80);
+        BUILD_HOR(80);
         public final int jobTime;
 
         Job(int jobTime) {

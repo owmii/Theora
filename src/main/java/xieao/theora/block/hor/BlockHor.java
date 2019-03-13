@@ -1,4 +1,4 @@
-package xieao.theora.block.gate;
+package xieao.theora.block.hor;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockFaceShape;
@@ -16,25 +16,25 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import xieao.theora.block.BlockBase;
 import xieao.theora.item.ItemBlockBase;
-import xieao.theora.item.ItemGate;
+import xieao.theora.item.ItemHor;
 import xieao.theora.item.ItemPowder;
 
 import javax.annotation.Nullable;
 
-public class BlockGate extends BlockBase {
-    public BlockGate(Properties properties) {
+public class BlockHor extends BlockBase {
+    public BlockHor(Properties properties) {
         super(properties);
     }
 
     @Override
     public ItemBlockBase getItemBlock(Item.Properties properties) {
-        return new ItemGate(this, properties);
+        return new ItemHor(this, properties);
     }
 
     @Nullable
     @Override
     public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
-        return new TileGate();
+        return new TileHor();
     }
 
     @Override

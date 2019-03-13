@@ -13,8 +13,8 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import xieao.theora.Theora;
 import xieao.theora.api.TheoraAPI;
-import xieao.theora.api.player.GateData;
-import xieao.theora.block.gate.TileGate;
+import xieao.theora.api.player.HorData;
+import xieao.theora.block.hor.TileHor;
 import xieao.theora.client.gui.player.GuiPlayer;
 import xieao.theora.network.packet.gui.SyncPlayerGuiStatus;
 import xieao.theora.network.packet.playerdata.SyncPlayerData;
@@ -31,12 +31,12 @@ public class PlayerHandler {
     public static void playerLoggedOut(PlayerLoggedOutEvent event) {
         DATA_SYNC.remove(event.getPlayer().getUniqueID());
         TheoraAPI.getPlayerData(event.getPlayer()).ifPresent(playerData -> {
-            GateData gateData = playerData.gate;
-            TileEntity tileEntity = gateData.getTileEntity(event.getPlayer().world);
-            if (tileEntity instanceof TileGate) {
-                ((TileGate) tileEntity).setPlayer(null);
+            HorData horData = playerData.hor;
+            TileEntity tileEntity = horData.getTileEntity(event.getPlayer().world);
+            if (tileEntity instanceof TileHor) {
+                ((TileHor) tileEntity).setPlayer(null);
             }
-            gateData.getLiquidHandler().read(new NBTTagCompound());
+            horData.getLiquidHandler().read(new NBTTagCompound());
         });
     }
 
@@ -55,9 +55,9 @@ public class PlayerHandler {
         } else {
             TheoraAPI.getPlayerData(player).ifPresent(data -> {
                 Minecraft mc = Minecraft.getInstance();
-                if (data.gate.playerGuiOpen && !(mc.currentScreen instanceof GuiPlayer)) {
+                if (data.hor.playerGuiOpen && !(mc.currentScreen instanceof GuiPlayer)) {
                     Theora.NET.toServer(new SyncPlayerGuiStatus());
-                    data.gate.setPlayerGuiOpen(false);
+                    data.hor.setPlayerGuiOpen(false);
                 }
             });
         }

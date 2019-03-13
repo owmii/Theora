@@ -1,4 +1,4 @@
 @NonnullByDefault
-package xieao.theora.block.gate;
+package xieao.theora.block.hor;
 
 import xieao.theora.api.annotation.NonnullByDefault;

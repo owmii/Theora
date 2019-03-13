@@ -9,8 +9,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import xieao.theora.api.TheoraAPI;
-import xieao.theora.api.player.GateData;
-import xieao.theora.block.gate.TileGate;
+import xieao.theora.api.player.HorData;
+import xieao.theora.block.hor.TileHor;
 import xieao.theora.client.renderer.item.IItemColorHolder;
 import xieao.theora.lib.util.PlayerUtil;
 
@@ -26,10 +26,10 @@ public class ItemStone extends ItemBase implements IItemColorHolder {
             EntityPlayer player = context.getPlayer();
             if (player != null && !PlayerUtil.isFake(player)) {
                 TheoraAPI.getPlayerData(player).ifPresent(playerData -> {
-                    GateData gateData = playerData.gate;
-                    TileEntity tileEntity = gateData.getTileEntity(world);
-                    if (tileEntity instanceof TileGate) {
-                        TileGate gate = (TileGate) tileEntity;
+                    HorData horData = playerData.hor;
+                    TileEntity tileEntity = horData.getTileEntity(world);
+                    if (tileEntity instanceof TileHor) {
+                        TileHor hor = (TileHor) tileEntity;
 
 
                     }

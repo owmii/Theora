@@ -9,8 +9,8 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class ItemGate extends ItemBlockBase {
-    public ItemGate(Block block, Properties properties) {
+public class ItemHor extends ItemBlockBase {
+    public ItemHor(Block block, Properties properties) {
         super(block, properties);
     }
 

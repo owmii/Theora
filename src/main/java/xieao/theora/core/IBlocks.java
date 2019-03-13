@@ -8,8 +8,8 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import xieao.theora.block.IBlockBase;
-import xieao.theora.block.gate.BlockGate;
-import xieao.theora.block.gate.BlockGatePart;
+import xieao.theora.block.hor.BlockHor;
+import xieao.theora.block.hor.BlockHorPart;
 import xieao.theora.item.IItemBase;
 
 import java.util.ArrayList;
@@ -19,12 +19,12 @@ import java.util.List;
 public class IBlocks {
     public static final List<ItemBlock> ITEM_BLOCKS = new ArrayList<>();
     public static final List<Block> BLOCKS = new ArrayList<>();
-    public static final Block GATE;
-    public static final Block GATE_PART;
+    public static final Block HOR;
+    public static final Block HOR_PART;
 
     static {
-        GATE = register("gate", new BlockGate(Block.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, Float.MAX_VALUE)));
-        GATE_PART = register("gate_part", new BlockGatePart(Block.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, Float.MAX_VALUE)));
+        HOR = register("hor", new BlockHor(Block.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, Float.MAX_VALUE)));
+        HOR_PART = register("hor_part", new BlockHorPart(Block.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, Float.MAX_VALUE)));
     }
 
     static <T extends Block & IBlockBase> T register(String name, T block) {

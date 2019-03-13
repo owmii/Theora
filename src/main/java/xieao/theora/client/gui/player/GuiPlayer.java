@@ -7,7 +7,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import xieao.theora.api.Consts;
 import xieao.theora.api.TheoraAPI;
-import xieao.theora.api.player.GateData;
+import xieao.theora.api.player.HorData;
 import xieao.theora.client.gui.GuiBase;
 
 @OnlyIn(Dist.CLIENT)
@@ -32,10 +32,10 @@ public class GuiPlayer extends GuiBase {
         drawTexturedModalRect(0, 0, 0, 0, this.w, this.h);
         EntityPlayer player = this.mc.player;
         TheoraAPI.getPlayerData(player).ifPresent(playerData -> {
-            GateData gateData = playerData.gate;
-            if (gateData.loaded) {
-                float stored = gateData.getLiquidHandler().get("slot.essence").getStored();
-                float cap = gateData.getLiquidHandler().get("slot.essence").getCapacity();
+            HorData horData = playerData.hor;
+            if (horData.loaded) {
+                float stored = horData.getLiquidHandler().get("slot.essence").getStored();
+                float cap = horData.getLiquidHandler().get("slot.essence").getCapacity();
                 drawString(this.fontRenderer, "test: " + String.format("%.2f", stored) + "/" + String.format("%.2f", cap), 20, 20, 0xffffff);
             } else {
                 drawString(this.fontRenderer, "Not loaded", 20, 20, 0xffffff);

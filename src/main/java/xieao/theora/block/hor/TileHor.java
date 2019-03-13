@@ -1,4 +1,4 @@
-package xieao.theora.block.gate;
+package xieao.theora.block.hor;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.gui.GuiScreen;
@@ -13,21 +13,21 @@ import net.minecraftforge.common.util.Constants;
 import xieao.theora.Theora;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.liquid.LiquidHandler;
-import xieao.theora.api.player.GateData;
+import xieao.theora.api.player.HorData;
 import xieao.theora.block.IInvBase;
 import xieao.theora.block.TileBase;
-import xieao.theora.client.gui.GuiGate;
+import xieao.theora.client.gui.inventory.GuiHor;
 import xieao.theora.core.ILiquids;
 import xieao.theora.core.ITiles;
 import xieao.theora.inventory.ContainerGate;
 import xieao.theora.lib.util.PlayerUtil;
-import xieao.theora.network.packet.playerdata.SyncGateData;
+import xieao.theora.network.packet.playerdata.SyncHorData;
 import xieao.theora.world.IInteractObj;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class TileGate extends TileBase.Tickable implements IInvBase, IInteractObj {
+public class TileHor extends TileBase.Tickable implements IInvBase, IInteractObj {
     private final LiquidHandler handler = new LiquidHandler();
     private GameProfile owner = new GameProfile(new UUID(0L, 0L), "null");
 
@@ -35,8 +35,8 @@ public class TileGate extends TileBase.Tickable implements IInvBase, IInteractOb
     private EntityPlayer player;
     public int openTab;
 
-    public TileGate() {
-        super(ITiles.GATE);
+    public TileHor() {
+        super(ITiles.HOR);
         this.handler.add("slot.essence", ILiquids.ESSENCE, 1000.0F, 100.0F);
         setInvSize(4);
     }
@@ -70,22 +70,22 @@ public class TileGate extends TileBase.Tickable implements IInvBase, IInteractOb
             }
             if (this.player != null) {
                 TheoraAPI.getPlayerData(this.player).ifPresent(playerData -> {
-                    GateData gateData = playerData.gate;
-                    gateData.setLastCheck(this.world.getGameTime());
-                    gateData.setTileEntity(this);
-                    syncPlayer(gateData);
+                    HorData horData = playerData.hor;
+                    horData.setLastCheck(this.world.getGameTime());
+                    horData.setTileEntity(this);
+                    syncPlayer(horData);
                 });
             }
         }
         super.tick();
     }
 
-    public void syncPlayer(GateData gateData) {
-        LiquidHandler handler = gateData.getLiquidHandler();
+    public void syncPlayer(HorData horData) {
+        LiquidHandler handler = horData.getLiquidHandler();
         handler.read(this.handler.serialize());
-        boolean guiOpen = gateData.playerGuiOpen;
+        boolean guiOpen = horData.playerGuiOpen;
         if (guiOpen && this.world.getGameTime() % 10 == 0) {
-            Theora.NET.toClient(new SyncGateData(gateData.serialize()), this.player);
+            Theora.NET.toClient(new SyncHorData(horData.serialize()), this.player);
         }
     }
 
@@ -133,6 +133,6 @@ public class TileGate extends TileBase.Tickable implements IInvBase, IInteractOb
     @Override
     @OnlyIn(Dist.CLIENT)
     public GuiScreen getGui(EntityPlayer player, EnumHand hand) {
-        return new GuiGate(player, this);
+        return new GuiHor(player, this);
     }
 }

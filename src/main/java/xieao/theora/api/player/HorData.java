@@ -7,7 +7,7 @@ import xieao.theora.api.liquid.LiquidHandler;
 
 import javax.annotation.Nullable;
 
-public class GateData {
+public class HorData {
     private final LiquidHandler liquidHandler = new LiquidHandler();
     public long lastCheck;
     public boolean loaded;

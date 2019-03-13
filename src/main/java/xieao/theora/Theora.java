@@ -12,9 +12,9 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.player.PlayerData;
-import xieao.theora.block.gate.TileGate;
+import xieao.theora.block.hor.TileHor;
 import xieao.theora.client.gui.inventory.GuiFactory;
-import xieao.theora.client.renderer.tile.RenderGate;
+import xieao.theora.client.renderer.tile.RenderHor;
 import xieao.theora.core.handler.Initializer;
 import xieao.theora.lib.util.ServerUtil;
 import xieao.theora.network.NetworkHandler;
@@ -40,7 +40,7 @@ public class Theora {
     }
 
     void client(FMLClientSetupEvent event) {
-        ClientRegistry.bindTileEntitySpecialRenderer(TileGate.class, new RenderGate());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileHor.class, new RenderHor());
     }
 
     void enqueue(InterModEnqueueEvent event) {

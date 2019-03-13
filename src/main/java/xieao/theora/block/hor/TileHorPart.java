@@ -1,4 +1,4 @@
-package xieao.theora.block.gate;
+package xieao.theora.block.hor;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
@@ -9,36 +9,36 @@ import xieao.theora.core.ITiles;
 
 import javax.annotation.Nullable;
 
-public class TileGatePart extends TileBase {
+public class TileHorPart extends TileBase {
     @Nullable
-    private BlockPos gatePos;
+    private BlockPos horPos;
 
-    public TileGatePart() {
-        super(ITiles.GATE_PART);
+    public TileHorPart() {
+        super(ITiles.HOR_PART);
     }
 
     @Override
     public void readSync(NBTTagCompound compound) {
         super.readSync(compound);
         if (compound.contains("GatePos", Constants.NBT.TAG_COMPOUND)) {
-            setGatePos(NBTUtil.readBlockPos(compound.getCompound("GatePos")));
+            setHorPos(NBTUtil.readBlockPos(compound.getCompound("GatePos")));
         }
     }
 
     @Override
     public NBTTagCompound writeSync(NBTTagCompound compound) {
-        if (this.gatePos != null) {
-            compound.put("GatePos", NBTUtil.writeBlockPos(getGatePos()));
+        if (this.horPos != null) {
+            compound.put("GatePos", NBTUtil.writeBlockPos(getHorPos()));
         }
         return super.writeSync(compound);
     }
 
     @Nullable
-    public BlockPos getGatePos() {
-        return gatePos;
+    public BlockPos getHorPos() {
+        return horPos;
     }
 
-    public void setGatePos(@Nullable BlockPos gatePos) {
-        this.gatePos = gatePos;
+    public void setHorPos(@Nullable BlockPos horPos) {
+        this.horPos = horPos;
     }
 }

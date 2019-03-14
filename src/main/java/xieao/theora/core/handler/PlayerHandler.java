@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -29,10 +30,12 @@ public class PlayerHandler {
 
     @SubscribeEvent
     public static void playerLoggedOut(PlayerLoggedOutEvent event) {
-        DATA_SYNC.remove(event.getPlayer().getUniqueID());
-        TheoraAPI.getPlayerData(event.getPlayer()).ifPresent(playerData -> {
+        EntityPlayer player = event.getPlayer();
+        World world = player.world;
+        DATA_SYNC.remove(player.getUniqueID());
+        TheoraAPI.getPlayerData(player).ifPresent(playerData -> {
             HorData horData = playerData.hor;
-            TileEntity tileEntity = horData.getTileEntity(event.getPlayer().world);
+            TileEntity tileEntity = horData.getTileEntity(world.isRemote);
             if (tileEntity instanceof TileHor) {
                 ((TileHor) tileEntity).setPlayer(null);
             }

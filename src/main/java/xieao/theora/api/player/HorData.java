@@ -2,22 +2,21 @@ package xieao.theora.api.player;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import xieao.theora.api.liquid.LiquidHandler;
 
 import javax.annotation.Nullable;
 
 public class HorData {
     private final LiquidHandler liquidHandler = new LiquidHandler();
-    public long lastCheck;
-    public boolean loaded;
+    public static long current;
+    private long lastCheck;
+    private boolean loaded;
     public boolean playerGuiOpen;
 
     @Nullable
     private TileEntity tile;
 
     public NBTTagCompound write(NBTTagCompound compound) {
-        compound.putLong("LastCheck", this.lastCheck);
         this.liquidHandler.write(compound);
         compound.putBoolean("Loaded", this.loaded);
         compound.putBoolean("PlayerGuiOpen", this.playerGuiOpen);
@@ -25,7 +24,6 @@ public class HorData {
     }
 
     public void read(NBTTagCompound compound) {
-        this.lastCheck = compound.getLong("LastCheck");
         this.liquidHandler.read(compound);
         this.loaded = compound.getBoolean("Loaded");
         this.playerGuiOpen = compound.getBoolean("PlayerGuiOpen");
@@ -35,20 +33,20 @@ public class HorData {
         return write(new NBTTagCompound());
     }
 
-    public void setLastCheck(long lastCheck) {
-        this.lastCheck = lastCheck;
-    }
-
     @Nullable
-    public TileEntity getTileEntity(World world) {
-        if (!loaded(world)) {
+    public TileEntity getTileEntity(boolean isClient) {
+        if (!loaded(isClient)) {
             setTileEntity(null);
+            this.liquidHandler.read(new NBTTagCompound());
         }
         return tile;
     }
 
     public void setTileEntity(@Nullable TileEntity tile) {
         this.tile = tile;
+        if (tile != null) {
+            this.lastCheck = current;
+        }
     }
 
     public LiquidHandler getLiquidHandler() {
@@ -59,8 +57,10 @@ public class HorData {
         this.playerGuiOpen = playerGuiOpen;
     }
 
-    public boolean loaded(World world) {
-        this.loaded = world.getGameTime() - this.lastCheck == 0;
+    public boolean loaded(boolean isClient) {
+        if (!isClient) {
+            this.loaded = current - this.lastCheck == 0;
+        }
         return loaded;
     }
 }

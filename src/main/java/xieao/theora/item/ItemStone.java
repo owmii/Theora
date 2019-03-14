@@ -27,7 +27,7 @@ public class ItemStone extends ItemBase implements IItemColorHolder {
             if (player != null && !PlayerUtil.isFake(player)) {
                 TheoraAPI.getPlayerData(player).ifPresent(playerData -> {
                     HorData horData = playerData.hor;
-                    TileEntity tileEntity = horData.getTileEntity(world);
+                    TileEntity tileEntity = horData.getTileEntity(false);
                     if (tileEntity instanceof TileHor) {
                         TileHor hor = (TileHor) tileEntity;
 

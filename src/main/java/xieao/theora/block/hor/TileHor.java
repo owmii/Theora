@@ -71,7 +71,6 @@ public class TileHor extends TileBase.Tickable implements IInvBase, IInteractObj
             if (this.player != null) {
                 TheoraAPI.getPlayerData(this.player).ifPresent(playerData -> {
                     HorData horData = playerData.hor;
-                    horData.setLastCheck(this.world.getGameTime());
                     horData.setTileEntity(this);
                     syncPlayer(horData);
                 });
@@ -83,8 +82,7 @@ public class TileHor extends TileBase.Tickable implements IInvBase, IInteractObj
     public void syncPlayer(HorData horData) {
         LiquidHandler handler = horData.getLiquidHandler();
         handler.read(this.handler.serialize());
-        boolean guiOpen = horData.playerGuiOpen;
-        if (guiOpen && this.world.getGameTime() % 10 == 0) {
+        if (horData.playerGuiOpen && this.world.getGameTime() % 10 == 0) {
             Theora.NET.toClient(new SyncHorData(horData.serialize()), this.player);
         }
     }

@@ -33,7 +33,7 @@ public class GuiPlayer extends GuiBase {
         EntityPlayer player = this.mc.player;
         TheoraAPI.getPlayerData(player).ifPresent(playerData -> {
             HorData horData = playerData.hor;
-            if (horData.loaded) {
+            if (horData.loaded(true)) {
                 float stored = horData.getLiquidHandler().get("slot.essence").getStored();
                 float cap = horData.getLiquidHandler().get("slot.essence").getCapacity();
                 drawString(this.fontRenderer, "test: " + String.format("%.2f", stored) + "/" + String.format("%.2f", cap), 20, 20, 0xffffff);

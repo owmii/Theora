@@ -12,6 +12,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import xieao.theora.lib.util.InvUtil;
@@ -97,6 +98,10 @@ public abstract class TileBase extends TileEntity {
 
     public boolean isServerWorld() {
         return !this.world.isRemote;
+    }
+
+    public DimensionType getDimensionType() {
+        return this.world.getDimension().getType();
     }
 
     public ITextComponent getName() {

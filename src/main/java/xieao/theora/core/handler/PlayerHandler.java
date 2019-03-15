@@ -3,9 +3,6 @@ package xieao.theora.core.handler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -14,8 +11,6 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import xieao.theora.Theora;
 import xieao.theora.api.TheoraAPI;
-import xieao.theora.api.player.HorData;
-import xieao.theora.block.hor.TileHor;
 import xieao.theora.client.gui.player.GuiPlayer;
 import xieao.theora.network.packet.gui.SyncPlayerGuiStatus;
 import xieao.theora.network.packet.playerdata.SyncPlayerData;
@@ -31,16 +26,7 @@ public class PlayerHandler {
     @SubscribeEvent
     public static void playerLoggedOut(PlayerLoggedOutEvent event) {
         EntityPlayer player = event.getPlayer();
-        World world = player.world;
         DATA_SYNC.remove(player.getUniqueID());
-        TheoraAPI.getPlayerData(player).ifPresent(playerData -> {
-            HorData horData = playerData.hor;
-            TileEntity tileEntity = horData.getTileEntity(world.isRemote);
-            if (tileEntity instanceof TileHor) {
-                ((TileHor) tileEntity).setPlayer(null);
-            }
-            horData.getLiquidHandler().read(new NBTTagCompound());
-        });
     }
 
     @SubscribeEvent
@@ -58,9 +44,9 @@ public class PlayerHandler {
         } else {
             TheoraAPI.getPlayerData(player).ifPresent(data -> {
                 Minecraft mc = Minecraft.getInstance();
-                if (data.hor.playerGuiOpen && !(mc.currentScreen instanceof GuiPlayer)) {
+                if (data.hor.guiOpen && !(mc.currentScreen instanceof GuiPlayer)) {
                     Theora.NET.toServer(new SyncPlayerGuiStatus());
-                    data.hor.setPlayerGuiOpen(false);
+                    data.hor.setGuiOpen(false);
                 }
             });
         }

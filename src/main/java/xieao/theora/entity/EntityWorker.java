@@ -18,8 +18,8 @@ import xieao.theora.block.hor.TileHor;
 import xieao.theora.block.hor.TileHorPart;
 import xieao.theora.core.IBlocks;
 import xieao.theora.core.IEntities;
+import xieao.theora.core.lib.util.Ticker;
 import xieao.theora.item.ItemPowder;
-import xieao.theora.lib.util.Ticker;
 
 import javax.annotation.Nullable;
 import java.util.UUID;

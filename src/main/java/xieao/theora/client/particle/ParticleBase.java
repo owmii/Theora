@@ -2,7 +2,7 @@ package xieao.theora.client.particle;
 
 import net.minecraft.client.particle.Particle;
 import net.minecraft.world.World;
-import xieao.theora.lib.util.math.V3d;
+import xieao.theora.core.lib.util.math.V3d;
 
 public class ParticleBase extends Particle {
     protected V3d pos;

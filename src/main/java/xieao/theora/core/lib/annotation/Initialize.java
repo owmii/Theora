@@ -1,4 +1,4 @@
-package xieao.theora.lib.annotation;
+package xieao.theora.core.lib.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

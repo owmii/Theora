@@ -13,8 +13,8 @@ import net.minecraft.world.World;
 import xieao.theora.Theora;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.api.player.HorData;
+import xieao.theora.core.lib.util.PlayerUtil;
 import xieao.theora.entity.EntityWorker;
-import xieao.theora.lib.util.PlayerUtil;
 import xieao.theora.network.packet.gui.OpenPlayerGui;
 
 public class ItemPowder extends ItemBase {

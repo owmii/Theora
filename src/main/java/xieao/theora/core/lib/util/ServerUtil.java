@@ -1,4 +1,4 @@
-package xieao.theora.lib.util;
+package xieao.theora.core.lib.util;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;

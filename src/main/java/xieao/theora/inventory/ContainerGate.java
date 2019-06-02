@@ -6,7 +6,5 @@ import xieao.theora.block.hor.TileHor;
 public class ContainerGate extends ContainerBase<TileHor> {
     public ContainerGate(EntityPlayer player, TileHor inv) {
         super(player, inv);
-
-        addPlayerInv(player.inventory, 8, 142, 84);
     }
 }

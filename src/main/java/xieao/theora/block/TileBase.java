@@ -15,7 +15,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import xieao.theora.lib.util.InvUtil;
+import xieao.theora.core.lib.util.InvUtil;
 
 import javax.annotation.Nullable;
 import java.util.Objects;

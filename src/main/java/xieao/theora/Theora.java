@@ -16,7 +16,7 @@ import xieao.theora.block.hor.TileHor;
 import xieao.theora.client.gui.inventory.GuiFactory;
 import xieao.theora.client.renderer.tile.RenderHor;
 import xieao.theora.core.handler.Initializer;
-import xieao.theora.lib.util.ServerUtil;
+import xieao.theora.core.lib.util.ServerUtil;
 import xieao.theora.network.NetworkHandler;
 
 @Mod("theora")

@@ -11,6 +11,8 @@ public class GuiHor extends GuiContainerBase<TileHor, ContainerGate> {
 
     public GuiHor(EntityPlayer player, TileHor inv) {
         super(new ContainerGate(player, inv), player, inv);
+        this.xSize = 164;
+        this.ySize = 93;
     }
 
     @Override
@@ -21,6 +23,6 @@ public class GuiHor extends GuiContainerBase<TileHor, ContainerGate> {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        drawString(fontRenderer, "Stored " + inv.getHandler().get("slot.essence").getStored(), 0, 0, 0xffffff);
+        drawString(fontRenderer, "Stored ", 0, 0, 0xffffff);
     }
 }

@@ -1,4 +1,4 @@
-package xieao.theora.lib.util.math;
+package xieao.theora.core.lib.util.math;
 
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;

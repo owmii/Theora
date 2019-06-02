@@ -17,10 +17,9 @@ import xieao.theora.api.player.HorData;
 import xieao.theora.block.IInvBase;
 import xieao.theora.block.TileBase;
 import xieao.theora.client.gui.inventory.GuiHor;
-import xieao.theora.core.ILiquids;
 import xieao.theora.core.ITiles;
+import xieao.theora.core.lib.util.PlayerUtil;
 import xieao.theora.inventory.ContainerGate;
-import xieao.theora.lib.util.PlayerUtil;
 import xieao.theora.network.packet.playerdata.SyncHorData;
 import xieao.theora.world.IInteractObj;
 
@@ -37,7 +36,6 @@ public class TileHor extends TileBase.Tickable implements IInvBase, IInteractObj
 
     public TileHor() {
         super(ITiles.HOR);
-        this.handler.add("slot.essence", ILiquids.ESSENCE, 1000.0F, 100.0F);
         setInvSize(4);
     }
 

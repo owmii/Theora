@@ -9,7 +9,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import xieao.theora.block.hor.TileHor;
 import xieao.theora.client.renderer.item.IItemColorHolder;
-import xieao.theora.lib.util.PlayerUtil;
+import xieao.theora.core.lib.util.PlayerUtil;
 
 public class ItemStone extends ItemBase implements IItemColorHolder {
     public ItemStone(Properties properties) {

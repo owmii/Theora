@@ -3,7 +3,7 @@ package xieao.theora.core.handler;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.forgespi.language.ModFileScanData;
 import org.objectweb.asm.Type;
-import xieao.theora.lib.annotation.Initialize;
+import xieao.theora.core.lib.annotation.Initialize;
 
 import java.util.Collection;
 import java.util.List;

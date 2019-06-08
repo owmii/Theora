@@ -1,6 +1,6 @@
 package xieao.theora.block;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.extensions.IForgeBlock;
 import xieao.theora.item.ItemBlockBase;
@@ -11,7 +11,7 @@ public interface IBlockBase extends IForgeBlock {
     }
 
     @Override
-    default boolean hasTileEntity(IBlockState state) {
+    default boolean hasTileEntity(BlockState state) {
         return createTileEntity(state, null) != null;
     }
 }

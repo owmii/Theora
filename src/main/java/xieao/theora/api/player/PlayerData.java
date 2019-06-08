@@ -1,8 +1,8 @@
 package xieao.theora.api.player;
 
-import net.minecraft.nbt.INBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -10,19 +10,16 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import javax.annotation.Nullable;
 
 public final class PlayerData {
-    public final HorData hor = new HorData();
 
-    public NBTTagCompound write(NBTTagCompound compound) {
-        this.hor.write(compound);
+    public CompoundNBT write(CompoundNBT compound) {
         return compound;
     }
 
-    public void read(NBTTagCompound compound) {
-        this.hor.read(compound);
+    public void read(CompoundNBT compound) {
     }
 
-    public NBTTagCompound serialize() {
-        return write(new NBTTagCompound());
+    public CompoundNBT serialize() {
+        return write(new CompoundNBT());
     }
 
     public static class Cap {
@@ -33,12 +30,12 @@ public final class PlayerData {
             CapabilityManager.INSTANCE.register(PlayerData.class, new Capability.IStorage<PlayerData>() {
                 @Nullable
                 @Override
-                public INBTBase writeNBT(Capability<PlayerData> capability, PlayerData instance, EnumFacing side) {
+                public INBT writeNBT(Capability<PlayerData> capability, PlayerData instance, Direction side) {
                     return null;
                 }
 
                 @Override
-                public void readNBT(Capability<PlayerData> capability, PlayerData instance, EnumFacing side, INBTBase nbt) {
+                public void readNBT(Capability<PlayerData> capability, PlayerData instance, Direction side, INBT nbt) {
                 }
             }, PlayerData::new);
         }

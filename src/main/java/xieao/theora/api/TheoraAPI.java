@@ -1,6 +1,6 @@
 package xieao.theora.api;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.ModList;
 import xieao.theora.api.player.PlayerData;
@@ -12,7 +12,7 @@ public final class TheoraAPI {
         return ModList.get().isLoaded(Consts.MOD_ID);
     }
 
-    public static LazyOptional<PlayerData> getPlayerData(EntityPlayer player) {
+    public static LazyOptional<PlayerData> getPlayerData(PlayerEntity player) {
         return player.getCapability(PlayerData.Cap.DATA);
     }
 }

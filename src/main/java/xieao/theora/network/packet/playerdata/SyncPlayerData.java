@@ -1,7 +1,7 @@
 package xieao.theora.network.packet.playerdata;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 import xieao.theora.api.TheoraAPI;
@@ -10,9 +10,9 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 public class SyncPlayerData {
-    private NBTTagCompound compound;
+    private CompoundNBT compound;
 
-    public SyncPlayerData(NBTTagCompound compound) {
+    public SyncPlayerData(CompoundNBT compound) {
         this.compound = compound;
     }
 

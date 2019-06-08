@@ -1,6 +1,6 @@
 package xieao.theora.core.lib.util;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public class Ticker {
 
@@ -39,11 +39,11 @@ public class Ticker {
         return System.currentTimeMillis() % (delay * 5) == 0;
     }
 
-    public void read(NBTTagCompound compound, String key) {
+    public void read(CompoundNBT compound, String key) {
         this.ticks = compound.getInt(key);
     }
 
-    public void write(NBTTagCompound compound, String key) {
+    public void write(CompoundNBT compound, String key) {
         compound.putInt(key, this.ticks);
     }
 

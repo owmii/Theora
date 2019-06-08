@@ -2,7 +2,7 @@ package xieao.theora.core.lib.util;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.ServerWorld;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
@@ -13,17 +13,17 @@ public class ServerUtil {
     private static MinecraftServer server;
 
     @Nullable
-    public static WorldServer getWorld(int dimId) {
+    public static ServerWorld getWorld(int dimId) {
         return getWorld(DimensionType.getById(dimId));
     }
 
     @Nullable
-    public static WorldServer getWorld(ResourceLocation dimName) {
+    public static ServerWorld getWorld(ResourceLocation dimName) {
         return getWorld(DimensionType.byName(dimName));
     }
 
     @Nullable
-    public static WorldServer getWorld(DimensionType dim) {
+    public static ServerWorld getWorld(DimensionType dim) {
         return DimensionManager.getWorld(getServer(), dim, false, false);
     }
 

@@ -2,20 +2,20 @@ package xieao.theora.core.lib.util;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 
 public class InvUtil {
-    public static NBTTagCompound writeItems(NBTTagCompound tag, IInventory inv) {
+    public static CompoundNBT writeItems(CompoundNBT tag, IInventory inv) {
         return writeItems(tag, inv, true);
     }
 
-    public static NBTTagCompound writeItems(NBTTagCompound tag, IInventory inv, boolean saveEmpty) {
-        NBTTagList nbttaglist = new NBTTagList();
+    public static CompoundNBT writeItems(CompoundNBT tag, IInventory inv, boolean saveEmpty) {
+        ListNBT nbttaglist = new ListNBT();
         for (int i = 0; i < inv.getSizeInventory(); ++i) {
             ItemStack itemstack = inv.getStackInSlot(i);
             if (!itemstack.isEmpty()) {
-                NBTTagCompound nbttagcompound = new NBTTagCompound();
+                CompoundNBT nbttagcompound = new CompoundNBT();
                 nbttagcompound.putByte("Slot", (byte) i);
                 itemstack.write(nbttagcompound);
                 nbttaglist.add(nbttagcompound);
@@ -27,10 +27,10 @@ public class InvUtil {
         return tag;
     }
 
-    public static void readAllItems(NBTTagCompound tag, IInventory inv) {
-        NBTTagList nbttaglist = tag.getList("Items", 10);
+    public static void readAllItems(CompoundNBT tag, IInventory inv) {
+        ListNBT nbttaglist = tag.getList("Items", 10);
         for (int i = 0; i < nbttaglist.size(); ++i) {
-            NBTTagCompound nbttagcompound = nbttaglist.getCompound(i);
+            CompoundNBT nbttagcompound = nbttaglist.getCompound(i);
             int j = nbttagcompound.getByte("Slot") & 255;
             if (j < inv.getSizeInventory()) {
                 inv.setInventorySlotContents(j, ItemStack.read(nbttagcompound));

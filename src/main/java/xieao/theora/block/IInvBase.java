@@ -1,12 +1,11 @@
 package xieao.theora.block;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.extensions.IForgeTileEntity;
 
 import javax.annotation.Nullable;
@@ -18,17 +17,17 @@ public interface IInvBase extends ISidedInventory, IForgeTileEntity {
     }
 
     @Override
-    default int[] getSlotsForFace(EnumFacing enumFacing) {
+    default int[] getSlotsForFace(Direction Direction) {
         return IntStream.range(0, getSizeInventory() - 1).toArray();
     }
 
     @Override
-    default boolean canInsertItem(int index, ItemStack itemStack, @Nullable EnumFacing enumFacing) {
+    default boolean canInsertItem(int index, ItemStack itemStack, @Nullable Direction Direction) {
         return isItemValidForSlot(index, itemStack);
     }
 
     @Override
-    default boolean canExtractItem(int index, ItemStack itemStack, EnumFacing enumFacing) {
+    default boolean canExtractItem(int index, ItemStack itemStack, Direction Direction) {
         return true;
     }
 
@@ -87,35 +86,21 @@ public interface IInvBase extends ISidedInventory, IForgeTileEntity {
     }
 
     @Override
-    default boolean isUsableByPlayer(EntityPlayer entityPlayer) {
+    default boolean isUsableByPlayer(PlayerEntity PlayerEntity) {
         return true;
     }
 
     @Override
-    default void openInventory(EntityPlayer entityPlayer) {
+    default void openInventory(PlayerEntity PlayerEntity) {
     }
 
     @Override
-    default void closeInventory(EntityPlayer entityPlayer) {
+    default void closeInventory(PlayerEntity PlayerEntity) {
     }
 
     @Override
     default boolean isItemValidForSlot(int index, ItemStack itemStack) {
         return true;
-    }
-
-    @Override
-    default int getField(int id) {
-        return 0;
-    }
-
-    @Override
-    default void setField(int id, int value) {
-    }
-
-    @Override
-    default int getFieldCount() {
-        return 0;
     }
 
     @Override
@@ -126,35 +111,5 @@ public interface IInvBase extends ISidedInventory, IForgeTileEntity {
                 setInventorySlotContents(i, ItemStack.EMPTY);
             }
         }
-    }
-
-    @Override
-    default int getHeight() {
-        return 0;
-    }
-
-    @Override
-    default int getWidth() {
-        return 0;
-    }
-
-    @Override
-    default boolean hasCustomName() {
-        return getTile().customName != null;
-    }
-
-    default void setCustomName(@Nullable ITextComponent name) {
-        getTile().customName = name;
-    }
-
-    @Override
-    default ITextComponent getDisplayName() {
-        return getTile().customName != null ? getTile().customName : getName();
-    }
-
-    @Nullable
-    @Override
-    default ITextComponent getCustomName() {
-        return getTile().customName;
     }
 }

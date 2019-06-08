@@ -1,9 +1,9 @@
 package xieao.theora.core.handler;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
@@ -21,27 +21,28 @@ import javax.annotation.Nullable;
 public class CapabilityHandler {
     @SubscribeEvent
     public static void attachCapability(AttachCapabilitiesEvent<Entity> event) {
-        if (event.getObject() instanceof EntityPlayer) {
+        if (event.getObject() instanceof PlayerEntity) {
             event.addCapability(new ResourceLocation(Consts.MOD_ID, "player/data"), new PlayerDataProvider());
         }
     }
 
-    public static class PlayerDataProvider implements ICapabilitySerializable<NBTTagCompound> {
+    public static class PlayerDataProvider implements ICapabilitySerializable<CompoundNBT> {
         private final PlayerData data = new PlayerData();
         private final LazyOptional<PlayerData> holder = LazyOptional.of(() -> this.data);
 
         @Override
-        public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable EnumFacing side) {
+        public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction
+                side) {
             return PlayerData.Cap.DATA.orEmpty(cap, this.holder);
         }
 
         @Override
-        public NBTTagCompound serializeNBT() {
+        public CompoundNBT serializeNBT() {
             return this.data.serialize();
         }
 
         @Override
-        public void deserializeNBT(NBTTagCompound nbt) {
+        public void deserializeNBT(CompoundNBT nbt) {
             this.data.read(nbt);
         }
     }

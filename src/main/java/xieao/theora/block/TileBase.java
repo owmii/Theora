@@ -1,18 +1,17 @@
 package xieao.theora.block;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import xieao.theora.core.lib.util.InvUtil;
@@ -30,34 +29,34 @@ public abstract class TileBase extends TileEntity {
     }
 
     @Override
-    public void read(NBTTagCompound compound) {
+    public void read(CompoundNBT compound) {
         super.read(compound);
         readSync(compound);
     }
 
     @Override
-    public NBTTagCompound write(NBTTagCompound compound) {
-        NBTTagCompound nbt = super.write(compound);
+    public CompoundNBT write(CompoundNBT compound) {
+        CompoundNBT nbt = super.write(compound);
         return writeSync(nbt);
     }
 
     @Override
-    public NBTTagCompound getUpdateTag() {
-        return write(new NBTTagCompound());
+    public CompoundNBT getUpdateTag() {
+        return write(new CompoundNBT());
     }
 
     @Nullable
     @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-        return new SPacketUpdateTileEntity(getPos(), 3, getUpdateTag());
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        return new SUpdateTileEntityPacket(getPos(), 3, getUpdateTag());
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
         readSync(pkt.getNbtCompound());
     }
 
-    public void readSync(NBTTagCompound compound) {
+    public void readSync(CompoundNBT compound) {
         if (compound.contains("CustomName", 8)) {
             this.customName = ITextComponent.Serializer.fromJson(compound.getString("CustomName"));
         }
@@ -68,7 +67,7 @@ public abstract class TileBase extends TileEntity {
         readStorable(compound);
     }
 
-    public NBTTagCompound writeSync(NBTTagCompound compound) {
+    public CompoundNBT writeSync(CompoundNBT compound) {
         if (this.customName != null) {
             compound.putString("CustomName", ITextComponent.Serializer.toJson(this.customName));
         }
@@ -79,10 +78,10 @@ public abstract class TileBase extends TileEntity {
         return compound;
     }
 
-    public void readStorable(NBTTagCompound compound) {
+    public void readStorable(CompoundNBT compound) {
     }
 
-    public NBTTagCompound writeStorable(NBTTagCompound compound) {
+    public CompoundNBT writeStorable(CompoundNBT compound) {
         return compound;
     }
 
@@ -90,26 +89,22 @@ public abstract class TileBase extends TileEntity {
         if (this.world != null) {
             markDirty();
             if (isServerWorld()) {
-                IBlockState state = getBlockState();
+                BlockState state = getBlockState();
                 this.world.notifyBlockUpdate(getPos(), state, state, 3);
             }
         }
     }
 
     public boolean isServerWorld() {
-        return !this.world.isRemote;
-    }
-
-    public DimensionType getDimensionType() {
-        return this.world.getDimension().getType();
+        return this.world != null && !this.world.isRemote;
     }
 
     public ITextComponent getName() {
-        return new TextComponentTranslation("block." + Objects.requireNonNull(getType()
+        return new StringTextComponent("block." + Objects.requireNonNull(getType()
                 .getRegistryName()).toString().replace(':', '.'));
     }
 
-    public static abstract class Tickable extends TileBase implements ITickable {
+    public static abstract class Tickable extends TileBase implements ITickableTileEntity {
         @OnlyIn(Dist.CLIENT)
         public int ticks;
 

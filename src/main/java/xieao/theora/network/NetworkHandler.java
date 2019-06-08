@@ -1,7 +1,7 @@
 package xieao.theora.network;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -10,9 +10,6 @@ import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import xieao.theora.api.Consts;
-import xieao.theora.network.packet.gui.OpenPlayerGui;
-import xieao.theora.network.packet.gui.SyncPlayerGuiStatus;
-import xieao.theora.network.packet.playerdata.SyncHorData;
 import xieao.theora.network.packet.playerdata.SyncPlayerData;
 
 import java.util.function.BiConsumer;
@@ -28,9 +25,6 @@ public class NetworkHandler {
 
     public void registerAll() {
         register(SyncPlayerData.class, SyncPlayerData::encode, SyncPlayerData::decode, SyncPlayerData::handle);
-        register(SyncHorData.class, SyncHorData::encode, SyncHorData::decode, SyncHorData::handle);
-        register(OpenPlayerGui.class, OpenPlayerGui::encode, OpenPlayerGui::decode, OpenPlayerGui::handle);
-        register(SyncPlayerGuiStatus.class, (msg, buffer) -> {}, buffer -> new SyncPlayerGuiStatus(), SyncPlayerGuiStatus::handle);
     }
 
     public <T> void register(Class<T> clazz, BiConsumer<T, PacketBuffer> encoder, Function<PacketBuffer, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> handle) {
@@ -42,9 +36,9 @@ public class NetworkHandler {
         CHANNEL.sendToServer(msg);
     }
 
-    public <T> void toClient(T msg, EntityPlayer player) {
-        if (player instanceof EntityPlayerMP) {
-            CHANNEL.sendTo(msg, ((EntityPlayerMP) player).connection.getNetworkManager(), PLAY_TO_CLIENT);
+    public <T> void toClient(T msg, PlayerEntity player) {
+        if (player instanceof ServerPlayerEntity) {
+            CHANNEL.sendTo(msg, ((ServerPlayerEntity) player).connection.getNetworkManager(), PLAY_TO_CLIENT);
         }
     }
 

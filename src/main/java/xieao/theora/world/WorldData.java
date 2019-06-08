@@ -11,6 +11,10 @@ public class WorldData extends WorldSavedData {
         super(name);
     }
 
+    public WorldData() {
+        super("Theora_Data");
+    }
+
     @Override
     public void read(CompoundNBT nbt) {
     }
@@ -22,10 +26,11 @@ public class WorldData extends WorldSavedData {
 
     @Nullable
     public static WorldData get(World world) {
-//        WorldSavedDataStorage storage = world.ge();
-//        if (storage == null)
+//        WorldData data = Objects.requireNonNull(ServerUtil.getWorld(0)).func_217481_x().func_215753_b(WorldData::new, "Theora_Data");
+//        MapData mapData = world.func_217406_a("");
+//        if (mapData == null)
 //            return null;
-//        WorldData data = storage.get(DimensionType.OVERWORLD, WorldData::new, "theora_data");
+//        WorldData data = mapData.get(DimensionType.OVERWORLD, WorldData::new, "theora_data");
 //        if (data == null) {
 //            data = new WorldData("theora_data");
 //            storage.set(DimensionType.OVERWORLD, "theora_data", data);

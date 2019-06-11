@@ -1,18 +1,16 @@
 package xieao.theora.world;
 
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.DimensionSavedDataManager;
 import net.minecraft.world.storage.WorldSavedData;
 
-import javax.annotation.Nullable;
-
 public class WorldData extends WorldSavedData {
-    public WorldData(String name) {
-        super(name);
-    }
+    public static final String NAME = "theora_data";
 
     public WorldData() {
-        super("Theora_Data");
+        super(NAME);
     }
 
     @Override
@@ -24,17 +22,14 @@ public class WorldData extends WorldSavedData {
         return compound;
     }
 
-    @Nullable
     public static WorldData get(World world) {
-//        WorldData data = Objects.requireNonNull(ServerUtil.getWorld(0)).func_217481_x().func_215753_b(WorldData::new, "Theora_Data");
-//        MapData mapData = world.func_217406_a("");
-//        if (mapData == null)
-//            return null;
-//        WorldData data = mapData.get(DimensionType.OVERWORLD, WorldData::new, "theora_data");
-//        if (data == null) {
-//            data = new WorldData("theora_data");
-//            storage.set(DimensionType.OVERWORLD, "theora_data", data);
-//        }
-        return null;
+        DimensionSavedDataManager dataManager = ((ServerWorld) world).getSavedData();
+        WorldData data = dataManager.get(WorldData::new, NAME);
+        if (data == null) {
+            data = new WorldData();
+            data.markDirty();
+            dataManager.set(data);
+        }
+        return data;
     }
 }

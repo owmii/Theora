@@ -34,10 +34,8 @@ public class Theora {
     }
 
     void enqueue(InterModEnqueueEvent event) {
-
     }
 
     void process(InterModProcessEvent event) {
-
     }
 }

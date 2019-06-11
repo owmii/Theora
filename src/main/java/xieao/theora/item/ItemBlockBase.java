@@ -6,6 +6,6 @@ import xieao.theora.client.renderer.item.TEItemRenderer;
 
 public class ItemBlockBase extends BlockItem implements IItemBase {
     public ItemBlockBase(Block block, Properties properties) {
-        super(block, properties.setTEISR(() -> TEItemRenderer::new));
+        super(block, properties.setTEISR(() -> TEItemRenderer::new).group(MAIN));
     }
 }

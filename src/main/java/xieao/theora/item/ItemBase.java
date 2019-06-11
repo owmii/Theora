@@ -5,6 +5,6 @@ import xieao.theora.client.renderer.item.TEItemRenderer;
 
 public class ItemBase extends Item implements IItemBase {
     public ItemBase(Properties properties) {
-        super(properties.setTEISR(() -> TEItemRenderer::new));
+        super(properties.setTEISR(() -> TEItemRenderer::new).group(MAIN));
     }
 }

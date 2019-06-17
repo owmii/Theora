@@ -7,6 +7,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.player.PlayerData;
 import xieao.theora.core.handler.Initializer;
 import xieao.theora.core.lib.util.ServerUtil;
@@ -26,6 +27,7 @@ public class Theora {
 
     void common(FMLCommonSetupEvent event) {
         PlayerData.Cap.register();
+        Liquid.Cap.register();
         Initializer.load();
         NET.registerAll();
     }

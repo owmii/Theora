@@ -18,12 +18,12 @@ import java.util.UUID;
 
 @Mod.EventBusSubscriber
 public class PlayerHandler {
-    private static final Set<UUID> DATA_SYNC = new HashSet<>();
+    private static final Set<UUID> TMP_DATA_SYNC = new HashSet<>();
 
     @SubscribeEvent
     public static void playerLoggedOut(PlayerLoggedOutEvent event) {
         PlayerEntity player = event.getPlayer();
-        DATA_SYNC.remove(player.getUniqueID());
+        TMP_DATA_SYNC.remove(player.getUniqueID());
     }
 
     @SubscribeEvent
@@ -31,10 +31,10 @@ public class PlayerHandler {
         PlayerEntity player = event.player;
         if (event.phase == TickEvent.Phase.END) {
             if (event.side == LogicalSide.SERVER) {
-                if (!DATA_SYNC.contains(player.getUniqueID()) && player instanceof ServerPlayerEntity) {
+                if (!TMP_DATA_SYNC.contains(player.getUniqueID()) && player instanceof ServerPlayerEntity) {
                     TheoraAPI.getPlayerData(player).ifPresent(data -> {
                         Theora.NET.toClient(new SyncPlayerData(data.serialize()), player);
-                        DATA_SYNC.add(player.getUniqueID());
+                        TMP_DATA_SYNC.add(player.getUniqueID());
                     });
                 }
             }

@@ -9,6 +9,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import xieao.theora.api.liquid.Liquid;
 import xieao.theora.api.player.PlayerData;
+import xieao.theora.core.IFeatures;
 import xieao.theora.core.handler.Initializer;
 import xieao.theora.core.lib.util.ServerUtil;
 import xieao.theora.network.NetworkHandler;
@@ -36,6 +37,7 @@ public class Theora {
     }
 
     void enqueue(InterModEnqueueEvent event) {
+        IFeatures.register();
     }
 
     void process(InterModProcessEvent event) {

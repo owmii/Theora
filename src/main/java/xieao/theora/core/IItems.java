@@ -11,7 +11,7 @@ import java.util.List;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class IItems {
-    public static final List<Item> ITEMS = new ArrayList<>(IBlocks.ITEM_BLOCKS);
+    public static final List<Item> ITEMS = new ArrayList<>(IBlocks.BLOCK_ITEMS);
 
     static {
     }

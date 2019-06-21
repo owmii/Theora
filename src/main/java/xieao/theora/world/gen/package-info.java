@@ -1,4 +1,4 @@
 @NonnullByDefault
-package xieao.theora.block.horfire;
+package xieao.theora.world.gen;
 
 import xieao.theora.api.annotation.NonnullByDefault;

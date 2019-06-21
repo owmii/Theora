@@ -9,7 +9,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import xieao.theora.block.IBlockBase;
-import xieao.theora.block.horfire.HorFireBlock;
+import xieao.theora.block.WoodPulpBlock;
 import xieao.theora.item.IItemBase;
 
 import java.util.ArrayList;
@@ -17,19 +17,19 @@ import java.util.List;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class IBlocks {
-    public static final List<BlockItem> ITEM_BLOCKS = new ArrayList<>();
+    public static final List<BlockItem> BLOCK_ITEMS = new ArrayList<>();
     public static final List<Block> BLOCKS = new ArrayList<>();
     public static final Block HOR_FIRE;
 
     static {
-        HOR_FIRE = register("hor_fire", new HorFireBlock(Block.Properties.create(Material.FIRE).doesNotBlockMovement().lightValue(15).sound(SoundType.CLOTH)));
+        HOR_FIRE = register("hor_fire", new WoodPulpBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD)));
     }
 
     static <T extends Block & IBlockBase> T register(String name, T block) {
         BlockItem itemBlock = block.getItemBlock(new Item.Properties().group(IItemBase.MAIN));
         itemBlock.setRegistryName(name);
         block.setRegistryName(name);
-        ITEM_BLOCKS.add(itemBlock);
+        BLOCK_ITEMS.add(itemBlock);
         BLOCKS.add(block);
         return block;
     }

@@ -4,8 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import xieao.theora.client.renderer.item.TEItemRenderer;
 
-public class ItemBlockBase extends BlockItem implements IItemBase {
-    public ItemBlockBase(Block block, Properties properties) {
+public class BlockItemBase extends BlockItem implements IItemBase {
+    public BlockItemBase(Block block, Properties properties) {
         super(block, properties.setTEISR(() -> TEItemRenderer::new).group(MAIN));
     }
 }

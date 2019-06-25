@@ -4,12 +4,14 @@ import com.mojang.datafixers.Dynamic;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
+import xieao.theora.block.HorLogBlock;
 import xieao.theora.core.IBlocks;
 
 import java.util.Random;
@@ -21,7 +23,7 @@ public class WoodFeature extends Feature<NoFeatureConfig> {
     }
 
     @Override
-    public boolean place(IWorld worldIn, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos pos, NoFeatureConfig config) {
+    public boolean func_212245_a(IWorld worldIn, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos pos, NoFeatureConfig config) {
         BlockState state = worldIn.getBlockState(pos);
         if (state.getBlock() == Blocks.OAK_LOG) {
             while (worldIn.getBlockState(pos).getBlock() == Blocks.OAK_LOG) {
@@ -38,8 +40,9 @@ public class WoodFeature extends Feature<NoFeatureConfig> {
                 return false;
             }
             pos = pos.add(0, 1 + rand.nextInt(2), 0);
-            if (worldIn.isAirBlock(pos.east())) {
-                worldIn.setBlockState(pos, IBlocks.HOR_FIRE.getDefaultState(), 2);
+            if (worldIn.isAirBlock(pos.east()) && worldIn.isAirBlock(pos.west()) ||
+                    worldIn.isAirBlock(pos.north()) && worldIn.isAirBlock(pos.south())) {
+                worldIn.setBlockState(pos, IBlocks.HOR_LOG.getDefaultState().with(HorLogBlock.ROTATION, Direction.byHorizontalIndex(rand.nextInt(4))), 2);
             }
         }
         return false;

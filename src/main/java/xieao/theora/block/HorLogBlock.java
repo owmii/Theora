@@ -18,10 +18,10 @@ import xieao.theora.core.lib.util.math.V3d;
 
 import java.util.Random;
 
-public class WoodPulpBlock extends BlockBase {
+public class HorLogBlock extends BlockBase {
     public static final DirectionProperty ROTATION = HorizontalBlock.HORIZONTAL_FACING;
 
-    public WoodPulpBlock(Properties properties) {
+    public HorLogBlock(Properties properties) {
         super(properties);
         setDefaultState(this.stateContainer.getBaseState().with(ROTATION, Direction.NORTH));
     }

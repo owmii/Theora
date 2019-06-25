@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "theora:block/vea_plant"
-    }
+	  "": {
+		  "model": "theora:block/vea_plant"
+	  }
   }
 }

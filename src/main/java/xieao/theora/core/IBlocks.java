@@ -8,8 +8,9 @@ import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import xieao.theora.block.HorLogBlock;
 import xieao.theora.block.IBlockBase;
-import xieao.theora.block.WoodPulpBlock;
+import xieao.theora.block.cauldron.CauldronBlock;
 import xieao.theora.item.IItemBase;
 
 import java.util.ArrayList;
@@ -19,14 +20,16 @@ import java.util.List;
 public class IBlocks {
     public static final List<BlockItem> BLOCK_ITEMS = new ArrayList<>();
     public static final List<Block> BLOCKS = new ArrayList<>();
-    public static final Block HOR_FIRE;
+    public static final Block HOR_LOG;
+    public static final Block CAULDRON;
 
     static {
-        HOR_FIRE = register("hor_fire", new WoodPulpBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD)));
+        HOR_LOG = register("hor_log", new HorLogBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD)));
+        CAULDRON = register("cauldron", new CauldronBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL)));
     }
 
     static <T extends Block & IBlockBase> T register(String name, T block) {
-        BlockItem itemBlock = block.getItemBlock(new Item.Properties().group(IItemBase.MAIN));
+        BlockItem itemBlock = block.getBlockItem(new Item.Properties().group(IItemBase.MAIN));
         itemBlock.setRegistryName(name);
         block.setRegistryName(name);
         BLOCK_ITEMS.add(itemBlock);

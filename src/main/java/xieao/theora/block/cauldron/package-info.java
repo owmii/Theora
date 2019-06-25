@@ -1,4 +1,4 @@
 @NonnullByDefault
-package xieao.theora.client.model;
+package xieao.theora.block.cauldron;
 
 import xieao.theora.api.annotation.NonnullByDefault;

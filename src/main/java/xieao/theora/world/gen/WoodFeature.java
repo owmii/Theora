@@ -23,7 +23,7 @@ public class WoodFeature extends Feature<NoFeatureConfig> {
     }
 
     @Override
-    public boolean func_212245_a(IWorld worldIn, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos pos, NoFeatureConfig config) {
+    public boolean place(IWorld worldIn, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos pos, NoFeatureConfig config) {
         BlockState state = worldIn.getBlockState(pos);
         if (state.getBlock() == Blocks.OAK_LOG) {
             while (worldIn.getBlockState(pos).getBlock() == Blocks.OAK_LOG) {

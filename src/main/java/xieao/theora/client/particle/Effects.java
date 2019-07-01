@@ -134,9 +134,9 @@ public final class Effects {
                 ActiveRenderInfo renderInfo = Minecraft.getInstance().gameRenderer.getActiveRenderInfo();
                 double d4 = this.particleAngle + (this.particleAngle - this.prevParticleAngle) * partialTicks;
                 double d5 = MathHelper.cos((float) (d4 * 0.5F));
-                double d6 = MathHelper.sin((float) (d4 * 0.5F)) * renderInfo.func_216787_l().x;
-                double d7 = MathHelper.sin((float) (d4 * 0.5F)) * renderInfo.func_216787_l().y;
-                double d8 = MathHelper.sin((float) (d4 * 0.5F)) * renderInfo.func_216787_l().z;
+                double d6 = MathHelper.sin((float) (d4 * 0.5F)) * renderInfo.getProjectedView().x;
+                double d7 = MathHelper.sin((float) (d4 * 0.5F)) * renderInfo.getProjectedView().y;
+                double d8 = MathHelper.sin((float) (d4 * 0.5F)) * renderInfo.getProjectedView().z;
                 Vec3d vec3d = new Vec3d(d6, d7, d8);
                 for (int l = 0; l < 4; ++l) {
                     posVec[l] = vec3d.scale(2.0D * posVec[l].dotProduct(vec3d)).add(posVec[l].scale(d5 * d5 - vec3d.dotProduct(vec3d))).add(vec3d.crossProduct(posVec[l]).scale(2.0F * d5));

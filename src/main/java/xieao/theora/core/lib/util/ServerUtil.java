@@ -23,8 +23,8 @@ public class ServerUtil {
     }
 
     @Nullable
-    public static ServerWorld getWorld(DimensionType dim) {
-        return DimensionManager.getWorld(getServer(), dim, false, false);
+    public static ServerWorld getWorld( @Nullable DimensionType dim) {
+        return dim == null ? null : DimensionManager.getWorld(getServer(), dim, false, false);
     }
 
     public static MinecraftServer getServer() {

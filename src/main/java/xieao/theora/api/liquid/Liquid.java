@@ -1,20 +1,15 @@
 package xieao.theora.api.liquid;
 
 import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.common.capabilities.CapabilityManager;
 import xieao.theora.api.Consts;
 import xieao.theora.api.registry.RegistryEntry;
 
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,23 +74,5 @@ public class Liquid extends RegistryEntry<Liquid> {
         public static Capability<LiquidHandler> HANDLER = null;
         @CapabilityInject(LiquidHandler.Item.class)
         public static Capability<LiquidHandler.Item> HANDLER_ITEM = null;
-
-        public static void register() {
-            CapabilityManager.INSTANCE.register(LiquidHandler.class, new Storage<>(), LiquidHandler::new);
-            CapabilityManager.INSTANCE.register(LiquidHandler.Item.class, new Storage<>(),
-                    () -> new LiquidHandler.Item(ItemStack.EMPTY));
-        }
-
-        private static class Storage<T extends LiquidHandler> implements Capability.IStorage<T> {
-            @Nullable
-            @Override
-            public INBT writeNBT(Capability<T> capability, T instance, Direction side) {
-                return null;
-            }
-
-            @Override
-            public void readNBT(Capability<T> capability, T instance, Direction side, INBT nbt) {
-            }
-        }
     }
 }

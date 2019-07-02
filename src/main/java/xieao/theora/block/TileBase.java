@@ -12,8 +12,6 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import xieao.theora.core.lib.util.InvUtil;
 
 import javax.annotation.Nullable;
@@ -105,7 +103,6 @@ public abstract class TileBase extends TileEntity {
     }
 
     public static abstract class Tickable extends TileBase implements ITickableTileEntity {
-        @OnlyIn(Dist.CLIENT)
         public int ticks;
 
         public Tickable(TileEntityType<?> type) {
@@ -114,9 +111,7 @@ public abstract class TileBase extends TileEntity {
 
         @Override
         public void tick() {
-            if (isServerWorld()) {
-                this.ticks++;
-            }
+            this.ticks++;
         }
     }
 }

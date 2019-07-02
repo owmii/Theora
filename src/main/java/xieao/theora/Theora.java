@@ -29,13 +29,13 @@ public class Theora {
         NET.registerAll();
     }
 
-    void client(FMLClientSetupEvent event) {
-    }
-
     void enqueue(InterModEnqueueEvent event) {
         IFeatures.register();
     }
 
     void process(InterModProcessEvent event) {
+    }
+
+    void client(FMLClientSetupEvent event) {
     }
 }

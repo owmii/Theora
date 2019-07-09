@@ -20,16 +20,16 @@ import java.util.List;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class IFeatures {
     public static final List<Feature<?>> FEATURES = new ArrayList<>();
-    public static final Feature<NoFeatureConfig> WOOD_FEATURE;
+    public static final Feature<NoFeatureConfig> HOR_LOG;
 
     static {
-        WOOD_FEATURE = register("wood", new WoodFeature(NoFeatureConfig::deserialize));
+        HOR_LOG = register("hor_log", new WoodFeature(NoFeatureConfig::deserialize));
     }
 
     public static void register() {
         Biome.BIOMES.forEach(biome -> {
             if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.FOREST) || biome.getCategory() == Biome.Category.FOREST) {
-                ConfiguredFeature<?> configuredFeature = Biome.createDecoratedFeature(WOOD_FEATURE, IFeatureConfig.NO_FEATURE_CONFIG,
+                ConfiguredFeature<?> configuredFeature = Biome.createDecoratedFeature(HOR_LOG, IFeatureConfig.NO_FEATURE_CONFIG,
                         Placement.COUNT_HEIGHTMAP_DOUBLE, new FrequencyConfig(800));
                 biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, configuredFeature);
             }

@@ -39,10 +39,12 @@ public class WoodFeature extends Feature<NoFeatureConfig> {
             if (!Blocks.GRASS.isValidPosition(worldIn.getBlockState(pos), worldIn, pos)) {
                 return false;
             }
-            pos = pos.add(0, 1 + rand.nextInt(2), 0);
+            pos = pos.add(0, 2, 0);
             if (worldIn.isAirBlock(pos.east()) && worldIn.isAirBlock(pos.west()) ||
                     worldIn.isAirBlock(pos.north()) && worldIn.isAirBlock(pos.south())) {
                 worldIn.setBlockState(pos, IBlocks.HOR_LOG.getDefaultState().with(HorLogBlock.ROTATION, Direction.byHorizontalIndex(rand.nextInt(4))), 2);
+            } else {
+                worldIn.setBlockState(pos.down(), IBlocks.HOR_LOG.getDefaultState().with(HorLogBlock.ROTATION, Direction.byHorizontalIndex(rand.nextInt(4))), 2);
             }
         }
         return false;

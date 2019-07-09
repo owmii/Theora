@@ -1,3 +1,5 @@
 {
-	"block.theora.gate": "Hor Gate", "item.theora.vial": "Hor Vial"
+  "block.theora.hor_log": "Hor Log",
+  "block.theora.cauldron": "Cauldron",
+  "item.theora.hor_crystal": "Hor Crystal"
 }

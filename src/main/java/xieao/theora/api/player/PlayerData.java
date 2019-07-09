@@ -18,6 +18,7 @@ public final class PlayerData {
 
     public static class Cap {
         @CapabilityInject(PlayerData.class)
+        @SuppressWarnings("ConstantConditions")
         public static Capability<PlayerData> DATA = null;
     }
 }

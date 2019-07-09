@@ -23,7 +23,7 @@ public class ServerUtil {
     }
 
     @Nullable
-    public static ServerWorld getWorld( @Nullable DimensionType dim) {
+    public static ServerWorld getWorld(@Nullable DimensionType dim) {
         return dim == null ? null : DimensionManager.getWorld(getServer(), dim, false, false);
     }
 

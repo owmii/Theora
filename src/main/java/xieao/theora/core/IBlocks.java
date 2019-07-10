@@ -13,7 +13,6 @@ import xieao.theora.block.HorLogBlock;
 import xieao.theora.block.HorSaplingBlock;
 import xieao.theora.block.IBlockBase;
 import xieao.theora.block.LiquidBlock;
-import xieao.theora.item.IItemBase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ public class IBlocks {
     }
 
     static <T extends Block & IBlockBase> T register(String name, T block) {
-        BlockItem itemBlock = block.getBlockItem(new Item.Properties().group(IItemBase.MAIN));
+        BlockItem itemBlock = block.getBlockItem(new Item.Properties());
         itemBlock.setRegistryName(name);
         block.setRegistryName(name);
         BLOCK_ITEMS.add(itemBlock);

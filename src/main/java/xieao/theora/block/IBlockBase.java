@@ -14,4 +14,8 @@ public interface IBlockBase extends IForgeBlock {
     default boolean hasTileEntity(BlockState state) {
         return createTileEntity(state, null) != null;
     }
+
+    default boolean hideGroup() {
+        return false;
+    }
 }

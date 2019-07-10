@@ -1,5 +1,6 @@
 package xieao.theora;
 
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -7,7 +8,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import xieao.theora.client.renderer.item.IItemColorHolder;
 import xieao.theora.core.IFeatures;
+import xieao.theora.core.IItems;
 import xieao.theora.core.handler.CapabilityHandler;
 import xieao.theora.core.lib.util.ServerUtil;
 import xieao.theora.network.NetworkHandler;
@@ -37,5 +40,9 @@ public class Theora {
     }
 
     void client(FMLClientSetupEvent event) {
+        IItems.ITEMS.forEach(item -> {
+            if (item instanceof IItemColorHolder)
+                Minecraft.getInstance().getItemColors().register(((IItemColorHolder) item).getItemColor(), item);
+        });
     }
 }

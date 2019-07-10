@@ -49,10 +49,15 @@ public class LiquidBlock extends BlockBase {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        Effects.create(Effects.GLOW_SMALL, worldIn, new V3d(pos).down(stateIn.get(FULL) ? 0.4D : 0)
+        Effects.create(Effects.GLOW_SMALL, worldIn, new V3d(pos).down(!stateIn.get(FULL) ? 0.4D : 0)
                 .up(0.9D).south(Math.random())
                 .east(Math.random())).maxAge(10).color(0x02b500)
                 .alpha(0.3F, 1).blendFunc().scale(0, 3, 0).gravity(-0.03F).spawn();
 
+    }
+
+    @Override
+    public boolean hideGroup() {
+        return true;
     }
 }

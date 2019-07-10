@@ -47,10 +47,10 @@ public class LiquidHandler {
 
     public CompoundNBT write(CompoundNBT compound) {
         ListNBT tagList = new ListNBT();
-        this.slots.forEach((s, slot) -> {
+        this.slots.forEach((name, slot) -> {
             CompoundNBT nbt = new CompoundNBT();
             nbt.put("Slot", slot.write(new CompoundNBT()));
-            nbt.putString("SlotName", s);
+            nbt.putString("SlotName", name);
             tagList.add(nbt);
         });
         compound.put("LiquidSlots", tagList);
@@ -72,7 +72,7 @@ public class LiquidHandler {
         @Override
         public void setSlot(String key, Slot slot) {
             super.setSlot(key, slot);
-            this.stack.getOrCreateTag().put("LiquidTag", write(new CompoundNBT()));
+            this.stack.getOrCreateTag().put("LiquidTag", serialize());
         }
 
         @Override

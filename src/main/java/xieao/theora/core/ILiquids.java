@@ -1,13 +1,13 @@
 package xieao.theora.core;
 
+import net.minecraftforge.fml.common.Mod;
 import xieao.theora.api.liquid.Liquid;
-import xieao.theora.core.lib.annotation.Initialize;
 
-@Initialize
+@Mod.EventBusSubscriber
 public class ILiquids {
     public static final Liquid GLIOPHIN;
 
     static {
-        GLIOPHIN = Liquid.register("gliophin", 0x85be00, 0xd1ff00);
+        GLIOPHIN = Liquid.register("gliophin", 0x3e7c00, 0x3e9d00);
     }
 }

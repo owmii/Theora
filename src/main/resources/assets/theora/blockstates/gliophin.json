@@ -1,6 +1,0 @@
-{
-  "variants": {
-	"full=true": {"model": "theora:block/gliophin"},
-	"full=false": {"model": "theora:block/gliophin_half"}
-  }
-}

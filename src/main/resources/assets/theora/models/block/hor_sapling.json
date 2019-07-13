@@ -1,6 +1,0 @@
-{
-  "parent": "block/cross",
-  "textures": {
-	"cross": "theora:block/hor_sapling"
-  }
-}

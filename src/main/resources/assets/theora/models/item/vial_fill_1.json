@@ -1,7 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-	"layer0": "theora:item/vial_fill_1",
-	"layer1": "theora:item/vial_empty"
-  }
-}

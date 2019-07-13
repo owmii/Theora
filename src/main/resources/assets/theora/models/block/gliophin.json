@@ -1,8 +1,0 @@
-{
-  "parent": "block/template_farmland",
-  "textures": {
-	"particle": "theora:block/gliophin",
-	"dirt": "theora:block/gliophin",
-	"top": "theora:block/gliophin"
-  }
-}

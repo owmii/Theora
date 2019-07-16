@@ -54,7 +54,7 @@ public class VialItem extends ItemBase implements IItemColorHolder {
         LiquidHandler.Slot slotVial = handlerVial.getSlot("stored");
         PlayerEntity player = context.getPlayer();
         slotVial.setLiquid(ILiquids.GLIOPHIN);
-        slotVial.setFull();
+        slotVial.setStored(100.0F);
         handlerVial.setSlot("stored", slotVial);
         return super.onItemUseFirst(stack, context);
     }

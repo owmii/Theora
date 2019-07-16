@@ -23,7 +23,7 @@ public class NetworkHandler {
     private static final SimpleChannel CHANNEL;
     private static int id;
 
-    public void registerAll() {
+    public void register() {
         register(SyncPlayerData.class, SyncPlayerData::encode, SyncPlayerData::decode, SyncPlayerData::handle);
     }
 

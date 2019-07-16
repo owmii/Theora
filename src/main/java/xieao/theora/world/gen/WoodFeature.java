@@ -23,28 +23,28 @@ public class WoodFeature extends Feature<NoFeatureConfig> {
     }
 
     @Override
-    public boolean place(IWorld worldIn, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos pos, NoFeatureConfig config) {
-        BlockState state = worldIn.getBlockState(pos);
+    public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos pos, NoFeatureConfig config) {
+        BlockState state = world.getBlockState(pos);
         if (state.getBlock() == Blocks.OAK_LOG) {
-            while (worldIn.getBlockState(pos).getBlock() == Blocks.OAK_LOG) {
+            while (world.getBlockState(pos).getBlock() == Blocks.OAK_LOG) {
                 pos = pos.up();
             }
-            if (worldIn.getBlockState(pos).getMaterial() != Material.LEAVES) {
+            if (world.getBlockState(pos).getMaterial() != Material.LEAVES) {
                 return false;
             }
             pos = pos.down();
-            while (worldIn.getBlockState(pos).getBlock() == Blocks.OAK_LOG) {
+            while (world.getBlockState(pos).getBlock() == Blocks.OAK_LOG) {
                 pos = pos.down();
             }
-            if (!Blocks.GRASS.isValidPosition(worldIn.getBlockState(pos), worldIn, pos)) {
+            if (!Blocks.GRASS.isValidPosition(world.getBlockState(pos), world, pos)) {
                 return false;
             }
             pos = pos.add(0, 2, 0);
-            if (worldIn.isAirBlock(pos.east()) && worldIn.isAirBlock(pos.west()) ||
-                    worldIn.isAirBlock(pos.north()) && worldIn.isAirBlock(pos.south())) {
-                worldIn.setBlockState(pos, IBlocks.HOR_LOG.getDefaultState().with(HorLogBlock.ROTATION, Direction.byHorizontalIndex(rand.nextInt(4))), 2);
+            if (world.isAirBlock(pos.east()) || world.isAirBlock(pos.west()) ||
+                    world.isAirBlock(pos.north()) || world.isAirBlock(pos.south())) {
+                world.setBlockState(pos, IBlocks.HOR_LOG.getDefaultState().with(HorLogBlock.ROTATION, Direction.byHorizontalIndex(rand.nextInt(4))), 2);
             } else {
-                worldIn.setBlockState(pos.down(), IBlocks.HOR_LOG.getDefaultState().with(HorLogBlock.ROTATION, Direction.byHorizontalIndex(rand.nextInt(4))), 2);
+                world.setBlockState(pos.down(), IBlocks.HOR_LOG.getDefaultState().with(HorLogBlock.ROTATION, Direction.byHorizontalIndex(rand.nextInt(4))), 2);
             }
         }
         return false;

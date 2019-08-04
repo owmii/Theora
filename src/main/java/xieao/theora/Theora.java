@@ -1,35 +1,31 @@
 package xieao.theora;
 
-import net.minecraft.client.Minecraft;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import xieao.theora.client.renderer.item.IItemColorHolder;
-import xieao.theora.core.IFeatures;
-import xieao.theora.core.IItems;
+import xieao.lib.client.renderer.item.IItemColorHolder;
+import xieao.theora.client.renderer.entity.HorRenderer;
 import xieao.theora.core.handler.CapabilityHandler;
-import xieao.theora.network.NetworkHandler;
+import xieao.theora.entity.HorEntity;
+import xieao.theora.item.IItems;
+import xieao.theora.network.Packets;
+import xieao.theora.world.gen.IFeatures;
 
-@Mod("theora")
+import static xieao.lib.Lollipop.addModListener;
+
+@Mod(Theora.MOD_ID)
 public class Theora {
-    public static final NetworkHandler NET = new NetworkHandler();
+    public static final String MOD_ID = "theora";
 
     public Theora() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::common);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::client);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueue);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::process);
+        addModListener(this::commonSetup);
+        addModListener(this::clientSetup);
     }
 
-    void common(FMLCommonSetupEvent event) {
+    void commonSetup(FMLCommonSetupEvent event) {
         CapabilityHandler.register();
-        NET.register();
-    }
-
-    void enqueue(InterModEnqueueEvent event) {
+        Packets.register();
         IFeatures.register();
     }
 

@@ -57,11 +57,11 @@ dependencies {
 jar {
     manifest {
         attributes(["Specification-Title"     : mod_name,
-                    "Specification-Vendor"    : mod_group,
+                    "Specification-Vendor"    : lib.mod_group,
                     "Specification-Version"   : mod_version,
                     "Implementation-Title"    : project.name,
                     "Implementation-Version"  : mod_version,
-                    "Implementation-Vendor"   : mod_group,
+                    "Implementation-Vendor"   : lib.mod_group,
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
     }
 }

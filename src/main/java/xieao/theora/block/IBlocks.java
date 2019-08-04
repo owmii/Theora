@@ -1,4 +1,4 @@
-package xieao.theora.core;
+package xieao.theora.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -8,9 +8,8 @@ import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import xieao.theora.block.HorLogBlock;
-import xieao.theora.block.IBlockBase;
-import xieao.theora.block.LiquidBlock;
+import xieao.lib.block.IBlockBase;
+import xieao.theora.item.ItemGroups;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,7 @@ public class IBlocks {
     }
 
     static <T extends Block & IBlockBase> T register(String name, T block) {
-        BlockItem itemBlock = block.getBlockItem(new Item.Properties());
+        BlockItem itemBlock = block.getBlockItem(new Item.Properties(), ItemGroups.MAIN);
         itemBlock.setRegistryName(name);
         block.setRegistryName(name);
         BLOCK_ITEMS.add(itemBlock);

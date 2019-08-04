@@ -12,7 +12,7 @@ import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import xieao.theora.block.HorLogBlock;
-import xieao.theora.core.IBlocks;
+import xieao.theora.block.IBlocks;
 
 import java.util.Random;
 import java.util.function.Function;

@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import xieao.theora.Theora;
 
 import java.util.ArrayList;
 import java.util.List;

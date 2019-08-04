@@ -5,7 +5,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import xieao.theora.api.Consts;
+import xieao.theora.Theora;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ public class ISounds {
     public static final List<SoundEvent> SOUNDS = new ArrayList<>();
 
     static SoundEvent register(String name) {
-        ResourceLocation id = new ResourceLocation(Consts.MOD_ID, name);
+        ResourceLocation id = new ResourceLocation(Theora.MOD_ID, name);
         SoundEvent sound = new SoundEvent(id);
         sound.setRegistryName(id);
         SOUNDS.add(sound);

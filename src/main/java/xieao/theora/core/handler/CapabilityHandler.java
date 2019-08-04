@@ -14,8 +14,8 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import xieao.theora.api.Consts;
-import xieao.theora.api.liquid.LiquidHandler;
+import xieao.theora.Theora;
+import xieao.theora.api.fill.FillHandler;
 import xieao.theora.api.player.PlayerData;
 
 import javax.annotation.Nonnull;
@@ -26,7 +26,7 @@ public class CapabilityHandler {
     @SubscribeEvent
     public static void attachCapability(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof PlayerEntity) {
-            event.addCapability(new ResourceLocation(Consts.MOD_ID, "player/data"), new PlayerDataProvider());
+            event.addCapability(new ResourceLocation(Theora.MOD_ID, "player/data"), new PlayerDataProvider());
         }
     }
 

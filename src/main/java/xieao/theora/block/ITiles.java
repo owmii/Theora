@@ -1,4 +1,4 @@
-package xieao.theora.core;
+package xieao.theora.block;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;

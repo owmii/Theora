@@ -1,4 +1,4 @@
-package xieao.theora.network.packet.playerdata;
+package xieao.theora.network.packet;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundNBT;

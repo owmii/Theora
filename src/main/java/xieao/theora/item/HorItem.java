@@ -3,13 +3,15 @@ package xieao.theora.item;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import xieao.theora.core.IBlocks;
+import xieao.lib.item.IItemBase;
+import xieao.theora.block.IBlocks;
 
-public class HorItem extends ItemBase {
+public class HorItem extends Item implements IItemBase {
     public HorItem(Properties properties) {
         super(properties);
     }

@@ -8,9 +8,9 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import xieao.theora.Theora;
+import xieao.lib.Lollipop;
 import xieao.theora.api.TheoraAPI;
-import xieao.theora.network.packet.playerdata.SyncPlayerData;
+import xieao.theora.network.packet.SyncPlayerData;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -33,7 +33,7 @@ public class PlayerHandler {
             if (event.side == LogicalSide.SERVER) {
                 if (!TMP_DATA_SYNC.contains(player.getUniqueID()) && player instanceof ServerPlayerEntity) {
                     TheoraAPI.getPlayerData(player).ifPresent(data -> {
-                        Theora.NET.toClient(new SyncPlayerData(data.serialize()), player);
+                        Lollipop.NET.toClient(new SyncPlayerData(data.serialize()), player);
                         TMP_DATA_SYNC.add(player.getUniqueID());
                     });
                 }

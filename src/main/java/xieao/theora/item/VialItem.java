@@ -2,8 +2,7 @@ package xieao.theora.item;
 
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -26,7 +25,7 @@ import xieao.theora.core.ILiquids;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class VialItem extends ItemBase implements IItemColorHolder {
+public class VialItem extends Item implements IItemColorHolder, IItemBase {
     public VialItem(Properties properties) {
         super(properties);
         addPropertyOverride(new ResourceLocation("fill"), (stack, world, entity) -> {

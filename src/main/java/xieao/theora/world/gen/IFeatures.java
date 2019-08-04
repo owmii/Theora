@@ -12,7 +12,6 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import xieao.theora.world.gen.WoodFeature;
 
 import java.util.ArrayList;
 import java.util.List;

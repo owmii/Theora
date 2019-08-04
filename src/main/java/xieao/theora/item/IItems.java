@@ -1,12 +1,11 @@
-package xieao.theora.core;
+package xieao.theora.item;
 
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import xieao.theora.item.HorItem;
-import xieao.theora.item.IItemBase;
-import xieao.theora.item.VialItem;
+import xieao.lib.item.IItemBase;
+import xieao.theora.block.IBlocks;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +17,8 @@ public class IItems {
     public static final Item VIAL;
 
     static {
-        HOR_CRYSTAL = register("hor_crystal", new HorItem(new Item.Properties()));
-        VIAL = register("vial", new VialItem(new Item.Properties()));
+        HOR_CRYSTAL = register("hor_crystal", new HorItem(new Item.Properties().group(ItemGroups.MAIN)));
+        VIAL = register("vial", new VialItem(new Item.Properties().group(ItemGroups.MAIN)));
     }
 
     static <T extends Item & IItemBase> T register(String name, T item) {

@@ -1,4 +1,4 @@
-@NonnullByDefault
+@NonnullDefault
 package xieao.theora.api.registry;
 
-import xieao.theora.api.annotation.NonnullByDefault;
+import org.lwjgl.system.NonnullDefault;

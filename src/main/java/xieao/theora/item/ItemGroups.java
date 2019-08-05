@@ -8,7 +8,7 @@ public class ItemGroups {
     public static final ItemGroup MAIN = new ItemGroup(Theora.MOD_ID) {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(IItems.VIAL);
+            return new ItemStack(IItems.HOR_CRYSTAL);
         }
     };
 }

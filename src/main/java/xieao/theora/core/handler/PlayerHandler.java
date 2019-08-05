@@ -6,8 +6,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.event.TickEvent;
 import xieao.lib.Lollipop;
 import xieao.theora.api.TheoraAPI;
 import xieao.theora.network.packet.SyncPlayerData;
@@ -21,7 +20,7 @@ public class PlayerHandler {
     private static final Set<UUID> TMP_DATA_SYNC = new HashSet<>();
 
     @SubscribeEvent
-    public static void playerLoggedOut(PlayerLoggedOutEvent event) {
+    public static void playerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
         PlayerEntity player = event.getPlayer();
         TMP_DATA_SYNC.remove(player.getUniqueID());
     }

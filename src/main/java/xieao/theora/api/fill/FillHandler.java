@@ -11,6 +11,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class LiquidHandler {
     protected final Map<String, Slot> slots = new HashMap<>();

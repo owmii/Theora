@@ -9,3 +9,10 @@ authors="xieao"
 description='''
 Theora mod.
 '''
+
+#[[dependencies.theora]]
+#    modId="lollipop"
+#    mandatory=true
+#    versionRange="[0.0.1,)"
+#    ordering="NONE"
+#    side="BOTH"

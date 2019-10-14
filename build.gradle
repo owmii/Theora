@@ -45,7 +45,6 @@ minecraft {
 
 repositories {
     maven { url "http://dvs1.progwml6.com/files/maven" }
-    maven { url "https://tehnut.info/maven" }
 }
 
 dependencies {

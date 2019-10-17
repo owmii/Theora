@@ -62,12 +62,12 @@ public class CapabilityHandler {
             public void readNBT(Capability<PlayerData> capability, PlayerData instance, Direction side, INBT nbt) {
             }
         }, PlayerData::new);
-        CapabilityManager.INSTANCE.register(LiquidHandler.class, new Storage<>(), LiquidHandler::new);
-        CapabilityManager.INSTANCE.register(LiquidHandler.Item.class, new Storage<>(),
-                () -> new LiquidHandler.Item(ItemStack.EMPTY));
+        CapabilityManager.INSTANCE.register(FillHandler.class, new Storage<>(), FillHandler::new);
+        CapabilityManager.INSTANCE.register(FillHandler.Item.class, new Storage<>(),
+                () -> new FillHandler.Item(ItemStack.EMPTY));
     }
 
-    private static class Storage<T extends LiquidHandler> implements Capability.IStorage<T> {
+    private static class Storage<T extends FillHandler> implements Capability.IStorage<T> {
         @Nullable
         @Override
         public INBT writeNBT(Capability<T> capability, T instance, Direction side) {

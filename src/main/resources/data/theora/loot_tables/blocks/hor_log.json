@@ -6,34 +6,7 @@
 	  "entries": [
 		{
 		  "type": "minecraft:item",
-		  "name": "minecraft:oak_log"
-		}
-	  ],
-	  "conditions": [
-		{
-		  "condition": "minecraft:survives_explosion"
-		}
-	  ]
-	},
-	{
-	  "rolls": 1,
-	  "entries": [
-		{
-		  "type": "minecraft:item",
-		  "functions": [
-			{
-			  "function": "minecraft:set_count",
-			  "count": {
-				"min": 1.0,
-				"max": 3.0,
-				"type": "minecraft:uniform"
-			  }
-			},
-			{
-			  "function": "minecraft:explosion_decay"
-			}
-		  ],
-		  "name": "theora:hor_crystal"
+		  "name": "theora:hor_log"
 		}
 	  ],
 	  "conditions": [

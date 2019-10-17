@@ -1,4 +1,4 @@
-package xieao.theora.api.liquid;
+package xieao.theora.api.fill;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-public class LiquidHandler {
+public class FillHandler {
     protected final Map<String, Slot> slots = new HashMap<>();
 
     public Map<String, Slot> getSlots() {
@@ -32,18 +32,17 @@ public class LiquidHandler {
         return this.slots.size();
     }
 
-    public void addSlot(String key, Liquid liquid, float capacity, float transferRate, Transfer transfer) {
-        setSlot(key, new Slot(liquid, !liquid.isEmpty(), capacity, 0, transferRate, transfer));
+    public void addSlot(String key, Fill fill, float capacity, float transferRate, Transfer transfer) {
+        setSlot(key, new Slot(fill, !fill.isEmpty(), capacity, 0, transferRate, transfer));
     }
 
     public void read(CompoundNBT compound) {
-        ListNBT tagList = compound.getList("LiquidSlots", Constants.NBT.TAG_COMPOUND);
-        for (int i = 0; i < tagList.size(); i++) {
-            CompoundNBT nbt = tagList.getCompound(i);
-            Slot slot = new Slot(Liquid.EMPTY, false, 0.0F, 0.0F, 0.0F, Transfer.ALL);
+        ListNBT tagList = compound.getList("FillSlots", Constants.NBT.TAG_COMPOUND);
+        IntStream.range(0, tagList.size()).mapToObj(tagList::getCompound).forEach(nbt -> {
+            Slot slot = new Slot(Fill.EMPTY, false, 0.0F, 0.0F, 0.0F, Transfer.ALL);
             slot.read(nbt.getCompound("Slot"));
             this.slots.put(nbt.getString("SlotName"), slot);
-        }
+        });
     }
 
     public CompoundNBT write(CompoundNBT compound) {
@@ -54,7 +53,7 @@ public class LiquidHandler {
             nbt.putString("SlotName", name);
             tagList.add(nbt);
         });
-        compound.put("LiquidSlots", tagList);
+        compound.put("FillSlots", tagList);
         return compound;
     }
 
@@ -62,7 +61,7 @@ public class LiquidHandler {
         return write(new CompoundNBT());
     }
 
-    public static class Item extends LiquidHandler implements ICapabilityProvider {
+    public static class Item extends FillHandler implements ICapabilityProvider {
         private final LazyOptional<Item> holder = LazyOptional.of(() -> this);
         private final ItemStack stack;
 
@@ -73,21 +72,21 @@ public class LiquidHandler {
         @Override
         public void setSlot(String key, Slot slot) {
             super.setSlot(key, slot);
-            this.stack.getOrCreateTag().put("LiquidTag", serialize());
+            this.stack.getOrCreateTag().put("FillTag", serialize());
         }
 
         @Override
         public Slot getSlot(String key) {
             CompoundNBT nbt = this.stack.getTag();
-            if (nbt != null && nbt.contains("LiquidTag")) {
-                read(nbt.getCompound("LiquidTag"));
+            if (nbt != null && nbt.contains("FillTag")) {
+                read(nbt.getCompound("FillTag"));
             }
             return super.getSlot(key);
         }
 
         @Override
         public <T> LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> cap, @Nullable Direction side) {
-            return Liquid.Cap.HANDLER_ITEM.orEmpty(cap, holder);
+            return Fill.Cap.HANDLER_ITEM.orEmpty(cap, holder);
         }
 
         public ItemStack getStack() {
@@ -96,18 +95,18 @@ public class LiquidHandler {
     }
 
     public static class Slot {
-        public static final Slot EMPTY = new Slot(Liquid.EMPTY, true, 0.0F, 0.0F, 0.0F, Transfer.ALL);
-        private Liquid liquid;
-        private boolean finalLiquid, changable;
+        public static final Slot EMPTY = new Slot(Fill.EMPTY, true, 0.0F, 0.0F, 0.0F, Transfer.ALL);
+        private Fill fill;
+        private boolean finalFill, changable;
         private float capacity;
         private float stored;
         private float transferRate;
         private Transfer transfer;
 
-        public Slot(Liquid liquid, boolean finalLiquid, float capacity, float stored, float transferRate, Transfer transfer) {
-            this.liquid = liquid;
-            this.finalLiquid = finalLiquid;
-            this.changable = !finalLiquid;
+        public Slot(Fill fill, boolean finalFill, float capacity, float stored, float transferRate, Transfer transfer) {
+            this.fill = fill;
+            this.finalFill = finalFill;
+            this.changable = !finalFill;
             this.capacity = capacity;
             this.stored = stored;
             this.transferRate = transferRate;
@@ -115,9 +114,9 @@ public class LiquidHandler {
         }
 
         public void read(CompoundNBT compound) {
-            this.liquid = Liquid.get(compound.getString("LiquidName"));
-            this.finalLiquid = compound.getBoolean("FinalLiquid");
-            this.changable = !this.finalLiquid;
+            this.fill = Fill.get(compound.getString("FillName"));
+            this.finalFill = compound.getBoolean("FinalFill");
+            this.changable = !this.finalFill;
             this.capacity = compound.getFloat("Capacity");
             this.stored = compound.getFloat("Stored");
             this.transferRate = compound.getFloat("TransferRate");
@@ -125,8 +124,8 @@ public class LiquidHandler {
         }
 
         public CompoundNBT write(CompoundNBT compound) {
-            compound.putString("LiquidName", this.liquid.getString());
-            compound.putBoolean("FinalLiquid", this.finalLiquid);
+            compound.putString("FillName", this.fill.getString());
+            compound.putBoolean("FinalFill", this.finalFill);
             compound.putFloat("Capacity", this.capacity);
             compound.putFloat("Stored", this.stored);
             compound.putFloat("TransferRate", this.transferRate);
@@ -134,25 +133,25 @@ public class LiquidHandler {
             return compound;
         }
 
-        public Liquid getLiquid() {
-            return liquid;
+        public Fill getFill() {
+            return fill;
         }
 
-        public boolean setLiquid(Liquid liquid) {
-            if (!this.finalLiquid) {
-                this.liquid = liquid;
+        public boolean setFill(Fill fill) {
+            if (!this.finalFill) {
+                this.fill = fill;
                 return true;
             }
             return false;
         }
 
-        public boolean isFinalLiquid() {
-            return finalLiquid;
+        public boolean isFinalFill() {
+            return finalFill;
         }
 
-        public boolean setFinalLiquid(boolean finalLiquid) {
-            if (!this.liquid.isEmpty() && !this.finalLiquid) {
-                this.finalLiquid = finalLiquid;
+        public boolean setFinalFill(boolean finalFill) {
+            if (!this.fill.isEmpty() && !this.finalFill) {
+                this.finalFill = finalFill;
                 return true;
             }
             return false;
@@ -176,8 +175,8 @@ public class LiquidHandler {
 
         public void setStored(float stored) {
             this.stored = stored > this.capacity ? this.capacity : stored < 0.0F ? 0.0F : stored;
-            if (isEmpty() && !isFinalLiquid()) {
-                setLiquid(Liquid.EMPTY);
+            if (isEmpty() && !isFinalFill()) {
+                setFill(Fill.EMPTY);
             }
         }
 
@@ -198,7 +197,7 @@ public class LiquidHandler {
         }
 
         public boolean isEmpty() {
-            return this.stored <= 0 || this.liquid.isEmpty();
+            return this.stored <= 0 || this.fill.isEmpty();
         }
 
         public void setEmpty() {
@@ -213,30 +212,30 @@ public class LiquidHandler {
             setStored(getCapacity());
         }
 
-        public boolean canReceive(Liquid liquid) {
-            return (!isFull() && liquid.equals(this.liquid) || isEmpty())
+        public boolean canReceive(Fill fill) {
+            return (!isFull() && fill.equals(this.fill) || isEmpty())
                     && (this.transfer.equals(Transfer.ALL)
                     || this.transfer.equals(Transfer.RECEIVE));
         }
 
-        public boolean canSend(Liquid liquid) {
-            return !isEmpty() && liquid.equals(this.liquid)
+        public boolean canSend(Fill fill) {
+            return !isEmpty() && fill.equals(this.fill)
                     && (this.transfer.equals(Transfer.ALL)
                     || this.transfer.equals(Transfer.SEND));
         }
 
         public void to(Slot other, boolean override, boolean doDrain) {
             if (!isEmpty() && !other.isFull()) {
-                if (other.liquid.isEmpty()) {
-                    other.setLiquid(getLiquid());
+                if (other.fill.isEmpty()) {
+                    other.setFill(getFill());
                 }
-                if (this.liquid.equals(other.liquid)) {
+                if (this.fill.equals(other.fill)) {
                     float amount = Math.min(this.stored, other.capacity - other.stored);
                     float toDrain = Math.min(amount, override ? amount : Math.min(this.transferRate, other.transferRate));
                     if (doDrain) {
                         this.stored -= toDrain;
-                        if (isEmpty() && !isFinalLiquid()) {
-                            setLiquid(Liquid.EMPTY);
+                        if (isEmpty() && !isFinalFill()) {
+                            setFill(Fill.EMPTY);
                         }
                     }
                     other.stored += toDrain;
@@ -245,7 +244,7 @@ public class LiquidHandler {
         }
 
         public float add(float amount) {
-            if (this.liquid.isEmpty()) return amount;
+            if (this.fill.isEmpty()) return amount;
             float f = Math.min(amount, this.capacity - this.stored);
             this.stored += f;
             return amount - f;

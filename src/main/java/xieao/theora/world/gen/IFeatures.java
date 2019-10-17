@@ -1,4 +1,4 @@
-package xieao.theora.core;
+package xieao.theora.world.gen;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
@@ -27,7 +27,12 @@ public class IFeatures {
 
     public static void register() {
         Biome.BIOMES.forEach(biome -> {
-            if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.FOREST) || biome.getCategory() == Biome.Category.FOREST) {
+            if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.FOREST)
+                    || biome.getCategory() == Biome.Category.FOREST
+                    || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SWAMP)
+                    || biome.getCategory() == Biome.Category.SWAMP
+                    || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SAVANNA)
+                    || biome.getCategory() == Biome.Category.SAVANNA) {
                 ConfiguredFeature<?> configuredFeature = Biome.createDecoratedFeature(HOR_LOG, IFeatureConfig.NO_FEATURE_CONFIG,
                         Placement.COUNT_HEIGHTMAP_DOUBLE, new FrequencyConfig(800));
                 biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, configuredFeature);

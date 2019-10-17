@@ -29,15 +29,8 @@ public class Theora {
         IFeatures.register();
     }
 
-    void process(InterModProcessEvent event) {
-    }
-
-    void client(FMLClientSetupEvent event) {
-        IItems.ITEMS.forEach(item -> {
-            if (item instanceof IItemColorHolder)
-                Minecraft.getInstance().getItemColors()
-                        .register(((IItemColorHolder) item)
-                                .getItemColor(), item);
-        });
+    void clientSetup(FMLClientSetupEvent event) {
+        RenderingRegistry.registerEntityRenderingHandler(HorEntity.class, HorRenderer::new);
+        IItemColorHolder.registerAll(IItems.ITEMS);
     }
 }

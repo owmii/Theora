@@ -2,14 +2,21 @@ package xieao.theora.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -26,6 +33,40 @@ public class HorLogBlock extends BlockBase {
     public HorLogBlock(Properties properties) {
         super(properties);
         setDefaultState(this.stateContainer.getBaseState().with(ROTATION, Direction.NORTH));
+    }
+
+    @Override
+    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if (!worldIn.isRemote) {
+            worldIn.setBlockState(pos, Blocks.OAK_LOG.getDefaultState(), 2);
+        } else {
+            for (V3d v3d : V3d.from(pos).center().circled(4, 0.5D)) {
+                for (int i = 0; i < 40; i++) {
+                    Effects.create(Effect.GLOW_SMALL, worldIn, v3d.random(.15D)
+                    ).maxAge(10).color(0x02b500).to(v3d.random(.72D))
+                            .alpha(0.3F, 1).blend().spawn();
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void onBlockClicked(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
+        ItemStack held = player.getHeldItemMainhand();
+        if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, held) == 0) {
+            if (!worldIn.isRemote) {
+                worldIn.setBlockState(pos, Blocks.OAK_LOG.getDefaultState(), 2);
+            } else {
+                for (V3d v3d : V3d.from(pos).center().circled(4, 0.5D)) {
+                    for (int i = 0; i < 40; i++) {
+                        Effects.create(Effect.GLOW_SMALL, worldIn, v3d.random(.15D)
+                        ).maxAge(10).color(0x02b500).to(v3d.random(.72D))
+                                .alpha(0.3F, 1).blend().spawn();
+                    }
+                }
+            }
+        }
     }
 
     @Override

@@ -16,11 +16,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import xieao.theora.api.liquid.Liquid;
-import xieao.theora.api.liquid.LiquidHandler;
-import xieao.theora.api.liquid.Transfer;
-import xieao.theora.client.renderer.item.IItemColorHolder;
-import xieao.theora.core.ILiquids;
+import xieao.lib.client.renderer.item.IItemColorHolder;
+import xieao.lib.item.IItemBase;
+import xieao.theora.api.fill.Fill;
+import xieao.theora.api.fill.FillHandler;
+import xieao.theora.api.fill.Transfer;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -29,44 +29,26 @@ public class VialItem extends Item implements IItemColorHolder, IItemBase {
     public VialItem(Properties properties) {
         super(properties);
         addPropertyOverride(new ResourceLocation("fill"), (stack, world, entity) -> {
-            LiquidHandler.Item handler = new LiquidHandler.Item(stack);
-            LiquidHandler.Slot slot = handler.getSlot("stored");
+            FillHandler.Item handler = new FillHandler.Item(stack);
+            FillHandler.Slot slot = handler.getSlot("stored");
             return slot.getStored() / slot.getCapacity();
         });
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-        LiquidHandler.Item handler = new LiquidHandler.Item(stack);
-        LiquidHandler.Slot slot = handler.getSlot("stored");
-//        stack.getOrCreateTag().putBoolean("fg",true);
-//        stack.getOrCreateTag().putBoolean("fgfgf",true);
-//        stack.getOrCreateTag().putBoolean("fgg",true);
-//        stack.getOrCreateTag().putBoolean("ggg",true);
-        //  if(worldIn.getGameTime()%20==0)
-        // System.out.println("" + stack.getTag()+"" + slot.getLiquid().getDisplayName()+" "+slot.getStored());
-    }
-
-    @Override
-    public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
-        LiquidHandler.Item handlerVial = new LiquidHandler.Item(stack);
-        LiquidHandler.Slot slotVial = handlerVial.getSlot("stored");
-        PlayerEntity player = context.getPlayer();
-        slotVial.setLiquid(ILiquids.GLIOPHIN);
-        slotVial.setStored(100.0F);
-        handlerVial.setSlot("stored", slotVial);
-        return super.onItemUseFirst(stack, context);
+    public ActionResultType onItemUse(ItemUseContext context) {
+        return ActionResultType.SUCCESS;
     }
 
     @Override
     public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
         if (isInGroup(group)) {
-            Liquid.REGISTRY.values().forEach(liquid -> {
+            Fill.REGISTRY.values().forEach(fill -> {
                 ItemStack stack = new ItemStack(this);
-                LiquidHandler.Item handler = new LiquidHandler.Item(stack);
-                LiquidHandler.Slot slot = handler.getSlot("stored");
-                if (!liquid.isEmpty()) {
-                    slot.setLiquid(liquid);
+                FillHandler.Item handler = new FillHandler.Item(stack);
+                FillHandler.Slot slot = handler.getSlot("stored");
+                if (!fill.isEmpty()) {
+                    slot.setFill(fill);
                     slot.setFull();
                     handler.setSlot("stored", slot);
                 }
@@ -77,29 +59,29 @@ public class VialItem extends Item implements IItemColorHolder, IItemBase {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        LiquidHandler.Item handler = new LiquidHandler.Item(stack);
-        LiquidHandler.Slot slot = handler.getSlot("stored");
-        tooltip.add(new StringTextComponent("" + slot.getLiquid().getDisplayName() + " " + slot.getStored()));
+        FillHandler.Item handler = new FillHandler.Item(stack);
+        FillHandler.Slot slot = handler.getSlot("stored");
+        tooltip.add(new StringTextComponent("" + slot.getFill().getDisplayName() + " " + slot.getStored()));
     }
 
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
         if (stack.getTag() == null) {
-            LiquidHandler.Item handler = new LiquidHandler.Item(stack);
-            handler.addSlot("stored", Liquid.EMPTY, 200.0F, 200.0F, Transfer.ALL);
+            FillHandler.Item handler = new FillHandler.Item(stack);
+            handler.addSlot("stored", Fill.EMPTY, 200.0F, 200.0F, Transfer.ALL);
             return handler;
         }
-        return new LiquidHandler.Item(stack);
+        return new FillHandler.Item(stack);
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public IItemColor getItemColor() {
         return (stack, i) -> {
-            LiquidHandler.Item handler = new LiquidHandler.Item(stack);
-            Liquid liquid = handler.getSlot("stored").getLiquid();
-            return i == 1 || liquid.isEmpty() ? 0xFFFFFF : liquid.getColor0();
+            FillHandler.Item handler = new FillHandler.Item(stack);
+            Fill fill = handler.getSlot("stored").getFill();
+            return i == 1 || fill.isEmpty() ? 0xFFFFFF : fill.getColor0();
         };
     }
 }

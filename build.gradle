@@ -12,35 +12,17 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
-version = minecraft_version + '-' + mod_version
-group = mod_group
+final Project lib = project(':Lollipop')
+
+version = lib.minecraft_version + '-' + mod_version
+group = lib.mod_group
 archivesBaseName = mod_name
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: mappings_channel, version: mappings_version
-    accessTransformer = file('src/main/resources/META-INF/at.cfg')
-    runs {
-        //noinspection GroovyAssignabilityCheck
-        client = {
-            workingDirectory project.file('run').canonicalPath
-            mods {
-                theora {
-                    source sourceSets.main
-                }
-            }
-        }
-        //noinspection GroovyAssignabilityCheck
-        server = {
-            workingDirectory project.file('run').canonicalPath
-            mods {
-                theora {
-                    source sourceSets.main
-                }
-            }
-        }
-    }
+    mappings channel: lib.mappings_channel, version: lib.mappings_version
+    accessTransformer = file('../Lollipop/src/main/resources/META-INF/at.cfg')
 }
 
 repositories {
@@ -48,9 +30,10 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:' + minecraft_version + '-' + forge_version
-    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
+    minecraft 'net.minecraftforge:forge:' + lib.minecraft_version + '-' + lib.forge_version
+    compileOnly fg.deobf("mezz.jei:jei-${lib.minecraft_version}:${lib.jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-${lib.minecraft_version}:${lib.jei_version}")
+    compile lib
 }
 
 jar {

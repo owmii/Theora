@@ -1,8 +1,8 @@
 package xieao.theora.world;
 
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.DimensionSavedDataManager;
 import net.minecraft.world.storage.WorldSavedData;
 

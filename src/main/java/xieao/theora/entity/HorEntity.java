@@ -2,7 +2,6 @@ package xieao.theora.entity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MoverType;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -14,9 +13,6 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
-import xieao.lib.client.particle.Effect;
-import xieao.lib.client.particle.Effects;
-import xieao.lib.util.PlayerUtil;
 import xieao.lib.util.math.V3d;
 
 import javax.annotation.Nullable;
@@ -48,32 +44,32 @@ public class HorEntity extends Entity {
     @Override
     public void tick() {
         super.tick();
-        this.player = PlayerUtil.get(UUID.fromString(this.dataManager.get(PLAYER_ID)));
-        if (this.player != null) {
-            double dist = this.player.getDistance(this);
-            if (dist > 10.0D) {
-                remove();
-            } else {
-                if (this.ticksExisted > 3 * getTurn()) {
-                    setMotion(
-                            (this.player.posX - this.posX) * 0.35D * (1 + (this.ticksExisted - 2) / 10.0F),
-                            ((this.player.posY + 1.2D) - this.posY) * 0.35D * (1 + (this.ticksExisted - 2) / 10.0F),
-                            (this.player.posZ - this.posZ) * 0.35D * (1 + (this.ticksExisted - 2) / 10.0F)
-                    );
-                    move(MoverType.SELF, getMotion());
-                }
-                if (dist < 1.21D) {
-                    if (this.world.isRemote) {
-                        for (int i = 0; i < 40; i++) {
-                            Effects.create(Effect.GLOW_SMALL, world, V3d.from(getPositionVec()).random(.15D)
-                            ).maxAge(10).color(0x02b500).to(V3d.from(getPositionVec()).random(.72D))
-                                    .alpha(0.3F, 1).blend().spawn();
-                        }
-                    }
-                    remove();
-                }
-            }
-        } else remove();
+//        this.player = Player.get(UUID.fromString(this.dataManager.get(PLAYER_ID)));
+//        if (this.player != null) {
+//            double dist = this.player.getDistance(this);
+//            if (dist > 10.0D) {
+//                remove();
+//            } else {
+//                if (this.ticksExisted > 3 * getTurn()) {
+//                    setMotion(
+//                            (this.player.posX - this.posX) * 0.35D * (1 + (this.ticksExisted - 2) / 10.0F),
+//                            ((this.player.posY + 1.2D) - this.posY) * 0.35D * (1 + (this.ticksExisted - 2) / 10.0F),
+//                            (this.player.posZ - this.posZ) * 0.35D * (1 + (this.ticksExisted - 2) / 10.0F)
+//                    );
+//                    move(MoverType.SELF, getMotion());
+//                }
+//                if (dist < 1.21D) {
+//                    if (this.world.isRemote) {
+//                        for (int i = 0; i < 40; i++) {
+//                            Effects.create(Effect.GLOW_SMALL, world, V3d.from(getPositionVec()).random(.15D)
+//                            ).maxAge(10).color(0x02b500).to(V3d.from(getPositionVec()).random(.72D))
+//                                    .alpha(0.3F, 1).blend().spawn();
+//                        }
+//                    }
+//                    remove();
+//                }
+//            }
+//        } else remove();
     }
 
     @Override

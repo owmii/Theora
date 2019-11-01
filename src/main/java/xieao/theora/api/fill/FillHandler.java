@@ -24,16 +24,17 @@ public class FillHandler {
         return this.slots.get(key);
     }
 
-    public void setSlot(String key, Slot slot) {
+    public FillHandler setSlot(String key, Slot slot) {
         this.slots.put(key, slot);
+        return this;
     }
 
     public int slotCount() {
         return this.slots.size();
     }
 
-    public void addSlot(String key, Fill fill, float capacity, float transferRate, Transfer transfer) {
-        setSlot(key, new Slot(fill, !fill.isEmpty(), capacity, 0, transferRate, transfer));
+    public FillHandler addSlot(String key, Fill fill, float capacity, float transferRate, Transfer transfer) {
+        return setSlot(key, new Slot(fill, !fill.isEmpty(), capacity, 0, transferRate, transfer));
     }
 
     public void read(CompoundNBT compound) {
@@ -70,9 +71,10 @@ public class FillHandler {
         }
 
         @Override
-        public void setSlot(String key, Slot slot) {
+        public Item setSlot(String key, Slot slot) {
             super.setSlot(key, slot);
             this.stack.getOrCreateTag().put("FillTag", serialize());
+            return this;
         }
 
         @Override

@@ -13,13 +13,13 @@ Theora mod.
 #[[dependencies.theora]]
 #    modId="lollipop"
 #    mandatory=true
-#    versionRange="[0.0.1,)"
+#    versionRange="[0.0.2,)"
 #    ordering="NONE"
 #    side="BOTH"
 
-[[dependencies.theora]]
+[[dependencies.countdown]]
     modId="forge"
     mandatory=true
-    versionRange="[28.1.56,)"
+    versionRange="[28.1.80,)"
     ordering="NONE"
     side="BOTH"

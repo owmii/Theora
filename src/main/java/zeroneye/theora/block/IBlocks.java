@@ -9,6 +9,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import zeroneye.lib.block.IBlockBase;
+import zeroneye.theora.block.cauldron.CauldronBlock;
 import zeroneye.theora.item.ItemGroups;
 
 import java.util.ArrayList;
@@ -20,10 +21,12 @@ public class IBlocks {
     public static final List<Block> BLOCKS = new ArrayList<>();
     public static final Block HOR_LOG;
     public static final Block GLIOPHIN;
+    public static final Block CAULDRON;
 
     static {
         HOR_LOG = register("hor_log", new HorLogBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.0F).sound(SoundType.WOOD)));
         GLIOPHIN = register("gliophin", new LiquidBlock(Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F)));
+        CAULDRON = register("cauldron", new CauldronBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.5F)));
     }
 
     static <T extends Block & IBlockBase> T register(String name, T block) {

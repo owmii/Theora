@@ -4,7 +4,7 @@ loaderVersion="[28,)"
 [[mods]]
 modId="theora" 
 version="${file.jarVersion}"
-displayName="Theora" 
+textFormatting="Theora"
 authors="zeroneye"
 description='''
 Theora mod.

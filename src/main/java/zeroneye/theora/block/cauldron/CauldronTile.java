@@ -7,4 +7,9 @@ public class CauldronTile extends TileBase.Tickable {
     public CauldronTile() {
         super(ITiles.CAULDRON);
     }
+
+    @Override
+    protected void postTicks() {
+
+    }
 }

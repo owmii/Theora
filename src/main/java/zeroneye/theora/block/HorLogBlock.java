@@ -36,13 +36,13 @@ public class HorLogBlock extends BlockBase {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (!worldIn.isRemote) {
-            worldIn.setBlockState(pos, Blocks.OAK_LOG.getDefaultState(), 2);
+    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult blockRayTraceResult) {
+        if (!world.isRemote) {
+            world.setBlockState(pos, Blocks.OAK_LOG.getDefaultState(), 2);
         } else {
             for (V3d v3d : V3d.from(pos).center().circled(4, 0.5D)) {
                 for (int i = 0; i < 40; i++) {
-                    Effects.create(Effect.GLOW_SMALL, worldIn, v3d.random(.15D)
+                    Effects.create(Effect.GLOW_SMALL, world, v3d.random(.15D)
                     ).maxAge(10).color(0x02b500).to(v3d.random(.72D))
                             .alpha(0.3F, 1).blend().spawn();
                 }

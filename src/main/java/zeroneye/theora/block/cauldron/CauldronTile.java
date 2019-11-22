@@ -9,7 +9,7 @@ public class CauldronTile extends TileBase.Tickable {
     }
 
     @Override
-    protected void postTicks() {
-
+    protected boolean postTicks() {
+        return false;
     }
 }
